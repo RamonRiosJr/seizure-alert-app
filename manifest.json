@@ -1,0 +1,24 @@
+{
+  "short_name": "Seizure Alert",
+  "name": "Seizure Alert",
+  "description": "An emergency tool for people with epilepsy to alert others nearby during a seizure.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#dc2626",
+  "background_color": "#ffffff"
+}
