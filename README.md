@@ -1,6 +1,6 @@
 # Seizure Alert App  seizure_alert
 
-![App Logo]() <!-- You can create a simple logo -->
+<!-- You can create a simple logo -->
 
 **A PWA emergency tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
 
