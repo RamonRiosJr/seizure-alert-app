@@ -9,23 +9,87 @@ import { useTheme } from './hooks/useTheme';
 import { translations } from './constants';
 import { SunIcon, MoonIcon, SettingsIcon, DocumentChartBarIcon } from './assets/icons';
 
-function LanguageSwitcher({ language, setLanguage }: { language: Language, setLanguage: (lang: Language) => void }) {
-  const baseClasses = 'px-6 py-2 text-md font-semibold rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-opacity-70 focus:ring-offset-2 dark:focus:ring-offset-gray-800';
-  const activeClasses = 'bg-blue-600 text-white focus:ring-blue-400';
-  const inactiveClasses = 'text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 focus:ring-blue-400';
+// Controls that only appear on the Ready Screen
+function TopRightControls({
+  theme,
+  toggleTheme,
+  onOpenSettings,
+  onOpenReports,
+  language
+}: {
+  theme: 'light' | 'dark',
+  toggleTheme: () => void,
+  onOpenSettings: () => void,
+  onOpenReports: () => void,
+  language: Language
+}) {
+  const t = translations[language];
+  const buttonClasses = 'p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600';
 
   return (
-    <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-10 flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-lg">
+    <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+      <button
+        onClick={toggleTheme}
+        className={buttonClasses}
+        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      >
+        {theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}
+      </button>
+      <button
+        onClick={onOpenSettings}
+        className={buttonClasses}
+        aria-label="Open settings"
+      >
+        <SettingsIcon className="w-6 h-6" />
+      </button>
+       <button
+            onClick={onOpenReports}
+            className={buttonClasses}
+            aria-label={t.openReports}
+          >
+            <DocumentChartBarIcon className="w-6 h-6" />
+        </button>
+    </div>
+  );
+}
+
+// Universal, centrally-located language switcher
+function UniversalLanguageSwitcher({
+  language,
+  setLanguage,
+  screen
+}: {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  screen: 'ready' | 'alert';
+}) {
+  const baseButton = 'px-6 py-2 text-lg font-bold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black';
+  
+  const getDynamicStyles = (lang: Language) => {
+    const isActive = language === lang;
+    if (screen === 'alert') {
+      return isActive
+        ? 'bg-white text-red-600 scale-105 shadow-lg focus:ring-white'
+        : 'bg-transparent text-white hover:bg-white/20 focus:ring-white';
+    }
+    // Ready screen styles
+    return isActive
+      ? 'bg-blue-600 text-white scale-105 shadow-lg focus:ring-blue-400'
+      : 'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 focus:ring-blue-400';
+  };
+
+  return (
+    <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] flex items-center space-x-2 p-2 rounded-full shadow-xl bg-black/20 backdrop-blur-sm">
       <button
         onClick={() => setLanguage('en')}
-        className={`${baseClasses} ${language === 'en' ? activeClasses : inactiveClasses}`}
+        className={`${baseButton} ${getDynamicStyles('en')}`}
         aria-pressed={language === 'en'}
       >
         English
       </button>
       <button
         onClick={() => setLanguage('es')}
-        className={`${baseClasses} ${language === 'es' ? activeClasses : inactiveClasses}`}
+        className={`${baseButton} ${getDynamicStyles('es')}`}
         aria-pressed={language === 'es'}
       >
         Español
@@ -34,40 +98,6 @@ function LanguageSwitcher({ language, setLanguage }: { language: Language, setLa
   );
 }
 
-function TopLeftControls({ theme, toggleTheme, onOpenSettings, onOpenReports, language }: { 
-  theme: 'light' | 'dark', 
-  toggleTheme: () => void,
-  onOpenSettings: () => void,
-  onOpenReports: () => void,
-  language: Language
-}) {
-  const t = translations[language];
-  return (
-    <div className="absolute top-4 left-4 flex items-center gap-2 z-10">
-      <button
-        onClick={toggleTheme}
-        className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full shadow-md text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      >
-        {theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}
-      </button>
-      <button
-        onClick={onOpenSettings}
-        className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full shadow-md text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label="Open settings"
-      >
-        <SettingsIcon className="w-6 h-6" />
-      </button>
-      <button
-        onClick={onOpenReports}
-        className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full shadow-md text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label={t.openReports}
-      >
-        <DocumentChartBarIcon className="w-6 h-6" />
-      </button>
-    </div>
-  );
-}
 
 function App() {
   const [screen, setScreen] = useState<'ready' | 'alert'>('ready');
@@ -114,15 +144,13 @@ function App() {
   return (
     <div className="w-screen h-screen overflow-hidden">
       {screen === 'ready' && (
-        <>
-          <TopLeftControls 
-            theme={theme} 
-            toggleTheme={toggleTheme}
-            onOpenSettings={openSettings}
-            onOpenReports={openReports}
-            language={language}
-          />
-        </>
+        <TopRightControls
+          theme={theme}
+          toggleTheme={toggleTheme}
+          onOpenSettings={openSettings}
+          onOpenReports={openReports}
+          language={language}
+        />
       )}
       
       {screen === 'ready' && (
@@ -139,8 +167,12 @@ function App() {
           onDeactivateAlert={deactivateAlert}
         />
       )}
-      
-      {screen === 'ready' && <LanguageSwitcher language={language} setLanguage={setLanguage} />}
+
+      <UniversalLanguageSwitcher 
+        language={language}
+        setLanguage={setLanguage}
+        screen={screen}
+      />
 
       <Chatbot 
         isOpen={isChatOpen} 
