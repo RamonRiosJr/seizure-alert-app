@@ -45,4 +45,3 @@ export const useSpeechRecognition = () => {
 
   return { isListening, transcript, startListening, hasRecognitionSupport };
 };
-   

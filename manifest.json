@@ -4,21 +4,14 @@
   "description": "An emergency tool for people with epilepsy to alert others nearby during a seizure.",
   "icons": [
     {
-      "src": "/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "src": "https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
-  "start_url": "/",
+  "start_url": "/seizure-alert-app/",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/seizure-alert-app/",
   "theme_color": "#dc2626",
   "background_color": "#ffffff"
 }

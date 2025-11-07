@@ -4,7 +4,7 @@ export const useEmergencyAlert = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
   const gainRef = useRef<GainNode | null>(null);
-  const intervalRefs = useRef<NodeJS.Timeout[]>([]);
+  const intervalRefs = useRef<number[]>([]);
   const [isMuted, setIsMuted] = useState(false);
 
   const stopAlert = useCallback(() => {
@@ -34,7 +34,7 @@ export const useEmergencyAlert = () => {
   const startAlert = useCallback(() => {
     // Vibration effect
     if (typeof navigator.vibrate === 'function') {
-      const vibrateInterval = setInterval(() => {
+      const vibrateInterval = window.setInterval(() => {
         navigator.vibrate([500, 200, 500, 200]);
       }, 1400);
       intervalRefs.current.push(vibrateInterval);
@@ -58,7 +58,7 @@ export const useEmergencyAlert = () => {
       oscillator.start(0);
       
       let freq = 800;
-      const sirenInterval = setInterval(() => {
+      const sirenInterval = window.setInterval(() => {
         if (context.state === 'running') {
             freq = freq === 800 ? 1000 : 800;
             oscillator.frequency.setValueAtTime(freq, context.currentTime);

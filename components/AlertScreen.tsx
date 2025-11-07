@@ -77,8 +77,8 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
   const [isAutoCallPending, setIsAutoCallPending] = useState(!!primaryContact);
 
-  const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const callTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownIntervalRef = useRef<number | null>(null);
+  const callTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const STATUS_MESSAGE_KEY = `seizure_alert_status_message_${language}`;
@@ -96,7 +96,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   
   useEffect(() => {
     if (isAutoCallPending && primaryContact) {
-      callTimeoutRef.current = setTimeout(() => {
+      callTimeoutRef.current = window.setTimeout(() => {
         window.location.href = `tel:${primaryContact.phone}`;
         setIsAutoCallPending(false); 
         if (countdownIntervalRef.current) {
@@ -104,7 +104,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
         }
       }, 30000);
 
-      countdownIntervalRef.current = setInterval(() => {
+      countdownIntervalRef.current = window.setInterval(() => {
         setAutoCallCountdown(prev => (prev > 0 ? prev - 1 : 0));
       }, 1000);
 

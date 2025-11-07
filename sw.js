@@ -1,7 +1,8 @@
-const CACHE_NAME = 'seizure-alert-cache-v1';
+const CACHE_NAME = 'seizure-alert-cache-v6';
 const urlsToCache = [
-  '/',
-  '/index.html',
+  '/seizure-alert-app/',
+  '/seizure-alert-app/index.html',
+  'https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg',
   'https://cdn.tailwindcss.com'
 ];
 
@@ -10,6 +11,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
+        // Use addAll with absolute paths
         return cache.addAll(urlsToCache);
       })
   );

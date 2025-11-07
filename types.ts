@@ -1,4 +1,3 @@
-// FIX: Define and export shared types to resolve circular dependency and missing export errors.
 export type Language = 'en' | 'es';
 
 export interface EmergencyContact {
