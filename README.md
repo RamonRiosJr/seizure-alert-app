@@ -4,7 +4,7 @@
 
 **A PWA emergency tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
 
-**Live Demo:** [https://RamonRiosJr.github.io/seizure-alert-app/](https://RamonRiosJr.github.io/seizure-alert-app/)
+**Currently working on Live Demo:** [https://RamonRiosJr.github.io/seizure-alert-app/](https://RamonRiosJr.github.io/seizure-alert-app/)
 
 ---
 
