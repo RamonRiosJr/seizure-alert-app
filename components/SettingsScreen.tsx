@@ -179,9 +179,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
             <div className="space-y-3">
               <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
               <p className="text-sm text-gray-500 dark:text-gray-400">{t.settingsAPIKeyDesc}</p>
-              <div className="flex gap-2">
-                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="flex-grow px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                <button onClick={handleSaveApiKey} className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                <button onClick={handleSaveApiKey} className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2">
                   <Save className="w-5 h-5" />
                   {t.settingsSave}
                 </button>
