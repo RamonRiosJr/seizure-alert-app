@@ -29,18 +29,18 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait',
           icons: [
             {
-              src: 'https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg',
+              src: 'seizure-alert-logo.svg',
               sizes: 'any',
               type: 'image/svg+xml',
               purpose: 'any maskable'
             },
             {
-              src: 'https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg',
+              src: 'seizure-alert-logo.svg',
               sizes: '192x192',
               type: 'image/svg+xml'
             },
             {
-              src: 'https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg',
+              src: 'seizure-alert-logo.svg',
               sizes: '512x512',
               type: 'image/svg+xml'
             }
