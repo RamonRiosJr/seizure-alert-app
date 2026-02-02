@@ -22,11 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for package-lock.json
+        id: lockfile
+        # Check if package-lock.json exists and output 'true' or 'false'
+        run: echo "exists=$(test -f package-lock.json && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
+          # Conditionally enable caching only if package-lock.json exists
+          cache: ${{ steps.lockfile.outputs.exists == 'true' && 'npm' || '' }}
 
       - name: Install dependencies
         run: npm install
