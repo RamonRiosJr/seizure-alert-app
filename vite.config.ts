@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+        includeAssets: ['favicon.ico', 'seizure-alert-logo.svg'],
         manifest: {
           name: 'Seizure Alert',
           short_name: 'Seizure Alert',
