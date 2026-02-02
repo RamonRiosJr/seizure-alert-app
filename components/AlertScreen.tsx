@@ -4,7 +4,7 @@ import { translations } from '../constants';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { WarningIcon, SpeakerIcon, SpeakerOffIcon, LoadingSpinner, BatteryIcon, PencilIcon, CloseIcon, CheckIcon } from '../assets/icons';
+import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check } from 'lucide-react';
 
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
@@ -68,7 +68,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   const t = translations[language];
   const [timer, setTimer] = useState(0);
   const { level, charging, isSupported } = useBatteryStatus();
-  
+
   const [statusMessage, setStatusMessage] = useState(t.alertStatus);
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [statusInput, setStatusInput] = useState('');
@@ -93,12 +93,12 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  
+
   useEffect(() => {
     if (isAutoCallPending && primaryContact) {
       callTimeoutRef.current = window.setTimeout(() => {
         window.location.href = `tel:${primaryContact.phone}`;
-        setIsAutoCallPending(false); 
+        setIsAutoCallPending(false);
         if (countdownIntervalRef.current) {
           clearInterval(countdownIntervalRef.current);
         }
@@ -153,16 +153,16 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
     <>
       <div className="h-screen w-screen alert-active flex flex-col box-border">
         <header className="relative text-center p-4 sm:p-6 flex-shrink-0">
-           <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4">
             <button
               onClick={toggleSound}
               className="p-2 rounded-full bg-black/20 hover:bg-black/40"
               aria-label={isMuted ? t.sirenUnmute : t.sirenMute}
             >
-              {isMuted ? <SpeakerOffIcon className="w-8 h-8" /> : <SpeakerIcon className="w-8 h-8" />}
+              {isMuted ? <VolumeX className="w-8 h-8" /> : <Volume2 className="w-8 h-8" />}
             </button>
           </div>
-          <WarningIcon className="w-16 h-16 mx-auto mb-2" />
+          <TriangleAlert className="w-16 h-16 mx-auto mb-2" />
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{t.alertTitle}</h1>
           <div className="flex items-center justify-center flex-wrap gap-2 mt-2 px-4 min-h-[56px]">
             {isEditingStatus ? (
@@ -179,14 +179,14 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
                   className="p-2 rounded-full bg-green-500/50 hover:bg-green-500/80"
                   aria-label="Save status message"
                 >
-                  <CheckIcon className="w-6 h-6 text-white" />
+                  <Check className="w-6 h-6 text-white" />
                 </button>
                 <button
                   onClick={handleCancelEditing}
                   className="p-2 rounded-full bg-red-500/50 hover:bg-red-500/80"
                   aria-label="Cancel editing status message"
                 >
-                  <CloseIcon className="w-6 h-6 text-white" />
+                  <X className="w-6 h-6 text-white" />
                 </button>
               </div>
             ) : (
@@ -197,7 +197,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
                   className="flex-shrink-0 p-2 rounded-full bg-black/20 hover:bg-black/40"
                   aria-label="Edit status message"
                 >
-                  <PencilIcon className="w-5 h-5" />
+                  <Pencil className="w-5 h-5" />
                 </button>
               </>
             )}
@@ -210,12 +210,12 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               <div className="text-lg font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</div>
               <div className="text-7xl md:text-8xl font-mono font-bold tracking-widest">{formattedTime(timer)}</div>
             </div>
-            
+
             {isSupported && level !== null && (
               <div className="text-center bg-black bg-opacity-20 rounded-lg p-4 flex flex-col justify-center">
                 <div className="text-lg font-semibold opacity-80 uppercase tracking-wider">Battery</div>
                 <div className="flex items-center justify-center text-4xl md:text-5xl font-bold gap-2 mt-1">
-                  <BatteryIcon className="w-10 h-10 md:w-12 md:h-12" isCharging={!!charging} />
+                  {charging ? <BatteryCharging className="w-10 h-10 md:w-12 md:h-12" /> : <Battery className="w-10 h-10 md:w-12 md:h-12" />}
                   <span className="font-mono">{level}%</span>
                 </div>
               </div>
@@ -259,7 +259,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
                 className="p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Read instructions aloud"
               >
-                {isSpeaking ? <LoadingSpinner className="w-6 h-6"/> : <SpeakerIcon className="w-6 h-6" />}
+                {isSpeaking ? <Loader2 className="w-6 h-6 animate-spin" /> : <Volume2 className="w-6 h-6" />}
               </button>
             </div>
             <ol className="space-y-3 list-decimal list-inside text-xl">
@@ -268,7 +268,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               ))}
             </ol>
           </div>
-          
+
           <div className="w-full max-w-2xl bg-black bg-opacity-20 rounded-lg my-2 p-4">
             <h3 className="text-2xl font-bold mb-3">{t.emergencyContacts}</h3>
             {contacts.length > 0 ? (
