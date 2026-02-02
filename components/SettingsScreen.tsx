@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { CloseIcon, TrashIcon, UserPlusIcon, KeyIcon, SaveIcon, PencilIcon, CheckIcon } from '../assets/icons';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check } from 'lucide-react';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -13,15 +13,15 @@ interface SettingsScreenProps {
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, language }) => {
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
-  
+
   const [newContact, setNewContact] = useState({ name: '', relation: '', phone: '' });
   const [apiKeyInput, setApiKeyInput] = useState(apiKey);
-  
+
   const [editingContactId, setEditingContactId] = useState<string | null>(null);
-  const [editingContactData, setEditingContactData] = useState<{name: string; relation: string; phone: string} | null>(null);
+  const [editingContactData, setEditingContactData] = useState<{ name: string; relation: string; phone: string } | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
-  
+
   const t = translations[language];
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
   const handleDeleteContact = (id: string) => {
     setContacts(contacts.filter(c => c.id !== id));
   };
-  
+
   const handleSaveApiKey = () => {
     setApiKey(apiKeyInput);
   };
@@ -77,7 +77,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
       setEditError('Name and Phone Number are required fields.');
       return;
     }
-    
+
     setContacts(contacts.map(c => c.id === editingContactId ? { ...c, ...editingContactData } : c));
     handleCancelEditing();
   };
@@ -88,7 +88,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t.settingsTitle}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
-            <CloseIcon className="w-6 h-6" />
+            <X className="w-6 h-6" />
           </button>
         </header>
 
@@ -96,28 +96,28 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
           {/* Emergency Contacts Section */}
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <UserPlusIcon className="w-6 h-6" />
+              <UserPlus className="w-6 h-6" />
               {t.emergencyContacts}
             </h3>
             <div className="space-y-3">
               {contacts.map(contact => (
                 <div key={contact.id} className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
-                   {editingContactId === contact.id ? (
+                  {editingContactId === contact.id ? (
                     <div className="space-y-2">
-                       {editError && <p className="text-red-500 text-sm text-center">{editError}</p>}
-                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                         <input type="text" placeholder={t.settingsContactName} value={editingContactData?.name ?? ''} onChange={e => { setEditingContactData(d => ({...d!, name: e.target.value})); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.name.trim() ? 'border-red-500' : ''}`} required />
-                         <input type="text" placeholder={t.settingsContactRelation} value={editingContactData?.relation ?? ''} onChange={e => setEditingContactData(d => ({...d!, relation: e.target.value}))} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                         <input type="tel" placeholder={t.settingsContactPhone} value={editingContactData?.phone ?? ''} onChange={e => { setEditingContactData(d => ({...d!, phone: e.target.value})); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.phone.trim() ? 'border-red-500' : ''}`} required />
-                       </div>
-                       <div className="flex justify-end items-center gap-2">
-                         <button onClick={handleCancelEditing} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600" aria-label="Cancel edit">
-                           <CloseIcon className="w-6 h-6" />
-                         </button>
-                         <button onClick={handleSaveEdit} className="text-green-500 hover:text-green-700 dark:hover:text-green-400 p-2 rounded-full hover:bg-green-100 dark:hover:bg-green-900/50" aria-label="Save contact">
-                           <CheckIcon className="w-6 h-6" />
-                         </button>
-                       </div>
+                      {editError && <p className="text-red-500 text-sm text-center">{editError}</p>}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <input type="text" placeholder={t.settingsContactName} value={editingContactData?.name ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, name: e.target.value })); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.name.trim() ? 'border-red-500' : ''}`} required />
+                        <input type="text" placeholder={t.settingsContactRelation} value={editingContactData?.relation ?? ''} onChange={e => setEditingContactData(d => ({ ...d!, relation: e.target.value }))} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                        <input type="tel" placeholder={t.settingsContactPhone} value={editingContactData?.phone ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, phone: e.target.value })); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.phone.trim() ? 'border-red-500' : ''}`} required />
+                      </div>
+                      <div className="flex justify-end items-center gap-2">
+                        <button onClick={handleCancelEditing} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600" aria-label="Cancel edit">
+                          <X className="w-6 h-6" />
+                        </button>
+                        <button onClick={handleSaveEdit} className="text-green-500 hover:text-green-700 dark:hover:text-green-400 p-2 rounded-full hover:bg-green-100 dark:hover:bg-green-900/50" aria-label="Save contact">
+                          <Check className="w-6 h-6" />
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="flex justify-between items-center">
@@ -127,29 +127,29 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                       </div>
                       <div className="flex items-center gap-1">
                         <button onClick={() => handleStartEditing(contact)} className="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!!editingContactId || isAddingContact} aria-label="Edit contact">
-                          <PencilIcon className="w-5 h-5" />
+                          <Pencil className="w-5 h-5" />
                         </button>
                         <button onClick={() => handleDeleteContact(contact.id)} className="text-red-500 hover:text-red-700 dark:hover:text-red-400 p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!!editingContactId} aria-label="Delete contact">
-                          <TrashIcon className="w-5 h-5" />
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </div>
                     </div>
                   )}
                 </div>
               ))}
-               {contacts.length === 0 && !editingContactId && !isAddingContact && (
+              {contacts.length === 0 && !editingContactId && !isAddingContact && (
                 <p className="text-gray-500 dark:text-gray-400 text-center py-4">{`No contacts added yet.`}</p>
               )}
             </div>
-            
+
             <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
               {isAddingContact ? (
                 <form onSubmit={handleAddContact} className="space-y-3">
                   <h4 className="font-semibold text-gray-700 dark:text-gray-200">{t.settingsAddContact}</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" placeholder={t.settingsContactName} value={newContact.name} onChange={e => setNewContact({...newContact, name: e.target.value})} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
-                    <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({...newContact, relation: e.target.value})} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                    <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({...newContact, phone: e.target.value})} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                    <input type="text" placeholder={t.settingsContactName} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                    <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                    <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
                   </div>
                   <div className="flex items-center gap-2">
                     <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400">{t.settingsSave}</button>
@@ -157,12 +157,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                   </div>
                 </form>
               ) : (
-                <button 
-                  onClick={() => setIsAddingContact(true)} 
+                <button
+                  onClick={() => setIsAddingContact(true)}
                   className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
                   disabled={!!editingContactId}
                 >
-                  <UserPlusIcon className="w-5 h-5" />
+                  <UserPlus className="w-5 h-5" />
                   <span>{t.settingsAddContact}</span>
                 </button>
               )}
@@ -172,20 +172,20 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
 
           {/* API Key Section */}
           <section>
-             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <KeyIcon className="w-6 h-6" />
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Key className="w-6 h-6" />
               {t.settingsAPIKey}
             </h3>
             <div className="space-y-3">
-                <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{t.settingsAPIKeyDesc}</p>
-                <div className="flex gap-2">
-                    <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="flex-grow px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                    <button onClick={handleSaveApiKey} className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
-                        <SaveIcon className="w-5 h-5" />
-                        {t.settingsSave}
-                    </button>
-                </div>
+              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t.settingsAPIKeyDesc}</p>
+              <div className="flex gap-2">
+                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="flex-grow px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                <button onClick={handleSaveApiKey} className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
+                  <Save className="w-5 h-5" />
+                  {t.settingsSave}
+                </button>
+              </div>
             </div>
           </section>
         </main>

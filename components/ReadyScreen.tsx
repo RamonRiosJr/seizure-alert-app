@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Language } from '../types';
 import { translations } from '../constants';
-import { ChatIcon } from '../assets/icons';
+import { MessageCircle } from 'lucide-react';
 
 interface ReadyScreenProps {
   language: Language;
@@ -33,7 +33,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
         className="absolute bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400"
         aria-label="Open AI Health Assistant"
       >
-        <ChatIcon className="w-8 h-8" />
+        <MessageCircle className="w-8 h-8" />
       </button>
     </div>
   );
