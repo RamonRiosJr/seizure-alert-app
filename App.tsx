@@ -73,7 +73,7 @@ function UniversalLanguageSwitcher({
   };
 
   return (
-    <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] flex items-center space-x-2 p-2 rounded-full shadow-xl bg-black/20 backdrop-blur-sm">
+    <div className="fixed top-4 left-4 z-[60] flex items-center space-x-2 p-2 rounded-full shadow-xl bg-black/20 backdrop-blur-sm">
       <button
         onClick={() => setLanguage('en')}
         className={`${baseButton} ${getDynamicStyles('en')}`}
