@@ -204,7 +204,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
           </div>
         </header>
 
-        <main className="flex-grow flex flex-col items-center justify-center px-4 overflow-y-auto pb-4">
+        <main className="flex-grow flex flex-col items-center px-4 overflow-y-auto py-6">
           <div className="flex items-stretch justify-center gap-4 flex-wrap my-4">
             <div className="text-center bg-black bg-opacity-20 rounded-lg p-4">
               <div className="text-lg font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</div>
@@ -262,7 +262,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
                 {isSpeaking ? <Loader2 className="w-6 h-6 animate-spin" /> : <Volume2 className="w-6 h-6" />}
               </button>
             </div>
-            <ol className="space-y-3 list-decimal list-inside text-xl">
+            <ol className="space-y-3 list-decimal list-inside text-lg md:text-xl">
               {t.instructions.map((inst: string, index: number) => (
                 <li key={index}>{inst}</li>
               ))}
