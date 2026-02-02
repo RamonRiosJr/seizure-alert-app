@@ -151,9 +151,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                     <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
                     <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400">{t.settingsSave}</button>
-                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500">{t.settingsCancel}</button>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t.settingsSave}</button>
+                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t.settingsCancel}</button>
                   </div>
                 </form>
               ) : (
