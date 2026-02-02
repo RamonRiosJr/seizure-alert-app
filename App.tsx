@@ -57,7 +57,7 @@ function UniversalLanguageSwitcher({
   setLanguage: (lang: Language) => void;
   screen: 'ready' | 'alert';
 }) {
-  const baseButton = 'px-6 py-2 text-lg font-bold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black';
+  const baseButton = 'px-3 py-1 text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black';
 
   const getDynamicStyles = (lang: Language) => {
     const isActive = language === lang;
