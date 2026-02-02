@@ -20,7 +20,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
         <p className="text-lg md:text-2xl mb-16 max-w-lg">{t.subtitle}</p>
         <button
           onClick={onActivateAlert}
-          className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 bg-red-600 text-white rounded-full shadow-2xl transition-transform duration-150 ease-in-out active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-400"
+          className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 bg-red-600 text-white rounded-full shadow-[0_0_60px_rgba(220,38,38,0.6)] transition-transform duration-150 ease-in-out active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-400"
           aria-label={t.emergencyButton}
         >
           <span className="absolute h-full w-full rounded-full bg-red-500 animate-pulse"></span>
