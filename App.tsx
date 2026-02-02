@@ -28,13 +28,7 @@ function TopRightControls({
 
   return (
     <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-      <button
-        onClick={toggleTheme}
-        className={buttonClasses}
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      >
-        {theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}
-      </button>
+
       <button
         onClick={onOpenSettings}
         className={buttonClasses}
@@ -42,13 +36,13 @@ function TopRightControls({
       >
         <SettingsIcon className="w-6 h-6" />
       </button>
-       <button
-            onClick={onOpenReports}
-            className={buttonClasses}
-            aria-label={t.openReports}
-          >
-            <DocumentChartBarIcon className="w-6 h-6" />
-        </button>
+      <button
+        onClick={onOpenReports}
+        className={buttonClasses}
+        aria-label={t.openReports}
+      >
+        <DocumentChartBarIcon className="w-6 h-6" />
+      </button>
     </div>
   );
 }
@@ -64,7 +58,7 @@ function UniversalLanguageSwitcher({
   screen: 'ready' | 'alert';
 }) {
   const baseButton = 'px-6 py-2 text-lg font-bold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black';
-  
+
   const getDynamicStyles = (lang: Language) => {
     const isActive = language === lang;
     if (screen === 'alert') {
@@ -121,14 +115,14 @@ function App() {
       };
       const existingReportsJSON = localStorage.getItem('alert_reports');
       const existingReports: AlertReport[] = existingReportsJSON ? JSON.parse(existingReportsJSON) : [];
-      
+
       const updatedReports = [newReport, ...existingReports];
-      
+
       localStorage.setItem('alert_reports', JSON.stringify(updatedReports));
     } catch (error) {
-        console.error("Failed to save alert report:", error);
+      console.error("Failed to save alert report:", error);
     }
-    
+
     setScreen('ready');
   }, []);
 
@@ -152,35 +146,35 @@ function App() {
           language={language}
         />
       )}
-      
+
       {screen === 'ready' && (
-        <ReadyScreen 
+        <ReadyScreen
           language={language}
           onActivateAlert={activateAlert}
           onOpenChat={openChat}
         />
       )}
-      
+
       {screen === 'alert' && (
-        <AlertScreen 
+        <AlertScreen
           language={language}
           onDeactivateAlert={deactivateAlert}
         />
       )}
 
-      <UniversalLanguageSwitcher 
+      <UniversalLanguageSwitcher
         language={language}
         setLanguage={setLanguage}
         screen={screen}
       />
 
-      <Chatbot 
-        isOpen={isChatOpen} 
+      <Chatbot
+        isOpen={isChatOpen}
         onClose={closeChat}
         language={language}
       />
 
-      <SettingsScreen 
+      <SettingsScreen
         isOpen={isSettingsOpen}
         onClose={closeSettings}
         language={language}
