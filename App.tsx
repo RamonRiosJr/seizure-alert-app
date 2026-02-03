@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReadyScreen from './components/ReadyScreen';
 import AlertScreen from './components/AlertScreen';
 import Chatbot from './components/Chatbot';
@@ -7,27 +7,38 @@ import ReportsScreen from './components/ReportsScreen';
 import type { Language, AlertReport } from './types';
 import { useTheme } from './hooks/useTheme';
 import { translations } from './constants';
-import { Settings, ClipboardList } from 'lucide-react';
+import { Settings, ClipboardList, AlertTriangle } from 'lucide-react';
+import DisclaimerModal from './components/DisclaimerModal';
 
 // Controls that only appear on the Ready Screen
 function TopRightControls({
   theme,
   toggleTheme,
   onOpenSettings,
-  onOpenReports,
-  language
+  onOpenSettings: () => void,
+    onOpenReports: () => void,
+      onOpenDisclaimer: () => void,
+        language: Language
 }: {
   theme: 'light' | 'dark',
-  toggleTheme: () => void,
-  onOpenSettings: () => void,
-  onOpenReports: () => void,
-  language: Language
+    toggleTheme: () => void,
+      onOpenSettings: () => void,
+        onOpenReports: () => void,
+          onOpenDisclaimer: () => void,
+            language: Language
 }) {
   const t = translations[language];
   const buttonClasses = 'p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600';
 
   return (
     <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+      <button
+        onClick={onOpenDisclaimer}
+        className="p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/50"
+        aria-label="Medical Disclaimer"
+      >
+        <AlertTriangle className="w-6 h-6" />
+      </button>
 
       <button
         onClick={onOpenSettings}
@@ -115,14 +126,67 @@ function App() {
     setScreen('ready');
   }, []);
 
-  const openChat = useCallback(() => setIsChatOpen(true), []);
-  const closeChat = useCallback(() => setIsChatOpen(false), []);
+  // Handle back button for modals
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      // If any modal is open, close it and stay on page (prevent exit)
+      if (isChatOpen || isSettingsOpen || isReportsOpen) {
+        setIsChatOpen(false);
+        setIsSettingsOpen(false);
+        setIsReportsOpen(false);
+      }
+    };
 
-  const openSettings = useCallback(() => setIsSettingsOpen(true), []);
-  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isChatOpen, isSettingsOpen, isReportsOpen]);
 
-  const openReports = useCallback(() => setIsReportsOpen(true), []);
-  const closeReports = useCallback(() => setIsReportsOpen(false), []);
+  const openChat = useCallback(() => {
+    window.history.pushState({ modal: 'chat' }, '');
+    setIsChatOpen(true);
+  }, []);
+
+  const closeChat = useCallback(() => {
+    if (isChatOpen) {
+      // Check if looking at state created by us vs generic back
+      if (window.history.state?.modal === 'chat') {
+        window.history.back();
+      } else {
+        setIsChatOpen(false);
+      }
+    }
+  }, [isChatOpen]);
+
+  // Apply similar logic to other modals for consistency
+  const openSettings = useCallback(() => {
+    window.history.pushState({ modal: 'settings' }, '');
+    setIsSettingsOpen(true);
+  }, []);
+
+  const closeSettings = useCallback(() => {
+    if (isSettingsOpen) {
+      if (window.history.state?.modal === 'settings') {
+        window.history.back();
+      } else {
+        setIsSettingsOpen(false);
+      }
+    }
+  }, [isSettingsOpen]);
+
+  const openReports = useCallback(() => {
+    window.history.pushState({ modal: 'reports' }, '');
+    setIsReportsOpen(true);
+  }, []);
+
+  const closeReports = useCallback(() => {
+    if (isReportsOpen) {
+      if (window.history.state?.modal === 'reports') {
+        window.history.back();
+      } else {
+        setIsReportsOpen(false);
+      }
+    }
+  }, [isReportsOpen]);
 
   return (
     <div className="w-screen h-screen overflow-hidden">
@@ -155,7 +219,7 @@ function App() {
         language={language}
         setLanguage={setLanguage}
         screen={screen}
-        isVisible={!isSettingsOpen && !isReportsOpen}
+        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
       />
 
       <Chatbot
@@ -174,6 +238,11 @@ function App() {
         isOpen={isReportsOpen}
         onClose={closeReports}
         language={language}
+      />
+
+      <DisclaimerModal
+        isOpen={isDisclaimerOpen}
+        onClose={closeDisclaimer}
       />
     </div>
   );
