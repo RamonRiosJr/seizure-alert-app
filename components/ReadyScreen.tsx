@@ -31,14 +31,14 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
           {/* Chatbot Trigger - 1 o'clock position */}
           <button
             onClick={onOpenChat}
-            className="absolute top-0 right-0 transform -translate-y-2 translate-x-2 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400 z-10"
+            className="absolute top-0 right-0 transform -translate-y-2 translate-x-2 bg-blue-600 text-white p-0 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400 z-10 font-black text-lg"
             aria-label="Open AI Health Assistant"
           >
-            <MessageCircle className="w-6 h-6" />
+            AI
           </button>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 };
 
