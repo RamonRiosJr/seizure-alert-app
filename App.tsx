@@ -57,7 +57,8 @@ function TopRightControls({
   );
 }
 
-language,
+function UniversalLanguageSwitcher({
+  language,
   setLanguage,
   screen,
   isVisible = true
@@ -65,7 +66,7 @@ language,
   language: Language;
   setLanguage: (lang: Language) => void;
   screen: 'ready' | 'alert';
-  isVisible ?: boolean;
+  isVisible?: boolean;
 }) {
   if (!isVisible) return null;
 
