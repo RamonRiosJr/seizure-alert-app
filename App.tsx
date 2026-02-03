@@ -196,80 +196,79 @@ function App() {
         setIsReportsOpen(false);
       }
     }
-  }
   }, [isReportsOpen]);
 
-const openDisclaimer = useCallback(() => {
-  window.history.pushState({ modal: 'disclaimer' }, '');
-  setIsDisclaimerOpen(true);
-}, []);
+  const openDisclaimer = useCallback(() => {
+    window.history.pushState({ modal: 'disclaimer' }, '');
+    setIsDisclaimerOpen(true);
+  }, []);
 
-const closeDisclaimer = useCallback(() => {
-  if (isDisclaimerOpen) {
-    if (window.history.state?.modal === 'disclaimer') window.history.back();
-    else setIsDisclaimerOpen(false);
-  }
-}, [isDisclaimerOpen]);
+  const closeDisclaimer = useCallback(() => {
+    if (isDisclaimerOpen) {
+      if (window.history.state?.modal === 'disclaimer') window.history.back();
+      else setIsDisclaimerOpen(false);
+    }
+  }, [isDisclaimerOpen]);
 
-return (
-  <div className="w-screen h-screen overflow-hidden">
-    {screen === 'ready' && (
-      <TopRightControls
-        theme={theme}
-        toggleTheme={toggleTheme}
-        onOpenSettings={openSettings}
-        onOpenReports={openReports}
-        onOpenDisclaimer={openDisclaimer}
+  return (
+    <div className="w-screen h-screen overflow-hidden">
+      {screen === 'ready' && (
+        <TopRightControls
+          theme={theme}
+          toggleTheme={toggleTheme}
+          onOpenSettings={openSettings}
+          onOpenReports={openReports}
+          onOpenDisclaimer={openDisclaimer}
+          language={language}
+        />
+      )}
+
+      {screen === 'ready' && (
+        <ReadyScreen
+          language={language}
+          onActivateAlert={activateAlert}
+          onOpenChat={openChat}
+        />
+      )}
+
+      {screen === 'alert' && (
+        <AlertScreen
+          language={language}
+          onDeactivateAlert={deactivateAlert}
+        />
+      )}
+
+      <UniversalLanguageSwitcher
+        language={language}
+        setLanguage={setLanguage}
+        screen={screen}
+        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
+      />
+
+      <Chatbot
+        isOpen={isChatOpen}
+        onClose={closeChat}
         language={language}
       />
-    )}
 
-    {screen === 'ready' && (
-      <ReadyScreen
+      <SettingsScreen
+        isOpen={isSettingsOpen}
+        onClose={closeSettings}
         language={language}
-        onActivateAlert={activateAlert}
-        onOpenChat={openChat}
       />
-    )}
 
-    {screen === 'alert' && (
-      <AlertScreen
+      <ReportsScreen
+        isOpen={isReportsOpen}
+        onClose={closeReports}
         language={language}
-        onDeactivateAlert={deactivateAlert}
       />
-    )}
 
-    <UniversalLanguageSwitcher
-      language={language}
-      setLanguage={setLanguage}
-      screen={screen}
-      isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
-    />
-
-    <Chatbot
-      isOpen={isChatOpen}
-      onClose={closeChat}
-      language={language}
-    />
-
-    <SettingsScreen
-      isOpen={isSettingsOpen}
-      onClose={closeSettings}
-      language={language}
-    />
-
-    <ReportsScreen
-      isOpen={isReportsOpen}
-      onClose={closeReports}
-      language={language}
-    />
-
-    <DisclaimerModal
-      isOpen={isDisclaimerOpen}
-      onClose={closeDisclaimer}
-    />
-  </div>
-);
+      <DisclaimerModal
+        isOpen={isDisclaimerOpen}
+        onClose={closeDisclaimer}
+      />
+    </div>
+  );
 }
 
 export default App;
