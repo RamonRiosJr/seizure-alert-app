@@ -30,28 +30,30 @@ function TopRightControls({
   const buttonClasses = 'p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600';
 
   return (
-    <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+    <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
+      <div className="flex items-center gap-2">
+        <button
+          onClick={onOpenSettings}
+          className={buttonClasses}
+          aria-label="Open settings"
+        >
+          <Settings className="w-6 h-6" />
+        </button>
+        <button
+          onClick={onOpenReports}
+          className={buttonClasses}
+          aria-label={t.openReports}
+        >
+          <ClipboardList className="w-6 h-6" />
+        </button>
+      </div>
+
       <button
         onClick={onOpenDisclaimer}
         className="p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/50"
         aria-label="Medical Disclaimer"
       >
         <AlertTriangle className="w-6 h-6" />
-      </button>
-
-      <button
-        onClick={onOpenSettings}
-        className={buttonClasses}
-        aria-label="Open settings"
-      >
-        <Settings className="w-6 h-6" />
-      </button>
-      <button
-        onClick={onOpenReports}
-        className={buttonClasses}
-        aria-label={t.openReports}
-      >
-        <ClipboardList className="w-6 h-6" />
       </button>
     </div>
   );
