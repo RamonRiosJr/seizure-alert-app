@@ -98,6 +98,7 @@ function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isReportsOpen, setIsReportsOpen] = useState(false);
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const [theme, toggleTheme] = useTheme();
 
   const activateAlert = useCallback(() => {
@@ -148,7 +149,7 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [isChatOpen, isSettingsOpen, isReportsOpen]);
+  }, [isChatOpen, isSettingsOpen, isReportsOpen, isDisclaimerOpen]);
 
   const openChat = useCallback(() => {
     window.history.pushState({ modal: 'chat' }, '');
@@ -195,66 +196,80 @@ function App() {
         setIsReportsOpen(false);
       }
     }
+  }
   }, [isReportsOpen]);
 
-  return (
-    <div className="w-screen h-screen overflow-hidden">
-      {screen === 'ready' && (
-        <TopRightControls
-          theme={theme}
-          toggleTheme={toggleTheme}
-          onOpenSettings={openSettings}
-          onOpenReports={openReports}
-          language={language}
-        />
-      )}
+const openDisclaimer = useCallback(() => {
+  window.history.pushState({ modal: 'disclaimer' }, '');
+  setIsDisclaimerOpen(true);
+}, []);
 
-      {screen === 'ready' && (
-        <ReadyScreen
-          language={language}
-          onActivateAlert={activateAlert}
-          onOpenChat={openChat}
-        />
-      )}
+const closeDisclaimer = useCallback(() => {
+  if (isDisclaimerOpen) {
+    if (window.history.state?.modal === 'disclaimer') window.history.back();
+    else setIsDisclaimerOpen(false);
+  }
+}, [isDisclaimerOpen]);
 
-      {screen === 'alert' && (
-        <AlertScreen
-          language={language}
-          onDeactivateAlert={deactivateAlert}
-        />
-      )}
-
-      <UniversalLanguageSwitcher
-        language={language}
-        setLanguage={setLanguage}
-        screen={screen}
-        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
-      />
-
-      <Chatbot
-        isOpen={isChatOpen}
-        onClose={closeChat}
+return (
+  <div className="w-screen h-screen overflow-hidden">
+    {screen === 'ready' && (
+      <TopRightControls
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenSettings={openSettings}
+        onOpenReports={openReports}
+        onOpenDisclaimer={openDisclaimer}
         language={language}
       />
+    )}
 
-      <SettingsScreen
-        isOpen={isSettingsOpen}
-        onClose={closeSettings}
+    {screen === 'ready' && (
+      <ReadyScreen
         language={language}
+        onActivateAlert={activateAlert}
+        onOpenChat={openChat}
       />
+    )}
 
-      <ReportsScreen
-        isOpen={isReportsOpen}
-        onClose={closeReports}
+    {screen === 'alert' && (
+      <AlertScreen
         language={language}
+        onDeactivateAlert={deactivateAlert}
       />
+    )}
 
-      <DisclaimerModal
-        isOpen={isDisclaimerOpen}
-        onClose={closeDisclaimer}
-      />
-    </div>
-  );
+    <UniversalLanguageSwitcher
+      language={language}
+      setLanguage={setLanguage}
+      screen={screen}
+      isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
+    />
+
+    <Chatbot
+      isOpen={isChatOpen}
+      onClose={closeChat}
+      language={language}
+    />
+
+    <SettingsScreen
+      isOpen={isSettingsOpen}
+      onClose={closeSettings}
+      language={language}
+    />
+
+    <ReportsScreen
+      isOpen={isReportsOpen}
+      onClose={closeReports}
+      language={language}
+    />
+
+    <DisclaimerModal
+      isOpen={isDisclaimerOpen}
+      onClose={closeDisclaimer}
+    />
+  </div>
+);
 }
 
 export default App;
