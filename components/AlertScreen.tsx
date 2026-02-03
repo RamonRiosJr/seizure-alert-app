@@ -208,19 +208,16 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
         </header>
 
         <main className="flex-grow flex flex-col items-center px-4 overflow-y-auto py-6">
-          <div className="flex items-stretch justify-center gap-4 flex-wrap my-4">
-            <div className="text-center bg-black bg-opacity-20 rounded-lg p-4">
-              <div className="text-lg font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</div>
-              <div className="text-7xl md:text-8xl font-mono font-bold tracking-widest">{formattedTime(timer)}</div>
+          <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
+            <div className="flex items-center gap-3 border-r border-white/20 pr-4">
+              <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</span>
+              <span className="text-4xl md:text-5xl font-mono font-bold tracking-widest">{formattedTime(timer)}</span>
             </div>
 
             {isSupported && level !== null && (
-              <div className="text-center bg-black bg-opacity-20 rounded-lg p-4 flex flex-col justify-center">
-                <div className="text-lg font-semibold opacity-80 uppercase tracking-wider">Battery</div>
-                <div className="flex items-center justify-center text-4xl md:text-5xl font-bold gap-2 mt-1">
-                  {charging ? <BatteryCharging className="w-10 h-10 md:w-12 md:h-12" /> : <Battery className="w-10 h-10 md:w-12 md:h-12" />}
-                  <span className="font-mono">{level}%</span>
-                </div>
+              <div className="flex items-center gap-2 pl-2">
+                {charging ? <BatteryCharging className="w-6 h-6 md:w-8 md:h-8" /> : <Battery className="w-6 h-6 md:w-8 md:h-8" />}
+                <span className="text-xl md:text-2xl font-mono font-bold">{level}%</span>
               </div>
             )}
           </div>

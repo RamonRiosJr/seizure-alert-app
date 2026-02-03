@@ -155,6 +155,7 @@ function App() {
         language={language}
         setLanguage={setLanguage}
         screen={screen}
+        isVisible={!isSettingsOpen && !isReportsOpen}
       />
 
       <Chatbot
