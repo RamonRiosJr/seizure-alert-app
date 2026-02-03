@@ -14,10 +14,9 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
 
   return (
     <div className="relative flex flex-col items-center justify-center h-screen w-screen bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 text-center p-4">
-      <main className="flex flex-col items-center justify-center flex-grow">
-        <img src="https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg" alt={`${t.title} Logo`} className="w-32 h-32 md:w-40 md:h-40 mb-4" />
-        <h1 className="text-5xl md:text-7xl font-bold mb-4">{t.title}</h1>
-        <p className="text-lg md:text-2xl mb-16 max-w-lg">{t.subtitle}</p>
+      <main className="flex flex-col items-center justify-center flex-grow min-h-0">
+        <img src="seizure-alert-logo.svg" alt={`${t.title} Logo`} className="w-56 h-56 md:w-72 md:h-72 mb-6" />
+        <p className="text-lg md:text-2xl mb-8 max-w-lg font-medium">{t.subtitle}</p>
         <button
           onClick={onActivateAlert}
           className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 bg-red-600 text-white rounded-full animate-breathe transition-transform duration-150 ease-in-out active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-400"
