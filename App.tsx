@@ -198,6 +198,7 @@ function App() {
     }
   }, [isReportsOpen]);
 
+  // Missing handlers
   const openDisclaimer = useCallback(() => {
     window.history.pushState({ modal: 'disclaimer' }, '');
     setIsDisclaimerOpen(true);
@@ -209,6 +210,8 @@ function App() {
       else setIsDisclaimerOpen(false);
     }
   }, [isDisclaimerOpen]);
+
+
 
   return (
     <div className="w-screen h-screen overflow-hidden">
