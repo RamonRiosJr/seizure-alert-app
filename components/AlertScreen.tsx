@@ -80,6 +80,9 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   const countdownIntervalRef = useRef<number | null>(null);
   const callTimeoutRef = useRef<number | null>(null);
 
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
   useEffect(() => {
     const STATUS_MESSAGE_KEY = `seizure_alert_status_message_${language}`;
     const savedMessage = localStorage.getItem(STATUS_MESSAGE_KEY);
@@ -227,14 +230,50 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               {isAutoCallPending && (
                 <div>
                   <p className="text-lg">
-                    Automatically calling {primaryContact.name} ({primaryContact.relation}) in <span className="font-bold text-xl">{autoCallCountdown}s</span>...
+                    Automatically calling {primaryContact.name} ({primaryContact.relation}) in <span className="font-bold text-xl">{autoCallCountdown}s</span>
                   </p>
-                  <button
-                    onClick={cancelAutoCall}
-                    className="mt-2 bg-white/20 px-4 py-1 rounded-md hover:bg-white/30 text-sm font-semibold"
-                  >
-                    Cancel
-                  </button>
+
+                  {/* Slide to Cancel UI */}
+                  <div className="relative w-full max-w-xs h-14 bg-gray-700 rounded-full mt-4 overflow-hidden select-none mx-auto touch-none">
+                    <div className="absolute inset-0 flex items-center justify-center text-white font-bold pointer-events-none uppercase tracking-wider opacity-50 text-sm">
+                      Slide to Cancel
+                    </div>
+                    <div
+                      className="absolute left-1 top-1 bottom-1 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing"
+                      style={{ transform: `translateX(${dragX}px)` }}
+                      onPointerDown={(e) => {
+                        (e.target as HTMLElement).setPointerCapture(e.pointerId);
+                        setIsDragging(true);
+                      }}
+                      onPointerMove={(e) => {
+                        if (isDragging) {
+                          const containerWidth = (e.currentTarget.parentElement as HTMLElement).offsetWidth;
+                          const maxDrag = containerWidth - 56; // width - padding - button width
+                          let newX = e.clientX - (e.currentTarget.parentElement as HTMLElement).getBoundingClientRect().left - 24; // center offset
+                          newX = Math.max(0, Math.min(newX, maxDrag));
+                          setDragX(newX);
+                          if (newX >= maxDrag * 0.9) {
+                            cancelAutoCall();
+                            setIsDragging(false);
+                            setDragX(0);
+                          }
+                        }
+                      }}
+                      onPointerUp={(e) => {
+                        setIsDragging(false);
+                        setDragX(0);
+                        (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+                      }}
+                      onPointerLeave={(e) => {
+                        if (isDragging) {
+                          setIsDragging(false);
+                          setDragX(0);
+                        }
+                      }}
+                    >
+                      <X className="w-6 h-6 text-red-600" />
+                    </div>
+                  </div>
                 </div>
               )}
               {wasCallCancelled && (

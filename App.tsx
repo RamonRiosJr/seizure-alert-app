@@ -47,7 +47,6 @@ function TopRightControls({
   );
 }
 
-// Universal, centrally-located language switcher
 function UniversalLanguageSwitcher({
   language,
   setLanguage,
@@ -57,36 +56,26 @@ function UniversalLanguageSwitcher({
   setLanguage: (lang: Language) => void;
   screen: 'ready' | 'alert';
 }) {
-  const baseButton = 'px-3 py-1 text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black';
+  const targetLang = language === 'en' ? 'es' : 'en';
+  const label = language === 'en' ? 'Español' : 'English';
 
-  const getDynamicStyles = (lang: Language) => {
-    const isActive = language === lang;
+  // Dynamic styles based on screen context
+  const getButtonStyles = () => {
     if (screen === 'alert') {
-      return isActive
-        ? 'bg-white text-red-600 scale-105 shadow-lg focus:ring-white'
-        : 'bg-transparent text-white hover:bg-white/20 focus:ring-white';
+      return 'bg-white/20 text-white hover:bg-white/30 border-white/30 shadow-[0_0_15px_rgba(0,0,0,0.3)]';
     }
-    // Ready screen styles
-    return isActive
-      ? 'bg-blue-600 text-white scale-105 shadow-lg focus:ring-blue-400'
-      : 'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 focus:ring-blue-400';
+    // Ready screen (Light/Dark mode adaptive)
+    return 'bg-white/80 dark:bg-black/40 text-gray-800 dark:text-white border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-black/60 shadow-lg backdrop-blur-md';
   };
 
   return (
-    <div className="fixed top-4 left-4 z-[60] flex items-center space-x-2 p-2 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(255,255,255,0.2)] bg-black/20 backdrop-blur-sm border border-white/10">
+    <div className="fixed top-4 left-4 z-[60]">
       <button
-        onClick={() => setLanguage('en')}
-        className={`${baseButton} ${getDynamicStyles('en')}`}
-        aria-pressed={language === 'en'}
+        onClick={() => setLanguage(targetLang)}
+        className={`px-4 py-2 text-sm font-bold rounded-full border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-black ${getButtonStyles()}`}
+        aria-label={`Switch to ${label}`}
       >
-        English
-      </button>
-      <button
-        onClick={() => setLanguage('es')}
-        className={`${baseButton} ${getDynamicStyles('es')}`}
-        aria-pressed={language === 'es'}
-      >
-        Español
+        {label}
       </button>
     </div>
   );
