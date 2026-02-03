@@ -178,105 +178,105 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                 </button>
               )}
             </div>
+
+
           </section>
 
-        </section>
-
-        {/* Custom Alert Message Section */}
-        < section >
-          <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <Pencil className="w-6 h-6" />
-            Custom Alert Message
-          </h3>
-          <div className="space-y-3">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              This message will be displayed on the screen during an emergency.
-            </p>
-            <AlertMessageEditor language={language} t={t} />
-          </div>
-        </section>
-
-        {/* API Key Section */}
-        <section>
-          <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <Key className="w-6 h-6" />
-            {t.settingsAPIKey}
-          </h3>
-          <div className="space-y-3">
-            <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {t.settingsAPIKeyDesc}
-              <br />
-              <a
-                href="https://aistudio.google.com/app/apikey"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors inline-flex items-center gap-1 mt-1"
-              >
-                Get your free API Key from Google AI Studio <ExternalLink className="w-3 h-3" />
-              </a>
-            </p>
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-md border border-yellow-200 dark:border-yellow-800/50 text-sm text-yellow-800 dark:text-yellow-200 flex gap-2 items-start">
-              <ShieldAlert className="w-4 h-4 mt-0.5 flex-shrink-0" />
-              <span>Your API key is stored <strong>locally</strong> on your device. It is used directly to communicate with Google's servers and is never shared with us.</span>
+          {/* Custom Alert Message Section */}
+          < section >
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Pencil className="w-6 h-6" />
+              Custom Alert Message
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                This message will be displayed on the screen during an emergency.
+              </p>
+              <AlertMessageEditor language={language} t={t} />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-              <button onClick={handleSaveApiKey} className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2">
-                <Save className="w-5 h-5" />
-                {t.settingsSave}
+          </section>
+
+          {/* API Key Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Key className="w-6 h-6" />
+              {t.settingsAPIKey}
+            </h3>
+            <div className="space-y-3">
+              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {t.settingsAPIKeyDesc}
+                <br />
+                <a
+                  href="https://aistudio.google.com/app/apikey"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors inline-flex items-center gap-1 mt-1"
+                >
+                  Get your free API Key from Google AI Studio <ExternalLink className="w-3 h-3" />
+                </a>
+              </p>
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-md border border-yellow-200 dark:border-yellow-800/50 text-sm text-yellow-800 dark:text-yellow-200 flex gap-2 items-start">
+                <ShieldAlert className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>Your API key is stored <strong>locally</strong> on your device. It is used directly to communicate with Google's servers and is never shared with us.</span>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                <button onClick={handleSaveApiKey} className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2">
+                  <Save className="w-5 h-5" />
+                  {t.settingsSave}
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* NFC Activation Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Smartphone className="w-6 h-6" />
+              NFC Activation (Tap-to-Alert)
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Program an NFC tag to instantly launch this app in Emergency Mode when tapped.
+              </p>
+
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-2">How to use:</h4>
+                <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                  <li>Tap the button below.</li>
+                  <li>When prompted, hold your phone near a writable NFC tag.</li>
+                  <li>The tag will be programmed with the "Emergency Link".</li>
+                </ol>
+              </div>
+
+              <button
+                onClick={async () => {
+                  try {
+                    if (!('NDEFReader' in window)) {
+                      alert('NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' + window.location.href + '?emergency=true');
+                      return;
+                    }
+
+                    // @ts-ignore - Web NFC API is experimental
+                    const ndef = new window.NDEFReader();
+                    await ndef.write({
+                      records: [{ recordType: "url", data: window.location.origin + window.location.pathname + "?emergency=true" }]
+                    });
+                    alert("✅ Success! Tag programmed. Tap it to test.");
+                  } catch (error) {
+                    console.error(error);
+                    alert("❌ Write failed. Make sure NFC is on and the tag is unlocked.");
+                  }
+                }}
+                className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+              >
+                Start NFC Programming
               </button>
             </div>
-          </div>
-        </section>
-
-        {/* NFC Activation Section */}
-        <section>
-          <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-            <Smartphone className="w-6 h-6" />
-            NFC Activation (Tap-to-Alert)
-          </h3>
-          <div className="space-y-3">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Program an NFC tag to instantly launch this app in Emergency Mode when tapped.
-            </p>
-
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
-              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-2">How to use:</h4>
-              <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-300">
-                <li>Tap the button below.</li>
-                <li>When prompted, hold your phone near a writable NFC tag.</li>
-                <li>The tag will be programmed with the "Emergency Link".</li>
-              </ol>
-            </div>
-
-            <button
-              onClick={async () => {
-                try {
-                  if (!('NDEFReader' in window)) {
-                    alert('NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' + window.location.href + '?emergency=true');
-                    return;
-                  }
-
-                  // @ts-ignore - Web NFC API is experimental
-                  const ndef = new window.NDEFReader();
-                  await ndef.write({
-                    records: [{ recordType: "url", data: window.location.origin + window.location.pathname + "?emergency=true" }]
-                  });
-                  alert("✅ Success! Tag programmed. Tap it to test.");
-                } catch (error) {
-                  console.error(error);
-                  alert("❌ Write failed. Make sure NFC is on and the tag is unlocked.");
-                }
-              }}
-              className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
-            >
-              Start NFC Programming
-            </button>
-          </div>
-        </section>
-      </main>
-    </div>
+          </section>
+        </main>
+      </div>
     </div >
   );
 };
