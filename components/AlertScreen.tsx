@@ -70,8 +70,6 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   const { level, charging, isSupported } = useBatteryStatus();
 
   const [statusMessage, setStatusMessage] = useState(t.alertStatus);
-  const [isEditingStatus, setIsEditingStatus] = useState(false);
-  const [statusInput, setStatusInput] = useState('');
 
   const primaryContact = contacts.length > 0 ? contacts[0] : null;
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
@@ -118,21 +116,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
     }
   }, [isAutoCallPending, primaryContact]);
 
-  const handleSaveStatus = () => {
-    const STATUS_MESSAGE_KEY = `seizure_alert_status_message_${language}`;
-    localStorage.setItem(STATUS_MESSAGE_KEY, statusInput);
-    setStatusMessage(statusInput);
-    setIsEditingStatus(false);
-  };
 
-  const handleStartEditing = () => {
-    setStatusInput(statusMessage);
-    setIsEditingStatus(true);
-  };
-
-  const handleCancelEditing = () => {
-    setIsEditingStatus(false);
-  };
 
   const cancelAutoCall = () => {
     setIsAutoCallPending(false);
@@ -181,43 +165,12 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
           </div>
           <TriangleAlert className="w-16 h-16 mx-auto mb-2" />
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{t.alertTitle}</h1>
-          <div className="flex items-center justify-center flex-wrap gap-2 mt-2 px-4 min-h-[56px]">
-            {isEditingStatus ? (
-              <div className="flex items-center gap-2 w-full max-w-md mx-auto">
-                <input
-                  type="text"
-                  value={statusInput}
-                  onChange={(e) => setStatusInput(e.target.value)}
-                  className="flex-grow bg-black/10 text-current text-xl md:text-2xl font-medium text-center rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-current"
-                  aria-label="Edit status message input"
-                />
-                <button
-                  onClick={handleSaveStatus}
-                  className="p-2 rounded-full bg-green-500/50 hover:bg-green-500/80"
-                  aria-label="Save status message"
-                >
-                  <Check className="w-6 h-6 text-white" />
-                </button>
-                <button
-                  onClick={handleCancelEditing}
-                  className="p-2 rounded-full bg-red-500/50 hover:bg-red-500/80"
-                  aria-label="Cancel editing status message"
-                >
-                  <X className="w-6 h-6 text-white" />
-                </button>
-              </div>
-            ) : (
-              <>
-                <p className="text-xl md:text-2xl font-medium text-center">{statusMessage}</p>
-                <button
-                  onClick={handleStartEditing}
-                  className="flex-shrink-0 p-2 rounded-full bg-black/20 hover:bg-black/40"
-                  aria-label="Edit status message"
-                >
-                  <Pencil className="w-5 h-5" />
-                </button>
-              </>
-            )}
+
+          {/* Status Message - Responsive, no editing */}
+          <div className="w-full max-w-4xl mx-auto mt-4 px-4">
+            <p className="text-xl md:text-3xl font-medium text-center leading-relaxed break-words">
+              {statusMessage || t.alertStatus}
+            </p>
           </div>
         </header>
 

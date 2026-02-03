@@ -11,6 +11,39 @@ interface SettingsScreenProps {
   language: Language;
 }
 
+// Sub-component for message editing to handle its own state/effect logic cleanly
+const AlertMessageEditor = ({ language, t }: { language: Language, t: any }) => {
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
+    setMessage(saved || t.alertStatus);
+  }, [language, t.alertStatus]);
+
+  const handleSave = () => {
+    localStorage.setItem(`seizure_alert_status_message_${language}`, message);
+    alert('Message saved!');
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none"
+        placeholder="Enter custom alert message..."
+      />
+      <button
+        onClick={handleSave}
+        className="self-end px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2"
+      >
+        <Save className="w-4 h-4" />
+        {t.settingsSave}
+      </button>
+    </div>
+  );
+};
+
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, language }) => {
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
@@ -122,53 +155,64 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                     </div>
                   ) : (
                     <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-bold text-gray-800 dark:text-gray-200">{contact.name}</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{contact.relation} - {contact.phone}</p>
+                      <div key={contact.id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                        <div>
+                          <p className="font-semibold text-gray-800 dark:text-gray-200">{contact.name} ({contact.relation})</p>
+                          <p className="text-gray-600 dark:text-gray-400">{contact.phone}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={() => {
+                            setNewContact({ name: contact.name, relation: contact.relation, phone: contact.phone });
+                            setIsAddingContact(true);
+                            setEditingContactId(contact.id);
+                          }} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full">
+                            <Pencil className="w-5 h-5" />
+                          </button>
+                          <button onClick={() => handleDeleteContact(contact.id!)} className="p-2 text-red-600 hover:bg-red-100 rounded-full">
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <button onClick={() => handleStartEditing(contact)} className="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!!editingContactId || isAddingContact} aria-label="Edit contact">
-                          <Pencil className="w-5 h-5" />
-                        </button>
-                        <button onClick={() => handleDeleteContact(contact.id)} className="text-red-500 hover:text-red-700 dark:hover:text-red-400 p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!!editingContactId} aria-label="Delete contact">
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
               ))}
-              {contacts.length === 0 && !editingContactId && !isAddingContact && (
-                <p className="text-gray-500 dark:text-gray-400 text-center py-4">{`No contacts added yet.`}</p>
-              )}
-            </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              {isAddingContact ? (
-                <form onSubmit={handleAddContact} className="space-y-3">
-                  <h4 className="font-semibold text-gray-700 dark:text-gray-200">{t.settingsAddContact}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" placeholder={t.settingsContactName} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
-                    <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                    <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
-                  </div>
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t.settingsSave}</button>
-                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t.settingsCancel}</button>
-                  </div>
-                </form>
-              ) : (
-                <button
-                  onClick={() => setIsAddingContact(true)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
-                  disabled={!!editingContactId}
-                >
-                  <UserPlus className="w-5 h-5" />
-                  <span>{t.settingsAddContact}</span>
-                </button>
-              )}
-            </div>
+                      {isAddingContact ? (
+                        <form onSubmit={handleAddContact} className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <input type="text" placeholder={t.settingsContactName} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                            <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                            <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                            <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t.settingsSave}</button>
+                            <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t.settingsCancel}</button>
+                          </div>
+                        </form>
+                      ) : (
+                        <button
+                          onClick={() => setIsAddingContact(true)}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                          disabled={!!editingContactId}
+                        >
+                          <UserPlus className="w-5 h-5" />
+                          <span>{t.settingsAddContact}</span>
+                        </button>
+                      )}
+                    </div>
 
+          </section>
+
+          {/* Custom Alert Message Section */ }
+                < section >
+             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Pencil className="w-6 h-6" />
+              Custom Alert Message
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                This message will be displayed on the screen during an emergency.
+              </p>
+              <AlertMessageEditor language={language} t={t} />
+            </div>
           </section>
 
           {/* API Key Section */}
