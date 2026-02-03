@@ -98,6 +98,7 @@ function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isReportsOpen, setIsReportsOpen] = useState(false);
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const [theme, toggleTheme] = useTheme();
 
   const activateAlert = useCallback(() => {
@@ -148,7 +149,7 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [isChatOpen, isSettingsOpen, isReportsOpen]);
+  }, [isChatOpen, isSettingsOpen, isReportsOpen, isDisclaimerOpen]);
 
   const openChat = useCallback(() => {
     window.history.pushState({ modal: 'chat' }, '');
@@ -197,6 +198,21 @@ function App() {
     }
   }, [isReportsOpen]);
 
+  // Missing handlers
+  const openDisclaimer = useCallback(() => {
+    window.history.pushState({ modal: 'disclaimer' }, '');
+    setIsDisclaimerOpen(true);
+  }, []);
+
+  const closeDisclaimer = useCallback(() => {
+    if (isDisclaimerOpen) {
+      if (window.history.state?.modal === 'disclaimer') window.history.back();
+      else setIsDisclaimerOpen(false);
+    }
+  }, [isDisclaimerOpen]);
+
+
+
   return (
     <div className="w-screen h-screen overflow-hidden">
       {screen === 'ready' && (
@@ -205,6 +221,7 @@ function App() {
           toggleTheme={toggleTheme}
           onOpenSettings={openSettings}
           onOpenReports={openReports}
+          onOpenDisclaimer={openDisclaimer}
           language={language}
         />
       )}
