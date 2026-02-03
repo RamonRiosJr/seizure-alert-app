@@ -60,12 +60,16 @@ function TopRightControls({
 function UniversalLanguageSwitcher({
   language,
   setLanguage,
-  screen
+  screen,
+  isVisible = true
 }: {
   language: Language;
   setLanguage: (lang: Language) => void;
   screen: 'ready' | 'alert';
+  isVisible?: boolean;
 }) {
+  if (!isVisible) return null;
+
   const targetLang = language === 'en' ? 'es' : 'en';
   const label = language === 'en' ? 'Español' : 'English';
 
