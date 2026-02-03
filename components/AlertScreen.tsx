@@ -138,25 +138,19 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
 
   return (
     <>
-      {/* Audio Permission Overlay */}
-      {!hasAudioPermission && (
-        <div
-          className="fixed inset-0 z-50 bg-red-600/90 flex flex-col items-center justify-center text-white cursor-pointer animate-pulse"
-          onClick={attemptResume}
-        >
-          <Volume2 className="w-24 h-24 mb-4" />
-          <h1 className="text-4xl font-bold text-center px-4 uppercase tracking-widest">
-            Tap to Sound Alarm
-          </h1>
-          <p className="mt-2 text-xl opacity-80">(Audio blocked by browser)</p>
-        </div>
-      )}
-
-      <div className="h-screen w-screen alert-active flex flex-col box-border">
+      <div
+        className="h-screen w-screen alert-active flex flex-col box-border cursor-pointer"
+        onClick={() => {
+          if (!hasAudioPermission) attemptResume();
+        }}
+      >
         <header className="relative text-center p-4 sm:p-6 flex-shrink-0">
           <div className="absolute top-4 right-4">
             <button
-              onClick={toggleSound}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleSound();
+              }}
               className="p-2 rounded-full bg-black/20 hover:bg-black/40"
               aria-label={isMuted ? t.sirenUnmute : t.sirenMute}
             >
