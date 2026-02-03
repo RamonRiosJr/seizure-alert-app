@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import type { Language, AlertReport } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, Pencil, Check, ClipboardList } from 'lucide-react';
+import { X, Trash2, Pencil, Check, ClipboardList, FileDown } from 'lucide-react';
+import { generateSeizureReport } from '../utils/pdfGenerator';
 
 interface ReportsScreenProps {
   isOpen: boolean;
@@ -17,6 +18,10 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
   const t = translations[language];
 
   if (!isOpen) return null;
+
+  const handleExport = () => {
+    generateSeizureReport(reports, language);
+  };
 
   const formattedTime = (totalSeconds: number) => {
     const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
@@ -58,9 +63,21 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
             <ClipboardList className="w-6 h-6" />
             {t.reportsTitle}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            {reports.length > 0 && (
+              <button
+                onClick={handleExport}
+                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors"
+                title="Export as PDF"
+              >
+                <FileDown className="w-4 h-4" />
+                <span className="hidden sm:inline">Export PDF</span>
+              </button>
+            )}
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white p-1">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </header>
 
         <main className="flex-grow p-6 overflow-y-auto">
