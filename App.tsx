@@ -15,17 +15,16 @@ function TopRightControls({
   theme,
   toggleTheme,
   onOpenSettings,
-  onOpenSettings: () => void,
-    onOpenReports: () => void,
-      onOpenDisclaimer: () => void,
-        language: Language
+  onOpenReports,
+  onOpenDisclaimer,
+  language
 }: {
   theme: 'light' | 'dark',
-    toggleTheme: () => void,
-      onOpenSettings: () => void,
-        onOpenReports: () => void,
-          onOpenDisclaimer: () => void,
-            language: Language
+  toggleTheme: () => void,
+  onOpenSettings: () => void,
+  onOpenReports: () => void,
+  onOpenDisclaimer: () => void,
+  language: Language
 }) {
   const t = translations[language];
   const buttonClasses = 'p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600';
