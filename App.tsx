@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReadyScreen from './components/ReadyScreen';
 import AlertScreen from './components/AlertScreen';
 import Chatbot from './components/Chatbot';
@@ -115,14 +115,67 @@ function App() {
     setScreen('ready');
   }, []);
 
-  const openChat = useCallback(() => setIsChatOpen(true), []);
-  const closeChat = useCallback(() => setIsChatOpen(false), []);
+  // Handle back button for modals
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      // If any modal is open, close it and stay on page (prevent exit)
+      if (isChatOpen || isSettingsOpen || isReportsOpen) {
+        setIsChatOpen(false);
+        setIsSettingsOpen(false);
+        setIsReportsOpen(false);
+      }
+    };
 
-  const openSettings = useCallback(() => setIsSettingsOpen(true), []);
-  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isChatOpen, isSettingsOpen, isReportsOpen]);
 
-  const openReports = useCallback(() => setIsReportsOpen(true), []);
-  const closeReports = useCallback(() => setIsReportsOpen(false), []);
+  const openChat = useCallback(() => {
+    window.history.pushState({ modal: 'chat' }, '');
+    setIsChatOpen(true);
+  }, []);
+
+  const closeChat = useCallback(() => {
+    if (isChatOpen) {
+      // Check if looking at state created by us vs generic back
+      if (window.history.state?.modal === 'chat') {
+        window.history.back();
+      } else {
+        setIsChatOpen(false);
+      }
+    }
+  }, [isChatOpen]);
+
+  // Apply similar logic to other modals for consistency
+  const openSettings = useCallback(() => {
+    window.history.pushState({ modal: 'settings' }, '');
+    setIsSettingsOpen(true);
+  }, []);
+
+  const closeSettings = useCallback(() => {
+    if (isSettingsOpen) {
+      if (window.history.state?.modal === 'settings') {
+        window.history.back();
+      } else {
+        setIsSettingsOpen(false);
+      }
+    }
+  }, [isSettingsOpen]);
+
+  const openReports = useCallback(() => {
+    window.history.pushState({ modal: 'reports' }, '');
+    setIsReportsOpen(true);
+  }, []);
+
+  const closeReports = useCallback(() => {
+    if (isReportsOpen) {
+      if (window.history.state?.modal === 'reports') {
+        window.history.back();
+      } else {
+        setIsReportsOpen(false);
+      }
+    }
+  }, [isReportsOpen]);
 
   return (
     <div className="w-screen h-screen overflow-hidden">

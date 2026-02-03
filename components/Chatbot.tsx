@@ -64,11 +64,24 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose, language }) => {
   const isApiKeyMissing = !apiKey;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 transition-opacity duration-300">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col">
-        <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t.chatTitle}</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 transition-opacity duration-300 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform transition-all"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-lg">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t.chatTitle}</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
+            aria-label="Close Chat"
+          >
             <X className="w-6 h-6" />
           </button>
         </header>
