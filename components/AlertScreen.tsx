@@ -62,7 +62,7 @@ interface AlertScreenProps {
 }
 
 const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }) => {
-  const { isMuted, toggleSound } = useEmergencyAlert();
+  const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert();
   const { speak, isSpeaking } = useTTS();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const t = translations[language];
@@ -154,6 +154,20 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
 
   return (
     <>
+      {/* Audio Permission Overlay */}
+      {!hasAudioPermission && (
+        <div
+          className="fixed inset-0 z-50 bg-red-600/90 flex flex-col items-center justify-center text-white cursor-pointer animate-pulse"
+          onClick={attemptResume}
+        >
+          <Volume2 className="w-24 h-24 mb-4" />
+          <h1 className="text-4xl font-bold text-center px-4 uppercase tracking-widest">
+            Tap to Sound Alarm
+          </h1>
+          <p className="mt-2 text-xl opacity-80">(Audio blocked by browser)</p>
+        </div>
+      )}
+
       <div className="h-screen w-screen alert-active flex flex-col box-border">
         <header className="relative text-center p-4 sm:p-6 flex-shrink-0">
           <div className="absolute top-4 right-4">

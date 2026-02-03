@@ -6,6 +6,18 @@ export const useEmergencyAlert = () => {
   const gainRef = useRef<GainNode | null>(null);
   const intervalRefs = useRef<number[]>([]);
   const [isMuted, setIsMuted] = useState(false);
+  const [hasAudioPermission, setHasAudioPermission] = useState(true);
+
+  const attemptResume = useCallback(() => {
+    if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+      audioContextRef.current.resume().then(() => {
+        setHasAudioPermission(true);
+      }).catch(err => {
+        console.warn("Audio resume failed (autoplay policy):", err);
+        setHasAudioPermission(false);
+      });
+    }
+  }, []);
 
   const stopAlert = useCallback(() => {
     intervalRefs.current.forEach(clearInterval);
@@ -21,7 +33,7 @@ export const useEmergencyAlert = () => {
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
       audioContextRef.current.close().catch(e => console.error("Error closing AudioContext", e));
     }
-    
+
     oscillatorRef.current = null;
     gainRef.current = null;
     audioContextRef.current = null;
@@ -44,24 +56,35 @@ export const useEmergencyAlert = () => {
     try {
       const context = new (window.AudioContext || (window as any).webkitAudioContext)();
       audioContextRef.current = context;
-      
+
+      // Check for autoplay policy
+      if (context.state === 'suspended') {
+        context.resume().then(() => {
+          setHasAudioPermission(true);
+        }).catch(() => {
+          setHasAudioPermission(false);
+        });
+      } else {
+        setHasAudioPermission(true);
+      }
+
       const oscillator = context.createOscillator();
       const gain = context.createGain();
-      
+
       gainRef.current = gain;
-      
+
       oscillator.type = 'sine';
       oscillator.connect(gain);
       gain.connect(context.destination);
       gain.gain.setValueAtTime(isMuted ? 0 : 1, context.currentTime);
-      
+
       oscillator.start(0);
-      
+
       let freq = 800;
       const sirenInterval = window.setInterval(() => {
         if (context.state === 'running') {
-            freq = freq === 800 ? 1000 : 800;
-            oscillator.frequency.setValueAtTime(freq, context.currentTime);
+          freq = freq === 800 ? 1000 : 800;
+          oscillator.frequency.setValueAtTime(freq, context.currentTime);
         }
       }, 500);
 
@@ -76,21 +99,21 @@ export const useEmergencyAlert = () => {
 
   const toggleSound = useCallback(() => {
     if (gainRef.current && audioContextRef.current) {
-        if(audioContextRef.current.state === 'suspended') {
-            audioContextRef.current.resume();
-        }
-        const newMutedState = !isMuted;
-        setIsMuted(newMutedState);
-        gainRef.current.gain.exponentialRampToValueAtTime(
-            newMutedState ? 0.0001 : 1.0,
-            audioContextRef.current.currentTime + 0.1
-        );
+      if (audioContextRef.current.state === 'suspended') {
+        audioContextRef.current.resume();
+      }
+      const newMutedState = !isMuted;
+      setIsMuted(newMutedState);
+      gainRef.current.gain.exponentialRampToValueAtTime(
+        newMutedState ? 0.0001 : 1.0,
+        audioContextRef.current.currentTime + 0.1
+      );
     }
   }, [isMuted]);
 
   useEffect(() => {
     startAlert();
-    
+
     document.documentElement.requestFullscreen().catch(err => {
       console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
     });
@@ -103,5 +126,12 @@ export const useEmergencyAlert = () => {
     };
   }, [startAlert, stopAlert]);
 
-  return { isMuted, toggleSound };
+  return {
+    isMuted,
+    toggleSound: () => setIsMuted(prev => !prev),
+    stopAlert,
+    startAlert,
+    hasAudioPermission,
+    attemptResume
+  };
 };
