@@ -204,6 +204,52 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
               </div>
             </div>
           </section>
+
+          {/* NFC Activation Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Smartphone className="w-6 h-6" />
+              NFC Activation (Tap-to-Alert)
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Program an NFC tag to instantly launch this app in Emergency Mode when tapped.
+              </p>
+
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-2">How to use:</h4>
+                <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                  <li>Tap the button below.</li>
+                  <li>When prompted, hold your phone near a writable NFC tag.</li>
+                  <li>The tag will be programmed with the "Emergency Link".</li>
+                </ol>
+              </div>
+
+              <button
+                onClick={async () => {
+                  try {
+                    if (!('NDEFReader' in window)) {
+                      alert('NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' + window.location.href + '?emergency=true');
+                      return;
+                    }
+
+                    // @ts-ignore - Web NFC API is experimental
+                    const ndef = new window.NDEFReader();
+                    await ndef.write({
+                      records: [{ recordType: "url", data: window.location.origin + window.location.pathname + "?emergency=true" }]
+                    });
+                    alert("✅ Success! Tag programmed. Tap it to test.");
+                  } catch (error) {
+                    console.error(error);
+                    alert("❌ Write failed. Make sure NFC is on and the tag is unlocked.");
+                  }
+                }}
+                className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+              >
+                Start NFC Programming
+              </button>
+            </div>
+          </section>
         </main>
       </div>
     </div>
