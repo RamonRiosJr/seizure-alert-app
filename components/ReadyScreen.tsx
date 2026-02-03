@@ -13,7 +13,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
   const t = translations[language];
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-screen w-screen bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 text-center p-4">
+    <div className="relative flex flex-col items-center justify-center h-[100dvh] w-screen bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 text-center p-4">
       <main className="flex flex-col items-center justify-center flex-grow min-h-0 -mt-16">
         <img src="seizure-alert-logo.svg" alt={`${t.title} Logo`} className="w-56 h-56 md:w-72 md:h-72 mb-6" />
         <p className="text-lg md:text-2xl mb-8 max-w-lg font-medium">{t.subtitle}</p>
@@ -29,7 +29,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
 
       <button
         onClick={onOpenChat}
-        className="absolute bottom-[20%] right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400"
+        className="absolute bottom-[18%] right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400"
         aria-label="Open AI Health Assistant"
       >
         <MessageCircle className="w-8 h-8" />
