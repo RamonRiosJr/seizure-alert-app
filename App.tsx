@@ -126,6 +126,16 @@ function App() {
     setScreen('ready');
   }, []);
 
+  // Check for emergency URL trigger (NFC/QR code)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('emergency') === 'true') {
+      activateAlert();
+      // Optional: Clean URL so reload doesn't re-trigger? 
+      // window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [activateAlert]);
+
   // Handle back button for modals
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {

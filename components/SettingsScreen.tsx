@@ -1,8 +1,9 @@
+```
 import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check } from 'lucide-react';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone } from 'lucide-react';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -106,9 +107,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
                     <div className="space-y-2">
                       {editError && <p className="text-red-500 text-sm text-center">{editError}</p>}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <input type="text" placeholder={t.settingsContactName} value={editingContactData?.name ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, name: e.target.value })); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.name.trim() ? 'border-red-500' : ''}`} required />
+                        <input type="text" placeholder={t.settingsContactName} value={editingContactData?.name ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, name: e.target.value })); setEditError(null); }} className={`w - full px - 3 py - 2 border rounded - md dark: bg - gray - 600 dark: border - gray - 500 ${ editError && !editingContactData?.name.trim() ? 'border-red-500' : '' } `} required />
                         <input type="text" placeholder={t.settingsContactRelation} value={editingContactData?.relation ?? ''} onChange={e => setEditingContactData(d => ({ ...d!, relation: e.target.value }))} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                        <input type="tel" placeholder={t.settingsContactPhone} value={editingContactData?.phone ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, phone: e.target.value })); setEditError(null); }} className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 ${editError && !editingContactData?.phone.trim() ? 'border-red-500' : ''}`} required />
+                        <input type="tel" placeholder={t.settingsContactPhone} value={editingContactData?.phone ?? ''} onChange={e => { setEditingContactData(d => ({ ...d!, phone: e.target.value })); setEditError(null); }} className={`w - full px - 3 py - 2 border rounded - md dark: bg - gray - 600 dark: border - gray - 500 ${ editError && !editingContactData?.phone.trim() ? 'border-red-500' : '' } `} required />
                       </div>
                       <div className="flex justify-end items-center gap-2">
                         <button onClick={handleCancelEditing} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600" aria-label="Cancel edit">
