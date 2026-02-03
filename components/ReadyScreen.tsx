@@ -29,7 +29,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
 
       <button
         onClick={onOpenChat}
-        className="absolute bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400"
+        className="absolute bottom-[20%] right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400"
         aria-label="Open AI Health Assistant"
       >
         <MessageCircle className="w-8 h-8" />

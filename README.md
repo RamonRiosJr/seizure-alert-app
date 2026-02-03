@@ -1,34 +1,58 @@
-# Seizure Alert App  seizure_alert
+# Seizure Alert App 🚨
 
 ![Seizure Alert App Logo](https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg)
 
-**A PWA emergency tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
+**A life-saving PWA tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
 
-# https://ramonriosjr.github.io/seizure-alert-app/
+🌐 **Live App:** [https://ramonriosjr.github.io/seizure-alert-app/](https://ramonriosjr.github.io/seizure-alert-app/)
+
 ---
 
-## Seizure Alert App Screenshot
-<img width="1121" height="1026" alt="image" src="https://github.com/user-attachments/assets/84cf38d3-f8dd-4481-9310-68396cabd78c" />
-<img width="1120" height="1017" alt="image" src="https://github.com/user-attachments/assets/e45821b6-b2d9-4acd-b34e-b82059041c7d" />
-<img width="1122" height="1030" alt="image" src="https://github.com/user-attachments/assets/db3195c9-ee5e-46de-8c86-c56bc61253d4" />
-<img width="1127" height="1033" alt="image" src="https://github.com/user-attachments/assets/10f015a9-32c0-4dd7-8e59-fa826b3b1bbe" />
+## 📱 Features
 
-## 🚨 Key Features
+### 🆘 Emergency Response
 
-*   **One-Tap Emergency Alert:** A large, accessible button to immediately activate the alert screen.
-*   **Multi-Sensory Alerts:** Attracts attention with screen flashing, a loud siren, and device vibration.
-*   **Clear Bystander Instructions:** Simple, actionable first-aid steps with text-to-speech functionality.
-*   **AI Health Assistant "Aura":** A Gemini-powered chatbot for non-emergency first aid questions.
-*   **Works Offline:** As a Progressive Web App (PWA), the core alert functions work without an internet connection.
-*   **Bilingual:** Fully available in English and Spanish.
-*   **Private & Secure:** All data (contacts, history, API key) is stored locally on your device.
+* **One-Tap Activation:** Large, pulsing emergency button for instant access.
+* **Slide-to-Cancel:** Prevent accidental calls with a secure slide gesture.
+* **Auto-Call Protocol:** Automatically calls your designated emergency contact after a 30-second countdown (customizable).
+* **Multi-Sensory Alert:** Flashes screen, sounds a loud siren, and vibrates to attract immediate attention.
+
+### 🏥 Bystander Support
+
+* **Clear Instructions:** Step-by-step first aid guide (e.g., "Cushion head", "Time the seizure").
+* **Text-to-Speech:** Reads instructions aloud for hands-free guidance.
+* **Bilingual:** Switch purely between **English** and **Spanish** with a single tap.
+
+### 🤖 AI Health Assistant "Aura"
+
+* **Gemini-Powered:** Ask voice or text questions about seizure safety (e.g., "Is swallowing tongue a myth?").
+* **Voice Interaction:** Speak directly to the app during an emergency.
+
+### ⚡ PWA & Offline
+
+* **Installable:** Works like a native app on iOS and Android (Add to Home Screen).
+* **Offline-First:** Core alert features work without internet.
+
+---
 
 ## 🛠️ Tech Stack
 
-*   **Frontend:** React with TypeScript
-*   **Styling:** Tailwind CSS
-*   **AI/TTS:** Google Gemini API (`gemini-2.5-flash`, `tts-1`)
-*   **APIs:** Web Audio API, Vibration API, Web Speech API
+* **Frontend:** React 18, TypeScript, Vite
+* **Styling:** Tailwind CSS (Dark Mode supported)
+* **AI:** Google Gemini API (`gemini-2.0-flash-exp`)
+* **PWA:** `vite-plugin-pwa` (Service Workers, Manifest)
+* **State:** LocalStorage for privacy (Zero backend).
+
+---
+
+## 🚀 Installation (Mobile)
+
+1. Open the website in Chrome (Android) or Safari (iOS).
+2. Tap **Share** (iOS) or **Menu** (Android).
+3. Select **"Add to Home Screen"**.
+4. Launch from your home screen for the full app experience.
+
+---
 
 ## ⚠️ Medical Disclaimer
 
