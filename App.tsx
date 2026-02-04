@@ -8,7 +8,7 @@ import AboutScreen from './components/AboutScreen';
 import type { Language, AlertReport } from './types';
 import { useTheme } from './hooks/useTheme';
 import { translations } from './constants';
-import { Settings, ClipboardList, AlertTriangle } from 'lucide-react';
+import { Settings, ClipboardList, AlertTriangle, Heart } from 'lucide-react';
 import DisclaimerModal from './components/DisclaimerModal';
 
 // Controls that only appear on the Ready Screen
@@ -18,6 +18,7 @@ function TopRightControls({
   onOpenSettings,
   onOpenReports,
   onOpenDisclaimer,
+  onOpenAbout,
   language
 }: {
   theme: 'light' | 'dark',
@@ -25,6 +26,7 @@ function TopRightControls({
   onOpenSettings: () => void,
   onOpenReports: () => void,
   onOpenDisclaimer: () => void,
+  onOpenAbout: () => void,
   language: Language
 }) {
   const t = translations[language];
@@ -55,6 +57,14 @@ function TopRightControls({
         aria-label="Medical Disclaimer"
       >
         <AlertTriangle className="w-6 h-6" />
+      </button>
+
+      <button
+        onClick={onOpenAbout}
+        className="p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 hover:bg-rose-200 dark:hover:bg-rose-900/50"
+        aria-label={t.aboutTitle || "Our Story"}
+      >
+        <Heart className="w-6 h-6 animate-pulse fill-rose-600 dark:fill-rose-400" />
       </button>
     </div>
   );
@@ -184,6 +194,7 @@ function App() {
           onOpenSettings={openSettings}
           onOpenReports={openReports}
           onOpenDisclaimer={openDisclaimer}
+          onOpenAbout={openAbout}
           language={language}
         />
       )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Language } from '../types';
 import { translations } from '../constants';
-import { MessageCircle, Heart } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 interface ReadyScreenProps {
   language: Language;
@@ -38,14 +38,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, on
             {t.aiButton}
           </button>
 
-          {/* About/Story Trigger - 11 o'clock position */}
-          <button
-            onClick={onOpenAbout}
-            className="absolute top-0 left-0 transform -translate-y-2 -translate-x-2 bg-rose-500 text-white p-0 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-rose-600 dark:bg-rose-600 dark:hover:bg-rose-700 transition-colors focus:outline-none focus:ring-4 focus:ring-rose-400 z-10"
-            aria-label={t.aboutTitle || "Our Story"}
-          >
-            <Heart className="w-6 h-6 animate-pulse fill-white" />
-          </button>
+
         </div>
       </main >
     </div >
