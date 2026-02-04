@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink, Heart, Github, Globe } from 'lucide-react';
+import { X, ExternalLink, Heart, Github, Globe, Cloud } from 'lucide-react';
 import type { Language } from '../types';
 import { translations } from '../constants';
 
@@ -79,6 +79,20 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, language }) 
                             <div>
                                 <div className="font-medium">My Projects</div>
                                 <div className="text-xs opacity-70">github.com/RamonRiosJr</div>
+                            </div>
+                            <ExternalLink className="w-4 h-4 ml-auto opacity-50" />
+                        </a>
+
+                        <a
+                            href="https://coqui.cloud"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                        >
+                            <Cloud className="w-5 h-5 text-sky-500" />
+                            <div>
+                                <div className="font-medium">{t.aboutCompanyTitle || "Coqui Cloud Dev Co."}</div>
+                                <div className="text-xs opacity-70">coqui.cloud</div>
                             </div>
                             <ExternalLink className="w-4 h-4 ml-auto opacity-50" />
                         </a>
