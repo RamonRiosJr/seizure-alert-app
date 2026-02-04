@@ -188,13 +188,13 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               {isAutoCallPending && (
                 <div>
                   <p className="text-lg">
-                    Automatically calling {primaryContact.name} ({primaryContact.relation}) in <span className="font-bold text-xl">{autoCallCountdown}s</span>
+                    {t.autoCalling} {primaryContact.name} ({primaryContact.relation}) {t.inSeconds} <span className="font-bold text-xl">{autoCallCountdown}{t.secondsShort}</span>
                   </p>
 
                   {/* Slide to Cancel UI */}
                   <div className="relative w-full max-w-xs h-14 bg-gray-700 rounded-full mt-4 overflow-hidden select-none mx-auto touch-none">
                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold pointer-events-none uppercase tracking-wider opacity-50 text-sm">
-                      Slide to Cancel
+                      {t.slideToCancel}
                     </div>
                     <div
                       className="absolute left-1 top-1 bottom-1 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing"
@@ -236,12 +236,12 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               )}
               {wasCallCancelled && (
                 <p className="text-lg opacity-70">
-                  Automatic call to {primaryContact.name} was cancelled.
+                  {t.callCancelled}
                 </p>
               )}
               {wasCallInitiated && (
                 <p className="text-lg text-green-400">
-                  Automatic call to {primaryContact.name} initiated.
+                  {t.callInitiated}
                 </p>
               )}
             </div>
