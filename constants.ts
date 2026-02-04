@@ -49,7 +49,7 @@ export const translations: Record<Language, any> = {
     settingsBloodType: "Blood Type",
     settingsMedicalConditions: "Medical Conditions / Allergies",
     settingsBloodTypePlaceholder: "Select Blood Type",
-    aboutTitle: "Our Story",
+    aboutTitle: "My Story, My Mission",
     aboutOriginTitle: "The Medellin Incident",
     aboutStory: "I had a near seizure... I was eating a sandwich and a coffee in the airport in Medellin, when suddenly it hit me. I didn't have a way to express myself, words went away. I pulled my phone but to call who? My girlfriend an hour away? I needed to communicate but my mind had thousands of thoughts and déjá vus, unable to find the word 'seizure'. I drank my coffee rapidly and the symptoms faded a bit and I was able to stabilize. All I needed in that moment was a Button to press and others to be able to identify what was happening.",
     aboutMissionTitle: "Our Mission",
