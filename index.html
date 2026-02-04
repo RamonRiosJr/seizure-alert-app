@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+  <title>Seizure Alert</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#b91c1c" />
+  <meta name="description"
+    content="Seizure Alert App by Coqui Cloud Dev Co. A free PWA safety tool for epilepsy monitoring. Logs seizures, alerts contacts, and generates PDF reports." />
+  <meta name="keywords"
+    content="Seizure Alert, Epilepsy, Medical Safety, Emergency App, Coqui Cloud, RamonRios.NET, PWA" />
+  <meta name="author" content="Ramon Rios Jr / Coqui Cloud Dev Co" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Seizure Alert">
+  <link rel="apple-touch-icon" href="/seizure-alert-app/Seizures_Alert_App.png">
+  <link rel="icon" type="image/png" href="/seizure-alert-app/Seizures_Alert_App.png">
+
+  <script>
+    // Prevent FOUC by setting theme class before React loads
+    (function () {
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @keyframes pulse-border {
+
+      0%,
+      100% {
+        border-color: #f87171;
+      }
+
+      50% {
+        border-color: #b91c1c;
+      }
+    }
+
+    @keyframes breathe-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 40px rgba(220, 38, 38, 0.4);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 80px rgba(220, 38, 38, 0.8);
+        transform: scale(1.02);
+      }
+    }
+
+    .alert-active {
+      background-color: #dc2626;
+      color: white;
+      border: 10px solid;
+      animation: pulse-border 1.5s infinite ease-in-out;
+    }
+
+    .animate-breathe {
+      animation: breathe-glow 3s infinite ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="index.css">
+  <script type="module" crossorigin src="/seizure-alert-app/assets/index-CVRV4Rg9.js"></script>
+<link rel="manifest" href="/seizure-alert-app/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/seizure-alert-app/registerSW.js"></script></head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+</body>
+
+</html>

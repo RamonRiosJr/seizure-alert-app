@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/seizure-alert-app/sw.js', { scope: '/seizure-alert-app/' })})}
