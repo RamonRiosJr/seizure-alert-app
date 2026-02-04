@@ -39,28 +39,60 @@ export const useTTS = () => {
   const [error, setError] = useState<string | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
+  const speakNative = useCallback((text: string, language: Language) => {
+    if (!('speechSynthesis' in window)) {
+      setError('Text-to-speech not supported in this browser.');
+      setIsSpeaking(false);
+      return;
+    }
+
+    // Cancel any current speaking
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = language === 'es' ? 'es-ES' : 'en-US';
+
+    // Attempt to find a matching voice
+    const voices = window.speechSynthesis.getVoices();
+    const matchingVoice = voices.find(v => v.lang.startsWith(language));
+    if (matchingVoice) {
+      utterance.voice = matchingVoice;
+    }
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = (e) => {
+      console.error("Native TTS Error:", e);
+      setIsSpeaking(false);
+      setError('Native text-to-speech failed.');
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
   const speak = useCallback(async (text: string, language: Language) => {
     setIsSpeaking(true);
     setError(null);
-    
+
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close();
-    }
-    
-    let apiKey: string | null = null;
-    try {
-        const keyItem = localStorage.getItem('gemini_api_key');
-        if (keyItem) {
-            apiKey = JSON.parse(keyItem);
-        }
-    } catch (e) {
-        console.error("Could not parse API Key from localStorage", e);
+      audioContextRef.current.close();
     }
 
+    let apiKey: string | null = null;
+    try {
+      const keyItem = localStorage.getItem('gemini_api_key');
+      if (keyItem) {
+        apiKey = JSON.parse(keyItem);
+      }
+    } catch (e) {
+      console.error("Could not parse API Key from localStorage", e);
+    }
+
+    // FALLBACK: If no API key, use Native TTS immediately
     if (!apiKey) {
-        setError("API Key not found. Please set it in the settings.");
-        setIsSpeaking(false);
-        return;
+      console.warn("No API Key found. Falling back to native TTS.");
+      speakNative(text, language);
+      return;
     }
 
     try {
@@ -71,13 +103,13 @@ export const useTTS = () => {
         config: {
           responseModalities: [Modality.AUDIO],
           speechConfig: {
-              voiceConfig: {
-                prebuiltVoiceConfig: { voiceName: language === 'es' ? 'Puck' : 'Kore' },
-              },
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: language === 'es' ? 'Puck' : 'Kore' },
+            },
           },
         },
       });
-      
+
       const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
       if (!base64Audio) {
         throw new Error('No audio data received from API.');
@@ -108,11 +140,12 @@ export const useTTS = () => {
       };
 
     } catch (e: any) {
-      console.error('TTS Error:', e);
-      setError('Failed to generate audio.');
-      setIsSpeaking(false);
+      console.error('TTS API Error:', e);
+      // FALLBACK: If API fails, try Native TTS
+      console.warn("API failed. Falling back to native TTS.");
+      speakNative(text, language);
     }
-  }, []);
+  }, [speakNative]);
 
   return { speak, isSpeaking, error };
 };
