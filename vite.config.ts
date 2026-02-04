@@ -19,9 +19,9 @@ export default defineConfig(({ mode }) => {
         includeAssets: ['favicon.ico', 'seizure-alert-logo.svg'],
         manifest: {
           name: 'Seizure Alert',
-          short_name: 'Seizure Alert',
-          description: 'An emergency tool for people with epilepsy to alert others nearby during a seizure.',
-          theme_color: '#dc2626',
+          short_name: 'SeizureAlert',
+          description: 'Seizure Alert App by Coqui Cloud Dev Co. A free PWA safety tool for epilepsy monitoring.',
+          theme_color: '#b91c1c',
           background_color: '#ffffff',
           display: 'standalone',
           scope: '/seizure-alert-app/',
@@ -29,20 +29,20 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait',
           icons: [
             {
-              src: 'seizure-alert-logo.svg',
+              src: 'Seizures_Alert_App.png',
               sizes: 'any',
-              type: 'image/svg+xml',
+              type: 'image/png',
               purpose: 'any maskable'
             },
             {
-              src: 'seizure-alert-logo.svg',
+              src: 'Seizures_Alert_App.png',
               sizes: '192x192',
-              type: 'image/svg+xml'
+              type: 'image/png'
             },
             {
-              src: 'seizure-alert-logo.svg',
+              src: 'Seizures_Alert_App.png',
               sizes: '512x512',
-              type: 'image/svg+xml'
+              type: 'image/png'
             }
           ]
         },
