@@ -74,6 +74,13 @@ export const translations: Record<Language, any> = {
     callInitiated: "Automatic call initiated.",
     inSeconds: "in",
     secondsShort: "s",
+    disclaimerTitle: "Medical Disclaimer",
+    disclaimerImportant: "Important:",
+    disclaimerText1: "This application is for informational purposes only.",
+    disclaimerText2: "This application is NOT a certified medical device. It is intended as an informational tool to assist in attracting attention and providing guidance to bystanders during a potential medical event.",
+    disclaimerText3: "It should not be solely relied upon for emergency situations. In case of a medical emergency, always call your local emergency services immediately.",
+    disclaimerText4: "The developer assumes no liability for the use or misuse of this application. Is stored locally.",
+    disclaimerButton: "I Understand",
   },
   es: {
     title: 'Alerta de Convulsión',
@@ -143,6 +150,13 @@ export const translations: Record<Language, any> = {
     callInitiated: "Llamada automática iniciada.",
     inSeconds: "en",
     secondsShort: "s",
+    disclaimerTitle: "Aviso Médico",
+    disclaimerImportant: "Importante:",
+    disclaimerText1: "Esta aplicación es solo para fines informativos.",
+    disclaimerText2: "Esta aplicación NO es un dispositivo médico certificado. Está destinada a ser una herramienta informativa para ayudar a atraer la atención y proporcionar orientación a los transeúntes durante un posible evento médico.",
+    disclaimerText3: "No debe depender únicamente de ella para situaciones de emergencia. En caso de una emergencia médica, llame siempre a los servicios de emergencia locales de inmediato.",
+    disclaimerText4: "El desarrollador no asume ninguna responsabilidad por el uso o mal uso de esta aplicación. Se almacena localmente.",
+    disclaimerButton: "Entiendo",
   },
 };
 

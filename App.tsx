@@ -232,9 +232,7 @@ function App() {
       <DisclaimerModal
         isOpen={isDisclaimerOpen}
         onClose={closeDisclaimer}
-        onAccept={() => { }} // Usually just closing is enough
         language={language}
-      // If we want to support closing via prop if Modal supports it
       />
 
       <AboutScreen
