@@ -56,6 +56,7 @@ export const translations: Record<Language, any> = {
     aboutMissionText: "This is not a medical app but a tool to inspire and help potentially others. Please read our full disclosure.",
     aboutReadDisclosure: "Read Full Disclosure",
     aboutConnectTitle: "Connect with the Creator",
+    aboutCompanyTitle: "My Company",
     reportsTitle: "Alert History",
     openReports: "Open Alert History",
     noReportsMessage: "No alert history has been recorded yet.",
