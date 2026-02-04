@@ -188,70 +188,58 @@ function App() {
       }
     }
   }, [isSettingsOpen]);
+  // Removed the old useEffect for back button handling as new handlers directly control state.
 
-  const openReports = useCallback(() => {
-    window.history.pushState({ modal: 'reports' }, '');
-    setIsReportsOpen(true);
-  }, []);
-
-  const closeReports = useCallback(() => {
-    if (isReportsOpen) {
-      if (window.history.state?.modal === 'reports') {
-        window.history.back();
-      } else {
-        setIsReportsOpen(false);
-      }
-    }
-  }, [isReportsOpen]);
-
-  // Missing handlers
-  const openDisclaimer = useCallback(() => {
-    window.history.pushState({ modal: 'disclaimer' }, '');
-    setIsDisclaimerOpen(true);
-  }, []);
-
-  const closeDisclaimer = useCallback(() => {
-    if (isDisclaimerOpen) {
-      if (window.history.state?.modal === 'disclaimer') window.history.back();
-      else setIsDisclaimerOpen(false);
-    }
-  }, [isDisclaimerOpen]);
-
+  const openSettings = useCallback(() => setIsSettingsOpen(true), []);
+  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
+  const openReports = useCallback(() => setIsReportsOpen(true), []);
+  const closeReports = useCallback(() => setIsReportsOpen(false), []);
+  const openChat = useCallback(() => setIsChatOpen(true), []);
+  const closeChat = useCallback(() => setIsChatOpen(false), []);
+  const openDisclaimer = useCallback(() => setIsDisclaimerOpen(true), []); // Re-enabled manual trigger
+  const closeDisclaimer = useCallback(() => setIsDisclaimerOpen(false), []);
+  const openAbout = useCallback(() => setIsAboutOpen(true), []);
+  const closeAbout = useCallback(() => setIsAboutOpen(false), []);
 
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
-      {screen === 'ready' && (
+    <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+
+      {!isAlertActive && (
         <TopRightControls
           theme={theme}
           toggleTheme={toggleTheme}
           onOpenSettings={openSettings}
           onOpenReports={openReports}
-          onOpenDisclaimer={openDisclaimer}
+          onOpenDisclaimer={openDisclaimer} // Map the 'Info' button (triangle) in top right to About as well? Or keep it separate? 
+          // The user requested a separate 'About' button. 
+          // TopRightControls currently has an 'AlertTriangle' button that opens Disclaimer.
+          // Let's keep that as Disclaimer.
           language={language}
         />
       )}
 
-      {screen === 'ready' && (
+      {isAlertActive ? (
+        <AlertScreen
+          language={language}
+          onDeactivate={() => setIsAlertActive(false)}
+        />
+      ) : (
         <ReadyScreen
           language={language}
           onActivateAlert={activateAlert}
           onOpenChat={openChat}
+          onOpenAbout={openAbout}
         />
       )}
 
-      {screen === 'alert' && (
-        <AlertScreen
-          language={language}
-          onDeactivateAlert={deactivateAlert}
-        />
-      )}
+      {/* Screen Overlay for inactive state if needed, or just Conditional Rendering above */}
 
       <UniversalLanguageSwitcher
         language={language}
         setLanguage={setLanguage}
-        screen={screen}
-        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen}
+        screen={isAlertActive ? 'alert' : 'ready'} // Pass current screen state
+        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen && !isAboutOpen} // Added isAboutOpen
       />
 
       <Chatbot
@@ -275,6 +263,15 @@ function App() {
       <DisclaimerModal
         isOpen={isDisclaimerOpen}
         onClose={closeDisclaimer}
+        onAccept={() => { }} // Usually just closing is enough
+        language={language}
+      // If we want to support closing via prop if Modal supports it
+      />
+
+      <AboutScreen
+        isOpen={isAboutOpen}
+        onClose={closeAbout}
+        language={language}
       />
     </div>
   );
