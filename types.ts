@@ -19,3 +19,9 @@ export interface AlertReport {
   duration: number; // in seconds
   notes: string;
 }
+
+export interface PatientInfo {
+  name: string;
+  bloodType: string;
+  medicalConditions: string;
+}
