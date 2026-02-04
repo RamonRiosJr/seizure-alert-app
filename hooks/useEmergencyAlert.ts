@@ -114,14 +114,29 @@ export const useEmergencyAlert = () => {
   useEffect(() => {
     startAlert();
 
-    document.documentElement.requestFullscreen().catch(err => {
-      console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-    });
+    const enterFullscreen = async () => {
+      try {
+        const elem = document.documentElement as any;
+        if (elem.requestFullscreen) {
+          await elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+          await elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          await elem.msRequestFullscreen();
+        }
+      } catch (err: any) {
+        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+      }
+    };
+
+    enterFullscreen();
 
     return () => {
       stopAlert();
       if (document.fullscreenElement) {
-        document.exitFullscreen();
+        document.exitFullscreen().catch(console.error);
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
       }
     };
   }, [startAlert, stopAlert]);
