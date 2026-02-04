@@ -157,38 +157,7 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [isChatOpen, isSettingsOpen, isReportsOpen, isDisclaimerOpen]);
 
-  const openChat = useCallback(() => {
-    window.history.pushState({ modal: 'chat' }, '');
-    setIsChatOpen(true);
-  }, []);
 
-  const closeChat = useCallback(() => {
-    if (isChatOpen) {
-      // Check if looking at state created by us vs generic back
-      if (window.history.state?.modal === 'chat') {
-        window.history.back();
-      } else {
-        setIsChatOpen(false);
-      }
-    }
-  }, [isChatOpen]);
-
-  // Apply similar logic to other modals for consistency
-  const openSettings = useCallback(() => {
-    window.history.pushState({ modal: 'settings' }, '');
-    setIsSettingsOpen(true);
-  }, []);
-
-  const closeSettings = useCallback(() => {
-    if (isSettingsOpen) {
-      if (window.history.state?.modal === 'settings') {
-        window.history.back();
-      } else {
-        setIsSettingsOpen(false);
-      }
-    }
-  }, [isSettingsOpen]);
-  // Removed the old useEffect for back button handling as new handlers directly control state.
 
   const openSettings = useCallback(() => setIsSettingsOpen(true), []);
   const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
