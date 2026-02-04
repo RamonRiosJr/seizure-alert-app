@@ -4,6 +4,7 @@ import AlertScreen from './components/AlertScreen';
 import Chatbot from './components/Chatbot';
 import SettingsScreen from './components/SettingsScreen';
 import ReportsScreen from './components/ReportsScreen';
+import AboutScreen from './components/AboutScreen';
 import type { Language, AlertReport } from './types';
 import { useTheme } from './hooks/useTheme';
 import { translations } from './constants';
@@ -105,6 +106,7 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isReportsOpen, setIsReportsOpen] = useState(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [theme, toggleTheme] = useTheme();
 
   const activateAlert = useCallback(() => {
@@ -155,7 +157,7 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [isChatOpen, isSettingsOpen, isReportsOpen, isDisclaimerOpen]);
+  }, [isChatOpen, isSettingsOpen, isReportsOpen, isDisclaimerOpen, isAboutOpen]);
 
 
 
@@ -174,24 +176,22 @@ function App() {
   return (
     <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
 
-      {!isAlertActive && (
+
+      {screen === 'ready' && (
         <TopRightControls
           theme={theme}
           toggleTheme={toggleTheme}
           onOpenSettings={openSettings}
           onOpenReports={openReports}
-          onOpenDisclaimer={openDisclaimer} // Map the 'Info' button (triangle) in top right to About as well? Or keep it separate? 
-          // The user requested a separate 'About' button. 
-          // TopRightControls currently has an 'AlertTriangle' button that opens Disclaimer.
-          // Let's keep that as Disclaimer.
+          onOpenDisclaimer={openDisclaimer}
           language={language}
         />
       )}
 
-      {isAlertActive ? (
+      {screen === 'alert' ? (
         <AlertScreen
           language={language}
-          onDeactivate={() => setIsAlertActive(false)}
+          onDeactivate={() => setScreen('ready')}
         />
       ) : (
         <ReadyScreen
@@ -207,8 +207,8 @@ function App() {
       <UniversalLanguageSwitcher
         language={language}
         setLanguage={setLanguage}
-        screen={isAlertActive ? 'alert' : 'ready'} // Pass current screen state
-        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen && !isAboutOpen} // Added isAboutOpen
+        screen={screen} // Pass current screen state
+        isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen && !isAboutOpen}
       />
 
       <Chatbot
