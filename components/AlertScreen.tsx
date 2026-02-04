@@ -168,7 +168,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
           </div>
         </header>
 
-        <main className="flex-grow flex flex-col items-center justify-evenly px-4 py-2 w-full">
+        <main className="flex-grow flex flex-col items-center justify-start px-4 py-2 w-full overflow-y-auto min-h-0">
           <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
             <div className="flex items-center gap-3 border-r border-white/20 pr-4">
               <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</span>
