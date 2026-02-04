@@ -4,15 +4,16 @@ import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SettingsScreenProps {
   isOpen: boolean;
   onClose: () => void;
-  language: Language;
 }
 
 // Sub-component for message editing to handle its own state/effect logic cleanly
-const AlertMessageEditor = ({ language, t }: { language: Language, t: any }) => {
+const AlertMessageEditor = ({ t }: { t: any }) => {
+  const { language } = useLanguage();
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -44,7 +45,8 @@ const AlertMessageEditor = ({ language, t }: { language: Language, t: any }) => 
   );
 };
 
-const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, language }) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
+  const { language } = useLanguage();
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', { name: '', bloodType: '', medicalConditions: '' });
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
@@ -237,7 +239,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 This message will be displayed on the screen during an emergency.
               </p>
-              <AlertMessageEditor language={language} t={t} />
+              {/* Alert Message Editor */}
+              <AlertMessageEditor t={t} />
             </div>
           </section>
 

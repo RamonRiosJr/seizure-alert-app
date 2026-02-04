@@ -4,14 +4,15 @@ import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { X, Trash2, Pencil, Check, ClipboardList, FileDown } from 'lucide-react';
 import { generateSeizureReport } from '../utils/pdfGenerator';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ReportsScreenProps {
   isOpen: boolean;
   onClose: () => void;
-  language: Language;
 }
 
-const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language }) => {
+const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
+  const { language } = useLanguage();
   const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
   const [editingReportId, setEditingReportId] = useState<string | null>(null);
   const [notesInput, setNotesInput] = useState('');

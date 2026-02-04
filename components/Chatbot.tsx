@@ -5,14 +5,15 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Language } from '../types';
 import { translations } from '../constants';
 import { X, Send, Mic, Sparkles, User, Flag } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ChatbotProps {
   isOpen: boolean;
   onClose: () => void;
-  language: Language;
 }
 
-const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose, language }) => {
+const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
+  const { language } = useLanguage();
   const { messages, input, setInput, sendMessage, isLoading, error } = useChat(language);
   const { transcript, isListening, startListening, hasRecognitionSupport } = useSpeechRecognition();
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');

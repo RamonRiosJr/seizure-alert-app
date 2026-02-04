@@ -10,6 +10,7 @@ import { useTheme } from './hooks/useTheme';
 import { translations } from './constants';
 import { Settings, ClipboardList, AlertTriangle, Heart } from 'lucide-react';
 import DisclaimerModal from './components/DisclaimerModal';
+import { useLanguage } from './contexts/LanguageContext';
 
 // Controls that only appear on the Ready Screen
 function TopRightControls({
@@ -19,7 +20,6 @@ function TopRightControls({
   onOpenReports,
   onOpenDisclaimer,
   onOpenAbout,
-  language
 }: {
   theme: 'light' | 'dark',
   toggleTheme: () => void,
@@ -27,8 +27,8 @@ function TopRightControls({
   onOpenReports: () => void,
   onOpenDisclaimer: () => void,
   onOpenAbout: () => void,
-  language: Language
 }) {
+  const { language } = useLanguage();
   const t = translations[language];
   const buttonClasses = 'p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600';
 
@@ -71,17 +71,15 @@ function TopRightControls({
 }
 
 function UniversalLanguageSwitcher({
-  language,
-  setLanguage,
   screen,
   isVisible = true
 }: {
-  language: Language;
-  setLanguage: (lang: Language) => void;
   screen: 'ready' | 'alert';
   isVisible?: boolean;
 }) {
   if (!isVisible) return null;
+
+  const { language, setLanguage } = useLanguage();
 
   const targetLang = language === 'en' ? 'es' : 'en';
   const label = language === 'en' ? 'Español' : 'English';
@@ -111,7 +109,7 @@ function UniversalLanguageSwitcher({
 
 function App() {
   const [screen, setScreen] = useState<'ready' | 'alert'>('ready');
-  const [language, setLanguage] = useState<Language>('en');
+  // language removed - managed by Context
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isReportsOpen, setIsReportsOpen] = useState(false);
@@ -195,18 +193,15 @@ function App() {
           onOpenReports={openReports}
           onOpenDisclaimer={openDisclaimer}
           onOpenAbout={openAbout}
-          language={language}
         />
       )}
 
       {screen === 'alert' ? (
         <AlertScreen
-          language={language}
           onDeactivateAlert={deactivateAlert}
         />
       ) : (
         <ReadyScreen
-          language={language}
           onActivateAlert={activateAlert}
           onOpenChat={openChat}
           onOpenAbout={openAbout}
@@ -216,8 +211,6 @@ function App() {
       {/* Screen Overlay for inactive state if needed, or just Conditional Rendering above */}
 
       <UniversalLanguageSwitcher
-        language={language}
-        setLanguage={setLanguage}
         screen={screen} // Pass current screen state
         isVisible={!isSettingsOpen && !isReportsOpen && !isDisclaimerOpen && !isAboutOpen}
       />
@@ -225,32 +218,27 @@ function App() {
       <Chatbot
         isOpen={isChatOpen}
         onClose={closeChat}
-        language={language}
       />
 
       <SettingsScreen
         isOpen={isSettingsOpen}
         onClose={closeSettings}
-        language={language}
       />
 
       <ReportsScreen
         isOpen={isReportsOpen}
         onClose={closeReports}
-        language={language}
       />
 
       <DisclaimerModal
         isOpen={isDisclaimerOpen}
         onClose={closeDisclaimer}
-        language={language}
       />
 
       <AboutScreen
         isOpen={isAboutOpen}
         onClose={closeAbout}
         onOpenDisclosure={openDisclaimer}
-        language={language}
       />
     </div>
   );

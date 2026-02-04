@@ -2,14 +2,15 @@ import React from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import { translations } from '../constants';
 import type { Language } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface DisclaimerModalProps {
     isOpen: boolean;
     onClose: () => void;
-    language: Language;
 }
 
-const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClose, language }) => {
+const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClose }) => {
+    const { language } = useLanguage();
     const t = translations[language];
 
     if (!isOpen) return null;

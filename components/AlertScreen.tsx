@@ -5,6 +5,7 @@ import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
@@ -57,11 +58,11 @@ const useBatteryStatus = () => {
 // --- End Battery Status Hook ---
 
 interface AlertScreenProps {
-  language: Language;
   onDeactivateAlert: (duration: number) => void;
 }
 
-const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }) => {
+const AlertScreen: React.FC<AlertScreenProps> = ({ onDeactivateAlert }) => {
+  const { language } = useLanguage();
   const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert();
   const { speak, isSpeaking } = useTTS();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);

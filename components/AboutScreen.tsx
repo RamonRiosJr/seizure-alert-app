@@ -2,15 +2,16 @@ import React from 'react';
 import { X, ExternalLink, Heart, Github, Globe, Cloud } from 'lucide-react';
 import type { Language } from '../types';
 import { translations } from '../constants';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface AboutScreenProps {
     isOpen: boolean;
     onClose: () => void;
     onOpenDisclosure: () => void;
-    language: Language;
 }
 
-const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclosure, language }) => {
+const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclosure }) => {
+    const { language } = useLanguage();
     const t = translations[language];
 
     if (!isOpen) return null;

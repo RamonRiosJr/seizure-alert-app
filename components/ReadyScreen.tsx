@@ -3,14 +3,16 @@ import type { Language } from '../types';
 import { translations } from '../constants';
 import { MessageCircle } from 'lucide-react';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface ReadyScreenProps {
-  language: Language;
   onActivateAlert: () => void;
   onOpenChat: () => void;
   onOpenAbout: () => void;
 }
 
-const ReadyScreen: React.FC<ReadyScreenProps> = ({ language, onActivateAlert, onOpenChat, onOpenAbout }) => {
+const ReadyScreen: React.FC<ReadyScreenProps> = ({ onActivateAlert, onOpenChat, onOpenAbout }) => {
+  const { language } = useLanguage();
   const t = translations[language];
 
   return (
