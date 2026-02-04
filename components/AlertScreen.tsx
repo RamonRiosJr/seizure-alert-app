@@ -139,13 +139,13 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
   return (
     <>
       <div
-        className="h-screen w-screen alert-active flex flex-col box-border cursor-pointer"
+        className="h-[100dvh] w-screen alert-active flex flex-col box-border cursor-pointer overflow-hidden"
         onClick={() => {
           if (!hasAudioPermission) attemptResume();
         }}
       >
-        <header className="relative text-center p-4 sm:p-6 flex-shrink-0">
-          <div className="absolute top-4 right-4">
+        <header className="relative text-center p-2 flex-shrink-0">
+          <div className="absolute top-2 right-2">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -154,21 +154,21 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ language, onDeactivateAlert }
               className="p-2 rounded-full bg-black/20 hover:bg-black/40"
               aria-label={isMuted ? t.sirenUnmute : t.sirenMute}
             >
-              {isMuted ? <VolumeX className="w-8 h-8" /> : <Volume2 className="w-8 h-8" />}
+              {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
             </button>
           </div>
-          <TriangleAlert className="w-16 h-16 mx-auto mb-2" />
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{t.alertTitle}</h1>
+          <TriangleAlert className="w-12 h-12 mx-auto mb-1" />
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">{t.alertTitle}</h1>
 
           {/* Status Message - Responsive, no editing */}
-          <div className="w-full max-w-4xl mx-auto mt-4 px-4">
-            <p className="text-xl md:text-3xl font-medium text-center leading-relaxed break-words">
+          <div className="w-full max-w-4xl mx-auto mt-2 px-4">
+            <p className="text-lg md:text-2xl font-medium text-center leading-tight break-words line-clamp-3">
               {statusMessage || t.alertStatus}
             </p>
           </div>
         </header>
 
-        <main className="flex-grow flex flex-col items-center px-4 overflow-y-auto py-6">
+        <main className="flex-grow flex flex-col items-center justify-evenly px-4 py-2 w-full">
           <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
             <div className="flex items-center gap-3 border-r border-white/20 pr-4">
               <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</span>
