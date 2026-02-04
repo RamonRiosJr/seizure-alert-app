@@ -130,13 +130,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
           {/* Patient Info Section */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <UserPlus className="w-5 h-5 text-blue-500" />
               {t.settingsPatientInfo}
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsPatientName}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsPatientName}</label>
                 <input
                   type="text"
                   value={patientInfo.name}
@@ -147,7 +147,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsBloodType}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsBloodType}</label>
                 <select
                   value={patientInfo.bloodType}
                   onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
@@ -161,7 +161,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsMedicalConditions}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsMedicalConditions}</label>
                 <textarea
                   value={patientInfo.medicalConditions}
                   onChange={(e) => setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })}
