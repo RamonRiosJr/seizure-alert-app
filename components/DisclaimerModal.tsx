@@ -50,6 +50,9 @@ const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClose, lang
                     <p className="text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
                         {t.disclaimerText4}
                     </p>
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-400 pt-2 bg-green-50 dark:bg-green-900/10 p-2 rounded">
+                        {t.disclaimerPrivacy}
+                    </p>
                 </main>
 
                 <footer className="p-4 bg-gray-50 dark:bg-gray-800/50 flex justify-end">

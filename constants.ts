@@ -79,7 +79,8 @@ export const translations: Record<Language, any> = {
     disclaimerText1: "This application is for informational purposes only.",
     disclaimerText2: "This application is NOT a certified medical device. It is intended as an informational tool to assist in attracting attention and providing guidance to bystanders during a potential medical event.",
     disclaimerText3: "It should not be solely relied upon for emergency situations. In case of a medical emergency, always call your local emergency services immediately.",
-    disclaimerText4: "The developer assumes no liability for the use or misuse of this application. Is stored locally.",
+    disclaimerText4: "The developer assumes no liability for the use or misuse of this application.",
+    disclaimerPrivacy: "Privacy & Data Security: This app operates 100% locally. No personal data, contacts, or medical information is ever transmitted to us or any third-party servers. We do not track you.",
     disclaimerButton: "I Understand",
   },
   es: {
@@ -160,7 +161,8 @@ export const translations: Record<Language, any> = {
     disclaimerText1: "Esta aplicación es solo para fines informativos.",
     disclaimerText2: "Esta aplicación NO es un dispositivo médico certificado. Está destinada a ser una herramienta informativa para ayudar a atraer la atención y proporcionar orientación a los transeúntes durante un posible evento médico.",
     disclaimerText3: "No debe depender únicamente de ella para situaciones de emergencia. En caso de una emergencia médica, llame siempre a los servicios de emergencia locales de inmediato.",
-    disclaimerText4: "El desarrollador no asume ninguna responsabilidad por el uso o mal uso de esta aplicación. Se almacena localmente.",
+    disclaimerText4: "El desarrollador no asume ninguna responsabilidad por el uso o mal uso de esta aplicación.",
+    disclaimerPrivacy: "Privacidad y Seguridad: Esta aplicación funciona 100% localmente. Ningún dato personal, contacto o información médica se transmite a nosotros ni a servidores de terceros. No te rastreamos.",
     disclaimerButton: "Entiendo",
   },
 };
