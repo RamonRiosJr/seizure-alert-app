@@ -1,6 +1,6 @@
 # Seizure Alert App 🚨
 
-![Seizure Alert App Logo](https://coqui.cloud/web/image/6174-48fd9fa0/LogoSeizuresAlertApp.svg)
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/a267e4c3-150c-4cd2-9cd3-b0c80d8fde1a" />
 
 **A life-saving PWA tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
 
