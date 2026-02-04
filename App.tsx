@@ -238,6 +238,7 @@ function App() {
       <AboutScreen
         isOpen={isAboutOpen}
         onClose={closeAbout}
+        onOpenDisclosure={openDisclaimer}
         language={language}
       />
     </div>

@@ -6,10 +6,11 @@ import { translations } from '../constants';
 interface AboutScreenProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpenDisclosure: () => void;
     language: Language;
 }
 
-const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, language }) => {
+const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclosure, language }) => {
     const t = translations[language];
 
     if (!isOpen) return null;
@@ -56,7 +57,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, language }) 
                         </p>
                         <a
                             href="#"
-                            onClick={(e) => { e.preventDefault(); /* Open Disclosure Modal - TODO */ }}
+                            onClick={(e) => { e.preventDefault(); onOpenDisclosure(); }}
                             className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium mt-2 hover:underline"
                         >
                             {t.aboutReadDisclosure || "Read Full Disclosure"} <ExternalLink className="w-3 h-3" />
