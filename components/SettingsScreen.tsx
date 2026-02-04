@@ -130,28 +130,28 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
           {/* Patient Info Section */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
               <UserPlus className="w-5 h-5 text-blue-500" />
               {t.settingsPatientInfo}
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsPatientName}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsPatientName}</label>
                 <input
                   type="text"
                   value={patientInfo.name}
                   onChange={(e) => setPatientInfo({ ...patientInfo, name: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
                   placeholder="e.g. John Doe"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsBloodType}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsBloodType}</label>
                 <select
                   value={patientInfo.bloodType}
                   onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
                 >
                   <option value="">{t.settingsBloodTypePlaceholder}</option>
                   {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Unknown'].map(type => (
@@ -161,11 +161,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 opacity-80">{t.settingsMedicalConditions}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsMedicalConditions}</label>
                 <textarea
                   value={patientInfo.medicalConditions}
                   onChange={(e) => setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none"
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none dark:text-white"
                   placeholder="e.g. Epilepsy, Peanut Allergy..."
                 />
               </div>
