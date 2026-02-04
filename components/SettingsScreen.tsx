@@ -46,6 +46,7 @@ const AlertMessageEditor = ({ language, t }: { language: Language, t: any }) => 
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, language }) => {
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
+  const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', { name: '', bloodType: '', medicalConditions: '' });
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
 
   const [newContact, setNewContact] = useState({ name: '', relation: '', phone: '' });
@@ -127,6 +128,50 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose, langua
         </header>
 
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
+          {/* Patient Info Section */}
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <UserPlus className="w-5 h-5 text-blue-500" />
+              {t.settingsPatientInfo}
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsPatientName}</label>
+                <input
+                  type="text"
+                  value={patientInfo.name}
+                  onChange={(e) => setPatientInfo({ ...patientInfo, name: e.target.value })}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                  placeholder="e.g. John Doe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsBloodType}</label>
+                <select
+                  value={patientInfo.bloodType}
+                  onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                >
+                  <option value="">{t.settingsBloodTypePlaceholder}</option>
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Unknown'].map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1 opacity-80">{t.settingsMedicalConditions}</label>
+                <textarea
+                  value={patientInfo.medicalConditions}
+                  onChange={(e) => setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none"
+                  placeholder="e.g. Epilepsy, Peanut Allergy..."
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Emergency Contacts Section */}
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
