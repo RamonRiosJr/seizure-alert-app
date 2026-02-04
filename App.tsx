@@ -191,7 +191,7 @@ function App() {
       {screen === 'alert' ? (
         <AlertScreen
           language={language}
-          onDeactivate={() => setScreen('ready')}
+          onDeactivateAlert={deactivateAlert}
         />
       ) : (
         <ReadyScreen
