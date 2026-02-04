@@ -1,5 +1,9 @@
 # Seizure Alert App 🚨
 
+<div align="center">
+  <img src="public/Seizures_Alert_App.png" alt="Seizure Alert App Logo" width="180" />
+</div>
+
 > **"My Story, My Mission"**  
 > _This app was born from a moment of helplessness. I had a near seizure while eating a sandwich and coffee at the airport in Medellin. Suddenly, it hit me. I lost my ability to speak. I pulled out my phone, but to call who? My girlfriend, an hour away? I needed to communicate, but my mind was flooded with thousands of thoughts and déjá vus, unable to find the word 'seizure'. I drank my coffee rapidly, and the symptoms faded slightly, stabilizing me. All I needed in that moment was a **Button** to press so others could identify what was happening and help me._
 
