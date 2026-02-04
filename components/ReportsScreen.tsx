@@ -17,10 +17,32 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
   const [notesInput, setNotesInput] = useState('');
   const t = translations[language];
 
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
   if (!isOpen) return null;
 
-  const handleExport = () => {
-    generateSeizureReport(reports, language);
+  const handleExportClick = () => {
+    setIsExportModalOpen(true);
+  };
+
+  const generateFilteredReport = (months: number | 'prev_year' | 'all') => {
+    let filteredReports = reports;
+    const now = new Date();
+
+    if (months === 'prev_year') {
+      const prevYear = now.getFullYear() - 1;
+      filteredReports = reports.filter(r => {
+        const d = new Date(r.date);
+        return d.getFullYear() === prevYear;
+      });
+    } else if (typeof months === 'number') {
+      const cutoff = new Date();
+      cutoff.setMonth(now.getMonth() - months);
+      filteredReports = reports.filter(r => new Date(r.date) >= cutoff);
+    }
+
+    generateSeizureReport(filteredReports, language);
+    setIsExportModalOpen(false);
   };
 
   const formattedTime = (totalSeconds: number) => {
@@ -29,16 +51,15 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
     return `${minutes}:${seconds}`;
   };
 
+  // ... (handlers remain the same) ...
   const handleStartEditing = (report: AlertReport) => {
     setEditingReportId(report.id);
     setNotesInput(report.notes);
   };
-
   const handleCancelEditing = () => {
     setEditingReportId(null);
     setNotesInput('');
   };
-
   const handleSaveNotes = () => {
     if (!editingReportId) return;
     setReports(prevReports =>
@@ -48,7 +69,6 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
     );
     handleCancelEditing();
   };
-
   const handleDeleteReport = (id: string) => {
     if (window.confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
       setReports(prevReports => prevReports.filter(r => r.id !== id));
@@ -57,7 +77,46 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl h-[90vh] max-h-[800px] flex flex-col">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl h-[90vh] max-h-[800px] flex flex-col relative">
+
+        {/* Export Modal Overlay */}
+        {isExportModalOpen && (
+          <div className="absolute inset-0 bg-black/60 z-50 flex items-center justify-center p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-2xl w-full max-w-sm space-y-4 border border-gray-200 dark:border-gray-700">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Select Range</h3>
+                <button onClick={() => setIsExportModalOpen(false)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-2">
+                <button onClick={() => generateFilteredReport(1)} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Last Month
+                </button>
+                <button onClick={() => generateFilteredReport(3)} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Past 3 Months
+                </button>
+                <button onClick={() => generateFilteredReport(6)} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Past 6 Months
+                </button>
+                <button onClick={() => generateFilteredReport(9)} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Past 9 Months
+                </button>
+                <button onClick={() => generateFilteredReport(12)} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Past Year
+                </button>
+                <button onClick={() => generateFilteredReport('prev_year')} className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg text-left font-medium transition-colors">
+                  Previous Calendar Year ({new Date().getFullYear() - 1})
+                </button>
+                <button onClick={() => generateFilteredReport('all')} className="p-3 bg-blue-600 text-white hover:bg-blue-700 rounded-lg text-center font-bold mt-2 shadow-sm transition-colors">
+                  Export All Time
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
             <ClipboardList className="w-6 h-6" />
@@ -66,7 +125,7 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
           <div className="flex items-center gap-2">
             {reports.length > 0 && (
               <button
-                onClick={handleExport}
+                onClick={handleExportClick}
                 className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors"
                 title="Export as PDF"
               >
@@ -117,6 +176,7 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose, language
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                    {/* Notes Section - Intentionally keeping user logic same */}
                     <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-1">{t.reportNotesLabel}</h4>
                     {editingReportId === report.id ? (
                       <div className="space-y-2">
