@@ -22,36 +22,36 @@ export const useChat = (language: Language) => {
     setError(null);
 
     setMessages(prev => [...prev, { role: 'user', text: userMessage, priority }]);
-    
+
     let apiKey: string | null = null;
     try {
-        const keyItem = localStorage.getItem('gemini_api_key');
-        if (keyItem) {
-            apiKey = JSON.parse(keyItem);
-        }
+      const keyItem = localStorage.getItem('gemini_api_key');
+      if (keyItem) {
+        apiKey = JSON.parse(keyItem);
+      }
     } catch (e) {
-        console.error("Could not parse API Key from localStorage", e);
+      console.error("Could not parse API Key from localStorage", e);
     }
 
     if (!apiKey) {
-        const errorMsg = "API Key not found. Please set it in the settings.";
-        setError(errorMsg);
-        setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
-        setIsLoading(false);
-        return;
+      const errorMsg = "API Key not found. Please set it in the settings.";
+      setError(errorMsg);
+      setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
+      setIsLoading(false);
+      return;
     }
 
     try {
       const ai = new GoogleGenAI({ apiKey });
       const chat = ai.chats.create({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-1.5-flash',
         config: {
           systemInstruction: getSystemPrompt(language),
         },
       });
 
       const result = await chat.sendMessageStream({ message: userMessage });
-      
+
       setMessages(prev => [...prev, { role: 'model', text: '' }]);
 
       for await (const chunk of result) {
@@ -71,16 +71,16 @@ export const useChat = (language: Language) => {
       console.error("Gemini API error:", e);
       const errorMessage = "Sorry, I'm having trouble connecting. Please try again later.";
       setError(errorMessage);
-       setMessages(prev => {
+      setMessages(prev => {
         const lastMessage = prev[prev.length - 1];
         if (lastMessage && lastMessage.role === 'model' && lastMessage.text === '') {
-            return [
-                ...prev.slice(0, -1),
-                { role: 'model', text: errorMessage }
-            ];
+          return [
+            ...prev.slice(0, -1),
+            { role: 'model', text: errorMessage }
+          ];
         }
         return [...prev, { role: 'model', text: errorMessage }];
-    });
+      });
     } finally {
       setIsLoading(false);
     }
