@@ -4,98 +4,102 @@
   <img src="public/Seizures_Alert_App.png" alt="Seizure Alert App Logo" width="180" />
 </div>
 
-> **"My Story, My Mission"**  
+> **"My Story, My Mission"**
+>
 > _This app was born from a moment of helplessness. I had a near seizure while eating a sandwich and coffee at the airport in Medellin. Suddenly, it hit me. I lost my ability to speak. I pulled out my phone, but to call who? My girlfriend, an hour away? I needed to communicate, but my mind was flooded with thousands of thoughts and déjá vus, unable to find the word 'seizure'. I drank my coffee rapidly, and the symptoms faded slightly, stabilizing me. All I needed in that moment was a **Button** to press so others could identify what was happening and help me._
 
-**A life-saving PWA tool to help individuals alert bystanders during a seizure, providing clear instructions and an AI assistant for first-aid information.**
+**A simple, life-saving tool to help you alert others during a seizure. It provides clear instructions and an AI assistant to help those around you keep you safe.**
 
-🌐 **Live App:** [https://ramonriosjr.github.io/seizure-alert-app/](https://ramonriosjr.github.io/seizure-alert-app/)
+🌐 **Click here to open the App:** [Launch Seizure Alert](https://ramonriosjr.github.io/seizure-alert-app/)
 
 Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](https://ramonrios.net)
 
 ---
 
-## 📱 Features
+## 📱 Key Features (Simple & Easy)
 
-### 🆘 Emergency Response
+### 🆘 The "Big Red Button"
 
-* **One-Tap Activation:** Large, pulsing emergency button for instant access.
-* **Slide-to-Cancel:** Prevent accidental calls with a secure slide gesture.
-* **Auto-Call Protocol:** Automatically calls your designated emergency contact after a 30-second countdown (customizable).
-* **Multi-Sensory Alert:** Flashes screen, sounds a loud siren, and vibrates to attract immediate attention.
+* **One-Tap Help:** Just press the big red button if you feel a seizure coming.
+* **Safe:** You have to slide to cancel, so you don't call by accident.
+* **Loud Alert:** It flashes the screen and makes a loud noise to get people's attention.
+* **Automatic Call:** If you don't stop it, it calls your emergency contact automatically after 30 seconds.
 
-### 🏥 Bystander Support & Patient Info
+### 🏥 Helping the Helpers (Bystanders)
 
-* **My Story, My Mission:** Read the full origin story and mission statement within the app.
-* **Patient Information:** Display critical medical details (Blood Type, Allergies) to first responders.
-* **First Aid Guide:** audio & visual step-by-step instructions (e.g., "Cushion head", "Time the seizure").
-* **Text-to-Speech (TTS):** Reads instructions aloud. **New:** Robust fallback to native browser speech if AI voice is offline.
-* **Bilingual:** Switch fully between **English** and **Spanish**.
+* **Talks for You:** The phone speaks out loud, telling people exactly what to do (like "Turn them on their side").
+* **Works Offline:** Even if you have no internet, the voice instructions still work.
+* **Medical Info:** Shows your Name, Blood Type, and Allergies on the screen.
 
-### 🤖 AI Health Assistant "Aura"
+### 🤖 "Aura" - Your AI Helper
 
-* **Gemini-Powered:** Ask voice or text questions about seizure safety.
-* **Voice Interaction:** Speak directly to the app during an emergency.
+* **Ask Questions:** "Aura" is a smart assistant inside the app.
+* **Voice or Text:** You or a helper can ask questions like "What do I do safely?" using your voice.
+* **Note:** Aura needs an internet connection to work.
 
-### ⚡ PWA & Offline First
+### ⚙️ Easy to Install (PWA)
 
-* **Installable:** Works like a native app on iOS and Android (Add to Home Screen).
-* **Offline Capable:** Core alert features and native TTS work without internet.
-* **iPhone Optimized:** Fixed compatibility issues for older iOS devices (e.g., iPhone 11).
+* **No App Store Needed:** You can install this directly from your browser.
+* **iPhone & Android:** Works on almost any phone.
+* **Manual Install Button:** Go to **Settings** > **App Installation** to see a big "Install" button or instructions for your phone.
 
----
+### 📡 New: Tap-to-Alert (NFC)
 
-## 🛠️ Tech Stack
-
-* **Frontend:** React 18, TypeScript, Vite
-* **Styling:** Tailwind CSS (Dark Mode supported)
-* **AI:** Google Gemini API
-* **PWA:** `vite-plugin-pwa`
-* **Storage:** LocalStorage (Privacy-first, zero backend)
-
-* **Storage:** LocalStorage (Privacy-first, zero backend)
-* **Privacy:** No tracking, cookies, or external servers.
+* **Instant Start:** You can program a cheap NFC tag (sticker) so that simply _tapping_ your phone to it starts the alarm immediately. Great for bedside tables!
 
 ---
 
-## 🔒 Privacy & HIPAA Transparency
+## 🚧 Status: Web App & Improvements
+
+**Current Status: Active Development**
+
+* **✅ PWA (Installed App):** Works great! Add it to your home screen for the best experience.
+* **⚠️ Web Capabilities:** Some advanced features (like background notifications without the app open) are still limited by Apple/Android web rules. We are working hard on solutions!
+* **Performance:** Tested on iPhone 11+ and modern Androids.
+
+---
+
+## 🛠️ Instructions for Use
+
+1. **Open the App**: Click the link above.
+2. **Add Contacts**: Go to the **Settings (Gear Icon)** ⚙️ and add your specialized Doctor or Family member details.
+3. **Install It**: Look for the "Install App" button in Settings to save it to your phone.
+4. **Test It**: Press the Red Button to hear the alarm and instructions (Slide to cancel).
+
+---
+
+## 🔒 Privacy & Safety
 
 **"Local First, Privacy Always."**
 
-This application is built with a **Local-First Architecture**.
-
-* **No Databases:** All data (Contacts, Patient Info, Logs) lives exclusively in your browser's `localStorage` on your physical device.
-* **No Tracking:** We do not use Google Analytics, Facebook Pixels, or any tracking cookies.
-* **HIPAA Compliant Design:** Since no Personally Identifiable Information (PII) is transmitted to our servers, your medical data never leaves your control.
-* **Exceptions:**
-  * **AI Assistant:** When using the "Aura" Chatbot (optional), your text/audio queries are sent transiently to Google Gemini API for processing. No personal data is stored on our end.
-  * **TTS:** Text-to-Speech may use Google Cloud if the native browser voice is unavailable.
+* **Your Data Stays With You:** All your contacts and medical info are saved **only on your phone**. We don't see it. We don't steal it.
+* **No Tracking:** We don't track where you go or what you do.
+* **HIPAA Friendly:** Since we don't store your data, your privacy is safe.
 
 ---
 
 ## ⚠️ Medical Disclaimer
 
-This application is **NOT a certified medical device**. It is intended as an informational tool to assist in attracting attention and providing guidance to bystanders during a potential medical event. It should not be solely relied upon for emergency situations. In case of a medical emergency, always call your local emergency services immediately. The developer assumes no liability for the use or misuse of this application.
+**This is NOT a certified medical device.**
+It is an information tool to help attract attention and guide people helping you. **Always call 911 (or your local emergency number)** in a real medical emergency.
+
+---
 
 ## 🤝 Support the Mission
 
-This project is a labor of love, but it also comes with real costs—server hosting, API fees, and the coffee that keeps the development going late into the night.
+This project is a labor of love, but it costs money to keep online (servers, AI costs, and coffee!).
 
-**Why Donate?**
+If this tool gives you peace of mind, please consider buying me a coffee to keep it going.
 
-* **Infrastructure:** Help pay for the GitHub connection, Odoo hosting, and potential future backend services.
-* **AI Costs:** Support the usage of advanced AI (Gemini) for the "Aura" assistant.
-* **Sustainability:** Ensure this tool remains free and open for everyone who needs it.
+<a href="https://buymeacoffee.com/RamonRiosJr" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
 
-If this app has helped you or you believe in the mission, please consider supporting the development:
-
-**[☕ Buy Me a Coffee / Support Development](#)** _(Link coming soon)_
+**[☕ Click here to Buy Me a Coffee](https://buymeacoffee.com/RamonRiosJr)**
 
 ---
 
 ## 📄 License
 
-**GNU General Public License v3.0 (GPLv3) (Copyleft)** © 2025 Ramon Rios @ Coqui Cloud
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation.
-This ensures that any future improvements to this project **must also remain open and free** for the community.
+**GNU General Public License v3.0 (GPLv3)** © 2025 Ramon Rios @ Coqui Cloud
+This project is free and open for everyone.
