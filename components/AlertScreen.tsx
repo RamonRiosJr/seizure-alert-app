@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import type { Language, EmergencyContact } from '../types';
+import type { Language, EmergencyContact, AlertReport } from '../types';
 import { translations } from '../constants';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useUI } from '../contexts/UIContext';
 
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
@@ -57,15 +58,13 @@ const useBatteryStatus = () => {
 };
 // --- End Battery Status Hook ---
 
-interface AlertScreenProps {
-  onDeactivateAlert: (duration: number) => void;
-}
-
-const AlertScreen: React.FC<AlertScreenProps> = ({ onDeactivateAlert }) => {
+const AlertScreen: React.FC = () => {
+  const { setScreen } = useUI();
   const { language } = useLanguage();
   const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert();
   const { speak, isSpeaking } = useTTS();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
+  const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
   const t = translations[language];
   const [timer, setTimer] = useState(0);
   const { level, charging, isSupported } = useBatteryStatus();
@@ -136,6 +135,17 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ onDeactivateAlert }) => {
 
   const wasCallInitiated = !isAutoCallPending && autoCallCountdown === 0;
   const wasCallCancelled = !isAutoCallPending && autoCallCountdown > 0;
+
+  const handleDeactivate = () => {
+    const newReport: AlertReport = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      duration: timer,
+      notes: '',
+    };
+    setReports([newReport, ...reports]);
+    setScreen('ready');
+  };
 
   return (
     <>
@@ -289,7 +299,7 @@ const AlertScreen: React.FC<AlertScreenProps> = ({ onDeactivateAlert }) => {
 
         <footer className="p-4 sm:p-6 flex-shrink-0">
           <button
-            onClick={() => onDeactivateAlert(timer)}
+            onClick={handleDeactivate}
             className="w-full text-3xl font-bold py-4 px-8 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 transition-colors"
           >
             {t.imOkButton}

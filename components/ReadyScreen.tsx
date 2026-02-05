@@ -5,14 +5,11 @@ import { MessageCircle } from 'lucide-react';
 
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface ReadyScreenProps {
-  onActivateAlert: () => void;
-  onOpenChat: () => void;
-  onOpenAbout: () => void;
-}
+import { useUI } from '../contexts/UIContext';
 
-const ReadyScreen: React.FC<ReadyScreenProps> = ({ onActivateAlert, onOpenChat, onOpenAbout }) => {
+const ReadyScreen: React.FC = () => {
   const { language } = useLanguage();
+  const { setScreen, openModal } = useUI();
   const t = translations[language];
 
   return (
@@ -23,7 +20,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ onActivateAlert, onOpenChat, 
 
         <div className="relative">
           <button
-            onClick={onActivateAlert}
+            onClick={() => setScreen('alert')}
             className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 bg-red-600 text-white rounded-full animate-breathe transition-transform duration-150 ease-in-out active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-400"
             aria-label={t.emergencyButton}
           >
@@ -33,7 +30,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({ onActivateAlert, onOpenChat, 
 
           {/* Chatbot Trigger - 1 o'clock position */}
           <button
-            onClick={onOpenChat}
+            onClick={() => openModal('chat')}
             className="absolute top-0 right-0 transform -translate-y-2 translate-x-2 bg-blue-600 text-white p-0 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400 z-10 font-black text-lg"
             aria-label="Open AI Health Assistant"
           >
