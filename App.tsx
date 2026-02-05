@@ -10,6 +10,7 @@ import DisclaimerModal from './components/DisclaimerModal';
 import { useUI } from './contexts/UIContext';
 import TopRightControls from './components/TopRightControls';
 import UniversalLanguageSwitcher from './components/UniversalLanguageSwitcher';
+import { InstallPrompt } from './components/InstallPrompt';
 
 function App() {
   const {
@@ -83,6 +84,8 @@ function App() {
         onClose={closeModal}
         onOpenDisclosure={() => openModal('disclaimer')}
       />
+
+      <InstallPrompt />
     </div>
   );
 }
