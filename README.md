@@ -51,12 +51,21 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ---
 
-## 🚧 Status: Web App & Improvements
+## 🚧 Status: Mobile & PWA Compatibility (Active Fixes)
 
-**Current Status: Active Development**
+> **⚠️ IMPORTANT NOTE FOR MOBILE USERS:**
+> Currently, the **"Install App" (PWA)** feature may not be working correctly on some mobile devices (iPhone/Android). We are investigating this ASAP.
+>
+> **Temporary Workaround:**
+>
+> 1. Open the link in your browser (Chrome/Safari).
+> 2. **Bookmark the page** for quick access.
+> 3. Type "Seizure" in your browser bar to find it quickly.
 
-* **✅ PWA (Installed App):** Works great! Add it to your home screen for the best experience.
-* **⚠️ Web Capabilities:** Some advanced features (like background notifications without the app open) are still limited by Apple/Android web rules. We are working hard on solutions!
+**Current Status:**
+
+* **✅ Desktop Chrome:** Fully Functional.
+* **⚠️ Mobile Browsers:** The app itself works, but "Installation" to the home screen is currently experiencing issues.
 * **Performance:** Tested on iPhone 11+ and modern Androids.
 
 ---
