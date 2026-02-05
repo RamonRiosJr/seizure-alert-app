@@ -53,6 +53,24 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 * **PWA:** `vite-plugin-pwa`
 * **Storage:** LocalStorage (Privacy-first, zero backend)
 
+* **Storage:** LocalStorage (Privacy-first, zero backend)
+* **Privacy:** No tracking, cookies, or external servers.
+
+---
+
+## 🔒 Privacy & HIPAA Transparency
+
+**"Local First, Privacy Always."**
+
+This application is built with a **Local-First Architecture**.
+
+* **No Databases:** All data (Contacts, Patient Info, Logs) lives exclusively in your browser's `localStorage` on your physical device.
+* **No Tracking:** We do not use Google Analytics, Facebook Pixels, or any tracking cookies.
+* **HIPAA Compliant Design:** Since no Personally Identifiable Information (PII) is transmitted to our servers, your medical data never leaves your control.
+* **Exceptions:**
+  * **AI Assistant:** When using the "Aura" Chatbot (optional), your text/audio queries are sent transiently to Google Gemini API for processing. No personal data is stored on our end.
+  * **TTS:** Text-to-Speech may use Google Cloud if the native browser voice is unavailable.
+
 ---
 
 ## ⚠️ Medical Disclaimer
