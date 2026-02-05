@@ -1,6 +1,6 @@
 
 import { useState, useCallback, useRef } from 'react';
-import { GoogleGenAI, Modality } from '@google/genai';
+// import { GoogleGenAI, Modality } from '@google/genai'; // Removed for simplification
 import type { Language } from '../types';
 
 // Helper functions for audio decoding
@@ -70,81 +70,12 @@ export const useTTS = () => {
     window.speechSynthesis.speak(utterance);
   }, []);
 
-  const speak = useCallback(async (text: string, language: Language) => {
-    setIsSpeaking(true);
-    setError(null);
-
-    if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-      audioContextRef.current.close();
-    }
-
-    let apiKey: string | null = null;
-    try {
-      const keyItem = localStorage.getItem('gemini_api_key');
-      if (keyItem) {
-        apiKey = JSON.parse(keyItem);
-      }
-    } catch (e) {
-      console.error("Could not parse API Key from localStorage", e);
-    }
-
-    // FALLBACK: If no API key, use Native TTS immediately
-    if (!apiKey) {
-      console.warn("No API Key found. Falling back to native TTS.");
-      speakNative(text, language);
-      return;
-    }
-
-    try {
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-preview-tts",
-        contents: [{ parts: [{ text: text }] }],
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: { voiceName: language === 'es' ? 'Puck' : 'Kore' },
-            },
-          },
-        },
-      });
-
-      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-      if (!base64Audio) {
-        throw new Error('No audio data received from API.');
-      }
-
-      const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-      audioContextRef.current = outputAudioContext;
-      const outputNode = outputAudioContext.createGain();
-      outputNode.connect(outputAudioContext.destination);
-
-      const audioBuffer = await decodeAudioData(
-        decode(base64Audio),
-        outputAudioContext,
-        24000,
-        1,
-      );
-
-      const source = outputAudioContext.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(outputNode);
-      source.start();
-
-      source.onended = () => {
-        setIsSpeaking(false);
-        if (outputAudioContext.state !== 'closed') {
-          outputAudioContext.close();
-        }
-      };
-
-    } catch (e: any) {
-      console.error('TTS API Error:', e);
-      // FALLBACK: If API fails, try Native TTS
-      console.warn("API failed. Falling back to native TTS.");
-      speakNative(text, language);
-    }
+  /* 
+   * SIMPLIFIED: Using Native Browser TTS for reliability and offline support.
+   * Removing dependency on external AI SDKs for this critical feature.
+   */
+  const speak = useCallback((text: string, language: Language) => {
+    speakNative(text, language);
   }, [speakNative]);
 
   return { speak, isSpeaking, error };
