@@ -1,6 +1,6 @@
 
 import { useState, useCallback, useEffect } from 'react';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { ChatMessage, Language } from '../types';
 import { translations, getSystemPrompt } from '../constants';
 
@@ -42,20 +42,23 @@ export const useChat = (language: Language) => {
     }
 
     try {
-      const ai = new GoogleGenAI({ apiKey });
-      const chat = ai.chats.create({
+      // Use the Browser-compatible SDK pattern
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({
         model: 'gemini-1.5-flash',
-        config: {
-          systemInstruction: getSystemPrompt(language),
-        },
+        systemInstruction: getSystemPrompt(language),
       });
 
-      const result = await chat.sendMessageStream({ message: userMessage });
+      const chat = model.startChat({
+        history: [], // We could pass previous messages here if we wanted context
+      });
+
+      const result = await chat.sendMessageStream(userMessage);
 
       setMessages(prev => [...prev, { role: 'model', text: '' }]);
 
-      for await (const chunk of result) {
-        const chunkText = chunk.text;
+      for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
         setMessages(prevMessages => {
           const lastMessage = prevMessages[prevMessages.length - 1];
           if (lastMessage && lastMessage.role === 'model') {
@@ -69,7 +72,13 @@ export const useChat = (language: Language) => {
       }
     } catch (e: any) {
       console.error("Gemini API error:", e);
-      const errorMessage = "Sorry, I'm having trouble connecting. Please try again later.";
+      let errorMessage = "Sorry, connection failed. Please check your API Key in Settings.";
+      if (e.message?.includes('401') || e.message?.includes('API key')) {
+        errorMessage = "Error: Invalid API Key. Please update it in Settings.";
+      } else if (e.message?.includes('quota') || e.message?.includes('429')) {
+        errorMessage = "Error: Usage limit exceeded. Please try again later.";
+      }
+
       setError(errorMessage);
       setMessages(prev => {
         const lastMessage = prev[prev.length - 1];
