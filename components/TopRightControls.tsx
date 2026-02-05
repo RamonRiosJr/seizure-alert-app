@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, ClipboardList, AlertTriangle, Heart } from 'lucide-react';
+import { Settings, ClipboardList, AlertTriangle, Heart, Coffee } from 'lucide-react';
 import { translations } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
@@ -50,6 +50,15 @@ export default function TopRightControls({ theme, toggleTheme }: TopRightControl
             >
                 <Heart className="w-6 h-6 animate-pulse fill-rose-600 dark:fill-rose-400" />
             </button>
+            <a
+                href="https://buymeacoffee.com/RamonRiosJr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-[#FFDD00] text-black hover:bg-[#FFEA00]"
+                aria-label="Buy me a coffee"
+            >
+                <Coffee className="w-6 h-6" />
+            </a>
         </div>
     );
 }

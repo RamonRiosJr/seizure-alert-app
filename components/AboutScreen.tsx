@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink, Heart, Github, Globe, Cloud } from 'lucide-react';
+import { X, ExternalLink, Heart, Github, Globe, Cloud, Coffee } from 'lucide-react';
 import type { Language } from '../types';
 import { translations } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -46,6 +46,17 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
                         <p className="italic border-l-4 border-rose-200 pl-4 py-1">
                             "{t.aboutStory || "I had a near seizure... I was eating a sandwich and a coffee in the airport in Medellin, when suddenly it hit me. I didn't have a way to express myself, words went away. I pulled my phone but to call who? My girlfriend an hour away? I needed to communicate but my mind had thousands of thoughts and déjá vus, unable to find the word 'seizure'. I drank my coffee rapidly and the symptoms faded a bit and I was able to stabilize. All I needed in that moment was a Button to press and others to be able to identify what was happening."}"
                         </p>
+                        <div className="flex justify-end">
+                            <a
+                                href="https://buymeacoffee.com/RamonRiosJr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFDD00] text-black rounded-lg font-bold shadow-sm hover:bg-[#FFEA00] transition-colors text-sm"
+                            >
+                                <Coffee className="w-4 h-4" />
+                                Buy me a coffee
+                            </a>
+                        </div>
                     </div>
 
                     {/* Mission/Disclaimer */}
