@@ -147,6 +147,13 @@ const AlertScreen: React.FC = () => {
     setScreen('ready');
   };
 
+  // Auto-mute siren when speaking starts
+  useEffect(() => {
+    if (isSpeaking && !isMuted) {
+      toggleSound();
+    }
+  }, [isSpeaking, isMuted, toggleSound]);
+
   return (
     <>
       <div
