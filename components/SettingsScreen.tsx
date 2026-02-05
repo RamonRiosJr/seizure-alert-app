@@ -321,8 +321,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   )}
 
                   {!isInstallable && !isIOS && !isAppInstalled && (
-                    <div className="text-sm text-gray-500 italic">
-                      Installation option not available. Try using Chrome or Edge.
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-semibold mb-2">Can't see the install button?</p>
+                      <p>Try installing manually via your browser menu:</p>
+                      <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
+                        <li><span className="font-bold">Chrome (Android):</span> Tap <span className="font-bold">⋮</span> (three dots) &rarr; <span className="font-bold">Install App</span> or <span className="font-bold">Add to Home screen</span>.</li>
+                        <li><span className="font-bold">Safari (iOS):</span> Tap <span className="font-bold">Share</span> &rarr; <span className="font-bold">Add to Home Screen</span>.</li>
+                        <li><span className="font-bold">Desktop:</span> Look for an install icon in the address bar.</li>
+                      </ul>
                     </div>
                   )}
                 </>

@@ -17,9 +17,10 @@ export const usePWAInstall = () => {
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
         setIsAppInstalled(isStandalone);
 
-        // Detect iOS
+        // Detect iOS (including iPadOS which often reports as Mac)
         const userAgent = window.navigator.userAgent.toLowerCase();
-        const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
+        const isIosDevice = /iphone|ipad|ipod/.test(userAgent) ||
+            (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
         setIsIOS(isIosDevice && !isStandalone);
 
         const handleBeforeInstallPrompt = (e: Event) => {
