@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download } from 'lucide-react';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
@@ -311,11 +311,24 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   )}
 
                   {isIOS && (
-                    <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-                      <p className="font-bold mb-2">How to install on iOS:</p>
-                      <ol className="list-decimal list-inside space-y-1">
-                        <li>Tap the <span className="font-bold text-blue-500">Share</span> icon in your browser bar.</li>
-                        <li>Scroll down and tap <span className="font-bold text-gray-900 dark:text-white">"Add to Home Screen"</span>.</li>
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                      <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+                        <Smartphone className="w-5 h-5" />
+                        Install on iPhone / iPad:
+                      </h4>
+                      <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
+                        <li className="flex items-center gap-3">
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">1</span>
+                          <span>Tap the <Share className="w-4 h-4 inline mx-1" /> <strong>Share</strong> button in your browser toolbar.</span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">2</span>
+                          <span>Scroll down and tap <strong className="whitespace-nowrap">Add to Home Screen</strong> <PlusSquare className="w-4 h-4 inline mx-1" />.</span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">3</span>
+                          <span>Confirm by tapping <strong>Add</strong> in the top corner.</span>
+                        </li>
                       </ol>
                     </div>
                   )}
