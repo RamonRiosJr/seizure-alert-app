@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone } from 'lucide-react';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -58,6 +59,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [editingContactData, setEditingContactData] = useState<{ name: string; relation: string; phone: string } | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
+
+  const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
 
   const t = translations[language];
 
@@ -275,6 +278,55 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   {t.settingsSave}
                 </button>
               </div>
+            </div>
+          </section>
+
+
+          {/* App Installation Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Smartphone className="w-6 h-6" />
+              App Installation
+            </h3>
+            <div className="space-y-3">
+              {isAppInstalled ? (
+                <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
+                  <Check className="w-5 h-5" />
+                  <span className="font-medium">App is installed and offline-ready.</span>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Install this app on your device for quick access and offline capabilities.
+                  </p>
+
+                  {isInstallable && (
+                    <button
+                      onClick={installApp}
+                      className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+                    >
+                      <Download className="w-5 h-5" />
+                      Install App
+                    </button>
+                  )}
+
+                  {isIOS && (
+                    <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                      <p className="font-bold mb-2">How to install on iOS:</p>
+                      <ol className="list-decimal list-inside space-y-1">
+                        <li>Tap the <span className="font-bold text-blue-500">Share</span> icon in your browser bar.</li>
+                        <li>Scroll down and tap <span className="font-bold text-gray-900 dark:text-white">"Add to Home Screen"</span>.</li>
+                      </ol>
+                    </div>
+                  )}
+
+                  {!isInstallable && !isIOS && !isAppInstalled && (
+                    <div className="text-sm text-gray-500 italic">
+                      Installation option not available. Try using Chrome or Edge.
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </section>
 

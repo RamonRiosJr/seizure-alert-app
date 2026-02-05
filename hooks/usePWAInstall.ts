@@ -10,10 +10,17 @@ export const usePWAInstall = () => {
     const [isInstallable, setIsInstallable] = useState(false);
     const [isAppInstalled, setIsAppInstalled] = useState(false);
 
+    const [isIOS, setIsIOS] = useState(false);
+
     useEffect(() => {
         // Check if running in standalone mode (already installed)
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
         setIsAppInstalled(isStandalone);
+
+        // Detect iOS
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
+        setIsIOS(isIosDevice && !isStandalone);
 
         const handleBeforeInstallPrompt = (e: Event) => {
             // Prevent the mini-infobar from appearing on mobile
@@ -63,5 +70,5 @@ export const usePWAInstall = () => {
         setIsInstallable(false);
     }, []);
 
-    return { isInstallable, isAppInstalled, installApp, dismissPrompt };
+    return { isInstallable, isAppInstalled, installApp, dismissPrompt, isIOS };
 };
