@@ -29,18 +29,18 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait',
           icons: [
             {
-              src: 'Seizures_Alert_App.png',
+              src: 'Seizures_Alert_App_icon.png',
               sizes: 'any',
               type: 'image/png',
               purpose: 'any maskable'
             },
             {
-              src: 'Seizures_Alert_App.png',
+              src: 'Seizures_Alert_App_icon.png',
               sizes: '192x192',
               type: 'image/png'
             },
             {
-              src: 'Seizures_Alert_App.png',
+              src: 'Seizures_Alert_App_icon.png',
               sizes: '512x512',
               type: 'image/png'
             }
