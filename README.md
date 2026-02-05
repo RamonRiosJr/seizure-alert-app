@@ -20,6 +20,8 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ### 🆘 The "Big Red Button"
 
+<img width="583" height="1100" alt="image" src="https://github.com/user-attachments/assets/49b4f952-1211-457e-bffe-11b9838abb9c" />
+
 * **One-Tap Help:** Just press the big red button if you feel a seizure coming.
 * **Safe:** You have to slide to cancel, so you don't call by accident.
 * **Loud Alert:** It flashes the screen and makes a loud noise to get people's attention.
