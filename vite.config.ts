@@ -29,18 +29,18 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait',
           icons: [
             {
-              src: 'Seizures_Alert_App_icon.png',
+              src: 'Aura-Speaks-AI.png',
               sizes: 'any',
               type: 'image/png',
               purpose: 'any maskable'
             },
             {
-              src: 'Seizures_Alert_App_icon.png',
+              src: 'Aura-Speaks-AI.png',
               sizes: '192x192',
               type: 'image/png'
             },
             {
-              src: 'Seizures_Alert_App_icon.png',
+              src: 'Aura-Speaks-AI.png',
               sizes: '512x512',
               type: 'image/png'
             }
@@ -65,4 +65,4 @@ export default defineConfig(({ mode }) => {
     }
   };
 });
-// Cache bust: 2026-02-05-1500
+// Cache bust: 2026-02-05-1510-LogoUpdate
