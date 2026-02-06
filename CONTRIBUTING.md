@@ -1,94 +1,34 @@
-# Contributing to Seizure Alert App
+# Contributing to Aura Speaks AI
 
-Welcome! This document outlines the best practices for contributing to this project. Following these steps ensures a clean history and safe deployments.
+Thank you for your interest in contributing to **Aura Speaks AI**! We welcome contributions from everyone. This project is dedicated to providing a safe, reliable tool for seizure monitoring and communication.
 
-## 🌳 The "Feature Branch" Workflow
+## How to Contribute
 
-We use a feature branch workflow. This means you **never** work directly on the `main` branch. The `main` branch is for production-ready code only.
+### Reporting Bugs
 
-### 🚲 Cycle of Life for a Branch
+1. Check the [Issues](https://github.com/RamonRiosJr/seizure-alert-app/issues) page to see if the bug has already been reported.
+2. If not, open a new issue.
+3. Describe the bug clearly, including steps to reproduce it.
 
-1. **Create**: You make a new branch for a specific task.
-2. **Work**: You write code and commit changes to that branch.
-3. **Merge**: You submit a Pull Request (PR) to merge your branch into `main`.
-4. **Delete**: Once merged, you delete the feature branch.
+### Suggesting Enhancements
 
----
+1. Open an issue to discuss your idea first.
+2. Explain why this enhancement would be useful.
 
-## step-by-Step Guide
+### Pull Requests
 
-### 1. Start Fresh
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
-Before starting new work, always switch to `main` and get the latest updates.
+## Development Setup
 
-```bash
-git checkout main
-git pull origin main
-```
+1. Clone the repo: `git clone https://github.com/RamonRiosJr/seizure-alert-app.git`
+2. Install dependencies: `npm install`
+3. Run locally: `npm run dev`
 
-### 2. Create a Branch (Create as you go!)
+## Code Style
 
-Create a branch specifically for what you are about to do. Name it descriptively.
-
-* **New Feature:** `feature/add-login-button`
-* **Bug Fix:** `fix/white-screen-on-iphone`
-* **Documentation:** `docs/update-readme`
-
-```bash
-# Example
-git checkout -b feature/my-new-feature
-```
-
-### 3. Do Your Work
-
-Make your code changes. When you are ready to save them:
-
-```bash
-git add .
-git commit -m "Add new login button component"
-```
-
-### 4. Push to GitHub
-
-Upload your branch to GitHub.
-
-```bash
-git push -u origin feature/my-new-feature
-```
-
-### 5. Create a Pull Request (PR)
-
-1. Go to the repository on GitHub.
-2. You will often see a yellow banner saying "Compare & pull request". Click it.
-3. Review your changes and click **Create Pull Request**.
-4. If everything looks good, click **Merge pull request**, then **Confirm merge**.
-
-### 6. Cleanup (The important part!)
-
-Now that your code is safely in `main`, you don't need the feature branch anymore.
-
-**On GitHub:** Click the "Delete branch" button after merging.
-
-**On your computer:**
-
-```bash
-# Switch back to the main branch
-git checkout main
-
-# Download the update (which now includes your merged work!)
-git pull origin main
-
-# Delete the old feature branch from your computer
-git branch -d feature/my-new-feature
-```
-
----
-
-## 📝 Commit Messages
-
-Write clear messages that explain *what* checking changed.
-
-* ✅ `Fix typo in header`
-* ✅ `Add new contact form`
-* ❌ `fix`
-* ❌ `update`
+Please ensure your code is clean, commented, and follows the existing style (React + TypeScript).
