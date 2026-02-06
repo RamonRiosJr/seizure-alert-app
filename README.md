@@ -1,7 +1,7 @@
 # Aura Speaks AI 🗣️🚨
 
 <div align="center">
-  <img src="public/Seizures_Alert_App.png" alt="Aura Speaks AI Logo" width="180" />
+  <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="180" />
 </div>
 
 > **"When I cannot speak, Aura speaks for me."**
