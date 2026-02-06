@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Aura Speaks AI</string>
+    <string name="title_activity_main">Aura Speaks AI</string>
+    <string name="package_name">com.coquicloud.auraspeaks</string>
+    <string name="custom_url_scheme">com.coquicloud.auraspeaks</string>
+</resources>

@@ -1,16 +1,16 @@
-# Seizure Alert App 🚨
+# Aura Speaks AI 🗣️🚨
 
 <div align="center">
-  <img src="public/Seizures_Alert_App.png" alt="Seizure Alert App Logo" width="180" />
+  <img src="public/Seizures_Alert_App.png" alt="Aura Speaks AI Logo" width="180" />
 </div>
 
-> **"My Story, My Mission"**
+> **"When I cannot speak, Aura speaks for me."**
 >
 > _This app was born from a moment of helplessness. I had a near seizure while eating a sandwich and coffee at the airport in Medellin. Suddenly, it hit me. I lost my ability to speak. I pulled out my phone, but to call who? My girlfriend, an hour away? I needed to communicate, but my mind was flooded with thousands of thoughts and déjá vus, unable to find the word 'seizure'. I drank my coffee rapidly, and the symptoms faded slightly, stabilizing me. All I needed in that moment was a **Button** to press so others could identify what was happening and help me._
 
-**A simple, life-saving tool to help you alert others during a seizure. It provides clear instructions and an AI assistant to help those around you keep you safe.**
+**A simple, life-saving seizure diary and assistant. It alerts, logs, and speaks for you when you can't.**
 
-🌐 **Click here to open the App:** [Launch Seizure Alert](https://ramonriosjr.github.io/seizure-alert-app/)
+🌐 **Click here to open the App:** [Launch Aura Speaks AI](https://ramonriosjr.github.io/seizure-alert-app/)
 
 Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](https://ramonrios.net)
 
@@ -60,7 +60,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 >
 > 1. Open the link in your browser (Chrome/Safari).
 > 2. **Bookmark the page** for quick access.
-> 3. Type "Seizure" in your browser bar to find it quickly.
+> 3. Type "Aura Speaks" in your browser bar to find it quickly.
 
 **Current Status:**
 

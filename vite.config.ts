@@ -18,9 +18,9 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'seizure-alert-logo.svg'],
         manifest: {
-          name: 'Seizure Alert',
-          short_name: 'SeizureAlert',
-          description: 'Seizure Alert App by Coqui Cloud Dev Co. A free PWA safety tool for epilepsy monitoring.',
+          name: 'Aura Speaks AI',
+          short_name: 'AuraSpeaks',
+          description: 'Aura Speaks AI - When I cannot speak, Aura speaks for me. Seizure safety diary and assistant.',
           theme_color: '#b91c1c',
           background_color: '#ffffff',
           display: 'standalone',

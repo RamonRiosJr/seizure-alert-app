@@ -2,8 +2,8 @@ import type { Language } from './types';
 
 export const translations: Record<Language, any> = {
   en: {
-    title: 'Seizure Alert',
-    subtitle: 'Press the button below if you feel a seizure starting.',
+    title: 'Aura Speaks AI',
+    subtitle: 'When I cannot speak, Aura speaks for me.',
     emergencyButton: 'EMERGENCY',
     alertTitle: 'MEDICAL EMERGENCY',
     alertStatus: 'I am having a seizure. I am not in control.',
