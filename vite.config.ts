@@ -65,4 +65,4 @@ export default defineConfig(({ mode }) => {
     }
   };
 });
-// Cache bust: 2026-02-05-1510-LogoUpdate
+// Cache bust: 2026-02-05-1540-LayoutFix
