@@ -15,7 +15,7 @@ const ReadyScreen: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white text-center p-4">
       <main className="flex flex-col items-center justify-center flex-grow min-h-0 -mt-16">
-        <img src="Aura-Speaks-AI.png" alt={`${t.title} Logo`} className="w-56 h-56 md:w-72 md:h-72 mb-6 rounded-3xl shadow-lg" />
+        <img src="Aura-Speaks-AI.png" alt={`${t.title} Logo`} className="w-72 h-auto md:w-96 md:h-auto mb-6 rounded-3xl shadow-lg" />
         <p className="text-lg md:text-2xl mb-8 max-w-lg font-medium">{t.subtitle}</p>
 
         <div className="relative">
