@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare } from 'lucide-react';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud } from 'lucide-react';
+import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
@@ -392,6 +393,61 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               >
                 Start NFC Programming
               </button>
+            </div>
+          </section>
+
+          {/* Data Management Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Cloud className="w-6 h-6" />
+              Data Management
+            </h3>
+            <div className="space-y-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Export your data to a file for safekeeping, or transfer it to another device.
+                <br />
+                <span className="text-xs italic opacity-80">Note: Data is exported as a plain JSON file. Keep it safe.</span>
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  onClick={() => {
+                    const success = generateBackup();
+                    if (success) alert('Backup file generated! Please save it.');
+                    else alert('Backup generation failed.');
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                >
+                  <Download className="w-5 h-5" />
+                  Backup Data (Export)
+                </button>
+
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept=".json"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+
+                      if (confirm('WARNING: This will overwrite your current app data with the backup file. Are you sure?')) {
+                        const result = await restoreBackup(file);
+                        alert(result.message);
+                        if (result.success) {
+                          window.location.reload();
+                        }
+                      }
+                      // Reset input
+                      e.target.value = '';
+                    }}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors pointer-events-none">
+                    <Upload className="w-5 h-5" />
+                    Restore Data (Import)
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
         </main>
