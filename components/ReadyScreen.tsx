@@ -13,7 +13,7 @@ const ReadyScreen: React.FC = () => {
   const t = translations[language];
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white text-center p-4">
+    <div className="relative flex flex-col items-center justify-center h-dvh w-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white text-center p-4 overflow-hidden">
       <main className="flex flex-col items-center justify-center flex-grow min-h-0 -mt-16">
         <img src="Aura-Speaks-AI.png" alt={`${t.title} Logo`} className="w-72 h-auto md:w-96 md:h-auto mb-6 rounded-3xl shadow-lg" />
         <p className="text-lg md:text-2xl mb-8 max-w-lg font-medium">{t.subtitle}</p>
