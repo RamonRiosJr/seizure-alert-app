@@ -1,5 +1,7 @@
 # Aura Speaks AI 🗣️🚨
 
+[![Read in Spanish](https://img.shields.io/badge/Leer_en_Español-🇪🇸-red)](README.es.md)
+
 <div align="center">
   <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="180" />
 </div>
