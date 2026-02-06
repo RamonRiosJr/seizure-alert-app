@@ -3,7 +3,7 @@
 [![Read in Spanish](https://img.shields.io/badge/Leer_en_Español-🇵🇷-red)](README.es.md)
 
 <div align="center">
-  <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="180" />
+  <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="400" />
 </div>
 
 > **"When I cannot speak, Aura speaks for me."**
@@ -109,6 +109,23 @@ If this tool gives you peace of mind, please consider buying me a coffee to keep
 </a>
 
 **[☕ Click here to Buy Me a Coffee](https://buymeacoffee.com/RamonRiosJr)**
+
+---
+
+## ✨ Meet the Creator
+
+<div align="center">
+  <img src="public/Ramon Rios.png" alt="Ramon Rios" width="150" style="border-radius: 50%; border: 4px solid #b91c1c; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" />
+  
+  <br />
+  <br />
+
+  > **"We cannot control the challenges we face, but we can control how we respond. Let this tool be your voice when you need it most."**
+  >
+  > — _Ramon Rios Jr_
+</div>
+
+<br />
 
 ---
 
