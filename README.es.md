@@ -8,7 +8,7 @@
 
 > **"Cuando no puedo hablar, Aura habla por mí."**
 >
-> _Esta aplicación nació de un momento de impotencia. Tuve una casi convulsión mientras comía un sándwich y un café en el aeropuerto de Medellín. De repente, me golpeó. Perdí la capacidad de hablar. Saqué mi teléfono, pero ¿a quién llamar? ¿A mi novia a una hora de distancia? Necesitaba comunicarme, pero mi mente estaba inundada con miles de pensamientos y déjá vus, incapaz de encontrar la palabra 'convulsión'. Bebí mi café rápidamente y los síntomas se desvanecieron un poco, estabilizándome. Todo lo que necesitaba en ese momento era un **Botón** para presionar y que otros pudieran identificar lo que estaba sucediendo y ayudarme._
+> _Esta aplicación nació de un momento de impotencia. Tuve una casi convulsión mientras comía un sándwich y un café en el aeropuerto de Medellín. De repente, me golpeó. Perdí la capacidad de hablar. Saqué mi teléfono, pero ¿a quién llamar? ¿A mi novia a una hora de distancia? Necesitaba comunicarme, pero mi mente estaba inundada con miles de pensamientos y déjá vus, incapaz de encontrar la palabra 'convulsión'. Bebí mi café rápidamente y los síntomas se desvanecieron un poco, estabilizándome. Al sentirme mejor, abrí mi laptop justo ahí en el aeropuerto y comencé a prototipar esta aplicación. Ya no se trataba del café; en esa fracción de tiempo 'Aura', todo lo que buscamos es una forma de alzar la voz._
 
 **Un diario de convulsiones y asistente simple que salva vidas. Alerta, registra y habla por ti cuando tú no puedes.**
 
