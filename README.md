@@ -101,7 +101,7 @@ It is an information tool to help attract attention and guide people helping you
 
 ---
 
-## 🤝 Support the Mission
+## 🤝 Support My Mission
 
 This project is a labor of love, but it costs money to keep online (servers, AI costs, and coffee!).
 

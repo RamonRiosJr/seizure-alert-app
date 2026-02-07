@@ -145,7 +145,7 @@ export const translations: Record<Language, any> = {
     aboutTitle: "Mi Historia, Mi Misión",
     aboutOriginTitle: "El Incidente de Medellín",
     aboutStory: "Tuve una casi convulsión... Estaba comiendo un sándwich y un café en el aeropuerto de Medellín, cuando de repente me golpeó. No tenía forma de expresarme, las palabras se fueron. Saqué mi teléfono pero ¿a quién llamar? ¿A mi novia a una hora de distancia? Necesitaba comunicarme pero mi mente tenía miles de pensamientos y déjá vus, incapaz de encontrar la palabra 'convulsión'. Bebí mi café rápidamente y los síntomas se desvanecieron un poco y pude estabilizarme. Todo lo que necesitaba en ese momento era un Botón para presionar y que otros pudieran identificar lo que estaba sucediendo.",
-    aboutMissionTitle: "Nuestra Misión",
+    aboutMissionTitle: "Mi Misión",
     aboutMissionText: "Esta no es una aplicación médica, sino una herramienta para inspirar y ayudar potencialmente a otros. Por favor lea nuestra divulgación completa.",
     aboutReadDisclosure: "Leer Divulgación Completa",
     aboutConnectTitle: "Conecta con el Creador",
