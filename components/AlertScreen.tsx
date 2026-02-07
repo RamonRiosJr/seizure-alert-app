@@ -75,13 +75,13 @@ const AlertScreen: React.FC = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        window.speechSynthesis.cancel();
+        window.speechSynthesis?.cancel();
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.speechSynthesis.cancel(); // Safety cleanup
+      window.speechSynthesis?.cancel(); // Safety cleanup
     };
   }, []);
 

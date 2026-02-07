@@ -40,7 +40,7 @@ export const useTTS = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
 
   const speakNative = useCallback((text: string, language: Language) => {
-    if (!('speechSynthesis' in window)) {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
       setError('Text-to-speech not supported in this browser.');
       setIsSpeaking(false);
       return;
