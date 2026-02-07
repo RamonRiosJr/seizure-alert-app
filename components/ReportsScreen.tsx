@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { Language, AlertReport } from '../types';
 import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, Pencil, Check, ClipboardList, FileDown } from 'lucide-react';
+import { X, Trash2, Pencil, Check, ClipboardList, FileDown, Plus, Calendar, Activity, Zap } from 'lucide-react';
 import { generateSeizureReport } from '../utils/pdfGenerator';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -19,6 +19,60 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
   const t = translations[language];
 
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isManualEntryOpen, setIsManualEntryOpen] = useState(false);
+  const [newEntry, setNewEntry] = useState({
+    date: new Date().toISOString().slice(0, 16), // YYYY-MM-DDTHH:mm
+    duration: 0,
+    type: 'Grand Mal (Tonic-Clonic)',
+    triggers: [] as string[],
+    notes: ''
+  });
+
+  const seizureTypes = [
+    'Grand Mal (Tonic-Clonic)',
+    'Focal (Partial)',
+    'Absence (Petit Mal)',
+    'Atonic (Drop Attack)',
+    'Myoclonic',
+    'Unknown/ Other'
+  ];
+
+  const commonTriggers = [
+    'Stress', 'Missed Meds', 'Lack of Sleep', 'Flashing Lights', 'Alcohol', 'Heat/Dehydration', 'Menstrual Cycle', 'Illness/Fever'
+  ];
+
+  const handleManualSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const durationSeconds = Math.max(0, newEntry.duration * 60); // Convert minutes to seconds for consistency
+    const report: AlertReport = {
+      id: Date.now().toString(),
+      date: newEntry.date,
+      duration: durationSeconds,
+      notes: newEntry.notes,
+      type: newEntry.type,
+      triggers: newEntry.triggers,
+      description: 'Manual Entry'
+    };
+    setReports([report, ...reports]);
+    setIsManualEntryOpen(false);
+    // Reset form
+    setNewEntry({
+      date: new Date().toISOString().slice(0, 16),
+      duration: 0,
+      type: 'Grand Mal (Tonic-Clonic)',
+      triggers: [],
+      notes: ''
+    });
+  };
+
+  const toggleTrigger = (trigger: string) => {
+    setNewEntry(prev => ({
+      ...prev,
+      triggers: prev.triggers.includes(trigger)
+        ? prev.triggers.filter(t => t !== trigger)
+        : [...prev.triggers, trigger]
+    }));
+  };
 
   if (!isOpen) return null;
 
@@ -124,6 +178,13 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
             {t.reportsTitle}
           </h2>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsManualEntryOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">Log Event</span>
+            </button>
             {reports.length > 0 && (
               <button
                 onClick={handleExportClick}
@@ -139,6 +200,89 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
             </button>
           </div>
         </header>
+
+        {/* Manual Entry Modal */}
+        {isManualEntryOpen && (
+          <div className="absolute inset-0 bg-black/60 z-50 flex items-center justify-center p-4 rounded-lg overflow-y-auto">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-2xl w-full max-w-lg space-y-4 border border-gray-200 dark:border-gray-700 my-auto">
+              <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Log Past Seizure</h3>
+                <button onClick={() => setIsManualEntryOpen(false)}><X className="w-6 h-6 text-gray-500" /></button>
+              </div>
+
+              <form onSubmit={handleManualSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date & Time</label>
+                    <input
+                      type="datetime-local"
+                      value={newEntry.date}
+                      onChange={e => setNewEntry({ ...newEntry, date: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Duration (Minutes)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.5"
+                      value={newEntry.duration}
+                      onChange={e => setNewEntry({ ...newEntry, duration: parseFloat(e.target.value) })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Seizure Type</label>
+                  <select
+                    value={newEntry.type}
+                    onChange={e => setNewEntry({ ...newEntry, type: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+                  >
+                    {seizureTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Triggers (Select all that apply)</label>
+                  <div className="flex flex-wrap gap-2">
+                    {commonTriggers.map(trig => (
+                      <button
+                        key={trig}
+                        type="button"
+                        onClick={() => toggleTrigger(trig)}
+                        className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${newEntry.triggers.includes(trig)
+                          ? 'bg-indigo-100 border-indigo-500 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200'
+                          : 'bg-gray-100 border-gray-300 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400'
+                          }`}
+                      >
+                        {trig}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes / Description</label>
+                  <textarea
+                    value={newEntry.notes}
+                    onChange={e => setNewEntry({ ...newEntry, notes: e.target.value })}
+                    placeholder="Describe what happened..."
+                    className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+                    rows={3}
+                  />
+                </div>
+
+                <button type="submit" className="w-full py-3 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700">
+                  Save Entry
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
 
         <main className="flex-grow p-6 overflow-y-auto">
           {reports.length === 0 ? (
@@ -159,22 +303,39 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
                         <span className="font-semibold">{t.reportDurationLabel}:</span> {formattedTime(report.duration)}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <button
-                        onClick={() => handleStartEditing(report)}
-                        className="p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
-                        aria-label={t.editNotes}
-                      >
-                        <Pencil className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteReport(report.id)}
-                        className="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 hover:text-red-700 dark:hover:text-red-400"
-                        aria-label={t.deleteReport}
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
-                    </div>
+                  </div>
+
+                  {/* Medical Details Badges */}
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {report.type && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                        <Activity className="w-3 h-3" />
+                        {report.type}
+                      </span>
+                    )}
+                    {report.triggers && report.triggers.map((trig, i) => (
+                      <span key={i} className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+                        <Zap className="w-3 h-3" />
+                        {trig}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={() => handleStartEditing(report)}
+                      className="p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+                      aria-label={t.editNotes}
+                    >
+                      <Pencil className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteReport(report.id)}
+                      className="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 hover:text-red-700 dark:hover:text-red-400"
+                      aria-label={t.deleteReport}
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
                     {/* Notes Section - Intentionally keeping user logic same */}
@@ -207,10 +368,11 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
                 </div>
               ))}
             </div>
-          )}
-        </main>
-      </div>
-    </div>
+          )
+          }
+        </main >
+      </div >
+    </div >
   );
 };
 

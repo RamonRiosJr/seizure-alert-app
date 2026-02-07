@@ -131,3 +131,12 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Android/Capacitor
+android/app/build
+android/.gradle
+android/build
+android/captures
+android/.idea
+android/app/src/main/assets/public
+
