@@ -51,7 +51,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
                                 href="https://buymeacoffee.com/RamonRiosJr"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFDD00] text-black rounded-lg font-bold shadow-sm hover:bg-[#FFEA00] transition-colors text-sm"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFDD00] text-black rounded-lg font-bold shadow-sm hover:bg-[#FFEA00] transition-colors text-sm animate-pulse"
                             >
                                 <Coffee className="w-4 h-4" />
                                 Buy me a coffee

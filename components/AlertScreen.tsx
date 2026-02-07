@@ -4,7 +4,7 @@ import { translations } from '../constants';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check } from 'lucide-react';
+import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check, Info } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 
@@ -65,9 +65,25 @@ const AlertScreen: React.FC = () => {
   const { speak, isSpeaking } = useTTS();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
+  const [patientInfo] = useLocalStorage<any>('patient_info', {});
   const t = translations[language];
   const [timer, setTimer] = useState(0);
   const { level, charging, isSupported } = useBatteryStatus();
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+
+  // Stop audio when app is backgrounded
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        window.speechSynthesis.cancel();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.speechSynthesis.cancel(); // Safety cleanup
+    };
+  }, []);
 
   const [statusMessage, setStatusMessage] = useState(t.alertStatus);
 
@@ -179,12 +195,64 @@ const AlertScreen: React.FC = () => {
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">{t.alertTitle}</h1>
 
           {/* Status Message - Responsive, no editing */}
-          <div className="w-full max-w-4xl mx-auto mt-2 px-4">
-            <p className="text-lg md:text-2xl font-medium text-center leading-tight break-words line-clamp-3">
+          <div className="w-full max-w-4xl mx-auto mt-2 px-4 relative z-10">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsInfoModalOpen(true);
+              }}
+              className="flex items-center justify-center gap-2 mx-auto bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-colors mb-2 backdrop-blur-sm border border-white/10"
+            >
+              <Info className="w-5 h-5 text-sky-300" />
+              <span className="text-lg md:text-xl font-bold text-sky-200 underline decoration-sky-400/50 underline-offset-4">
+                {patientInfo.name || t.settingsPatientName || "Patient Info"}
+              </span>
+            </button>
+            <p className="text-lg md:text-2xl font-medium text-center leading-tight break-words line-clamp-3 opacity-90">
               {statusMessage || t.alertStatus}
             </p>
           </div>
         </header>
+
+        {/* Patient Info Modal */}
+        {isInfoModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200" onClick={(e) => { e.stopPropagation(); setIsInfoModalOpen(false); }}>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-gray-700" onClick={e => e.stopPropagation()}>
+              <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <Info className="w-6 h-6 text-sky-500" />
+                  {t.settingsPatientInfo}
+                </h2>
+                <button onClick={() => setIsInfoModalOpen(false)} className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+                  <X className="w-6 h-6 text-gray-500" />
+                </button>
+              </div>
+              <div className="p-6 space-y-6">
+                <div>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t.settingsPatientName}</label>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{patientInfo.name || "N/A"}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t.settingsBloodType}</label>
+                  <p className="text-2xl font-bold text-red-500">{patientInfo.bloodType || "N/A"}</p>
+                </div>
+                <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-100 dark:border-red-800">
+                  <label className="text-sm font-semibold text-red-800 dark:text-red-300 uppercase tracking-wider mb-1 block">
+                    {t.settingsMedicalConditions}
+                  </label>
+                  <p className="text-lg font-medium text-gray-900 dark:text-white leading-relaxed">
+                    {patientInfo.medicalConditions || "None listed"}
+                  </p>
+                </div>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 flex justify-end">
+                <button onClick={() => setIsInfoModalOpen(false)} className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <main className="flex-grow flex flex-col items-center justify-start px-4 py-2 w-full overflow-y-auto min-h-0">
           <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
