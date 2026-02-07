@@ -22,7 +22,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ### 🆘 The "Big Red Button"
 
-<img width="583" height="1100" alt="image" src="https://github.com/user-attachments/assets/49b4f952-1211-457e-bffe-11b9838abb9c" />
+<img width="602" height="1127" alt="image" src="https://github.com/user-attachments/assets/8538a33a-df7c-4736-8268-b4ad098e05be" />
 
 * **One-Tap Help:** Just press the big red button if you feel a seizure coming.
 * **Safe:** You have to slide to cancel, so you don't call by accident.
@@ -30,6 +30,9 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 * **Automatic Call:** If you don't stop it, it calls your emergency contact automatically after 30 seconds.
 
 ### 🏥 Helping the Helpers (Bystanders)
+
+<img width="604" height="1129" alt="image" src="https://github.com/user-attachments/assets/9bbe9509-b0a7-49f1-9d2e-548052609eaa" />
+<img width="599" height="1135" alt="image" src="https://github.com/user-attachments/assets/be8e49b6-5b3d-4b18-a4c4-5f3fb033f113" />
 
 * **Talks for You:** The phone speaks out loud, telling people exactly what to do (like "Turn them on their side").
 * **Works Offline:** Even if you have no internet, the voice instructions still work.
