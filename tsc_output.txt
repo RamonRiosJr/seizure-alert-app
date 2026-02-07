@@ -1,2 +1,0 @@
-components/ErrorBoundary.tsx(49,21): error TS2339: Property 'props' does not exist on type 'ErrorBoundary'.
-hooks/useTTS.ts(3,39): error TS2307: Cannot find module '@google/genai' or its corresponding type declarations.
