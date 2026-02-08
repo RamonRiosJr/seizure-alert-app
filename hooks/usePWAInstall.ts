@@ -9,8 +9,8 @@ export const usePWAInstall = () => {
     const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
     const [isInstallable, setIsInstallable] = useState(false);
     const [isAppInstalled, setIsAppInstalled] = useState(false);
-
     const [isIOS, setIsIOS] = useState(false);
+    const [showPrompt, setShowPrompt] = useState(false);
 
     useEffect(() => {
         // Check if running in standalone mode (already installed)
@@ -21,7 +21,22 @@ export const usePWAInstall = () => {
         const userAgent = window.navigator.userAgent.toLowerCase();
         const isIosDevice = /iphone|ipad|ipod/.test(userAgent) ||
             (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
-        setIsIOS(isIosDevice && !isStandalone);
+
+        // Only consider it "iOS" if it's NOT already in standalone mode
+        const isIOSBrowser = isIosDevice && !isStandalone;
+        setIsIOS(isIOSBrowser);
+
+        // Check if user has previously dismissed the prompt in this session
+        const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
+
+        if (isStandalone) {
+            setShowPrompt(false);
+        } else if (!hasDismissed) {
+            // For iOS, we show the prompt immediately if not installed
+            if (isIOSBrowser) {
+                setShowPrompt(true);
+            }
+        }
 
         const handleBeforeInstallPrompt = (e: Event) => {
             // Prevent the mini-infobar from appearing on mobile
@@ -29,6 +44,10 @@ export const usePWAInstall = () => {
             // Stash the event so it can be triggered later.
             setDeferredPrompt(e as BeforeInstallPromptEvent);
             setIsInstallable(true);
+
+            if (!isStandalone && !hasDismissed) {
+                setShowPrompt(true);
+            }
             console.log('👋 PWA Install Prompt captured!');
         };
 
@@ -36,6 +55,7 @@ export const usePWAInstall = () => {
             setIsAppInstalled(true);
             setIsInstallable(false);
             setDeferredPrompt(null);
+            setShowPrompt(false);
             console.log('✅ PWA Installed successfully');
         };
 
@@ -50,7 +70,9 @@ export const usePWAInstall = () => {
 
     const installApp = useCallback(async () => {
         if (!deferredPrompt) {
-            console.warn('No installation prompt available');
+            // If on iOS, we can't programmatically install. 
+            // The UI should handle showing instructions instead.
+            console.warn('No installation prompt available (or on iOS)');
             return;
         }
 
@@ -64,12 +86,20 @@ export const usePWAInstall = () => {
         // We've used the prompt, and can't use it again, throw it away
         setDeferredPrompt(null);
         setIsInstallable(false);
+        setShowPrompt(false);
     }, [deferredPrompt]);
 
     const dismissPrompt = useCallback(() => {
-        setDeferredPrompt(null);
-        setIsInstallable(false);
+        setShowPrompt(false);
+        sessionStorage.setItem('pwa-prompt-dismissed', 'true');
     }, []);
 
-    return { isInstallable, isAppInstalled, installApp, dismissPrompt, isIOS };
+    return {
+        isInstallable,
+        isAppInstalled,
+        installApp,
+        dismissPrompt,
+        isIOS,
+        showPrompt
+    };
 };
