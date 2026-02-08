@@ -1,6 +1,6 @@
 import React from 'react';
 import { Settings, ClipboardList, AlertTriangle, Heart, Coffee } from 'lucide-react';
-import { translations } from '../constants';
+import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 
@@ -12,7 +12,7 @@ interface TopRightControlsProps {
 export default function TopRightControls({ theme, toggleTheme }: TopRightControlsProps) {
     const { language } = useLanguage();
     const { openModal } = useUI();
-    const t = translations[language];
+    const { t } = useTranslation();
 
     const buttonClasses = 'p-3 rounded-full shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-105 active:scale-95';
 
@@ -24,7 +24,7 @@ export default function TopRightControls({ theme, toggleTheme }: TopRightControl
                 <button
                     onClick={() => openModal('about')}
                     className="p-3 rounded-full shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-rose-500 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 hover:bg-rose-200 dark:hover:bg-rose-900/50 hover:scale-105 active:scale-95"
-                    aria-label={t.aboutTitle || "Our Story"}
+                    aria-label={t('aboutTitle') || "Our Story"}
                 >
                     <Heart className="w-7 h-7 animate-pulse fill-rose-600 dark:fill-rose-400" />
                 </button>
@@ -54,7 +54,7 @@ export default function TopRightControls({ theme, toggleTheme }: TopRightControl
             <button
                 onClick={() => openModal('reports')}
                 className={buttonClasses}
-                aria-label={t.openReports}
+                aria-label={t('openReports')}
             >
                 <ClipboardList className="w-6 h-6" />
             </button>

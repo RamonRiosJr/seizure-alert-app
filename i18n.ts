@@ -14,7 +14,7 @@ i18n
             escapeValue: false, // React already safes from xss
         },
         backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json',
+            loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
         },
     });
 

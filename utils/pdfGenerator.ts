@@ -1,16 +1,16 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { AlertReport, Language } from '../types';
-import { translations } from '../constants';
+import i18n from '@/i18n';
 
 export const generateSeizureReport = (reports: AlertReport[], language: Language) => {
-    const t = translations[language];
+    const t = (key: string) => i18n.t(key, { lng: language });
     const doc = new jsPDF();
 
     // Header - Logo & Title
     // Ideally load image here, but for now simple title enhancement
     doc.setFontSize(22);
-    doc.text(t.title || 'Seizure Alert', 14, 20);
+    doc.text(t('title') || 'Seizure Alert', 14, 20);
 
     doc.setFontSize(14);
     doc.text('Seizure Report', 14, 30);

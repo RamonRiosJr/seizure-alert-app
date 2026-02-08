@@ -140,3 +140,7 @@ android/captures
 android/.idea
 android/app/src/main/assets/public
 
+# Playwright
+test-results/
+playwright-report/
+

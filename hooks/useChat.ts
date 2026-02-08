@@ -1,18 +1,20 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { useTranslation } from 'react-i18next';
 import type { ChatMessage, Language } from '../types';
-import { translations, getSystemPrompt } from '../constants';
+import { getSystemPrompt } from '../constants';
 
 export const useChat = (language: Language) => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setMessages([{ role: 'model', text: translations[language].chatInitialGreeting }]);
-  }, [language]);
+    setMessages([{ role: 'model', text: t('chatInitialGreeting') }]);
+  }, [language, t]);
 
   const sendMessage = useCallback(async (userMessage: string, priority?: 'high' | 'medium' | 'low') => {
     if (!userMessage.trim()) return;

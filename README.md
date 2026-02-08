@@ -70,7 +70,8 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 **Current Status:**
 
 * **✅ Desktop Chrome:** Fully Functional.
-* **⚠️ Mobile Browsers:** The app itself works, but "Installation" to the home screen is currently experiencing issues.
+* **✅ Mobile Browsers:** PWA Installation fixed! You can now install the app to your home screen on iOS and Android.
+* **✅ Multi-Language:** Full English and Spanish support.
 * **Performance:** Tested on iPhone 11+ and modern Androids.
 
 ---
