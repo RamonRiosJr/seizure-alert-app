@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Language } from '../types';
 
 interface LanguageContextType {
@@ -9,15 +10,19 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // Initialize from localStorage or default to 'en'
-    const [language, setLanguage] = useState<Language>(() => {
-        const saved = localStorage.getItem('language');
-        return (saved === 'en' || saved === 'es') ? saved : 'en';
-    });
+    const { i18n } = useTranslation();
+
+    // Ensure language is typed correctly. i18n.language might contain region codes (en-US)
+    // For this app, we simply cast or normalize if needed. 
+    // Our constants.ts had 'en' | 'es'. i18next might detect 'es-ES'.
+    // Simple normalization:
+    const language = (i18n.language?.split('-')[0] as Language) || 'en';
+
+    const setLanguage = (lang: Language) => {
+        i18n.changeLanguage(lang);
+    };
 
     useEffect(() => {
-        localStorage.setItem('language', language);
-        // Update HTML lang attribute for accessibility
         document.documentElement.lang = language;
     }, [language]);
 

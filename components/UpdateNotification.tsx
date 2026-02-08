@@ -2,8 +2,10 @@ import React from 'react';
 // @ts-ignore - Vite virtual module
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { RefreshCw, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const UpdateNotification: React.FC = () => {
+    const { t } = useTranslation();
     const {
         needRefresh: [needRefresh, setNeedRefresh],
         updateServiceWorker,
@@ -35,16 +37,16 @@ export const UpdateNotification: React.FC = () => {
                     <div>
                         <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
                             <RefreshCw className="w-4 h-4 text-blue-500 animate-spin-slow" />
-                            Update Available
+                            {t('updateAvailable')}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                            A new version of the app is available. Reload to update.
+                            {t('updateDesc')}
                         </p>
                     </div>
                     <button
                         onClick={close}
                         className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                        aria-label="Close"
+                        aria-label={t('closeButton')}
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -55,7 +57,7 @@ export const UpdateNotification: React.FC = () => {
                         onClick={() => updateServiceWorker(true)}
                         className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-lg shadow-blue-500/20 transition-all active:scale-95"
                     >
-                        Reload
+                        {t('updateReload')}
                     </button>
                 </div>
             </div>

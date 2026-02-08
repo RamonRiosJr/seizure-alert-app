@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Language, EmergencyContact, AlertReport } from '../types';
-import { translations } from '../constants';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check, Info } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
+import { useTranslation } from 'react-i18next';
 
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
@@ -63,10 +63,11 @@ const AlertScreen: React.FC = () => {
   const { language } = useLanguage();
   const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert();
   const { speak, isSpeaking } = useTTS();
+  const { t } = useTranslation();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
   const [patientInfo] = useLocalStorage<any>('patient_info', {});
-  const t = translations[language];
+
   const [timer, setTimer] = useState(0);
   const { level, charging, isSupported } = useBatteryStatus();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -85,7 +86,7 @@ const AlertScreen: React.FC = () => {
     };
   }, []);
 
-  const [statusMessage, setStatusMessage] = useState(t.alertStatus);
+  const [statusMessage, setStatusMessage] = useState(t('alertStatus'));
 
   const primaryContact = contacts.length > 0 ? contacts[0] : null;
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
@@ -98,11 +99,8 @@ const AlertScreen: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
-    const STATUS_MESSAGE_KEY = `seizure_alert_status_message_${language}`;
-    const savedMessage = localStorage.getItem(STATUS_MESSAGE_KEY);
-    const initialMessage = savedMessage || t.alertStatus;
-    setStatusMessage(initialMessage);
-  }, [language, t.alertStatus]);
+    setStatusMessage(t('alertStatus'));
+  }, [language, t]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -145,7 +143,8 @@ const AlertScreen: React.FC = () => {
   };
 
   const handleSpeak = () => {
-    const textToRead = `${t.ttsIntro} ${t.instructions.join('. ')}`;
+    const instructions = (t('instructions', { returnObjects: true }) as string[]);
+    const textToRead = `${t('ttsIntro')} ${instructions.join('. ')}`;
     speak(textToRead, language);
   };
 
@@ -186,13 +185,13 @@ const AlertScreen: React.FC = () => {
                 toggleSound();
               }}
               className="p-2 rounded-full bg-black/20 hover:bg-black/40"
-              aria-label={isMuted ? t.sirenUnmute : t.sirenMute}
+              aria-label={isMuted ? t('sirenUnmute') : t('sirenMute')}
             >
               {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
             </button>
           </div>
           <TriangleAlert className="w-12 h-12 mx-auto mb-1" />
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">{t.alertTitle}</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">{t('alertTitle')}</h1>
 
           {/* Status Message - Responsive, no editing */}
           <div className="w-full max-w-4xl mx-auto mt-2 px-4 relative z-10">
@@ -205,11 +204,11 @@ const AlertScreen: React.FC = () => {
             >
               <Info className="w-5 h-5 text-sky-300" />
               <span className="text-lg md:text-xl font-bold text-sky-200 underline decoration-sky-400/50 underline-offset-4">
-                {patientInfo.name || t.settingsPatientName || "Patient Info"}
+                {patientInfo.name || t('settingsPatientName') || "Patient Info"}
               </span>
             </button>
             <p className="text-lg md:text-2xl font-medium text-center leading-tight break-words line-clamp-3 opacity-90">
-              {statusMessage || t.alertStatus}
+              {statusMessage || t('alertStatus')}
             </p>
           </div>
         </header>
@@ -221,7 +220,7 @@ const AlertScreen: React.FC = () => {
               <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <Info className="w-6 h-6 text-sky-500" />
-                  {t.settingsPatientInfo}
+                  {t('settingsPatientInfo')}
                 </h2>
                 <button onClick={() => setIsInfoModalOpen(false)} className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
                   <X className="w-6 h-6 text-gray-500" />
@@ -229,16 +228,16 @@ const AlertScreen: React.FC = () => {
               </div>
               <div className="p-6 space-y-6">
                 <div>
-                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t.settingsPatientName}</label>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settingsPatientName')}</label>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{patientInfo.name || "N/A"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t.settingsBloodType}</label>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settingsBloodType')}</label>
                   <p className="text-2xl font-bold text-red-500">{patientInfo.bloodType || "N/A"}</p>
                 </div>
                 <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-100 dark:border-red-800">
                   <label className="text-sm font-semibold text-red-800 dark:text-red-300 uppercase tracking-wider mb-1 block">
-                    {t.settingsMedicalConditions}
+                    {t('settingsMedicalConditions')}
                   </label>
                   <p className="text-lg font-medium text-gray-900 dark:text-white leading-relaxed">
                     {patientInfo.medicalConditions || "None listed"}
@@ -257,7 +256,7 @@ const AlertScreen: React.FC = () => {
         <main className="flex-grow flex flex-col items-center justify-start px-4 py-2 w-full overflow-y-auto min-h-0">
           <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
             <div className="flex items-center gap-3 border-r border-white/20 pr-4">
-              <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t.durationLabel}</span>
+              <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t('durationLabel')}</span>
               <span className="text-4xl md:text-5xl font-mono font-bold tracking-widest">{formattedTime(timer)}</span>
             </div>
 
@@ -274,13 +273,13 @@ const AlertScreen: React.FC = () => {
               {isAutoCallPending && (
                 <div>
                   <p className="text-lg">
-                    {t.autoCalling} {primaryContact.name} ({primaryContact.relation}) {t.inSeconds} <span className="font-bold text-xl">{autoCallCountdown}{t.secondsShort}</span>
+                    {t('autoCalling')} {primaryContact.name} ({primaryContact.relation}) {t('inSeconds')} <span className="font-bold text-xl">{autoCallCountdown}{t('secondsShort')}</span>
                   </p>
 
                   {/* Slide to Cancel UI */}
                   <div className="relative w-full max-w-xs h-14 bg-gray-700 rounded-full mt-4 overflow-hidden select-none mx-auto touch-none">
                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold pointer-events-none uppercase tracking-wider opacity-50 text-sm">
-                      {t.slideToCancel}
+                      {t('slideToCancel')}
                     </div>
                     <div
                       className="absolute left-1 top-1 bottom-1 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing"
@@ -322,12 +321,12 @@ const AlertScreen: React.FC = () => {
               )}
               {wasCallCancelled && (
                 <p className="text-lg opacity-70">
-                  {t.callCancelled}
+                  {t('callCancelled')}
                 </p>
               )}
               {wasCallInitiated && (
                 <p className="text-lg text-green-400">
-                  {t.callInitiated}
+                  {t('callInitiated')}
                 </p>
               )}
             </div>
@@ -335,7 +334,7 @@ const AlertScreen: React.FC = () => {
 
           <div className="w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-6 my-2">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-3xl font-bold">{t.instructionsTitle}</h2>
+              <h2 className="text-3xl font-bold">{t('instructionsTitle')}</h2>
               <button
                 onClick={handleSpeak}
                 disabled={isSpeaking}
@@ -346,14 +345,14 @@ const AlertScreen: React.FC = () => {
               </button>
             </div>
             <ol className="space-y-3 list-decimal list-inside text-lg md:text-xl">
-              {t.instructions.map((inst: string, index: number) => (
+              {(t('instructions', { returnObjects: true }) as string[])?.map((inst: string, index: number) => (
                 <li key={index}>{inst}</li>
               ))}
             </ol>
           </div>
 
           <div className="w-full max-w-2xl bg-black bg-opacity-20 rounded-lg my-2 p-4">
-            <h3 className="text-2xl font-bold mb-3">{t.emergencyContacts}</h3>
+            <h3 className="text-2xl font-bold mb-3">{t('emergencyContacts')}</h3>
             {contacts.length > 0 ? (
               <div className="space-y-2">
                 {contacts.map(contact => (
@@ -367,7 +366,7 @@ const AlertScreen: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-lg opacity-80 text-center py-2">{t.noContactsMessage}</p>
+              <p className="text-lg opacity-80 text-center py-2">{t('noContactsMessage')}</p>
             )}
           </div>
         </main>
@@ -377,7 +376,7 @@ const AlertScreen: React.FC = () => {
             onClick={handleDeactivate}
             className="w-full text-3xl font-bold py-4 px-8 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 transition-colors"
           >
-            {t.imOkButton}
+            {t('imOkButton')}
           </button>
         </footer>
       </div>

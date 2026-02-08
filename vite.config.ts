@@ -62,6 +62,12 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       target: 'es2015'
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/test/setup.ts',
+      css: true,
     }
   };
 });

@@ -1,9 +1,11 @@
 import React from 'react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 import { Download, X, Share, PlusSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const InstallPrompt: React.FC = () => {
     const { isInstallable, installApp, dismissPrompt, isIOS, showPrompt } = usePWAInstall();
+    const { t } = useTranslation();
 
     if (!showPrompt) return null;
 
@@ -20,26 +22,26 @@ export const InstallPrompt: React.FC = () => {
 
                 <div className="flex-grow text-center md:text-left">
                     <h3 className="font-bold text-gray-900 dark:text-white mb-1">
-                        Install Seizure Alert App
+                        {t('installTitle')}
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
                         {isIOS
-                            ? "Install this app on your home screen for quick access and offline use."
-                            : "Get the free, local-first app for offline access and better performance."
+                            ? t('installDescIOS')
+                            : t('installDescAndroid')
                         }
                     </p>
 
                     {isIOS && (
                         <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex flex-col items-center md:items-start gap-1">
                             <div className="flex items-center gap-1">
-                                <span>1. Tap</span>
+                                <span>{t('installStep1')}</span>
                                 <Share className="w-4 h-4 inline-block" />
-                                <span>Share</span>
+                                <span>{t('installShare')}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                                <span>2. Select</span>
+                                <span>{t('installStep2')}</span>
                                 <PlusSquare className="w-4 h-4 inline-block" />
-                                <span>Add to Home Screen</span>
+                                <span>{t('installAddToHome')}</span>
                             </div>
                         </div>
                     )}
@@ -51,14 +53,14 @@ export const InstallPrompt: React.FC = () => {
                             onClick={installApp}
                             className="flex-1 md:flex-none py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-sm shadow-lg shadow-red-500/30 transition-all active:scale-95 whitespace-nowrap"
                         >
-                            Install
+                            {t('installButton')}
                         </button>
                     )}
                     <button
                         onClick={dismissPrompt}
                         className="flex-1 md:flex-none py-2 px-3 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 whitespace-nowrap"
                     >
-                        {isIOS ? "Close" : "Not Now"}
+                        {isIOS ? t('closeButton') : t('notNowButton')}
                     </button>
                 </div>
 
