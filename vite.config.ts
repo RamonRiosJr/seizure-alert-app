@@ -44,6 +44,15 @@ export default defineConfig(({ mode }) => {
               sizes: '512x512',
               type: 'image/png'
             }
+          ],
+          shortcuts: [
+            {
+              name: "Emergency Alert",
+              short_name: "Emergency",
+              description: "Instant Seizure Alert",
+              url: "/seizure-alert-app/?mode=emergency",
+              icons: [{ src: "Aura-Speaks-AI.png", sizes: "192x192" }]
+            }
           ]
         },
         devOptions: {

@@ -29,10 +29,10 @@ function App() {
     setScreen('alert');
   }, [setScreen]);
 
-  // Check for emergency URL trigger (NFC/QR code)
+  // Check for emergency URL trigger (NFC/QR code/Shortcuts)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('emergency') === 'true') {
+    if (params.get('emergency') === 'true' || params.get('mode') === 'emergency') {
       activateAlert();
     }
   }, [activateAlert]);
