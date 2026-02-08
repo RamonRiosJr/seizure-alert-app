@@ -11,6 +11,7 @@ import { useUI } from './contexts/UIContext';
 import TopRightControls from './components/TopRightControls';
 import UniversalLanguageSwitcher from './components/UniversalLanguageSwitcher';
 import { InstallPrompt } from './components/InstallPrompt';
+import { UpdateNotification } from './components/UpdateNotification';
 
 function App() {
   const {
@@ -86,6 +87,7 @@ function App() {
       />
 
       <InstallPrompt />
+      <UpdateNotification />
     </div>
   );
 }
