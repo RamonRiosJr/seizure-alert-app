@@ -76,6 +76,19 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ---
 
+## 💻 Tech Stack (Recruiter Ready)
+
+Built with modern, production-grade tools to ensure speed, safety, and scalability.
+
+* **Core:** React 18, TypeScript, Vite
+* **Styling:** Tailwind CSS, PostCSS, Lucide React (Icons)
+* **State & Internationalization:** React Context API, i18next (English/Spanish)
+* **PWA (Progressive Web App):** Vite PWA Plugin, Service Workers (Offline Capability)
+* **Testing:** Playwright (End-to-End), Vitest (Unit Testing)
+* **Deployment:** GitHub Pages (CI/CD)
+
+---
+
 ## 🛠️ Instructions for Use
 
 1. **Open the App**: Click the link above.
