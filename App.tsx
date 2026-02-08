@@ -36,10 +36,6 @@ function App() {
     }
   }, [activateAlert]);
 
-  // Navigation handlers (Using Context now, but passing callbacks to legacy components if needed)
-  // Actually, we should refactor children to use useUI(), but for now App controls the Modal rendering.
-  // The 'isOpen' props are now derived from 'activeModal'.
-
   return (
     <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
 
