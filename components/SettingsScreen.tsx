@@ -1,12 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
-import { translations } from '../constants';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud } from 'lucide-react';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { useTranslation } from 'react-i18next';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -14,14 +13,15 @@ interface SettingsScreenProps {
 }
 
 // Sub-component for message editing to handle its own state/effect logic cleanly
-const AlertMessageEditor = ({ t }: { t: any }) => {
+const AlertMessageEditor = () => {
   const { language } = useLanguage();
+  const { t } = useTranslation();
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
-    setMessage(saved || t.alertStatus);
-  }, [language, t.alertStatus]);
+    setMessage(saved || t('alertStatus'));
+  }, [language, t]);
 
   const handleSave = () => {
     localStorage.setItem(`seizure_alert_status_message_${language}`, message);
@@ -41,7 +41,7 @@ const AlertMessageEditor = ({ t }: { t: any }) => {
         className="self-end px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2"
       >
         <Save className="w-4 h-4" />
-        {t.settingsSave}
+        {t('settingsSave')}
       </button>
     </div>
   );
@@ -53,6 +53,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', { name: '', bloodType: '', medicalConditions: '' });
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
 
+  const { t } = useTranslation();
+
   const [newContact, setNewContact] = useState({ name: '', relation: '', phone: '' });
   const [apiKeyInput, setApiKeyInput] = useState(apiKey);
 
@@ -62,8 +64,6 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [isAddingContact, setIsAddingContact] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
-
-  const t = translations[language];
 
   useEffect(() => {
     if (!isOpen) {
@@ -127,7 +127,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl h-[90vh] max-h-[800px] flex flex-col">
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t.settingsTitle}</h2>
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('settingsTitle')}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
             <X className="w-6 h-6" />
           </button>
@@ -138,11 +138,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
             <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
               <UserPlus className="w-5 h-5 text-blue-500" />
-              {t.settingsPatientInfo}
+              {t('settingsPatientInfo')}
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsPatientName}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsPatientName')}</label>
                 <input
                   type="text"
                   value={patientInfo.name}
@@ -153,13 +153,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsBloodType}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsBloodType')}</label>
                 <select
                   value={patientInfo.bloodType}
                   onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
                 >
-                  <option value="">{t.settingsBloodTypePlaceholder}</option>
+                  <option value="">{t('settingsBloodTypePlaceholder')}</option>
                   {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Unknown'].map(type => (
                     <option key={type} value={type}>{type}</option>
                   ))}
@@ -167,7 +167,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t.settingsMedicalConditions}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsMedicalConditions')}</label>
                 <textarea
                   value={patientInfo.medicalConditions}
                   onChange={(e) => setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })}
@@ -182,7 +182,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <UserPlus className="w-6 h-6" />
-              {t.emergencyContacts}
+              {t('emergencyContacts')}
             </h3>
             <div className="space-y-3">
               {contacts.map(contact => (
@@ -209,13 +209,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {isAddingContact ? (
                 <form onSubmit={handleAddContact} className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" placeholder={t.settingsContactName} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
-                    <input type="text" placeholder={t.settingsContactRelation} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                    <input type="tel" placeholder={t.settingsContactPhone} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                    <input type="text" placeholder={t('settingsContactName')} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                    <input type="text" placeholder={t('settingsContactRelation')} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                    <input type="tel" placeholder={t('settingsContactPhone')} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
                   </div>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t.settingsSave}</button>
-                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t.settingsCancel}</button>
+                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t('settingsSave')}</button>
+                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t('settingsCancel')}</button>
                   </div>
                 </form>
               ) : (
@@ -225,7 +225,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   disabled={!!editingContactId}
                 >
                   <UserPlus className="w-5 h-5" />
-                  <span>{t.settingsAddContact}</span>
+                  <span>{t('settingsAddContact')}</span>
                 </button>
               )}
             </div>
@@ -244,7 +244,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 This message will be displayed on the screen during an emergency.
               </p>
               {/* Alert Message Editor */}
-              <AlertMessageEditor t={t} />
+              <AlertMessageEditor />
             </div>
           </section>
 
@@ -252,12 +252,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Key className="w-6 h-6" />
-              {t.settingsAPIKey}
+              {t('settingsAPIKey')}
             </h3>
             <div className="space-y-3">
-              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t.settingsAPIKeyLabel}</label>
+              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t('settingsAPIKeyLabel')}</label>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t.settingsAPIKeyDesc}
+                {t('settingsAPIKeyDesc')}
                 <br />
                 <a
                   href="https://aistudio.google.com/app/apikey"
@@ -273,10 +273,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 <span>Your API key is stored <strong>locally</strong> on your device. It is used directly to communicate with Google's servers and is never shared with us.</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-2">
-                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t.settingsAPIKeyPlaceholder} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
+                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t('settingsAPIKeyPlaceholder')} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
                 <button onClick={handleSaveApiKey} className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2">
                   <Save className="w-5 h-5" />
-                  {t.settingsSave}
+                  {t('settingsSave')}
                 </button>
               </div>
             </div>

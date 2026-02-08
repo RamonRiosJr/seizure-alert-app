@@ -1,8 +1,8 @@
 import React from 'react';
 import { X, ExternalLink, Heart, Github, Globe, Cloud, Coffee } from 'lucide-react';
 import type { Language } from '../types';
-import { translations } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 interface AboutScreenProps {
     isOpen: boolean;
@@ -12,7 +12,7 @@ interface AboutScreenProps {
 
 const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclosure }) => {
     const { language } = useLanguage();
-    const t = translations[language];
+    const { t } = useTranslation();
 
     if (!isOpen) return null;
 
@@ -24,7 +24,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
                 <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800/50">
                     <h2 className="text-xl font-bold flex items-center gap-2 text-rose-600">
                         <Heart className="w-6 h-6 fill-current" />
-                        {t.aboutTitle || "Our Story"}
+                        {t('aboutTitle')}
                     </h2>
                     <button
                         onClick={onClose}
@@ -41,34 +41,34 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
                     {/* Origin Story */}
                     <div className="space-y-4">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            {t.aboutOriginTitle || "The Medellin Incident"}
+                            {t('aboutOriginTitle')}
                         </h3>
                         <p className="italic border-l-4 border-rose-200 pl-4 py-1">
-                            "{t.aboutStory}"
+                            "{t('aboutStory')}"
                         </p>
                     </div>
 
                     {/* Mission/Disclaimer */}
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800">
                         <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">
-                            {t.aboutMissionTitle || "Our Mission"}
+                            {t('aboutMissionTitle')}
                         </h4>
                         <p className="text-sm">
-                            {t.aboutMissionText || "This is not a medical app but a tool to inspire and help potentially others. Please read our full disclosure."}
+                            {t('aboutMissionText')}
                         </p>
                         <a
                             href="#"
                             onClick={(e) => { e.preventDefault(); onOpenDisclosure(); }}
                             className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium mt-2 hover:underline"
                         >
-                            {t.aboutReadDisclosure || "Read Full Disclosure"} <ExternalLink className="w-3 h-3" />
+                            {t('aboutReadDisclosure')} <ExternalLink className="w-3 h-3" />
                         </a>
                     </div>
 
                     {/* Links */}
                     <div className="space-y-3 pt-2">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            {t.aboutConnectTitle || "Connect with the Developer"}
+                            {t('aboutConnectTitle')}
                         </h3>
 
                         <a
@@ -93,7 +93,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
                         >
                             <Cloud className="w-5 h-5 text-sky-500" />
                             <div>
-                                <div className="font-medium">{t.aboutCompanyTitle || "Coqui Cloud Dev Co."}</div>
+                                <div className="font-medium">{t('aboutCompanyTitle')}</div>
                                 <div className="text-xs opacity-70">coqui.cloud</div>
                             </div>
                             <ExternalLink className="w-4 h-4 ml-auto opacity-50" />

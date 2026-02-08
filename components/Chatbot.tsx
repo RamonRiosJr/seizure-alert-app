@@ -3,9 +3,9 @@ import { useChat } from '../hooks/useChat';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Language } from '../types';
-import { translations } from '../constants';
 import { X, Send, Mic, Sparkles, User, Flag } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 interface ChatbotProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
   const [showPriorityOptions, setShowPriorityOptions] = useState(false);
   const [apiKey] = useLocalStorage<string>('gemini_api_key', '');
-  const t = translations[language];
+  const { t } = useTranslation();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const priorityRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const micButtonTooltip = isListening ? t.chatMicListening : hasRecognitionSupport ? 'Use microphone' : t.chatMicError;
+  const micButtonTooltip = isListening ? t('chatMicListening') : hasRecognitionSupport ? 'Use microphone' : t('chatMicError');
   const isApiKeyMissing = !apiKey;
 
   return (
@@ -76,7 +76,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-lg">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t.chatTitle}</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t('chatTitle')}</h2>
           </div>
           <button
             onClick={onClose}
@@ -130,7 +130,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
         <footer className="p-4 border-t border-gray-200 dark:border-gray-700">
           {isApiKeyMissing ? (
             <div className="text-center text-gray-500 dark:text-gray-400 p-2 rounded-md bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800">
-              {t.chatAPIKeyMissing}
+              {t('chatAPIKeyMissing')}
             </div>
           ) : (
             <div className="flex items-center space-x-2">
@@ -165,7 +165,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={t.chatPlaceholder}
+                placeholder={t('chatPlaceholder')}
                 className="flex-grow min-w-0 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                 disabled={isLoading || isListening}
               />
