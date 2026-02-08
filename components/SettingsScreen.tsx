@@ -48,6 +48,9 @@ const AlertMessageEditor = () => {
   );
 };
 
+import { DeviceManager } from './DeviceManager';
+import { Watch, Bluetooth } from 'lucide-react';
+
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const { language } = useLanguage();
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
@@ -63,6 +66,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [editingContactData, setEditingContactData] = useState<{ name: string; relation: string; phone: string } | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
+  const [isDeviceManagerOpen, setIsDeviceManagerOpen] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
   const { isEnabled: isShakeEnabled, setIsEnabled: setShakeEnabled, isSupported: isShakeSupported, permissionGranted: shakePermissionGranted, requestPermission: requestShakePermission } = useShake(() => { });
@@ -496,6 +500,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           </section>
         </main>
       </div>
+      {isDeviceManagerOpen && <DeviceManager onClose={() => setIsDeviceManagerOpen(false)} />}
     </div >
   );
 };
