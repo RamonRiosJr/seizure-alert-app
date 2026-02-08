@@ -3,7 +3,6 @@ import type { Language } from './types';
 // Text content has been migrated to i18n/locales
 // This file is now used for non-text constants or backend-logic helpers
 
-
 export const getSystemPrompt = (language: Language): string => `
   You are Aura, a compassionate AI assistant specialized in seizure first aid.
   Your goal is to provide clear, simple, and calm information.
