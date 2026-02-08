@@ -1,6 +1,6 @@
 # Aura Speaks AI 🗣️🚨
 
-[![Read in Spanish](https://img.shields.io/badge/Leer_en_Español-🇵🇷-red)](README.es.md)
+[![CI/CD Pipeline](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml) [![Read in Spanish](https://img.shields.io/badge/Leer_en_Español-🇵🇷-red)](README.es.md)
 
 <div align="center">
   <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="400" />
@@ -86,6 +86,40 @@ Built with modern, production-grade tools to ensure speed, safety, and scalabili
 * **PWA (Progressive Web App):** Vite PWA Plugin, Service Workers (Offline Capability)
 * **Testing:** Playwright (End-to-End), Vitest (Unit Testing)
 * **Deployment:** GitHub Pages (CI/CD)
+
+---
+
+## 🏗️ Architecture & Standards
+
+This project follows **Clean Architecture** principles and **Modern Git Flow**:
+
+### 📂 Modular Structure
+
+* `components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
+* `router`: dedicated `AppRouter` for screen management.
+* `contexts`: State management via React Context (UI, Theme).
+
+### 🛡️ Quality Assurance
+
+* **CI/CD**: GitHub Actions pipeline runs `npm test` and `npm run build` on every Pull Request.
+* **Unit Tests**: Critical hooks (`useShake`, `useLocalStorage`) are tested with Vitest.
+
+---
+
+## 🏗️ Architecture & Standards
+
+This project follows **Clean Architecture** principles and **Modern Git Flow**:
+
+### 📂 Modular Structure
+
+* `src/components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
+* `src/router`: dedicated `AppRouter` for screen management.
+* `src/contexts`: State management via React Context (UI, Theme).
+
+### 🛡️ Quality Assurance
+
+* **CI/CD**: GitHub Actions pipeline runs `npm test` and `npm run build` on every Pull Request.
+* **Unit Tests**: Critical hooks (`useShake`, `useLocalStorage`) are tested with Vitest.
 
 ---
 
