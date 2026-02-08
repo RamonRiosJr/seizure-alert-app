@@ -7,14 +7,39 @@ import { getSystemPrompt } from '../constants';
 
 export const useChat = (language: Language) => {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  // Load initial state from localStorage or default to empty
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    try {
+      const saved = localStorage.getItem('chat_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Failed to load chat history", e);
+      return [];
+    }
+  });
+
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Initialize greeting ONLY if history is empty
   useEffect(() => {
-    setMessages([{ role: 'model', text: t('chatInitialGreeting') }]);
-  }, [language, t]);
+    if (messages.length === 0) {
+      setMessages([{ role: 'model', text: t('chatInitialGreeting') }]);
+    }
+  }, [t]); // Removed 'messages.length' from dependency to avoid loop, and removed 'language' to prevent auto-wipe
+
+  // Persist messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('chat_history', JSON.stringify(messages));
+  }, [messages]);
+
+  const clearChat = useCallback(() => {
+    const initialMsg: ChatMessage = { role: 'model', text: t('chatInitialGreeting') };
+    setMessages([initialMsg]);
+    localStorage.removeItem('chat_history');
+    localStorage.setItem('chat_history', JSON.stringify([initialMsg]));
+  }, [t]);
 
   const sendMessage = useCallback(async (userMessage: string, priority?: 'high' | 'medium' | 'low') => {
     if (!userMessage.trim()) return;
@@ -36,7 +61,7 @@ export const useChat = (language: Language) => {
     }
 
     if (!apiKey) {
-      const errorMsg = "API Key not found. Please set it in the settings.";
+      const errorMsg = t('chatAPIKeyMissing') || "API Key not found. Please set it in the settings.";
       setError(errorMsg);
       setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
       setIsLoading(false);
@@ -51,8 +76,17 @@ export const useChat = (language: Language) => {
         systemInstruction: getSystemPrompt(language),
       });
 
+      // Construct history for the API from previous messages
+      // Filter out error messages or system greetings if needed, currently passing valid chat history
+      const history = messages
+        .filter(m => m.role === 'user' || m.role === 'model') // Simple filter
+        .map(m => ({
+          role: m.role,
+          parts: [{ text: m.text }],
+        }));
+
       const chat = model.startChat({
-        history: [], // We could pass previous messages here if we wanted context
+        history: history,
       });
 
       const result = await chat.sendMessageStream(userMessage);
@@ -95,7 +129,7 @@ export const useChat = (language: Language) => {
     } finally {
       setIsLoading(false);
     }
-  }, [language]);
+  }, [language, messages, t]); // Added messages as dependency for history context
 
-  return { messages, input, setInput, sendMessage, isLoading, error };
+  return { messages, input, setInput, sendMessage, isLoading, error, clearChat };
 };

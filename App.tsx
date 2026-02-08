@@ -12,6 +12,7 @@ import TopRightControls from './components/TopRightControls';
 import UniversalLanguageSwitcher from './components/UniversalLanguageSwitcher';
 import { InstallPrompt } from './components/InstallPrompt';
 import { UpdateNotification } from './components/UpdateNotification';
+import { useShake } from './hooks/useShake';
 
 function App() {
   const {
@@ -35,6 +36,13 @@ function App() {
       activateAlert();
     }
   }, [activateAlert]);
+
+  // Shake to Alert
+  useShake(() => {
+    if (screen === 'ready') {
+      activateAlert();
+    }
+  });
 
   return (
     <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>

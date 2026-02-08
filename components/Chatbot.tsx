@@ -2,8 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useChat } from '../hooks/useChat';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import type { Language } from '../types';
-import { X, Send, Mic, Sparkles, User, Flag } from 'lucide-react';
+import { X, Send, Mic, Sparkles, User, Flag, Trash2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +13,7 @@ interface ChatbotProps {
 
 const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   const { language } = useLanguage();
-  const { messages, input, setInput, sendMessage, isLoading, error } = useChat(language);
+  const { messages, input, setInput, sendMessage, isLoading, error, clearChat } = useChat(language);
   const { transcript, isListening, startListening, hasRecognitionSupport } = useSpeechRecognition();
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
   const [showPriorityOptions, setShowPriorityOptions] = useState(false);
@@ -78,13 +77,27 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
             <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t('chatTitle')}</h2>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
-            aria-label="Close Chat"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                if (confirm(t('chatClearConfirm') || 'Clear chat history?')) {
+                  clearChat();
+                }
+              }}
+              className="p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Clear Chat History"
+              title="Clear Chat History"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors"
+              aria-label="Close Chat"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </header>
 
         <div ref={chatContainerRef} className="flex-grow p-4 overflow-y-auto space-y-4">

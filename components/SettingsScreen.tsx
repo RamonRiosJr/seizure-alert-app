@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import type { Language, EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud } from 'lucide-react';
+import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud, Activity } from 'lucide-react';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 import { useTranslation } from 'react-i18next';
+import { useShake } from '../hooks/useShake';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -64,6 +65,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [isAddingContact, setIsAddingContact] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
+  const { isEnabled: isShakeEnabled, setIsEnabled: setShakeEnabled, isSupported: isShakeSupported, permissionGranted: shakePermissionGranted, requestPermission: requestShakePermission } = useShake(() => { });
 
   useEffect(() => {
     if (!isOpen) {
@@ -153,8 +155,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsBloodType')}</label>
+                <label htmlFor="blood-type" className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsBloodType')}</label>
                 <select
+                  id="blood-type"
                   value={patientInfo.bloodType}
                   onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
@@ -196,10 +199,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       setNewContact({ name: contact.name, relation: contact.relation, phone: contact.phone });
                       setIsAddingContact(true);
                       setEditingContactId(contact.id);
-                    }} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full">
+                    }} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full" aria-label="Edit Contact">
                       <Pencil className="w-5 h-5" />
                     </button>
-                    <button onClick={() => handleDeleteContact(contact.id!)} className="p-2 text-red-600 hover:bg-red-100 rounded-full">
+                    <button onClick={() => handleDeleteContact(contact.id!)} className="p-2 text-red-600 hover:bg-red-100 rounded-full" aria-label="Delete Contact">
                       <Trash2 className="w-5 h-5" />
                     </button>
                   </div>
@@ -231,6 +234,47 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
             </div>
 
 
+          </section>
+
+          {/* Shake to Alert Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Activity className="w-6 h-6" />
+              {t('settingsShakeTitle')}
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {t('settingsShakeDesc')}
+              </p>
+
+              {!isShakeSupported ? (
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md border border-red-200 dark:border-red-800">
+                  Device motion not supported on this device.
+                </div>
+              ) : (
+                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                  <span className="font-medium text-gray-900 dark:text-white">Enable Shake to Alert</span>
+                  <button
+                    onClick={() => setShakeEnabled(!isShakeEnabled)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isShakeEnabled ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'}`}
+                  >
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isShakeEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
+                </div>
+              )}
+
+              {isShakeEnabled && !shakePermissionGranted && (
+                <button
+                  onClick={async () => {
+                    const granted = await requestShakePermission();
+                    if (!granted) alert('Permission denied or not supported.');
+                  }}
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  {t('settingsShakePermissionBtn')}
+                </button>
+              )}
+            </div>
           </section>
 
           {/* Custom Alert Message Section */}
