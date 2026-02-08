@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       VitePWA({
-        registerType: 'autoUpdate',
+        registerType: 'prompt', // Changed from autoUpdate to allow user control via OfflineIndicator
         includeAssets: ['favicon.ico', 'seizure-alert-logo.svg'],
         manifest: {
           name: 'Aura Speaks AI',

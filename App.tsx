@@ -12,6 +12,7 @@ import { InstallPrompt } from './components/InstallPrompt';
 import { UpdateNotification } from './components/UpdateNotification';
 import { AppRouter } from './router/AppRouter';
 import { GlobalListeners } from './components/layout/GlobalListeners';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 function App() {
   const {
@@ -27,6 +28,7 @@ function App() {
     <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       {/* Non-visual logic listeners */}
       <GlobalListeners />
+      <OfflineIndicator />
 
       {/* Layout Elements */}
       {screen === 'ready' && (

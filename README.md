@@ -50,9 +50,11 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 * **iPhone & Android:** Works on almost any phone.
 * **Manual Install Button:** Go to **Settings** > **App Installation** to see a big "Install" button or instructions for your phone.
 
-### 📡 New: Tap-to-Alert (NFC)
+### 📡 New: Tap-to-Alert (NFC) & Quick Actions
 
-* **Instant Start:** You can program a cheap NFC tag (sticker) so that simply _tapping_ your phone to it starts the alarm immediately. Great for bedside tables!
+* **Instant Start:** Program an NFC tag to trigger the alarm instantly.
+* **Shake to Alert:** Shake your phone 3 times to activte the emergency countdown (Enable in Settings).
+* **Quick Shortcuts:** Long-press the App Icon on your home screen to launch directly into Emergency Mode.
 
 ---
 
@@ -76,7 +78,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ---
 
-## 💻 Tech Stack (Recruiter Ready)
+## 💻 Tech Stack
 
 Built with modern, production-grade tools to ensure speed, safety, and scalability.
 
@@ -105,21 +107,6 @@ This project follows **Clean Architecture** principles and **Modern Git Flow**:
 * **Unit Tests**: Critical hooks (`useShake`, `useLocalStorage`) are tested with Vitest.
 
 ---
-
-## 🏗️ Architecture & Standards
-
-This project follows **Clean Architecture** principles and **Modern Git Flow**:
-
-### 📂 Modular Structure
-
-* `src/components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
-* `src/router`: dedicated `AppRouter` for screen management.
-* `src/contexts`: State management via React Context (UI, Theme).
-
-### 🛡️ Quality Assurance
-
-* **CI/CD**: GitHub Actions pipeline runs `npm test` and `npm run build` on every Pull Request.
-* **Unit Tests**: Critical hooks (`useShake`, `useLocalStorage`) are tested with Vitest.
 
 ---
 
