@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .alert-active {
+    @apply bg-red-600 text-white border-[10px] animate-pulse-border;
+  }
+
+  .animate-breathe {
+    @apply animate-breathe-glow;
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
