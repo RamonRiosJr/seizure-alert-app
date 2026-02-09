@@ -13,6 +13,9 @@
     "test:ui": "vitest --ui",
     "lint": "eslint ."
   },
+  "overrides": {
+    "@exodus/bytes": "^1.0.0"
+  },
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^8.1.0",
     "@capacitor/android": "^8.0.2",
