@@ -13,6 +13,26 @@ i18n
         interpolation: {
             escapeValue: false, // React already safes from xss
         },
+        resources: {
+            en: {
+                translation: {
+                    aiButton: "AI",
+                    checkInButton: "I'm Safe / Check In",
+                    imSafeMessage: "I am safe. This was a false alarm.",
+                    noContactsPrompt: "No emergency contacts set. Add one now?",
+                }
+            },
+            es: {
+                translation: {
+                    title: "Aura Speaks AI",
+                    emergencyButton: "EMERGENCIA",
+                    aiButton: "IA",
+                    checkInButton: "Estoy Bien / Reportar",
+                    imSafeMessage: "Estoy bien. Fue una falsa alarma.",
+                    noContactsPrompt: "No hay contactos de emergencia. ¿Agregar uno ahora?",
+                }
+            }
+        },
         backend: {
             loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
         },
