@@ -33,7 +33,8 @@ export const useFallDetection = (onFallDetected: () => void) => {
         const gForce = Math.sqrt(x * x + y * y + z * z);
         const thresholds = getThresholds();
 
-        if (isMonitoringStillness) {
+        // Use ref to check current monitoring state (avoids stale closure)
+        if (isMonitoringRef.current) {
             // If movement is detected during stillness phase, cancel alert
             // Normal gravity is ~9.8. Movement means significant deviation or rotation.
             // Simplified: if variance from 1G (9.8) is high, user is moving.
@@ -53,7 +54,7 @@ export const useFallDetection = (onFallDetected: () => void) => {
                 isMonitoringRef.current = true;
             }
         }
-    }, [isEnabled, isMonitoringStillness, getThresholds, sensitivity, lastImpactTime]); // Added dependencies
+    }, [isEnabled, getThresholds]); // Added dependencies
 
     // Check for stillness timeout
     useEffect(() => {
