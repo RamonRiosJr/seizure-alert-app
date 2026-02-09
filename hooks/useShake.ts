@@ -113,11 +113,17 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
         };
     }, [isEnabled, permissionGranted, handleMotion]);
 
+    // Expose IS_IOS for UI permission prompts
+    const isIOS = typeof window !== 'undefined' &&
+        /iPad|iPhone|iPod/.test(navigator.platform) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
     return {
         isEnabled,
         setIsEnabled,
         isSupported,
         permissionGranted,
-        requestPermission
+        requestPermission,
+        isIOS
     };
 };
