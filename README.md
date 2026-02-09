@@ -56,6 +56,12 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 * **Shake to Alert:** Shake your phone 3 times to activte the emergency countdown (Enable in Settings).
 * **Quick Shortcuts:** Long-press the App Icon on your home screen to launch directly into Emergency Mode.
 
+### ✅ "I'm Safe" Check-in Button
+
+* **False Alarm? No Problem:** Quickly notify your emergency contact that you are okay.
+* **One-Tap SMS:** Sends a pre-filled "I am safe" message with your location (via SMS app) to your primary contact.
+* **Reduces Anxiety:** Helps prevent caregiver fatigue from accidental alerts.
+
 ---
 
 ## 🚧 Status: Mobile & PWA Compatibility (Active Fixes)
