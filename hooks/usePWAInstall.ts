@@ -7,43 +7,52 @@ interface BeforeInstallPromptEvent extends Event {
 
 export const usePWAInstall = () => {
     const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-    const [isInstallable, setIsInstallable] = useState(false);
-    const [isAppInstalled, setIsAppInstalled] = useState(false);
-    const [isIOS, setIsIOS] = useState(false);
-    const [showPrompt, setShowPrompt] = useState(false);
 
-    useEffect(() => {
-        // Check if running in standalone mode (already installed)
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
-        setIsAppInstalled(isStandalone);
+    // Lazy init for installation status
+    const [isAppInstalled, setIsAppInstalled] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+    });
 
-        // Detect iOS (including iPadOS which often reports as Mac)
+    const [isIOS, setIsIOS] = useState(() => {
+        if (typeof window === 'undefined') return false;
         const userAgent = window.navigator.userAgent.toLowerCase();
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+        const isIosDevice = /iphone|ipad|ipod/.test(userAgent) ||
+            (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+        return isIosDevice && !isStandalone;
+    });
+
+    const [showPrompt, setShowPrompt] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+        const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
+
+        if (isStandalone) return false;
+        if (hasDismissed) return false;
+
+        // For iOS, show immediately if not installed
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        // Re-calc isIOS logic or reuse? Can't reuse state inside other state init easily without duplication or external util.
+        // duplicating for safety/simplicity in lazy init
         const isIosDevice = /iphone|ipad|ipod/.test(userAgent) ||
             (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
 
-        // Only consider it "iOS" if it's NOT already in standalone mode
-        const isIOSBrowser = isIosDevice && !isStandalone;
-        setIsIOS(isIOSBrowser);
+        return isIosDevice;
+    });
 
-        // Check if user has previously dismissed the prompt in this session
-        const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
+    const [isInstallable, setIsInstallable] = useState(false);
 
-        if (isStandalone) {
-            setShowPrompt(false);
-        } else if (!hasDismissed) {
-            // For iOS, we show the prompt immediately if not installed
-            if (isIOSBrowser) {
-                setShowPrompt(true);
-            }
-        }
-
+    useEffect(() => {
         const handleBeforeInstallPrompt = (e: Event) => {
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
             // Stash the event so it can be triggered later.
             setDeferredPrompt(e as BeforeInstallPromptEvent);
             setIsInstallable(true);
+
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+            const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
 
             if (!isStandalone && !hasDismissed) {
                 setShowPrompt(true);

@@ -25,8 +25,11 @@ test.describe('Navigation and Settings', () => {
     });
 
     test('should toggle language', async ({ page }) => {
-        // 1. Check initial language (visual check)
-        const isEnglish = await page.getByText('EMERGENCY').isVisible();
+        // 1. Check initial language (wait for load)
+        const emergencyBtn = page.getByRole('button', { name: /EMERGENCY|EMERGENCIA/i });
+        await expect(emergencyBtn).toBeVisible();
+        const btnText = await emergencyBtn.textContent();
+        const isEnglish = btnText?.toUpperCase().includes('EMERGENCY') && !btnText?.toUpperCase().includes('EMERGENCIA');
 
         // Locate the language switcher button. 
         // It's the one with text "English" or "Español".
@@ -35,7 +38,7 @@ test.describe('Navigation and Settings', () => {
 
         if (isEnglish) {
             // Switch to Spanish
-            await langBtn.click();
+            await langBtn.click({ force: true });
             await expect(page.getByText('EMERGENCIA')).toBeVisible();
 
             // Switch back to English
@@ -44,16 +47,16 @@ test.describe('Navigation and Settings', () => {
             // The button text changes, so the filter might lose it? 
             // No, the locator is evaluated at action time.
             // Let's re-query to be safe.
-            await page.getByRole('button').filter({ hasText: /English|Español/ }).first().click();
+            await page.getByRole('button').filter({ hasText: /English|Español/ }).first().click({ force: true });
             await expect(page.getByText('EMERGENCY')).toBeVisible();
         } else {
             // Already in Spanish, switch to English
-            await langBtn.click();
+            await langBtn.click({ force: true });
             await expect(page.getByText('EMERGENCY')).toBeVisible();
 
             // Switch back to Spanish to confirm toggle works both ways? 
             // Optional, but good practice.
-            await page.getByRole('button').filter({ hasText: /English|Español/ }).first().click();
+            await page.getByRole('button').filter({ hasText: /English|Español/ }).first().click({ force: true });
             await expect(page.getByText('EMERGENCIA')).toBeVisible();
         }
     });

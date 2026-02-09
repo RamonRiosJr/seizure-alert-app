@@ -15,8 +15,17 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
     } = options;
 
     const [isEnabled, setIsEnabled] = useLocalStorage<boolean>('shake_enabled', false);
-    const [isSupported, setIsSupported] = useState<boolean>(false);
-    const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
+
+    // Lazy initialization for support and permission to avoid effect updates
+    const [isSupported] = useState<boolean>(() => typeof window !== 'undefined' && 'DeviceMotionEvent' in window);
+
+    const [permissionGranted, setPermissionGranted] = useState<boolean>(() => {
+        if (typeof window === 'undefined' || !('DeviceMotionEvent' in window)) return false;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const DME = (window as any).DeviceMotionEvent;
+        // If requestPermission is NOT a function, it's likely non-iOS (Android) or old iOS where perms are auto-granted
+        return typeof DME?.requestPermission !== 'function';
+    });
 
     // Shake detection state
     const shakesRef = useRef<number>(0);
@@ -26,19 +35,7 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
     const lastYRef = useRef<number>(0);
     const lastZRef = useRef<number>(0);
 
-    useEffect(() => {
-        if (typeof window !== 'undefined' && 'DeviceMotionEvent' in window) {
-            setIsSupported(true);
-            // Construct a dummy event to check if requestPermission is available (iOS 13+)
-            // Note: We can't actually call it here, just checking existence
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const DME = window.DeviceMotionEvent as any;
-            if (typeof DME.requestPermission !== 'function') {
-                // Non-iOS or older iOS, permission usually auto-granted or not needed
-                setPermissionGranted(true);
-            }
-        }
-    }, []);
+    // Remove useEffect that was setting these values
 
     const requestPermission = useCallback(async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

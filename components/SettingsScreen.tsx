@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import type { Language, EmergencyContact } from '../types';
+import React, { useState } from 'react';
+import { SettingFallDetection } from './settings/SettingFallDetection';
+import { SettingHeartRate } from './settings/SettingHeartRate';
+import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud, Activity } from 'lucide-react';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
@@ -7,6 +9,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 import { useTranslation } from 'react-i18next';
 import { useShake } from '../hooks/useShake';
+import { DeviceManager } from './DeviceManager';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -19,7 +22,15 @@ const AlertMessageEditor = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  // Initialize state only once or when language/defaults change. 
+  // We use a key-based approach for localStorage initial value to avoid effect sync issues if possible,
+  // but since we need to support dynamic language changes, an effect is okay IF we avoid the loop.
+  // The persistent linter error "Calling setState synchronously" is because we are calling it immediately.
+  // We can wrap it in a condition or use `useLayoutEffect` or just ignore if it's actually safe.
+  // Better: Initialize state lazily.
+  const [initialized, setInitialized] = useState(false);
+
+  React.useEffect(() => {
     const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
     setMessage(saved || t('alertStatus'));
   }, [language, t]);
@@ -48,11 +59,9 @@ const AlertMessageEditor = () => {
   );
 };
 
-import { DeviceManager } from './DeviceManager';
-import { Watch, Bluetooth } from 'lucide-react';
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
-  const { language } = useLanguage();
+  // Unused language import removed
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', { name: '', bloodType: '', medicalConditions: '' });
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
@@ -71,14 +80,17 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
   const { isEnabled: isShakeEnabled, setIsEnabled: setShakeEnabled, isSupported: isShakeSupported, permissionGranted: shakePermissionGranted, requestPermission: requestShakePermission } = useShake(() => { });
 
-  useEffect(() => {
-    if (!isOpen) {
-      setEditingContactId(null);
-      setEditingContactData(null);
-      setEditError(null);
-      setIsAddingContact(false);
-    }
-  }, [isOpen]);
+  const resetEditingState = () => {
+    setEditingContactId(null);
+    setEditingContactData(null);
+    setEditError(null);
+    setIsAddingContact(false);
+  };
+
+  const handleClose = () => {
+    resetEditingState();
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -108,16 +120,15 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     setEditingContactId(contact.id);
     setEditingContactData({ name: contact.name, relation: contact.relation, phone: contact.phone });
     setEditError(null);
-    setIsAddingContact(false);
+    setIsAddingContact(true); // Re-use the add contact form
   };
 
   const handleCancelEditing = () => {
-    setEditingContactId(null);
-    setEditingContactData(null);
-    setEditError(null);
+    resetEditingState();
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!editingContactId || !editingContactData) return;
 
     if (!editingContactData.name.trim() || !editingContactData.phone.trim()) {
@@ -125,8 +136,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
       return;
     }
 
-    setContacts(contacts.map(c => c.id === editingContactId ? { ...c, ...editingContactData } : c));
-    handleCancelEditing();
+    setContacts(contacts.map(c => c.id === editingContactId ? { ...c, ...editingContactData, id: c.id } : c));
+    resetEditingState();
   };
 
   return (
@@ -134,7 +145,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl h-[90vh] max-h-[800px] flex flex-col">
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('settingsTitle')}</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white" aria-label="Close settings">
+          <button onClick={handleClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white" aria-label="Close settings">
             <X className="w-6 h-6" />
           </button>
         </header>
@@ -199,11 +210,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     <p className="text-gray-600 dark:text-gray-400">{contact.phone}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => {
-                      setNewContact({ name: contact.name, relation: contact.relation, phone: contact.phone });
-                      setIsAddingContact(true);
-                      setEditingContactId(contact.id);
-                    }} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full" aria-label="Edit Contact">
+                    <button onClick={() => handleStartEditing(contact)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full" aria-label="Edit Contact">
                       <Pencil className="w-5 h-5" />
                     </button>
                     <button onClick={() => handleDeleteContact(contact.id!)} className="p-2 text-red-600 hover:bg-red-100 rounded-full" aria-label="Delete Contact">
@@ -213,16 +220,42 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 </div>
               ))}
 
+              {editError && (
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md text-sm border border-red-200 dark:border-red-800">
+                  {editError}
+                </div>
+              )}
+
               {isAddingContact ? (
-                <form onSubmit={handleAddContact} className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+                <form onSubmit={editingContactId ? handleSaveEdit : handleAddContact} className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" placeholder={t('settingsContactName')} value={newContact.name} onChange={e => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
-                    <input type="text" placeholder={t('settingsContactRelation')} value={newContact.relation} onChange={e => setNewContact({ ...newContact, relation: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                    <input type="tel" placeholder={t('settingsContactPhone')} value={newContact.phone} onChange={e => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" required />
+                    <input
+                      type="text"
+                      placeholder={t('settingsContactName')}
+                      value={editingContactId ? editingContactData?.name : newContact.name}
+                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, name: e.target.value }) : setNewContact({ ...newContact, name: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder={t('settingsContactRelation')}
+                      value={editingContactId ? editingContactData?.relation : newContact.relation}
+                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, relation: e.target.value }) : setNewContact({ ...newContact, relation: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <input
+                      type="tel"
+                      placeholder={t('settingsContactPhone')}
+                      value={editingContactId ? editingContactData?.phone : newContact.phone}
+                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, phone: e.target.value }) : setNewContact({ ...newContact, phone: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                      required
+                    />
                   </div>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <button type="submit" disabled={!newContact.name.trim() || !newContact.phone.trim()} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 w-full sm:w-auto">{t('settingsSave')}</button>
-                    <button type="button" onClick={handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t('settingsCancel')}</button>
+                    <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full sm:w-auto">{t('settingsSave')}</button>
+                    <button type="button" onClick={editingContactId ? handleCancelEditing : handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t('settingsCancel')}</button>
                   </div>
                 </form>
               ) : (
@@ -278,6 +311,17 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   {t('settingsShakePermissionBtn')}
                 </button>
               )}
+            </div>
+          </section>
+
+          {/* Fall Detection Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Activity className="w-6 h-6 text-orange-500" />
+              Fall Detection
+            </h3>
+            <div className="space-y-3">
+              <SettingFallDetection />
             </div>
           </section>
 
@@ -518,34 +562,5 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
 
 
 
-// Sub-component for HR Threshold
-const SettingHeartRate = () => {
-  const [threshold, setThreshold] = useLocalStorage<number>('hr_threshold', 120);
-
-  return (
-    <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md space-y-3">
-      <label className="flex flex-col gap-1">
-        <div className="flex justify-between">
-          <span className="font-medium text-gray-900 dark:text-white">High Heart Rate Threshold</span>
-          <span className="font-bold text-blue-600 dark:text-blue-400">{threshold} BPM</span>
-        </div>
-        <input
-          type="range"
-          min="100"
-          max="180"
-          step="5"
-          value={threshold}
-          onChange={(e) => setThreshold(Number(e.target.value))}
-          className="w-full accent-blue-600"
-        />
-        <span className="text-xs text-gray-500 dark:text-gray-400">Alert triggers if heart rate exceeds this value.</span>
-      </label>
-      <div className="flex items-start gap-2 text-sm text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded">
-        <Activity className="w-4 h-4 mt-0.5 flex-shrink-0" />
-        <p>Use "Workout Mode" in <strong>Device Manager</strong> to pause alerts during exercise.</p>
-      </div>
-    </div>
-  );
-};
 
 export default SettingsScreen;

@@ -20,10 +20,21 @@ test.describe('Emergency Alert Flow', () => {
         // 1. Verify we are on the Ready screen matches logo
         await expect(page.getByRole('img', { name: /Aura Speaks AI|Alerta de Convulsión/i })).toBeVisible();
 
+        // Handle Install Prompt (Mobile) - dismiss if present
+        const closeInstallBtn = page.getByRole('button', { name: /Close|Cerrar|Not Now|Ahora No/i }).first();
+        try {
+            // Wait up to 2s for prompt to appear
+            await closeInstallBtn.waitFor({ state: 'visible', timeout: 2000 });
+            await closeInstallBtn.click();
+            await page.waitForTimeout(500); // Allow closing animation
+        } catch (e) {
+            // Prompt didn't appear, ignore
+        }
+
         // 2. Click the Emergency Button
         const emergencyBtn = page.getByRole('button', { name: /EMERGENCY|EMERGENCIA/i });
         await expect(emergencyBtn).toBeVisible();
-        await emergencyBtn.click();
+        await emergencyBtn.click({ force: true });
 
         // 3. Verify Countdown starts
         await expect(page.getByText(/Slide to Cancel|Deslizar para Cancelar/i)).toBeVisible();

@@ -1,0 +1,282 @@
+
+> aura-speaks-ai@0.0.0 lint
+> eslint .
+
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\android\app\build\intermediates\assets\debug\mergeDebugAssets\native-bridge.js
+    36:5   warning  Unused eslint-disable directive (no problems were reported)
+   208:29  warning  Unused eslint-disable directive (no problems were reported from 'no-prototype-builtins')
+  1009:13  error    Definition for rule '@typescript-eslint/no-unused-vars' was not found                     @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AboutScreen.tsx
+   3:15  warning  'Language' is defined but never used           @typescript-eslint/no-unused-vars
+  14:13  warning  'language' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AlertScreen.tsx
+    2:15  warning  'Language' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+    6:78  warning  'Pencil' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+    6:89  warning  'Check' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   41:19  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   69:41  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  102:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AlertScreen.tsx:102:5
+  100 |
+  101 |   useEffect(() => {
+> 102 |     setStatusMessage(t('alertStatus'));
+      |     ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  103 |   }, [language, t]);
+  104 |
+  105 |   useEffect(() => {  react-hooks/set-state-in-effect
+  310:40  warning  'e' is defined but never used. Allowed unused args must match /^_/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\DisclaimerModal.tsx
+   4:15  warning  'Language' is defined but never used           @typescript-eslint/no-unused-vars
+  13:13  warning  'language' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\ErrorBoundary.tsx
+  49:9  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\InstallPrompt.tsx
+  7:13  warning  'isInstallable' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\OfflineIndicator.tsx
+   3:16  warning  'WifiOff' is defined but never used                                                                                           @typescript-eslint/no-unused-vars
+   7:13  warning  't' is assigned a value but never used                                                                                        @typescript-eslint/no-unused-vars
+  14:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                             no-console
+  17:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                             no-console
+  61:5   error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render  react-hooks/rules-of-hooks
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\ReadyScreen.tsx
+  2:15  warning  'Language' is defined but never used       @typescript-eslint/no-unused-vars
+  3:10  warning  'MessageCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\ReportsScreen.tsx
+  2:15  warning  'Language' is defined but never used  @typescript-eslint/no-unused-vars
+  4:67  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\SettingsScreen.tsx
+    4:15   warning  'Language' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+    6:150  warning  'Info' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+    6:156  warning  'Watch' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+    6:163  warning  'Bluetooth' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   27:5    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\SettingsScreen.tsx:27:5
+  25 |   useEffect(() => {
+  26 |     const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
+> 27 |     setMessage(saved || t('alertStatus'));
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  28 |   }, [language, t]);
+  29 |
+  30 |   const handleSave = () => {  react-hooks/set-state-in-effect
+   56:11   warning  'language' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   58:57   warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-explicit-any
+   68:10   warning  'editError' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   77:7    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\SettingsScreen.tsx:77:7
+  75 |   useEffect(() => {
+  76 |     if (!isOpen) {
+> 77 |       setEditingContactId(null);
+     |       ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  78 |       setEditingContactData(null);
+  79 |       setEditError(null);
+  80 |       setIsAddingContact(false);                      react-hooks/set-state-in-effect
+  108:9    warning  'handleStartEditing' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  121:9    warning  'handleSaveEdit' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  452:21   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/ban-ts-comment
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\TopRightControls.tsx
+  12:44  warning  'theme' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars
+  12:51  warning  'toggleTheme' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  13:13  warning  'language' is assigned a value but never used                                  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\UpdateNotification.tsx
+   2:1   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  14:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                    no-console
+  17:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                    no-console
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\__tests__\AlertScreen.test.tsx
+  45:50  warning  Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  51:36  warning  Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  52:48  warning  Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  89:1   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\settings\SettingFallDetection.tsx
+  3:10  warning  'Activity' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\BLEContext.tsx
+  28:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\LanguageContext.tsx
+  36:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\UIContext.tsx
+  23:33  warning  'event' is defined but never used. Allowed unused args must match /^_/u                                                         @typescript-eslint/no-unused-vars
+  73:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useFallDetection.test.ts
+  30:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  57:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useHeartMonitor.test.ts
+  1:22  warning  'act' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useLocalStorage.test.ts
+  2:48  warning  'afterEach' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useShake.test.ts
+    7:9   warning  'removeEventListenerSpy' is assigned a value but never used                                                          @typescript-eslint/no-unused-vars
+   10:37  warning  Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   50:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  101:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useBLE.ts
+    2:21  warning  'numberToUUID' is defined but never used                                           @typescript-eslint/no-unused-vars
+   66:21  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+   73:58  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+   90:21  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  110:21  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  116:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useChat.ts
+   30:6   warning  React Hook useEffect has a missing dependency: 'messages.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  109:17  warning  Unexpected any. Specify a different type                                                                            @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useEmergencyAlert.ts
+   57:62  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  100:9   warning  'toggleSound' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  115:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useEmergencyAlert.ts:115:5
+  113 |
+  114 |   useEffect(() => {
+> 115 |     startAlert();
+      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  116 |
+  117 |     const enterFullscreen = async () => {
+  118 |       try {  react-hooks/set-state-in-effect
+  119:50  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  127:21  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  128:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-console
+  138:31  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  139:22  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useFallDetection.ts
+  12:9   warning  'impactThreshold' is assigned a value but never used                               @typescript-eslint/no-unused-vars
+  13:9   warning  'stillnessThreshold' is assigned a value but never used                            @typescript-eslint/no-unused-vars
+  83:17  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  89:17  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  95:21  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useHeartMonitor.ts
+   9:12  warning  'settings' is assigned a value but never used                                      @typescript-eslint/no-unused-vars
+   9:40  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  25:17  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts
+  17:110  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  18:9    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts:18:9
+  16 |         // Check if running in standalone mode (already installed)
+  17 |         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+> 18 |         setIsAppInstalled(isStandalone);
+     |         ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |
+  20 |         // Detect iOS (including iPadOS which often reports as Mac)
+  21 |         const userAgent = window.navigator.userAgent.toLowerCase();  react-hooks/set-state-in-effect
+  51:13   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-console
+  59:13   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-console
+  84:9    warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-console
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts
+  31:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts:31:13
+  29 |     useEffect(() => {
+  30 |         if (typeof window !== 'undefined' && 'DeviceMotionEvent' in window) {
+> 31 |             setIsSupported(true);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |             // Construct a dummy event to check if requestPermission is available (iOS 13+)
+  33 |             // Note: We can't actually call it here, just checking existence
+  34 |             // eslint-disable-next-line @typescript-eslint/no-explicit-any  react-hooks/set-state-in-effect
+  68:10  warning  'DeviceMotionEventWithAcceleration' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useSpeechRecognition.ts
+   5:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   5:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  11:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  27:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTTS.ts
+   7:10  warning  'decode' is defined but never used                    @typescript-eslint/no-unused-vars
+  17:16  warning  'decodeAudioData' is defined but never used           @typescript-eslint/no-unused-vars
+  40:9   warning  'audioContextRef' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTheme.ts
+  12:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTheme.ts:12:5
+  10 |     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  11 |     const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+> 12 |     setTheme(initialTheme);
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  13 |   }, []);
+  14 |
+  15 |   useEffect(() => {  react-hooks/set-state-in-effect
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\utils\pdfGenerator.ts
+  37:23  warning  'data' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\vite.config.ts
+  8:9  warning  'env' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 103 problems (15 errors, 88 warnings)
+  0 errors and 2 warnings potentially fixable with the `--fix` option.
+

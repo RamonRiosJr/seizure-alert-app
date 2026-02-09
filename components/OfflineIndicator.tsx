@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
-import { Wifi, WifiOff, RefreshCw, X } from 'lucide-react';
+import { Wifi, RefreshCw, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const OfflineIndicator: React.FC = () => {
@@ -11,12 +11,20 @@ export const OfflineIndicator: React.FC = () => {
         updateServiceWorker,
     } = useRegisterSW({
         onRegistered(r) {
-            console.log('SW Registered: ' + r);
+            // console.log('SW Registered: ' + r);
         },
         onRegisterError(error) {
-            console.log('SW registration error', error);
+            console.error('SW registration error', error);
         },
     });
+
+    // Optional: Briefly show "Offline Ready" via a Toast, then hide
+    useEffect(() => {
+        if (offlineReady) {
+            const timer = setTimeout(() => setOfflineReady(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [offlineReady, setOfflineReady]);
 
     const close = () => {
         setOfflineReady(false);
@@ -33,10 +41,10 @@ export const OfflineIndicator: React.FC = () => {
                         </div>
                         <div className="flex-1">
                             <h3 className="font-semibold text-gray-900 dark:text-white">
-                                Update Available
+                                {t('updateAvailable', 'Update Available')}
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                                A new version of Aura Speaks is available.
+                                {t('updateDesc', 'A new version of Aura Speaks is available.')}
                             </p>
                         </div>
                         <button
@@ -50,20 +58,12 @@ export const OfflineIndicator: React.FC = () => {
                         onClick={() => updateServiceWorker(true)}
                         className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium text-sm transition-colors"
                     >
-                        Update Now
+                        {t('updateNow', 'Update Now')}
                     </button>
                 </div>
             </div>
         );
     }
-
-    // Optional: Briefly show "Offline Ready" via a Toast, then hide
-    useEffect(() => {
-        if (offlineReady) {
-            const timer = setTimeout(() => setOfflineReady(false), 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [offlineReady, setOfflineReady]);
 
     if (offlineReady) {
         return (
@@ -71,7 +71,7 @@ export const OfflineIndicator: React.FC = () => {
                 <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg shadow-lg p-3 flex items-center gap-3">
                     <Wifi className="w-5 h-5 text-green-600 dark:text-green-400" />
                     <span className="text-sm font-medium text-green-800 dark:text-green-200">
-                        Ready to work offline
+                        {t('offlineReady', 'Ready to work offline')}
                     </span>
                     <button
                         onClick={close}

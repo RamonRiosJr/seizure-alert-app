@@ -54,7 +54,8 @@ export const useEmergencyAlert = () => {
 
     // Siren sound effect
     try {
-      const context = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      const context = new AudioContextClass();
       audioContextRef.current = context;
 
       // Check for autoplay policy
@@ -64,9 +65,9 @@ export const useEmergencyAlert = () => {
         }).catch(() => {
           setHasAudioPermission(false);
         });
-      } else {
-        setHasAudioPermission(true);
       }
+      // Default is true, so no need to set synchronously if running.
+
 
       const oscillator = context.createOscillator();
       const gain = context.createGain();

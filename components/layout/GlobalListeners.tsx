@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useUI } from '../../contexts/UIContext';
 import { useShake } from '../../hooks/useShake';
 import { useHeartMonitor } from '../../hooks/useHeartMonitor';
+import { useFallDetection } from '../../hooks/useFallDetection';
 
 export const GlobalListeners: React.FC = () => {
     const { screen, setScreen } = useUI();
@@ -27,6 +28,9 @@ export const GlobalListeners: React.FC = () => {
 
     // Heart Rate Monitor
     useHeartMonitor(activateAlert);
+
+    // Fall Detection
+    useFallDetection(activateAlert);
 
     return null; // This component handles logic only, no UI
 };

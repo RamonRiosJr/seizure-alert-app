@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import type { Language, EmergencyContact, AlertReport } from '../types';
+import type { EmergencyContact, AlertReport } from '../types';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, Pencil, X, Check, Info } from 'lucide-react';
+import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, X, Info } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 import { useTranslation } from 'react-i18next';
@@ -12,11 +12,13 @@ import { useTranslation } from 'react-i18next';
 interface BatteryManager extends EventTarget {
   charging: boolean;
   level: number;
+  addEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions): void;
+  removeEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions): void;
 }
 
 const useBatteryStatus = () => {
   const [batteryStatus, setBatteryStatus] = useState({
-    isSupported: typeof navigator !== 'undefined' && 'getBattery' in navigator,
+    isSupported: typeof navigator !== 'undefined' && 'getBattery' in (navigator as any),
     level: null as number | null,
     charging: null as boolean | null,
   });
@@ -38,6 +40,7 @@ const useBatteryStatus = () => {
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (navigator as any).getBattery().then((manager: BatteryManager) => {
       batteryManager = manager;
       updateBatteryStatus();
@@ -66,6 +69,7 @@ const AlertScreen: React.FC = () => {
   const { t } = useTranslation();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [patientInfo] = useLocalStorage<any>('patient_info', {});
 
   const [timer, setTimer] = useState(0);
@@ -86,7 +90,7 @@ const AlertScreen: React.FC = () => {
     };
   }, []);
 
-  const [statusMessage, setStatusMessage] = useState(t('alertStatus'));
+  const [statusMessage] = useLocalStorage<string>(`seizure_alert_status_message_${language}`, t('alertStatus'));
 
   const primaryContact = contacts.length > 0 ? contacts[0] : null;
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
@@ -97,10 +101,6 @@ const AlertScreen: React.FC = () => {
 
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-
-  useEffect(() => {
-    setStatusMessage(t('alertStatus'));
-  }, [language, t]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -307,7 +307,7 @@ const AlertScreen: React.FC = () => {
                         setDragX(0);
                         (e.target as HTMLElement).releasePointerCapture(e.pointerId);
                       }}
-                      onPointerLeave={(e) => {
+                      onPointerLeave={() => {
                         if (isDragging) {
                           setIsDragging(false);
                           setDragX(0);
