@@ -50,6 +50,7 @@ export const OfflineIndicator: React.FC = () => {
                         <button
                             onClick={close}
                             className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                            aria-label="Close update notification"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -76,6 +77,7 @@ export const OfflineIndicator: React.FC = () => {
                     <button
                         onClick={close}
                         className="ml-auto text-green-600 dark:text-green-400 hover:text-green-800"
+                        aria-label="Close offline indicator"
                     >
                         <X className="w-4 h-4" />
                     </button>

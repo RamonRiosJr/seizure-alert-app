@@ -1,0 +1,170 @@
+
+> aura-speaks-ai@0.0.0 lint
+> eslint .
+
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\android\app\build\intermediates\assets\debug\mergeDebugAssets\native-bridge.js
+    36:5   warning  Unused eslint-disable directive (no problems were reported)
+   208:29  warning  Unused eslint-disable directive (no problems were reported from 'no-prototype-builtins')
+  1009:13  error    Definition for rule '@typescript-eslint/no-unused-vars' was not found                     @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AboutScreen.tsx
+   3:15  warning  'Language' is defined but never used           @typescript-eslint/no-unused-vars
+  14:13  warning  'language' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AlertScreen.tsx
+  21:84  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\DisclaimerModal.tsx
+   4:15  warning  'Language' is defined but never used           @typescript-eslint/no-unused-vars
+  13:13  warning  'language' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\InstallPrompt.tsx
+  7:13  warning  'isInstallable' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\OfflineIndicator.tsx
+  13:22  warning  'r' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\ReadyScreen.tsx
+  2:15  warning  'Language' is defined but never used       @typescript-eslint/no-unused-vars
+  3:10  warning  'MessageCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\ReportsScreen.tsx
+  2:15  warning  'Language' is defined but never used  @typescript-eslint/no-unused-vars
+  4:67  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\SettingsScreen.tsx
+  31:10  warning  'initialized' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  31:23  warning  'setInitialized' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  66:57  warning  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\TopRightControls.tsx
+  12:44  warning  'theme' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars
+  12:51  warning  'toggleTheme' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  13:13  warning  'language' is assigned a value but never used                                  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\__tests__\AlertScreen.test.tsx
+  45:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  52:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\settings\SettingContacts.tsx
+  4:38  warning  'Phone' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\BLEContext.tsx
+  28:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\LanguageContext.tsx
+  36:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\UIContext.tsx
+  23:33  warning  'event' is defined but never used. Allowed unused args must match /^_/u                                                         @typescript-eslint/no-unused-vars
+  73:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\dev-dist\workbox-5a5d9309.js
+    69:7   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+   436:5   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+   452:5   warning  Unused eslint-disable directive (no problems were reported)
+   769:11  error    Definition for rule '@typescript-eslint/no-unsafe-member-access' was not found  @typescript-eslint/no-unsafe-member-access
+   771:13  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   965:11  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   981:13  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   987:13  warning  Unused eslint-disable directive (no problems were reported)
+  1406:11  warning  Unused eslint-disable directive (no problems were reported)
+  1665:5   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+  2062:35  warning  Unused eslint-disable directive (no problems were reported)
+  2793:9   error    Definition for rule '@typescript-eslint/no-unsafe-return' was not found         @typescript-eslint/no-unsafe-return
+  2840:9   error    Definition for rule '@typescript-eslint/no-unsafe-return' was not found         @typescript-eslint/no-unsafe-return
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\dev-dist\workbox-7a5e81cd.js
+    52:7   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+   419:5   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+   435:5   warning  Unused eslint-disable directive (no problems were reported)
+   752:11  error    Definition for rule '@typescript-eslint/no-unsafe-member-access' was not found  @typescript-eslint/no-unsafe-member-access
+   754:13  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   948:11  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   964:13  error    Definition for rule '@typescript-eslint/no-unsafe-assignment' was not found     @typescript-eslint/no-unsafe-assignment
+   970:13  warning  Unused eslint-disable directive (no problems were reported)
+  1389:11  warning  Unused eslint-disable directive (no problems were reported)
+  1648:5   error    Definition for rule '@typescript-eslint/ban-types' was not found                @typescript-eslint/ban-types
+  2045:35  warning  Unused eslint-disable directive (no problems were reported)
+  2776:9   error    Definition for rule '@typescript-eslint/no-unsafe-return' was not found         @typescript-eslint/no-unsafe-return
+  2823:9   error    Definition for rule '@typescript-eslint/no-unsafe-return' was not found         @typescript-eslint/no-unsafe-return
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useFallDetection.test.ts
+   6:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   7:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   8:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useHeartMonitor.test.ts
+  1:22  warning  'act' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useLocalStorage.test.ts
+  2:48  warning  'afterEach' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useShake.test.ts
+   7:9   warning  'removeEventListenerSpy' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  10:37  warning  Unexpected any. Specify a different type                     @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useBLE.ts
+    2:21  warning  'numberToUUID' is defined but never used  @typescript-eslint/no-unused-vars
+   66:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   73:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   90:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useChat.ts
+   30:6   warning  React Hook useEffect has a missing dependency: 'messages.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  109:17  warning  Unexpected any. Specify a different type                                                                            @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useEmergencyAlert.ts
+   57:67  warning  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  101:9   warning  'toggleSound' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  120:50  warning  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  128:21  warning  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  139:31  warning  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  140:22  warning  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useFallDetection.ts
+  51:8  warning  React Hook useCallback has unnecessary dependencies: 'lastImpactTime' and 'sensitivity'. Either exclude them or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useHeartMonitor.ts
+  9:12  warning  'settings' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  9:40  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts
+  14:96   warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  17:19   warning  'setIsIOS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  20:110  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  28:110  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  54:114  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts
+  65:10  warning  'DeviceMotionEventWithAcceleration' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useSpeechRecognition.ts
+   5:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   5:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  11:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  27:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTTS.ts
+   7:10  warning  'decode' is defined but never used                    @typescript-eslint/no-unused-vars
+  17:16  warning  'decodeAudioData' is defined but never used           @typescript-eslint/no-unused-vars
+  40:9   warning  'audioContextRef' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\tests\emergency-flow.spec.ts
+  30:18  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\utils\pdfGenerator.ts
+  37:23  warning  'data' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\vite.config.ts
+  8:9  warning  'env' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 96 problems (19 errors, 77 warnings)
+  0 errors and 10 warnings potentially fixable with the `--fix` option.
+

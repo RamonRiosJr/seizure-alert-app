@@ -21,7 +21,7 @@ export const DeviceManager: React.FC<{ onClose: () => void }> = ({ onClose }) =>
                             {isMock && <span className="text-xs px-2 py-0.5 bg-yellow-100 text-yellow-800 rounded-full font-medium">Simulation Mode</span>}
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-gray-500">
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-gray-500" aria-label="Close Device Manager">
                         <XCircle className="w-6 h-6" />
                     </button>
                 </div>
@@ -77,6 +77,7 @@ export const DeviceManager: React.FC<{ onClose: () => void }> = ({ onClose }) =>
                                     <button
                                         onClick={() => setIsWorkoutMode(!isWorkoutMode)}
                                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isWorkoutMode ? 'bg-amber-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                                        aria-label={isWorkoutMode ? "Disable Workout Mode" : "Enable Workout Mode"}
                                     >
                                         <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isWorkoutMode ? 'translate-x-6' : 'translate-x-1'}`} />
                                     </button>

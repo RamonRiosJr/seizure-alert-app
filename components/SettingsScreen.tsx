@@ -529,6 +529,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   <input
                     type="file"
                     accept=".json"
+                    aria-label="Restore Backup File"
                     onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
