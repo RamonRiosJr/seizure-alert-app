@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const useFallDetection = (onFallDetected: () => void) => {
@@ -6,6 +6,9 @@ export const useFallDetection = (onFallDetected: () => void) => {
     const [sensitivity] = useLocalStorage('fallSensitivity', 'medium');
     const [lastImpactTime, setLastImpactTime] = useState<number>(0);
     const [isMonitoringStillness, setIsMonitoringStillness] = useState(false);
+
+    // Use ref to track current monitoring state for timeout callback
+    const isMonitoringRef = useRef(false);
 
     // Thresholds based on sensitivity
     const getThresholds = useCallback(() => {
@@ -30,14 +33,16 @@ export const useFallDetection = (onFallDetected: () => void) => {
         const gForce = Math.sqrt(x * x + y * y + z * z);
         const thresholds = getThresholds();
 
-        if (isMonitoringStillness) {
+        // Use ref to check current monitoring state (avoids stale closure)
+        if (isMonitoringRef.current) {
             // If movement is detected during stillness phase, cancel alert
             // Normal gravity is ~9.8. Movement means significant deviation or rotation.
             // Simplified: if variance from 1G (9.8) is high, user is moving.
             if (Math.abs(gForce - 9.8) > 2) {
                 // Movement detected, user is likely okay or picking up phone
-                console.log('Movement detected after impact - cancelling fall alert');
+                console.log(`Movement detected after impact - cancelling fall alert (gForce: ${gForce.toFixed(2)})`);
                 setIsMonitoringStillness(false);
+                isMonitoringRef.current = false;
                 setLastImpactTime(0);
             }
         } else {
@@ -46,9 +51,10 @@ export const useFallDetection = (onFallDetected: () => void) => {
                 console.log(`High Impact Detected: ${gForce.toFixed(2)}m/s²`);
                 setLastImpactTime(Date.now());
                 setIsMonitoringStillness(true);
+                isMonitoringRef.current = true;
             }
         }
-    }, [isEnabled, isMonitoringStillness, getThresholds, sensitivity, lastImpactTime]); // Added dependencies
+    }, [isEnabled, getThresholds]); // Added dependencies
 
     // Check for stillness timeout
     useEffect(() => {
@@ -56,15 +62,16 @@ export const useFallDetection = (onFallDetected: () => void) => {
 
         const thresholds = getThresholds();
         const timeoutId = setTimeout(() => {
-            // Verify state is still valid inside timeout
-            // We need a ref or stable check if we want to be perfect, 
-            // but here we rely on the component not unmounting or state changing rapidly.
-            // Actually, we should check if we are *still* monitoring.
-            // However, the effect will cleanup/re-run if dependencies change.
-            console.log('Fall Confirmed: Impact + Stillness');
-            onFallDetected();
-            setIsMonitoringStillness(false);
-            setLastImpactTime(0);
+            // Check ref value to get current monitoring state (not stale closure value)
+            // This prevents race conditions where motion cancels monitoring
+            // but the timeout was already scheduled
+            if (isMonitoringRef.current) {
+                console.log('Fall Confirmed: Impact + Stillness');
+                onFallDetected();
+                setIsMonitoringStillness(false);
+                isMonitoringRef.current = false;
+                setLastImpactTime(0);
+            }
         }, thresholds.stillness);
 
         return () => clearTimeout(timeoutId);
