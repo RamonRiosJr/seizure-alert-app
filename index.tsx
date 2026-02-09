@@ -7,6 +7,7 @@ import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UIProvider } from './contexts/UIContext';
+import { BLEProvider } from './contexts/BLEContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -20,7 +21,9 @@ root.render(
       <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
         <LanguageProvider>
           <UIProvider>
-            <App />
+            <BLEProvider>
+              <App />
+            </BLEProvider>
           </UIProvider>
         </LanguageProvider>
       </Suspense>

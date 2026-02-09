@@ -1,9 +1,11 @@
 import React from 'react';
-import { useBLE } from '../hooks/useBLE';
-import { Bluetooth, Activity, Smartphone, XCircle, Heart } from 'lucide-react';
+import { useBLEContext } from '../contexts/BLEContext';
+import { Bluetooth, Activity, Smartphone, XCircle, Heart, Dumbbell } from 'lucide-react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const DeviceManager: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-    const { scan, isScanning, devices, connect, disconnect, connectedDevice, heartRate, error, isMock } = useBLE();
+    const { scan, isScanning, devices, connect, disconnect, connectedDevice, heartRate, error, isMock } = useBLEContext();
+    const [isWorkoutMode, setIsWorkoutMode] = useLocalStorage<boolean>('workout_mode', false);
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -35,28 +37,51 @@ export const DeviceManager: React.FC<{ onClose: () => void }> = ({ onClose }) =>
 
                     {/* Connected State */}
                     {connectedDevice ? (
-                        <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-100 dark:border-green-800 flex flex-col items-center text-center space-y-4">
-                            <div className={`p-4 bg-white dark:bg-gray-800 rounded-full shadow-sm animate-pulse`}>
-                                <Heart className={`w-8 h-8 text-red-500 ${heartRate ? 'fill-red-500' : ''}`} />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{connectedDevice.name || 'Unknown Device'}</h3>
-                                <p className="text-sm text-green-600 dark:text-green-400 font-medium">Connected & Monitoring</p>
+                        <div className="space-y-4">
+                            <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-100 dark:border-green-800 flex flex-col items-center text-center space-y-4">
+                                <div className={`p-4 bg-white dark:bg-gray-800 rounded-full shadow-sm animate-pulse`}>
+                                    <Heart className={`w-8 h-8 text-red-500 ${heartRate ? 'fill-red-500' : ''}`} />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{connectedDevice.name || 'Unknown Device'}</h3>
+                                    <p className="text-sm text-green-600 dark:text-green-400 font-medium">Connected & Monitoring</p>
+                                </div>
+
+                                <div className="flex items-end gap-1">
+                                    <span className="text-4xl font-bold text-gray-900 dark:text-white tabular-nums">
+                                        {heartRate ?? '--'}
+                                    </span>
+                                    <span className="text-sm text-gray-500 mb-1 font-medium">BPM</span>
+                                </div>
+
+                                <button
+                                    onClick={disconnect}
+                                    className="px-4 py-2 bg-white dark:bg-gray-800 text-red-600 border border-red-100 dark:border-red-900/50 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shadow-sm"
+                                >
+                                    Disconnect Device
+                                </button>
                             </div>
 
-                            <div className="flex items-end gap-1">
-                                <span className="text-4xl font-bold text-gray-900 dark:text-white tabular-nums">
-                                    {heartRate ?? '--'}
-                                </span>
-                                <span className="text-sm text-gray-500 mb-1 font-medium">BPM</span>
+                            {/* Workout Mode Toggle */}
+                            <div className={`p-4 rounded-xl border transition-all ${isWorkoutMode ? 'bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800' : 'bg-gray-50 border-gray-100 dark:bg-gray-800 dark:border-gray-700'}`}>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`p-2 rounded-lg ${isWorkoutMode ? 'bg-amber-100 text-amber-600 dark:bg-amber-800 dark:text-amber-200' : 'bg-white text-gray-400 dark:bg-gray-700'}`}>
+                                            <Dumbbell className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold text-gray-900 dark:text-white">Workout Mode</h4>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">Pause alerts during exercise</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setIsWorkoutMode(!isWorkoutMode)}
+                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isWorkoutMode ? 'bg-amber-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                                    >
+                                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isWorkoutMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                                    </button>
+                                </div>
                             </div>
-
-                            <button
-                                onClick={disconnect}
-                                className="px-4 py-2 bg-white dark:bg-gray-800 text-red-600 border border-red-100 dark:border-red-900/50 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shadow-sm"
-                            >
-                                Disconnect Device
-                            </button>
                         </div>
                     ) : (
                         // Scanning State
