@@ -8,7 +8,7 @@ export const useEmergencyAlert = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [hasAudioPermission, setHasAudioPermission] = useState(true);
 
-  /* 
+  /*
    * CRITICAL: Audio Context State Management
    * Web Audio API contexts are often suspended by the browser to save battery or enforce autoplay policies.
    * For a safety-critical application, we must ensure the siren continues even if the device is locked or idle.
@@ -17,13 +17,16 @@ export const useEmergencyAlert = () => {
   // "Warm up" the audio context on user interaction to unlock it permanently
   const attemptResume = useCallback(() => {
     if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
-      audioContextRef.current.resume().then(() => {
-        console.log("AudioContext resumed successfully by user interaction.");
-        setHasAudioPermission(true);
-      }).catch(err => {
-        console.warn("Audio resume failed (autoplay policy):", err);
-        setHasAudioPermission(false);
-      });
+      audioContextRef.current
+        .resume()
+        .then(() => {
+          console.log('AudioContext resumed successfully by user interaction.');
+          setHasAudioPermission(true);
+        })
+        .catch((err) => {
+          console.warn('Audio resume failed (autoplay policy):', err);
+          setHasAudioPermission(false);
+        });
     }
   }, []);
 
@@ -47,7 +50,7 @@ export const useEmergencyAlert = () => {
     // We do NOT close the context, we just suspend it or leave it open to avoid re-creation cost/latency
     // Closing it can sometimes make re-opening it harder on mobile Safari
     if (audioContextRef.current && audioContextRef.current.state === 'running') {
-      audioContextRef.current.suspend().catch(e => console.error("Error suspending context", e));
+      audioContextRef.current.suspend().catch((e) => console.error('Error suspending context', e));
     }
 
     oscillatorRef.current = null;
@@ -83,12 +86,15 @@ export const useEmergencyAlert = () => {
 
       // Aggressive Resume: Force state to running
       if (context.state === 'suspended') {
-        context.resume().then(() => {
-          setHasAudioPermission(true);
-        }).catch(() => {
-          console.warn("Could not auto-resume audio context. Waiting for user interaction.");
-          setHasAudioPermission(false);
-        });
+        context
+          .resume()
+          .then(() => {
+            setHasAudioPermission(true);
+          })
+          .catch(() => {
+            console.warn('Could not auto-resume audio context. Waiting for user interaction.');
+            setHasAudioPermission(false);
+          });
       }
 
       const oscillator = context.createOscillator();
@@ -118,7 +124,7 @@ export const useEmergencyAlert = () => {
         // CRITICAL: Keep-Alive Check
         // If OS suspended us, try to resume immediately
         if (context.state === 'suspended') {
-          console.log("Context suspended by OS. Attempting aggressive resume...");
+          console.log('Context suspended by OS. Attempting aggressive resume...');
           context.resume();
         }
 
@@ -132,11 +138,9 @@ export const useEmergencyAlert = () => {
 
       intervalRefs.current.push(sirenInterval);
       oscillatorRef.current = oscillator;
-
     } catch (e) {
-      console.error("Web Audio API failed to initialize.", e);
+      console.error('Web Audio API failed to initialize.', e);
     }
-
   }, [isMuted]);
 
   useEffect(() => {
@@ -167,10 +171,10 @@ export const useEmergencyAlert = () => {
 
   return {
     isMuted,
-    toggleSound: () => setIsMuted(prev => !prev),
+    toggleSound: () => setIsMuted((prev) => !prev),
     stopAlert,
     startAlert,
     hasAudioPermission,
-    attemptResume
+    attemptResume,
   };
 };

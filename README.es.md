@@ -24,32 +24,32 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 <img width="583" height="1100" alt="imagen" src="https://github.com/user-attachments/assets/49b4f952-1211-457e-bffe-11b9838abb9c" />
 
-* **Ayuda con Un Toque:** Simplemente presiona el botón rojo grande si sientes que viene una convulsión.
-* **Seguro:** Tienes que deslizar para cancelar, para no llamar por accidente.
-* **Alerta Ruidosa:** La pantalla parpadea y hace un ruido fuerte para llamar la atención de las personas.
-* **Llamada Automática:** Si no lo detienes, llama a tu contacto de emergencia automáticamente después de 30 segundos.
+- **Ayuda con Un Toque:** Simplemente presiona el botón rojo grande si sientes que viene una convulsión.
+- **Seguro:** Tienes que deslizar para cancelar, para no llamar por accidente.
+- **Alerta Ruidosa:** La pantalla parpadea y hace un ruido fuerte para llamar la atención de las personas.
+- **Llamada Automática:** Si no lo detienes, llama a tu contacto de emergencia automáticamente después de 30 segundos.
 
 ### 🏥 Ayudando a los Ayudantes (Testigos)
 
-* **Habla por Ti:** El teléfono habla en voz alta, diciéndole a la gente exactamente qué hacer (como "Gírelos sobre su lado").
-* **Funciona Sin Conexión:** Incluso si no tienes internet, las instrucciones de voz siguen funcionando.
-* **Info Médica:** Muestra tu Nombre, Tipo de Sangre y Alergias en la pantalla.
+- **Habla por Ti:** El teléfono habla en voz alta, diciéndole a la gente exactamente qué hacer (como "Gírelos sobre su lado").
+- **Funciona Sin Conexión:** Incluso si no tienes internet, las instrucciones de voz siguen funcionando.
+- **Info Médica:** Muestra tu Nombre, Tipo de Sangre y Alergias en la pantalla.
 
 ### 🤖 "Aura" - Tu Asistente de IA
 
-* **Haz Preguntas:** "Aura" es un asistente inteligente dentro de la app.
-* **Voz o Texto:** Tú o un ayudante pueden hacer preguntas como "¿Qué hago de manera segura?" usando su voz.
-* **Nota:** Aura necesita una conexión a internet para funcionar.
+- **Haz Preguntas:** "Aura" es un asistente inteligente dentro de la app.
+- **Voz o Texto:** Tú o un ayudante pueden hacer preguntas como "¿Qué hago de manera segura?" usando su voz.
+- **Nota:** Aura necesita una conexión a internet para funcionar.
 
 ### ⚙️ Fácil de Instalar (PWA)
 
-* **No Necesita App Store:** Puedes instalar esto directamente desde tu navegador.
-* **iPhone y Android:** Funciona en casi cualquier teléfono.
-* **Botón de Instalación Manual:** Ve a **Configuración** > **Instalación de la App** para ver un gran botón de "Instalar" o instrucciones para tu teléfono.
+- **No Necesita App Store:** Puedes instalar esto directamente desde tu navegador.
+- **iPhone y Android:** Funciona en casi cualquier teléfono.
+- **Botón de Instalación Manual:** Ve a **Configuración** > **Instalación de la App** para ver un gran botón de "Instalar" o instrucciones para tu teléfono.
 
 ### 📡 Nuevo: Toque para Alertar (NFC)
 
-* **Inicio Instantáneo:** ¡Puedes programar una etiqueta NFC barata (pegatina) para que simplemente _tocando_ tu teléfono con ella se inicie la alarma inmediatamente! ¡Ideal para mesitas de noche!
+- **Inicio Instantáneo:** ¡Puedes programar una etiqueta NFC barata (pegatina) para que simplemente _tocando_ tu teléfono con ella se inicie la alarma inmediatamente! ¡Ideal para mesitas de noche!
 
 ---
 
@@ -66,9 +66,9 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 **Estado Actual:**
 
-* **✅ Chrome de Escritorio:** Totalmente Funcional.
-* **⚠️ Navegadores Móviles:** La aplicación en sí funciona, pero la "Instalación" en la pantalla de inicio está experimentando problemas actualmente.
-* **Rendimiento:** Probado en iPhone 11+ y Androids modernos.
+- **✅ Chrome de Escritorio:** Totalmente Funcional.
+- **⚠️ Navegadores Móviles:** La aplicación en sí funciona, pero la "Instalación" en la pantalla de inicio está experimentando problemas actualmente.
+- **Rendimiento:** Probado en iPhone 11+ y Androids modernos.
 
 ---
 
@@ -85,9 +85,9 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 **"Primero lo Local, Siempre la Privacidad."**
 
-* **Tus Datos Se Quedan Contigo:** Todos tus contactos e información médica se guardan **solo en tu teléfono**. Nosotros no los vemos. No los robamos.
-* **Sin Rastreo:** No rastreamos a dónde vas ni qué haces.
-* **Amigable con HIPAA:** Dado que no almacenamos tus datos, tu privacidad está segura.
+- **Tus Datos Se Quedan Contigo:** Todos tus contactos e información médica se guardan **solo en tu teléfono**. Nosotros no los vemos. No los robamos.
+- **Sin Rastreo:** No rastreamos a dónde vas ni qué haces.
+- **Amigable con HIPAA:** Dado que no almacenamos tus datos, tu privacidad está segura.
 
 ---
 
@@ -120,9 +120,10 @@ Si esta herramienta te da tranquilidad, por favor considera invitarme un café p
   <br />
   <br />
 
-  > **"No podemos controlar los desafíos que enfrentamos, pero podemos controlar cómo respondemos. Deja que esta herramienta sea tu voz cuando más la necesites."**
-  >
-  > — _Ramon Rios Jr_
+> **"No podemos controlar los desafíos que enfrentamos, pero podemos controlar cómo respondemos. Deja que esta herramienta sea tu voz cuando más la necesites."**
+>
+> — _Ramon Rios Jr_
+
 </div>
 
 <br />

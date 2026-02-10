@@ -3,7 +3,24 @@ import { SettingFallDetection } from './settings/SettingFallDetection';
 import { SettingHeartRate } from './settings/SettingHeartRate';
 import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { X, Trash2, UserPlus, Key, Save, Pencil, Check, ExternalLink, ShieldAlert, Smartphone, Download, Share, PlusSquare, Upload, Cloud, Activity } from 'lucide-react';
+import {
+  X,
+  Trash2,
+  UserPlus,
+  Key,
+  Save,
+  Pencil,
+  Check,
+  ExternalLink,
+  ShieldAlert,
+  Smartphone,
+  Download,
+  Share,
+  PlusSquare,
+  Upload,
+  Cloud,
+  Activity,
+} from 'lucide-react';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
@@ -22,13 +39,13 @@ const AlertMessageEditor = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
 
-  // Initialize state only once or when language/defaults change. 
+  // Initialize state only once or when language/defaults change.
   // We use a key-based approach for localStorage initial value to avoid effect sync issues if possible,
   // but since we need to support dynamic language changes, an effect is okay IF we avoid the loop.
   // The persistent linter error "Calling setState synchronously" is because we are calling it immediately.
   // We can wrap it in a condition or use `useLayoutEffect` or just ignore if it's actually safe.
   // Better: Initialize state lazily.
-  const [initialized, setInitialized] = useState(false);
+  // const [initialized, setInitialized] = useState(false); // Removed unused state
 
   React.useEffect(() => {
     const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
@@ -59,11 +76,15 @@ const AlertMessageEditor = () => {
   );
 };
 
-
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   // Unused language import removed
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
-  const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', { name: '', bloodType: '', medicalConditions: '' });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', {
+    name: '',
+    bloodType: '',
+    medicalConditions: '',
+  });
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
 
   const { t } = useTranslation();
@@ -72,13 +93,23 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [apiKeyInput, setApiKeyInput] = useState(apiKey);
 
   const [editingContactId, setEditingContactId] = useState<string | null>(null);
-  const [editingContactData, setEditingContactData] = useState<{ name: string; relation: string; phone: string } | null>(null);
+  const [editingContactData, setEditingContactData] = useState<{
+    name: string;
+    relation: string;
+    phone: string;
+  } | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [isDeviceManagerOpen, setIsDeviceManagerOpen] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
-  const { isEnabled: isShakeEnabled, setIsEnabled: setShakeEnabled, isSupported: isShakeSupported, permissionGranted: shakePermissionGranted, requestPermission: requestShakePermission } = useShake(() => { });
+  const {
+    isEnabled: isShakeEnabled,
+    setIsEnabled: setShakeEnabled,
+    isSupported: isShakeSupported,
+    permissionGranted: shakePermissionGranted,
+    requestPermission: requestShakePermission,
+  } = useShake(() => {});
 
   const resetEditingState = () => {
     setEditingContactId(null);
@@ -109,7 +140,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   };
 
   const handleDeleteContact = (id: string) => {
-    setContacts(contacts.filter(c => c.id !== id));
+    setContacts(contacts.filter((c) => c.id !== id));
   };
 
   const handleSaveApiKey = () => {
@@ -136,7 +167,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
       return;
     }
 
-    setContacts(contacts.map(c => c.id === editingContactId ? { ...c, ...editingContactData, id: c.id } : c));
+    setContacts(
+      contacts.map((c) =>
+        c.id === editingContactId ? { ...c, ...editingContactData, id: c.id } : c
+      )
+    );
     resetEditingState();
   };
 
@@ -144,8 +179,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl h-[90vh] max-h-[800px] flex flex-col">
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('settingsTitle')}</h2>
-          <button onClick={handleClose} className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white" aria-label="Close settings">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {t('settingsTitle')}
+          </h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
+            aria-label="Close settings"
+          >
             <X className="w-6 h-6" />
           </button>
         </header>
@@ -159,7 +200,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsPatientName')}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">
+                  {t('settingsPatientName')}
+                </label>
                 <input
                   type="text"
                   value={patientInfo.name}
@@ -170,7 +213,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label htmlFor="blood-type" className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsBloodType')}</label>
+                <label
+                  htmlFor="blood-type"
+                  className="block text-sm font-medium mb-1 text-gray-900 dark:text-white"
+                >
+                  {t('settingsBloodType')}
+                </label>
                 <select
                   id="blood-type"
                   value={patientInfo.bloodType}
@@ -178,17 +226,23 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
                 >
                   <option value="">{t('settingsBloodTypePlaceholder')}</option>
-                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Unknown'].map(type => (
-                    <option key={type} value={type}>{type}</option>
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Unknown'].map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">{t('settingsMedicalConditions')}</label>
+                <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">
+                  {t('settingsMedicalConditions')}
+                </label>
                 <textarea
                   value={patientInfo.medicalConditions}
-                  onChange={(e) => setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })}
+                  onChange={(e) =>
+                    setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })
+                  }
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none dark:text-white"
                   placeholder="e.g. Epilepsy, Peanut Allergy..."
                 />
@@ -203,17 +257,30 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {t('emergencyContacts')}
             </h3>
             <div className="space-y-3">
-              {contacts.map(contact => (
-                <div key={contact.id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+              {contacts.map((contact) => (
+                <div
+                  key={contact.id}
+                  className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md"
+                >
                   <div>
-                    <p className="font-semibold text-gray-800 dark:text-gray-200">{contact.name} ({contact.relation})</p>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      {contact.name} ({contact.relation})
+                    </p>
                     <p className="text-gray-600 dark:text-gray-400">{contact.phone}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => handleStartEditing(contact)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-full" aria-label="Edit Contact">
+                    <button
+                      onClick={() => handleStartEditing(contact)}
+                      className="p-2 text-blue-600 hover:bg-blue-100 rounded-full"
+                      aria-label="Edit Contact"
+                    >
                       <Pencil className="w-5 h-5" />
                     </button>
-                    <button onClick={() => handleDeleteContact(contact.id!)} className="p-2 text-red-600 hover:bg-red-100 rounded-full" aria-label="Delete Contact">
+                    <button
+                      onClick={() => handleDeleteContact(contact.id!)}
+                      className="p-2 text-red-600 hover:bg-red-100 rounded-full"
+                      aria-label="Delete Contact"
+                    >
                       <Trash2 className="w-5 h-5" />
                     </button>
                   </div>
@@ -227,13 +294,20 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               )}
 
               {isAddingContact ? (
-                <form onSubmit={editingContactId ? handleSaveEdit : handleAddContact} className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+                <form
+                  onSubmit={editingContactId ? handleSaveEdit : handleAddContact}
+                  className="space-y-3 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <input
                       type="text"
                       placeholder={t('settingsContactName')}
                       value={editingContactId ? editingContactData?.name : newContact.name}
-                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, name: e.target.value }) : setNewContact({ ...newContact, name: e.target.value })}
+                      onChange={(e) =>
+                        editingContactId
+                          ? setEditingContactData({ ...editingContactData!, name: e.target.value })
+                          : setNewContact({ ...newContact, name: e.target.value })
+                      }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
                       required
                     />
@@ -241,21 +315,43 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       type="text"
                       placeholder={t('settingsContactRelation')}
                       value={editingContactId ? editingContactData?.relation : newContact.relation}
-                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, relation: e.target.value }) : setNewContact({ ...newContact, relation: e.target.value })}
+                      onChange={(e) =>
+                        editingContactId
+                          ? setEditingContactData({
+                              ...editingContactData!,
+                              relation: e.target.value,
+                            })
+                          : setNewContact({ ...newContact, relation: e.target.value })
+                      }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
                     />
                     <input
                       type="tel"
                       placeholder={t('settingsContactPhone')}
                       value={editingContactId ? editingContactData?.phone : newContact.phone}
-                      onChange={e => editingContactId ? setEditingContactData({ ...editingContactData!, phone: e.target.value }) : setNewContact({ ...newContact, phone: e.target.value })}
+                      onChange={(e) =>
+                        editingContactId
+                          ? setEditingContactData({ ...editingContactData!, phone: e.target.value })
+                          : setNewContact({ ...newContact, phone: e.target.value })
+                      }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
                       required
                     />
                   </div>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full sm:w-auto">{t('settingsSave')}</button>
-                    <button type="button" onClick={editingContactId ? handleCancelEditing : handleCancelAdd} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto">{t('settingsCancel')}</button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full sm:w-auto"
+                    >
+                      {t('settingsSave')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={editingContactId ? handleCancelEditing : handleCancelAdd}
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 w-full sm:w-auto"
+                    >
+                      {t('settingsCancel')}
+                    </button>
                   </div>
                 </form>
               ) : (
@@ -269,8 +365,6 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 </button>
               )}
             </div>
-
-
           </section>
 
           {/* Shake to Alert Section */}
@@ -280,9 +374,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {t('settingsShakeTitle')}
             </h3>
             <div className="space-y-3">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t('settingsShakeDesc')}
-              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('settingsShakeDesc')}</p>
 
               {!isShakeSupported ? (
                 <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md border border-red-200 dark:border-red-800">
@@ -290,12 +382,16 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 </div>
               ) : (
                 <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
-                  <span className="font-medium text-gray-900 dark:text-white">Enable Shake to Alert</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    Enable Shake to Alert
+                  </span>
                   <button
                     onClick={() => setShakeEnabled(!isShakeEnabled)}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isShakeEnabled ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'}`}
                   >
-                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isShakeEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isShakeEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+                    />
                   </button>
                 </div>
               )}
@@ -358,7 +454,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {t('settingsAPIKey')}
             </h3>
             <div className="space-y-3">
-              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">{t('settingsAPIKeyLabel')}</label>
+              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">
+                {t('settingsAPIKeyLabel')}
+              </label>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {t('settingsAPIKeyDesc')}
                 <br />
@@ -373,18 +471,30 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               </p>
               <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-md border border-yellow-200 dark:border-yellow-800/50 text-sm text-yellow-800 dark:text-yellow-200 flex gap-2 items-start">
                 <ShieldAlert className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Your API key is stored <strong>locally</strong> on your device. It is used directly to communicate with Google's servers and is never shared with us.</span>
+                <span>
+                  Your API key is stored <strong>locally</strong> on your device. It is used
+                  directly to communicate with Google's servers and is never shared with us.
+                </span>
               </div>
               <div className="flex flex-col sm:flex-row gap-2">
-                <input id="api-key" type="password" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)} placeholder={t('settingsAPIKeyPlaceholder')} className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500" />
-                <button onClick={handleSaveApiKey} className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2">
+                <input
+                  id="api-key"
+                  type="password"
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  placeholder={t('settingsAPIKeyPlaceholder')}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
+                />
+                <button
+                  onClick={handleSaveApiKey}
+                  className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2"
+                >
                   <Save className="w-5 h-5" />
                   {t('settingsSave')}
                 </button>
               </div>
             </div>
           </section>
-
 
           {/* App Installation Section */}
           <section>
@@ -422,16 +532,31 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       </h4>
                       <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
                         <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">1</span>
-                          <span>Tap the <Share className="w-4 h-4 inline mx-1" /> <strong>Share</strong> button in your browser toolbar.</span>
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                            1
+                          </span>
+                          <span>
+                            Tap the <Share className="w-4 h-4 inline mx-1" /> <strong>Share</strong>{' '}
+                            button in your browser toolbar.
+                          </span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">2</span>
-                          <span>Scroll down and tap <strong className="whitespace-nowrap">Add to Home Screen</strong> <PlusSquare className="w-4 h-4 inline mx-1" />.</span>
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                            2
+                          </span>
+                          <span>
+                            Scroll down and tap{' '}
+                            <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
+                            <PlusSquare className="w-4 h-4 inline mx-1" />.
+                          </span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">3</span>
-                          <span>Confirm by tapping <strong>Add</strong> in the top corner.</span>
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                            3
+                          </span>
+                          <span>
+                            Confirm by tapping <strong>Add</strong> in the top corner.
+                          </span>
                         </li>
                       </ol>
                     </div>
@@ -442,9 +567,21 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       <p className="font-semibold mb-2">Can't see the install button?</p>
                       <p>Try installing manually via your browser menu:</p>
                       <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
-                        <li><span className="font-bold">Chrome (Android):</span> Tap <span className="font-bold">⋮</span> (three dots) &rarr; <span className="font-bold">Install App</span> or <span className="font-bold">Add to Home screen</span>.</li>
-                        <li><span className="font-bold">Safari (iOS):</span> Tap <span className="font-bold">Share</span> &rarr; <span className="font-bold">Add to Home Screen</span>.</li>
-                        <li><span className="font-bold">Desktop:</span> Look for an install icon in the address bar.</li>
+                        <li>
+                          <span className="font-bold">Chrome (Android):</span> Tap{' '}
+                          <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
+                          <span className="font-bold">Install App</span> or{' '}
+                          <span className="font-bold">Add to Home screen</span>.
+                        </li>
+                        <li>
+                          <span className="font-bold">Safari (iOS):</span> Tap{' '}
+                          <span className="font-bold">Share</span> &rarr;{' '}
+                          <span className="font-bold">Add to Home Screen</span>.
+                        </li>
+                        <li>
+                          <span className="font-bold">Desktop:</span> Look for an install icon in
+                          the address bar.
+                        </li>
                       </ul>
                     </div>
                   )}
@@ -477,19 +614,29 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 onClick={async () => {
                   try {
                     if (!('NDEFReader' in window)) {
-                      alert('NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' + window.location.href + '?emergency=true');
+                      alert(
+                        'NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' +
+                          window.location.href +
+                          '?emergency=true'
+                      );
                       return;
                     }
 
                     // @ts-ignore - Web NFC API is experimental
                     const ndef = new window.NDEFReader();
                     await ndef.write({
-                      records: [{ recordType: "url", data: window.location.origin + window.location.pathname + "?emergency=true" }]
+                      records: [
+                        {
+                          recordType: 'url',
+                          data:
+                            window.location.origin + window.location.pathname + '?emergency=true',
+                        },
+                      ],
                     });
-                    alert("✅ Success! Tag programmed. Tap it to test.");
+                    alert('✅ Success! Tag programmed. Tap it to test.');
                   } catch (error) {
                     console.error(error);
-                    alert("❌ Write failed. Make sure NFC is on and the tag is unlocked.");
+                    alert('❌ Write failed. Make sure NFC is on and the tag is unlocked.');
                   }
                 }}
                 className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
@@ -509,7 +656,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Export your data to a file for safekeeping, or transfer it to another device.
                 <br />
-                <span className="text-xs italic opacity-80">Note: Data is exported as a plain JSON file. Keep it safe.</span>
+                <span className="text-xs italic opacity-80">
+                  Note: Data is exported as a plain JSON file. Keep it safe.
+                </span>
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -534,7 +683,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
 
-                      if (confirm('WARNING: This will overwrite your current app data with the backup file. Are you sure?')) {
+                      if (
+                        confirm(
+                          'WARNING: This will overwrite your current app data with the backup file. Are you sure?'
+                        )
+                      ) {
                         const result = await restoreBackup(file);
                         alert(result.message);
                         if (result.success) {
@@ -557,11 +710,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         </main>
       </div>
       {isDeviceManagerOpen && <DeviceManager onClose={() => setIsDeviceManagerOpen(false)} />}
-    </div >
+    </div>
   );
 };
-
-
-
 
 export default SettingsScreen;

@@ -18,10 +18,10 @@ export interface AlertReport {
   date: string;
   duration: number; // in seconds
   notes: string;
-  type?: string;     // e.g., "Grand Mal", "Focal"
+  type?: string; // e.g., "Grand Mal", "Focal"
   triggers?: string[]; // e.g., "Stress", "Lights"
   description?: string; // Detailed description of event
-  mood?: string;       // Post-seizure feeling
+  mood?: string; // Post-seizure feeling
 }
 
 export interface PatientInfo {

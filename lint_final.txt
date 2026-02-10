@@ -3,33 +3,14 @@
 > eslint .
 
 
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\android\app\build\intermediates\assets\debug\mergeDebugAssets\native-bridge.js
-  1009:13  error  Definition for rule '@typescript-eslint/no-unused-vars' was not found  @typescript-eslint/no-unused-vars
-
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\AlertScreen.tsx
-  21:84  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
 C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\GForceMeter.tsx
-  106:30  error  Parsing error: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  105:18  error  Definition for rule 'react-dom/no-unsafe-inline-style' was not found  react-dom/no-unsafe-inline-style
 
 C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\InstallPrompt.tsx
   7:13  warning  'isInstallable' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
 C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\OfflineIndicator.tsx
   13:22  warning  'r' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
-
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\settings\SettingContacts.tsx
-  4:38  warning  'Phone' is defined but never used  @typescript-eslint/no-unused-vars
-
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\BLEContext.tsx
-  28:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
-
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\LanguageContext.tsx
-  36:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
-
-C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\UIContext.tsx
-  23:33  warning  'event' is defined but never used. Allowed unused args must match /^_/u                                                         @typescript-eslint/no-unused-vars
-  73:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
 
 C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useFallDetection.test.ts
    6:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -94,5 +75,5 @@ C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\ho
 C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\tests\emergency-flow.spec.ts
   30:18  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
 
-Γ£û 47 problems (2 errors, 45 warnings)
+Γ£û 40 problems (1 error, 39 warnings)
 

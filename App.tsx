@@ -15,12 +15,7 @@ import { GlobalListeners } from './components/layout/GlobalListeners';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
 function App() {
-  const {
-    activeModal,
-    screen,
-    closeModal,
-    openModal
-  } = useUI();
+  const { activeModal, screen, closeModal, openModal } = useUI();
 
   const [theme, toggleTheme] = useTheme();
 
@@ -29,6 +24,7 @@ function App() {
       className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
       onClick={() => {
         // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
         if (AudioContextClass) {
           const ctx = new AudioContextClass();
@@ -37,6 +33,7 @@ function App() {
       }}
       onTouchStart={() => {
         // Redundant touch handler for iOS safari which sometimes ignores onClick for audio unlocking
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
         if (AudioContextClass) {
           const ctx = new AudioContextClass();
@@ -49,12 +46,7 @@ function App() {
       <OfflineIndicator />
 
       {/* Layout Elements */}
-      {screen === 'ready' && (
-        <TopRightControls
-          theme={theme}
-          toggleTheme={toggleTheme}
-        />
-      )}
+      {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
 
       {/* Main Content Router */}
       <AppRouter />
@@ -65,25 +57,13 @@ function App() {
       <UpdateNotification />
 
       {/* Modals */}
-      <Chatbot
-        isOpen={activeModal === 'chat'}
-        onClose={closeModal}
-      />
+      <Chatbot isOpen={activeModal === 'chat'} onClose={closeModal} />
 
-      <SettingsScreen
-        isOpen={activeModal === 'settings'}
-        onClose={closeModal}
-      />
+      <SettingsScreen isOpen={activeModal === 'settings'} onClose={closeModal} />
 
-      <ReportsScreen
-        isOpen={activeModal === 'reports'}
-        onClose={closeModal}
-      />
+      <ReportsScreen isOpen={activeModal === 'reports'} onClose={closeModal} />
 
-      <DisclaimerModal
-        isOpen={activeModal === 'disclaimer'}
-        onClose={closeModal}
-      />
+      <DisclaimerModal isOpen={activeModal === 'disclaimer'} onClose={closeModal} />
 
       <AboutScreen
         isOpen={activeModal === 'about'}

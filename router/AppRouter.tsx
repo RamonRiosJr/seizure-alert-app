@@ -4,11 +4,11 @@ import AlertScreen from '../components/AlertScreen';
 import ReadyScreen from '../components/ReadyScreen';
 
 export const AppRouter: React.FC = () => {
-    const { screen } = useUI();
+  const { screen } = useUI();
 
-    if (screen === 'alert') {
-        return <AlertScreen />;
-    }
+  if (screen === 'alert') {
+    return <AlertScreen />;
+  }
 
-    return <ReadyScreen />;
+  return <ReadyScreen />;
 };

@@ -11,14 +11,16 @@ import { BLEProvider } from './contexts/BLEContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
+  throw new Error('Could not find root element to mount to');
 }
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+      <Suspense
+        fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}
+      >
         <LanguageProvider>
           <UIProvider>
             <BLEProvider>

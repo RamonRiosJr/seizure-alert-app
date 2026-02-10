@@ -3,7 +3,16 @@ import type { EmergencyContact, AlertReport } from '../types';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
 import { useTTS } from '../hooks/useTTS';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { TriangleAlert, Volume2, VolumeX, Loader2, Battery, BatteryCharging, X, Info } from 'lucide-react';
+import {
+  TriangleAlert,
+  Volume2,
+  VolumeX,
+  Loader2,
+  Battery,
+  BatteryCharging,
+  X,
+  Info,
+} from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 import { useTranslation } from 'react-i18next';
@@ -12,12 +21,21 @@ import { useTranslation } from 'react-i18next';
 interface BatteryManager extends EventTarget {
   charging: boolean;
   level: number;
-  addEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions): void;
-  removeEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions): void;
+  addEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject | null,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject | null,
+    options?: boolean | EventListenerOptions
+  ): void;
 }
 
 const useBatteryStatus = () => {
   const [batteryStatus, setBatteryStatus] = useState({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     isSupported: typeof navigator !== 'undefined' && 'getBattery' in (navigator as any),
     level: null as number | null,
     charging: null as boolean | null,
@@ -90,7 +108,10 @@ const AlertScreen: React.FC = () => {
     };
   }, []);
 
-  const [statusMessage] = useLocalStorage<string>(`seizure_alert_status_message_${language}`, t('alertStatus'));
+  const [statusMessage] = useLocalStorage<string>(
+    `seizure_alert_status_message_${language}`,
+    t('alertStatus')
+  );
 
   const primaryContact = contacts.length > 0 ? contacts[0] : null;
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
@@ -104,7 +125,7 @@ const AlertScreen: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer(prev => prev + 1);
+      setTimer((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -120,7 +141,7 @@ const AlertScreen: React.FC = () => {
       }, 30000);
 
       countdownIntervalRef.current = window.setInterval(() => {
-        setAutoCallCountdown(prev => (prev > 0 ? prev - 1 : 0));
+        setAutoCallCountdown((prev) => (prev > 0 ? prev - 1 : 0));
       }, 1000);
 
       return () => {
@@ -130,20 +151,20 @@ const AlertScreen: React.FC = () => {
     }
   }, [isAutoCallPending, primaryContact]);
 
-
-
   const cancelAutoCall = () => {
     setIsAutoCallPending(false);
   };
 
   const formattedTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const minutes = Math.floor(totalSeconds / 60)
+      .toString()
+      .padStart(2, '0');
     const seconds = (totalSeconds % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   };
 
   const handleSpeak = () => {
-    const instructions = (t('instructions', { returnObjects: true }) as string[]);
+    const instructions = t('instructions', { returnObjects: true }) as string[];
     const textToRead = `${t('ttsIntro')} ${instructions.join('. ')}`;
     speak(textToRead, language);
   };
@@ -191,7 +212,9 @@ const AlertScreen: React.FC = () => {
             </button>
           </div>
           <TriangleAlert className="w-12 h-12 mx-auto mb-1" />
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">{t('alertTitle')}</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none">
+            {t('alertTitle')}
+          </h1>
 
           {/* Status Message - Responsive, no editing */}
           <div className="w-full max-w-4xl mx-auto mt-2 px-4 relative z-10">
@@ -204,7 +227,7 @@ const AlertScreen: React.FC = () => {
             >
               <Info className="w-5 h-5 text-sky-300" />
               <span className="text-lg md:text-xl font-bold text-sky-200 underline decoration-sky-400/50 underline-offset-4">
-                {patientInfo.name || t('settingsPatientName') || "Patient Info"}
+                {patientInfo.name || t('settingsPatientName') || 'Patient Info'}
               </span>
             </button>
             <p className="text-lg md:text-2xl font-medium text-center leading-tight break-words line-clamp-3 opacity-90">
@@ -215,37 +238,60 @@ const AlertScreen: React.FC = () => {
 
         {/* Patient Info Modal */}
         {isInfoModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200" onClick={(e) => { e.stopPropagation(); setIsInfoModalOpen(false); }}>
-            <div className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-gray-700" onClick={e => e.stopPropagation()}>
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsInfoModalOpen(false);
+            }}
+          >
+            <div
+              className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-gray-700"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <Info className="w-6 h-6 text-sky-500" />
                   {t('settingsPatientInfo')}
                 </h2>
-                <button onClick={() => setIsInfoModalOpen(false)} className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+                <button
+                  onClick={() => setIsInfoModalOpen(false)}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full"
+                >
                   <X className="w-6 h-6 text-gray-500" />
                 </button>
               </div>
               <div className="p-6 space-y-6">
                 <div>
-                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settingsPatientName')}</label>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{patientInfo.name || "N/A"}</p>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {t('settingsPatientName')}
+                  </label>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {patientInfo.name || 'N/A'}
+                  </p>
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settingsBloodType')}</label>
-                  <p className="text-2xl font-bold text-red-500">{patientInfo.bloodType || "N/A"}</p>
+                  <label className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {t('settingsBloodType')}
+                  </label>
+                  <p className="text-2xl font-bold text-red-500">
+                    {patientInfo.bloodType || 'N/A'}
+                  </p>
                 </div>
                 <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-100 dark:border-red-800">
                   <label className="text-sm font-semibold text-red-800 dark:text-red-300 uppercase tracking-wider mb-1 block">
                     {t('settingsMedicalConditions')}
                   </label>
                   <p className="text-lg font-medium text-gray-900 dark:text-white leading-relaxed">
-                    {patientInfo.medicalConditions || "None listed"}
+                    {patientInfo.medicalConditions || 'None listed'}
                   </p>
                 </div>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-800 flex justify-end">
-                <button onClick={() => setIsInfoModalOpen(false)} className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
+                <button
+                  onClick={() => setIsInfoModalOpen(false)}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
+                >
                   Close
                 </button>
               </div>
@@ -256,13 +302,21 @@ const AlertScreen: React.FC = () => {
         <main className="flex-grow flex flex-col items-center justify-start px-4 py-2 w-full overflow-y-auto min-h-0">
           <div className="flex items-center justify-center gap-4 my-2 w-full max-w-2xl bg-black bg-opacity-20 rounded-lg p-3">
             <div className="flex items-center gap-3 border-r border-white/20 pr-4">
-              <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">{t('durationLabel')}</span>
-              <span className="text-4xl md:text-5xl font-mono font-bold tracking-widest">{formattedTime(timer)}</span>
+              <span className="text-sm font-semibold opacity-80 uppercase tracking-wider">
+                {t('durationLabel')}
+              </span>
+              <span className="text-4xl md:text-5xl font-mono font-bold tracking-widest">
+                {formattedTime(timer)}
+              </span>
             </div>
 
             {isSupported && level !== null && (
               <div className="flex items-center gap-2 pl-2">
-                {charging ? <BatteryCharging className="w-6 h-6 md:w-8 md:h-8" /> : <Battery className="w-6 h-6 md:w-8 md:h-8" />}
+                {charging ? (
+                  <BatteryCharging className="w-6 h-6 md:w-8 md:h-8" />
+                ) : (
+                  <Battery className="w-6 h-6 md:w-8 md:h-8" />
+                )}
                 <span className="text-xl md:text-2xl font-mono font-bold">{level}%</span>
               </div>
             )}
@@ -273,7 +327,12 @@ const AlertScreen: React.FC = () => {
               {isAutoCallPending && (
                 <div>
                   <p className="text-lg">
-                    {t('autoCalling')} {primaryContact.name} ({primaryContact.relation}) {t('inSeconds')} <span className="font-bold text-xl">{autoCallCountdown}{t('secondsShort')}</span>
+                    {t('autoCalling')} {primaryContact.name} ({primaryContact.relation}){' '}
+                    {t('inSeconds')}{' '}
+                    <span className="font-bold text-xl">
+                      {autoCallCountdown}
+                      {t('secondsShort')}
+                    </span>
                   </p>
 
                   {/* Slide to Cancel UI */}
@@ -290,9 +349,14 @@ const AlertScreen: React.FC = () => {
                       }}
                       onPointerMove={(e) => {
                         if (isDragging) {
-                          const containerWidth = (e.currentTarget.parentElement as HTMLElement).offsetWidth;
+                          const containerWidth = (e.currentTarget.parentElement as HTMLElement)
+                            .offsetWidth;
                           const maxDrag = containerWidth - 56; // width - padding - button width
-                          let newX = e.clientX - (e.currentTarget.parentElement as HTMLElement).getBoundingClientRect().left - 24; // center offset
+                          let newX =
+                            e.clientX -
+                            (e.currentTarget.parentElement as HTMLElement).getBoundingClientRect()
+                              .left -
+                            24; // center offset
                           newX = Math.max(0, Math.min(newX, maxDrag));
                           setDragX(newX);
                           if (newX >= maxDrag * 0.9) {
@@ -319,16 +383,8 @@ const AlertScreen: React.FC = () => {
                   </div>
                 </div>
               )}
-              {wasCallCancelled && (
-                <p className="text-lg opacity-70">
-                  {t('callCancelled')}
-                </p>
-              )}
-              {wasCallInitiated && (
-                <p className="text-lg text-green-400">
-                  {t('callInitiated')}
-                </p>
-              )}
+              {wasCallCancelled && <p className="text-lg opacity-70">{t('callCancelled')}</p>}
+              {wasCallInitiated && <p className="text-lg text-green-400">{t('callInitiated')}</p>}
             </div>
           )}
 
@@ -341,13 +397,19 @@ const AlertScreen: React.FC = () => {
                 className="p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Read instructions aloud"
               >
-                {isSpeaking ? <Loader2 className="w-6 h-6 animate-spin" /> : <Volume2 className="w-6 h-6" />}
+                {isSpeaking ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <Volume2 className="w-6 h-6" />
+                )}
               </button>
             </div>
             <ol className="space-y-3 list-decimal list-inside text-lg md:text-xl">
-              {(t('instructions', { returnObjects: true }) as string[])?.map((inst: string, index: number) => (
-                <li key={index}>{inst}</li>
-              ))}
+              {(t('instructions', { returnObjects: true }) as string[])?.map(
+                (inst: string, index: number) => (
+                  <li key={index}>{inst}</li>
+                )
+              )}
             </ol>
           </div>
 
@@ -355,13 +417,18 @@ const AlertScreen: React.FC = () => {
             <h3 className="text-2xl font-bold mb-3">{t('emergencyContacts')}</h3>
             {contacts.length > 0 ? (
               <div className="space-y-2">
-                {contacts.map(contact => (
+                {contacts.map((contact) => (
                   <div key={contact.id} className="flex justify-between items-center text-lg">
                     <div>
                       <span className="font-semibold">{contact.name}</span>
                       <span className="opacity-80"> ({contact.relation})</span>
                     </div>
-                    <a href={`tel:${contact.phone}`} className="font-mono bg-white/20 px-3 py-1 rounded-md hover:bg-white/30">{contact.phone}</a>
+                    <a
+                      href={`tel:${contact.phone}`}
+                      className="font-mono bg-white/20 px-3 py-1 rounded-md hover:bg-white/30"
+                    >
+                      {contact.phone}
+                    </a>
                   </div>
                 ))}
               </div>

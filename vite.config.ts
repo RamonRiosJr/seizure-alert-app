@@ -19,7 +19,8 @@ export default defineConfig(({ mode: _mode }) => {
         manifest: {
           name: 'Aura Speaks AI',
           short_name: 'AuraSpeaks',
-          description: 'Aura Speaks AI - When I cannot speak, Aura speaks for me. Seizure safety diary and assistant.',
+          description:
+            'Aura Speaks AI - When I cannot speak, Aura speaks for me. Seizure safety diary and assistant.',
           theme_color: '#b91c1c',
           background_color: '#ffffff',
           display: 'standalone',
@@ -31,33 +32,33 @@ export default defineConfig(({ mode: _mode }) => {
               src: 'Aura-Speaks-AI.png',
               sizes: 'any',
               type: 'image/png',
-              purpose: 'any maskable'
+              purpose: 'any maskable',
             },
             {
               src: 'Aura-Speaks-AI.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
             },
             {
               src: 'Aura-Speaks-AI.png',
               sizes: '512x512',
-              type: 'image/png'
-            }
+              type: 'image/png',
+            },
           ],
           shortcuts: [
             {
-              name: "Emergency Alert",
-              short_name: "Emergency",
-              description: "Instant Seizure Alert",
-              url: "/seizure-alert-app/?mode=emergency",
-              icons: [{ src: "Aura-Speaks-AI.png", sizes: "192x192" }]
-            }
-          ]
+              name: 'Emergency Alert',
+              short_name: 'Emergency',
+              description: 'Instant Seizure Alert',
+              url: '/seizure-alert-app/?mode=emergency',
+              icons: [{ src: 'Aura-Speaks-AI.png', sizes: '192x192' }],
+            },
+          ],
         },
         devOptions: {
-          enabled: true
-        }
-      })
+          enabled: true,
+        },
+      }),
     ],
     // To expose environment variables to the client, use the 'define' option:
     // define: {
@@ -66,17 +67,21 @@ export default defineConfig(({ mode: _mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
-      }
+      },
     },
     build: {
-      target: 'es2015'
+      target: 'es2015',
     },
     test: {
       globals: true,
       environment: 'jsdom',
       setupFiles: './src/test/setup.ts',
       css: true,
-      include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', 'hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', 'components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+      include: [
+        'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+        'hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+        'components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      ],
       exclude: ['tests/**', 'node_modules/**'],
       coverage: {
         provider: 'v8',
@@ -87,16 +92,16 @@ export default defineConfig(({ mode: _mode }) => {
           '**/*.config.{js,ts}',
           '**/*.d.ts',
           'tests/**',
-          'src/test/**'
+          'src/test/**',
         ],
         thresholds: {
           lines: 60,
           functions: 60,
           branches: 60,
-          statements: 60
-        }
-      }
-    }
+          statements: 60,
+        },
+      },
+    },
   };
 });
 // Cache bust: 2026-02-05-1540-LayoutFix
