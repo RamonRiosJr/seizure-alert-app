@@ -34,7 +34,7 @@ i18n
             }
         },
         backend: {
-            loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
+            loadPath: './locales/{{lng}}/{{ns}}.json',
         },
     });
 
