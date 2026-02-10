@@ -34,7 +34,7 @@ export const generateSeizureReport = (reports: AlertReport[], language: Language
         body: tableBody,
         foot: [['', '', '', '']], // Placeholder
         margin: { bottom: 40 }, // More room for extended footer
-        didDrawPage: (data) => {
+        didDrawPage: (_data) => {
             const pageSize = doc.internal.pageSize;
             const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
 

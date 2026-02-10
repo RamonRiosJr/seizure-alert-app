@@ -8,9 +8,17 @@ export const useEmergencyAlert = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [hasAudioPermission, setHasAudioPermission] = useState(true);
 
+  /* 
+   * CRITICAL: Audio Context State Management
+   * Web Audio API contexts are often suspended by the browser to save battery or enforce autoplay policies.
+   * For a safety-critical application, we must ensure the siren continues even if the device is locked or idle.
+   */
+
+  // "Warm up" the audio context on user interaction to unlock it permanently
   const attemptResume = useCallback(() => {
     if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
       audioContextRef.current.resume().then(() => {
+        console.log("AudioContext resumed successfully by user interaction.");
         setHasAudioPermission(true);
       }).catch(err => {
         console.warn("Audio resume failed (autoplay policy):", err);
@@ -20,23 +28,31 @@ export const useEmergencyAlert = () => {
   }, []);
 
   const stopAlert = useCallback(() => {
+    // Clear all keep-alive intervals
     intervalRefs.current.forEach(clearInterval);
     intervalRefs.current = [];
 
     if (oscillatorRef.current) {
-      oscillatorRef.current.stop();
-      oscillatorRef.current.disconnect();
+      try {
+        oscillatorRef.current.stop();
+        oscillatorRef.current.disconnect();
+      } catch (_e) {
+        // Ignore errors if already stopped
+      }
     }
     if (gainRef.current) {
       gainRef.current.disconnect();
     }
-    if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-      audioContextRef.current.close().catch(e => console.error("Error closing AudioContext", e));
+
+    // We do NOT close the context, we just suspend it or leave it open to avoid re-creation cost/latency
+    // Closing it can sometimes make re-opening it harder on mobile Safari
+    if (audioContextRef.current && audioContextRef.current.state === 'running') {
+      audioContextRef.current.suspend().catch(e => console.error("Error suspending context", e));
     }
 
     oscillatorRef.current = null;
     gainRef.current = null;
-    audioContextRef.current = null;
+    // Keep audioContextRef.current alive for re-use
 
     if (typeof navigator.vibrate === 'function') {
       navigator.vibrate(0);
@@ -44,72 +60,83 @@ export const useEmergencyAlert = () => {
   }, []);
 
   const startAlert = useCallback(() => {
-    // Vibration effect
+    // 1. Vibration effect (SOS Pattern-ish)
     if (typeof navigator.vibrate === 'function') {
+      // Clear any existing pattern first
+      navigator.vibrate(0);
       const vibrateInterval = window.setInterval(() => {
-        navigator.vibrate([500, 200, 500, 200]);
-      }, 1400);
+        navigator.vibrate([500, 200, 500, 200, 1000]); // Pulse... Pulse... Long Pause
+      }, 2500);
       intervalRefs.current.push(vibrateInterval);
     }
 
-    // Siren sound effect
+    // 2. Siren sound effect
     try {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      const context = new AudioContextClass();
-      audioContextRef.current = context;
 
-      // Check for autoplay policy
+      // Reuse existing context if available to maintain "unlocked" status
+      if (!audioContextRef.current) {
+        audioContextRef.current = new AudioContextClass();
+      }
+
+      const context = audioContextRef.current;
+
+      // Aggressive Resume: Force state to running
       if (context.state === 'suspended') {
         context.resume().then(() => {
           setHasAudioPermission(true);
         }).catch(() => {
+          console.warn("Could not auto-resume audio context. Waiting for user interaction.");
           setHasAudioPermission(false);
         });
       }
-      // Default is true, so no need to set synchronously if running.
-
 
       const oscillator = context.createOscillator();
       const gain = context.createGain();
 
       gainRef.current = gain;
 
-      oscillator.type = 'sine';
+      // Use a "Sawtooth" or "Square" wave for more piercing/alarming sound than Sine
+      oscillator.type = 'sawtooth';
       oscillator.connect(gain);
       gain.connect(context.destination);
-      gain.gain.setValueAtTime(isMuted ? 0 : 1, context.currentTime);
+
+      // Ramping for click-prevention
+      gain.gain.setValueAtTime(0, context.currentTime);
+      gain.gain.linearRampToValueAtTime(isMuted ? 0 : 1, context.currentTime + 0.1);
 
       oscillator.start(0);
 
-      let freq = 800;
+      // Siren Modulation (High-Low)
+      let isHigh = true;
+      const baseFreq = 880; // A5
+      const highFreq = 1100; // ~C#6
+
       const sirenInterval = window.setInterval(() => {
-        if (context.state === 'running') {
-          freq = freq === 800 ? 1000 : 800;
-          oscillator.frequency.setValueAtTime(freq, context.currentTime);
+        if (!context) return;
+
+        // CRITICAL: Keep-Alive Check
+        // If OS suspended us, try to resume immediately
+        if (context.state === 'suspended') {
+          console.log("Context suspended by OS. Attempting aggressive resume...");
+          context.resume();
         }
-      }, 500);
+
+        if (context.state === 'running' && oscillator) {
+          const targetFreq = isHigh ? highFreq : baseFreq;
+          oscillator.frequency.cancelScheduledValues(context.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(targetFreq, context.currentTime + 0.1);
+          isHigh = !isHigh;
+        }
+      }, 600); // Fast modulation for urgency
 
       intervalRefs.current.push(sirenInterval);
       oscillatorRef.current = oscillator;
 
     } catch (e) {
-      console.error("Web Audio API is not supported in this browser.", e);
+      console.error("Web Audio API failed to initialize.", e);
     }
 
-  }, [isMuted]);
-
-  const toggleSound = useCallback(() => {
-    if (gainRef.current && audioContextRef.current) {
-      if (audioContextRef.current.state === 'suspended') {
-        audioContextRef.current.resume();
-      }
-      const newMutedState = !isMuted;
-      setIsMuted(newMutedState);
-      gainRef.current.gain.exponentialRampToValueAtTime(
-        newMutedState ? 0.0001 : 1.0,
-        audioContextRef.current.currentTime + 0.1
-      );
-    }
   }, [isMuted]);
 
   useEffect(() => {
@@ -117,16 +144,17 @@ export const useEmergencyAlert = () => {
 
     const enterFullscreen = async () => {
       try {
+        // Fullscreen can help keep the app active on some Android versions
         const elem = document.documentElement as any;
-        if (elem.requestFullscreen) {
-          await elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-          await elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE/Edge */
-          await elem.msRequestFullscreen();
+        if (!document.fullscreenElement) {
+          if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            await elem.webkitRequestFullscreen();
+          }
         }
       } catch (err: any) {
-        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+        console.log(`Fullscreen request denied/failed: ${err.message}`);
       }
     };
 
@@ -134,11 +162,6 @@ export const useEmergencyAlert = () => {
 
     return () => {
       stopAlert();
-      if (document.fullscreenElement) {
-        document.exitFullscreen().catch(console.error);
-      } else if ((document as any).webkitExitFullscreen) {
-        (document as any).webkitExitFullscreen();
-      }
     };
   }, [startAlert, stopAlert]);
 

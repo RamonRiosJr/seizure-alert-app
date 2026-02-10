@@ -25,7 +25,25 @@ function App() {
   const [theme, toggleTheme] = useTheme();
 
   return (
-    <div className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div
+      className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
+      onClick={() => {
+        // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          ctx.resume().then(() => ctx.close()); // Just open-resume-close to verify intent
+        }
+      }}
+      onTouchStart={() => {
+        // Redundant touch handler for iOS safari which sometimes ignores onClick for audio unlocking
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          ctx.resume().then(() => ctx.close());
+        }
+      }}
+    >
       {/* Non-visual logic listeners */}
       <GlobalListeners />
       <OfflineIndicator />

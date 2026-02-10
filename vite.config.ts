@@ -1,11 +1,10 @@
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+export default defineConfig(({ mode: _mode }) => {
   return {
     base: '/seizure-alert-app/',
     server: {
@@ -79,6 +78,24 @@ export default defineConfig(({ mode }) => {
       css: true,
       include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', 'hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', 'components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       exclude: ['tests/**', 'node_modules/**'],
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html', 'lcov'],
+        exclude: [
+          'node_modules/**',
+          'dist/**',
+          '**/*.config.{js,ts}',
+          '**/*.d.ts',
+          'tests/**',
+          'src/test/**'
+        ],
+        thresholds: {
+          lines: 60,
+          functions: 60,
+          branches: 60,
+          statements: 60
+        }
+      }
     }
   };
 });
