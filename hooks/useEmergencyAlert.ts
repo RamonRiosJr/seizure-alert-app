@@ -36,7 +36,7 @@ export const useEmergencyAlert = () => {
       try {
         oscillatorRef.current.stop();
         oscillatorRef.current.disconnect();
-      } catch (e) {
+      } catch (_e) {
         // Ignore errors if already stopped
       }
     }
