@@ -144,3 +144,6 @@ android/app/src/main/assets/public
 test-results/
 playwright-report/
 
+# AI Assistant artifacts (private, never commit)
+.gemini/
+*.brain/
