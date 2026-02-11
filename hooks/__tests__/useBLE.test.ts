@@ -69,7 +69,9 @@ describe('useBLE', () => {
 
   it('should connect to a device', async () => {
     const mockDevice = { deviceId: 'test-dev', name: 'Polar H10' };
-    (BleClient.connect as any).mockImplementation((_id, cb) => cb('test-dev')); // Mock disconnect callback registration
+    (BleClient.connect as any).mockImplementation((_id: string, cb: (value: string) => void) =>
+      cb('test-dev')
+    ); // Mock disconnect callback registration
     (BleClient.startNotifications as any).mockResolvedValue(undefined);
 
     const { result } = renderHook(() => useBLE());
@@ -111,10 +113,12 @@ describe('useBLE', () => {
     let notificationCallback: (value: DataView) => void = () => {};
 
     (BleClient.connect as any).mockResolvedValue(undefined);
-    (BleClient.startNotifications as any).mockImplementation((_id, _svc, _char, cb) => {
-      notificationCallback = cb;
-      return Promise.resolve();
-    });
+    (BleClient.startNotifications as any).mockImplementation(
+      (_id: string, _svc: string, _char: string, cb: (value: DataView) => void) => {
+        notificationCallback = cb;
+        return Promise.resolve();
+      }
+    );
 
     const { result } = renderHook(() => useBLE());
 
@@ -141,10 +145,12 @@ describe('useBLE', () => {
     let notificationCallback: (value: DataView) => void = () => {};
 
     (BleClient.connect as any).mockResolvedValue(undefined);
-    (BleClient.startNotifications as any).mockImplementation((_id, _svc, _char, cb) => {
-      notificationCallback = cb;
-      return Promise.resolve();
-    });
+    (BleClient.startNotifications as any).mockImplementation(
+      (_id: string, _svc: string, _char: string, cb: (value: DataView) => void) => {
+        notificationCallback = cb;
+        return Promise.resolve();
+      }
+    );
 
     const { result } = renderHook(() => useBLE());
 
