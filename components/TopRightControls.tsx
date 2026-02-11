@@ -1,7 +1,9 @@
 import React from 'react';
-import { Settings, ClipboardList, AlertTriangle, Heart, Coffee } from 'lucide-react';
+import { Settings, ClipboardList, AlertTriangle, Heart, Coffee, Battery, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useUI } from '../contexts/UIContext';
+import { useBattery } from '../hooks/useBattery';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface TopRightControlsProps {
   theme: 'light' | 'dark';
@@ -66,6 +68,38 @@ export default function TopRightControls(_props: TopRightControlsProps) {
       >
         <Settings className="w-6 h-6" />
       </button>
+
+      {/* Battery Indicator */}
+      <BatteryIndicator />
+    </div>
+  );
+}
+
+function BatteryIndicator() {
+  const { level, charging, isSupported } = useBattery();
+  const { lowPowerMode } = useSettings();
+
+  if (!isSupported) return null;
+
+  const percentage = Math.round(level * 100);
+  let colorClass = 'text-green-500';
+  if (percentage < 20) colorClass = 'text-red-500 animate-pulse';
+  else if (percentage < 50) colorClass = 'text-yellow-500';
+
+  return (
+    <div
+      className={`flex flex-col items-center justify-center p-2 rounded-lg bg-gray-200 dark:bg-gray-700 shadow-md transition-all ${lowPowerMode ? 'border-2 border-green-500' : ''}`}
+      title={`Battery: ${percentage}% ${charging ? '(Charging)' : ''} ${lowPowerMode ? '- Low Power Mode' : ''}`}
+    >
+      <div className="relative">
+        <Battery className={`w-6 h-6 ${colorClass}`} />
+        {charging && (
+          <div className="absolute -top-1 -right-1">
+            <Zap className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+          </div>
+        )}
+      </div>
+      <span className="text-[10px] font-bold text-gray-600 dark:text-gray-300">{percentage}%</span>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { SettingFallDetection } from './settings/SettingFallDetection';
+import { useSettings } from '../contexts/SettingsContext';
+import { Battery } from 'lucide-react';
 import { SettingHeartRate } from './settings/SettingHeartRate';
 import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -115,6 +117,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     permissionGranted: shakePermissionGranted,
     requestPermission: requestShakePermission,
   } = useShake(() => {});
+
+  const { lowPowerMode, setLowPowerMode } = useSettings();
 
   const resetEditingState = () => {
     setEditingContactId(null);
@@ -434,6 +438,32 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
             </h3>
             <div className="space-y-3">
               <SettingHeartRate />
+            </div>
+          </section>
+
+          {/* Power & Performance Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <Battery className="w-6 h-6 text-green-500" />
+              Power & Performance
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                <div className="flex flex-col">
+                  <span className="font-medium text-gray-900 dark:text-white">Low Power Mode</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Reduces visualizer updates and background checks to save battery.
+                  </span>
+                </div>
+                <button
+                  onClick={() => setLowPowerMode(!lowPowerMode)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${lowPowerMode ? 'bg-green-600' : 'bg-gray-200 dark:bg-gray-600'}`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${lowPowerMode ? 'translate-x-6' : 'translate-x-1'}`}
+                  />
+                </button>
+              </div>
             </div>
           </section>
 
