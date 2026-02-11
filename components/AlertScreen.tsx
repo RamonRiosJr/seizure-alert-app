@@ -17,6 +17,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 import { useTranslation } from 'react-i18next';
 
+// Silent audio MP3 base64 (approx 0.5s of silence)
+const SILENT_AUDIO = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD//////////////////////////////////////////////////////////////////wAAAP//OEAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAABHAAAARwAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAABHAAAARwAAAAAAAAAAAAAA";
+
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
   charging: boolean;
@@ -198,6 +201,7 @@ const AlertScreen: React.FC = () => {
           if (!hasAudioPermission) attemptResume();
         }}
       >
+        <audio autoPlay loop src={SILENT_AUDIO} className="hidden" />
         <header className="relative text-center p-2 flex-shrink-0">
           <div className="absolute top-2 right-2">
             <button
