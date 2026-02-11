@@ -93,7 +93,6 @@ export const GForceMeter: React.FC<GForceMeterProps> = ({ value, threshold, max 
 
       {/* Value display */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        {/* eslint-disable-next-line */}
         <div className="text-3xl font-bold" style={{ color }}>
           {value.toFixed(1)}
         </div>
