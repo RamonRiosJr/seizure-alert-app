@@ -14,6 +14,12 @@ if (!rootElement) {
   throw new Error('Could not find root element to mount to');
 }
 
+if (import.meta.env.DEV) {
+  import('@axe-core/react').then((axe) => {
+    axe.default(React, ReactDOM, 1000);
+  });
+}
+
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>

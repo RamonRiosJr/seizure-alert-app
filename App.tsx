@@ -21,28 +21,37 @@ function App() {
 
   const [theme, toggleTheme] = useTheme();
 
+  // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
+  // Moved to useEffect to avoid a11y issues with onClick on non-interactive elements
+  React.useEffect(() => {
+    const warmUpAudio = () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContextClass) {
+        const ctx = new AudioContextClass();
+        ctx.resume().then(() => ctx.close());
+      }
+      // Remove listeners after first interaction
+      window.removeEventListener('click', warmUpAudio);
+      window.removeEventListener('touchstart', warmUpAudio);
+      window.removeEventListener('keydown', warmUpAudio);
+    };
+
+    window.addEventListener('click', warmUpAudio);
+    window.addEventListener('touchstart', warmUpAudio);
+    window.addEventListener('keydown', warmUpAudio);
+
+    return () => {
+      window.removeEventListener('click', warmUpAudio);
+      window.removeEventListener('touchstart', warmUpAudio);
+      window.removeEventListener('keydown', warmUpAudio);
+    };
+  }, []);
+
   return (
     <ErrorBoundary>
       <div
         className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
-        onClick={() => {
-          // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-          if (AudioContextClass) {
-            const ctx = new AudioContextClass();
-            ctx.resume().then(() => ctx.close()); // Just open-resume-close to verify intent
-          }
-        }}
-        onTouchStart={() => {
-          // Redundant touch handler for iOS safari which sometimes ignores onClick for audio unlocking
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-          if (AudioContextClass) {
-            const ctx = new AudioContextClass();
-            ctx.resume().then(() => ctx.close());
-          }
-        }}
       >
         {/* Non-visual logic listeners */}
         <GlobalListeners />

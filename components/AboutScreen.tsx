@@ -47,16 +47,13 @@ const AboutScreen: React.FC<AboutScreenProps> = ({ isOpen, onClose, onOpenDisclo
               {t('aboutMissionTitle')}
             </h4>
             <p className="text-sm">{t('aboutMissionText')}</p>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                onOpenDisclosure();
-              }}
-              className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium mt-2 hover:underline"
+            <button
+              type="button"
+              onClick={onOpenDisclosure}
+              className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 font-medium mt-2 hover:underline bg-transparent border-0 p-0 cursor-pointer"
             >
               {t('aboutReadDisclosure')} <ExternalLink className="w-3 h-3" />
-            </a>
+            </button>
           </div>
 
           {/* Links */}
