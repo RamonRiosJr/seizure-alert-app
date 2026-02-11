@@ -1,6 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import { useFallDetection } from '../useFallDetection';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, afterEach, Mock } from 'vitest';
+import * as SettingsContext from '../../contexts/SettingsContext';
+
+// Mock useSettings
+vi.mock('../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+  SettingsProvider: ({ children }: any) => children,
+}));
 
 describe('useFallDetection', () => {
   let addEventListenerSpy: any;
@@ -13,6 +20,11 @@ describe('useFallDetection', () => {
     addEventListenerSpy = vi.spyOn(window, 'addEventListener');
     removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     localStorage.clear();
+
+    // Default mock implementation
+    (SettingsContext.useSettings as Mock).mockReturnValue({
+      lowPowerMode: false,
+    });
   });
 
   afterEach(() => {
@@ -88,5 +100,50 @@ describe('useFallDetection', () => {
     });
 
     expect(mockOnFallDetected).not.toHaveBeenCalled();
+  });
+
+  it('should throttle motion events when Low Power Mode is enabled', () => {
+    // Enable Low Power Mode
+    (SettingsContext.useSettings as Mock).mockReturnValue({
+      lowPowerMode: true,
+    });
+    localStorage.setItem('fallDetectionEnabled', 'true');
+    renderHook(() => useFallDetection(mockOnFallDetected));
+
+    const handleMotion = addEventListenerSpy.mock.calls.find(
+      (call: any) => call[0] === 'devicemotion'
+    )[1];
+
+    const consoleSpy = vi.spyOn(console, 'log');
+
+    // 1. First event (T=0) - Processed
+    act(() => {
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 0, z: 25 },
+      } as DeviceMotionEvent);
+    });
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('High Impact Detected'));
+    consoleSpy.mockClear();
+
+    // 2. Second event (T=100) - Should be THROTTLED (Ignored)
+    act(() => {
+      vi.advanceTimersByTime(100);
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 0, z: 25 },
+      } as DeviceMotionEvent);
+    });
+    expect(consoleSpy).not.toHaveBeenCalled(); // Should NOT log "High Impact Detected" again
+
+    // 3. Third event (T=210) - Should be Processed
+    act(() => {
+      vi.advanceTimersByTime(110); // Total 210ms
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 0, z: 25 },
+      } as DeviceMotionEvent);
+    });
+    // The previous impact (T=0) put us in "Monitoring Stillness" mode.
+    // This new motion (T=210) is detected as movement, cancelling the fall alert.
+    // This confirms the event was processed and NOT throttled.
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Movement detected'));
   });
 });

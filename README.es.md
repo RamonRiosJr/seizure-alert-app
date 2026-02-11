@@ -51,6 +51,11 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 - **Inicio Instantáneo:** ¡Puedes programar una etiqueta NFC barata (pegatina) para que simplemente _tocando_ tu teléfono con ella se inicie la alarma inmediatamente! ¡Ideal para mesitas de noche!
 
+### 📉 Nuevo: Visualizador de Detección de Caídas y "Snooze"
+
+- **Modo de Prueba:** Visualiza los datos de los sensores de tu teléfono en tiempo real para verificar que la Detección de Caídas funciona sin lastimarte.
+- **Posponer Inteligente:** Evita la "Fatiga de Alertas" posponiendo las alertas de ritmo cardíaco alto por 15 minutos si estás a salvo.
+
 ---
 
 ## 🚧 Estado: Compatibilidad Móvil y PWA (Correcciones Activas)
@@ -67,7 +72,7 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 **Estado Actual:**
 
 - **✅ Chrome de Escritorio:** Totalmente Funcional.
-- **⚠️ Navegadores Móviles:** La aplicación en sí funciona, pero la "Instalación" en la pantalla de inicio está experimentando problemas actualmente.
+- **✅ Navegadores Móviles:** ¡Instalación PWA arreglada! Ahora puedes instalar la aplicación en tu pantalla de inicio en iOS y Android.
 - **Rendimiento:** Probado en iPhone 11+ y Androids modernos.
 
 ---

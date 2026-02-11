@@ -49,6 +49,16 @@ class LoggerService {
   public debug(message: string, data?: unknown) {
     this.log('debug', message, data);
   }
+
+  public logBatteryStats(level: number, charging: boolean) {
+    // Log as info, but formatted for easy grep/analytics
+    this.info(`[BatteryTelemetry] Level: ${(level * 100).toFixed(1)}%, Charging: ${charging}`);
+
+    // TODO: In real app, batch this and send to analytics periodically or on critical drops
+    if (level < 0.2 && !charging) {
+      this.warn('[BatteryTelemetry] Critical Battery Level detected', { level, charging });
+    }
+  }
 }
 
 export const Logger = new LoggerService();
