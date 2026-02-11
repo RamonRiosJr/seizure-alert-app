@@ -4,7 +4,7 @@ import '@/i18n';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import ErrorBoundary from './components/ErrorBoundary';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UIProvider } from './contexts/UIContext';
 import { BLEProvider } from './contexts/BLEContext';

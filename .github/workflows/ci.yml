@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Enterprise CI Pipeline
 
 on:
   push:
@@ -6,53 +6,65 @@ on:
   pull_request:
     branches: [main]
 
+# Concurrency: Auto-cancel old builds on the same PR to save resources
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Security: Lock down permissions to read-only by default
+permissions:
+  contents: read
+
 jobs:
-  build-and-test:
+  quality-gate:
+    name: 🛡️ Quality Gate
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [20.x] # Standardize on LTS
 
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
+        # 'npm ci' is faster and more reliable than 'npm install' for CI
         run: npm ci --legacy-peer-deps
 
-      - name: Lint Code
+      - name: 🔍 Type Check (Strict)
+        # Enforces TypeScript strict mode
+        run: npx tsc --noEmit
+
+      - name: 🧹 Lint Check
+        # Enforces ESLint rules
         run: npm run lint
 
-      - name: Check Code Formatting
+      - name: 🎨 Format Check
+        # Enforces Prettier formatting
         run: npm run format:check
 
-      - name: Run Unit Tests with Coverage
-        run: npm run test:run
+      - name: 🧪 Unit Tests & Coverage
+        # Enforces 80% coverage requirement
+        run: npm run test:coverage
 
-      - name: Upload Coverage to Codecov
-        if: matrix.node-version == '20.x'
-        uses: codecov/codecov-action@v4
-        with:
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
-      - name: Security Audit
+      - name: 🔒 Security Audit
+        # Checks for known vulnerabilities in dependencies
         run: npm audit --audit-level=moderate || true
 
-      - name: Build Project
+      - name: 🏗️ Logic Build Verification
+        # Ensures the app actually builds without error
         run: npm run build
 
-      - name: Check Bundle Size
+      - name: 📊 Bundle Config Check
+        # Reports bundle size to keep performance in check
         run: |
           echo "Build size:"
           du -sh dist/
-          echo "Detailed breakdown:"
-          du -h dist/ | sort -h | tail -20

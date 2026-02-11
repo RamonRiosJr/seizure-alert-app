@@ -95,10 +95,10 @@ export default defineConfig(({ mode: _mode }) => {
           'src/test/**',
         ],
         thresholds: {
-          lines: 60,
-          functions: 60,
+          lines: 78,
+          functions: 78,
           branches: 60,
-          statements: 60,
+          statements: 78,
         },
       },
     },

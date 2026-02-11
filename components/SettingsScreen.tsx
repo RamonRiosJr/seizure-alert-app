@@ -20,7 +20,10 @@ import {
   Upload,
   Cloud,
   Activity,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
+import { ApiKeyHelpModal } from './settings/ApiKeyHelpModal';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
@@ -101,6 +104,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [isDeviceManagerOpen, setIsDeviceManagerOpen] = useState(false);
+  const [isApiKeyHelpOpen, setIsApiKeyHelpOpen] = useState(false);
+  const [isApiKeyVisible, setIsApiKeyVisible] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
   const {
@@ -454,40 +459,83 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {t('settingsAPIKey')}
             </h3>
             <div className="space-y-3">
-              <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">
-                {t('settingsAPIKeyLabel')}
-              </label>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t('settingsAPIKeyDesc')}
-                <br />
-                <a
-                  href="https://aistudio.google.com/app/apikey"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors inline-flex items-center gap-1 mt-1"
+              <div className="flex justify-between items-center">
+                <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">
+                  {t('settingsAPIKeyLabel')}
+                </label>
+                <button
+                  onClick={() => setIsApiKeyHelpOpen(true)}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                 >
-                  Get your free API Key from Google AI Studio <ExternalLink className="w-3 h-3" />
-                </a>
-              </p>
+                  <ExternalLink className="w-3 h-3" />
+                  {t('settingsAPIKeyHelp')}
+                </button>
+              </div>
+
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('settingsAPIKeyDesc')}</p>
+
               <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-md border border-yellow-200 dark:border-yellow-800/50 text-sm text-yellow-800 dark:text-yellow-200 flex gap-2 items-start">
                 <ShieldAlert className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <span>
-                  Your API key is stored <strong>locally</strong> on your device. It is used
-                  directly to communicate with Google's servers and is never shared with us.
+                  Your API key is stored <strong>locally</strong> on your device. It is never shared
+                  with us.
                 </span>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  id="api-key"
-                  type="password"
-                  value={apiKeyInput}
-                  onChange={(e) => setApiKeyInput(e.target.value)}
-                  placeholder={t('settingsAPIKeyPlaceholder')}
-                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
-                />
+
+              <div className="space-y-2">
+                <div className="relative">
+                  <input
+                    id="api-key"
+                    type={isApiKeyVisible ? 'text' : 'password'}
+                    value={apiKeyInput}
+                    onChange={(e) => setApiKeyInput(e.target.value)}
+                    placeholder={t('settingsAPIKeyPlaceholder')}
+                    className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 pr-10 ${
+                      apiKeyInput && apiKeyInput.startsWith('AIza')
+                        ? 'border-green-500 focus:ring-green-500'
+                        : apiKeyInput && !apiKeyInput.startsWith('AIza')
+                          ? 'border-red-500 focus:ring-red-500'
+                          : ''
+                    }`}
+                  />
+                  <button
+                    onClick={() => setIsApiKeyVisible(!isApiKeyVisible)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    aria-label={isApiKeyVisible ? 'Hide API Key' : 'Show API Key'}
+                  >
+                    {isApiKeyVisible ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                {/* Validation Feedback */}
+                {apiKeyInput && (
+                  <div
+                    className={`text-xs flex items-center gap-1 ${
+                      apiKeyInput.startsWith('AIza')
+                        ? 'text-green-600 dark:text-green-400'
+                        : 'text-red-600 dark:text-red-400'
+                    }`}
+                  >
+                    {apiKeyInput.startsWith('AIza') ? (
+                      <>
+                        <Check className="w-3 h-3" /> {t('apiKeyValidationValid')}
+                      </>
+                    ) : (
+                      <>
+                        <X className="w-3 h-3" /> {t('apiKeyValidationInvalid')}
+                      </>
+                    )}
+                  </div>
+                )}
+
                 <button
                   onClick={handleSaveApiKey}
-                  className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center gap-2"
+                  disabled={!apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0}
+                  className={`w-full sm:w-auto px-4 py-2 text-white rounded-md flex items-center justify-center gap-2 transition-colors ${
+                    !apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-green-600 hover:bg-green-700'
+                  }`}
                 >
                   <Save className="w-5 h-5" />
                   {t('settingsSave')}
@@ -710,6 +758,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         </main>
       </div>
       {isDeviceManagerOpen && <DeviceManager onClose={() => setIsDeviceManagerOpen(false)} />}
+      <ApiKeyHelpModal isOpen={isApiKeyHelpOpen} onClose={() => setIsApiKeyHelpOpen(false)} />
     </div>
   );
 };

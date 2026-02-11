@@ -26,7 +26,7 @@ export const useChat = (language: Language) => {
     if (messages.length === 0) {
       setMessages([{ role: 'model', text: t('chatInitialGreeting') }]);
     }
-  }, [t]); // Removed 'messages.length' from dependency to avoid loop, and removed 'language' to prevent auto-wipe
+  }, [t, messages.length]);
 
   // Persist messages to localStorage whenever they change
   useEffect(() => {

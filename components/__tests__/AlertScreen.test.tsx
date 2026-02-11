@@ -43,7 +43,13 @@ vi.mock('../../hooks/useTTS', () => ({
 // We can use a simple implementation that just returns the initial value
 vi.mock('../../hooks/useLocalStorage', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useLocalStorage: (key: string, initialValue: any) => [initialValue, vi.fn()],
+  useLocalStorage: (key: string, initialValue: any) => {
+    if (key === 'emergency_contacts') {
+      const mockContacts = [{ id: '1', name: 'Mom', phone: '1234567890', relation: 'Parent' }];
+      return [mockContacts, vi.fn()];
+    }
+    return [initialValue, vi.fn()];
+  },
 }));
 
 // Mock react-i18next
@@ -152,5 +158,35 @@ describe('AlertScreen', () => {
   it('displays instructions', () => {
     render(<AlertScreen />);
     expect(screen.getByText(/Stay calm/i)).toBeInTheDocument();
+  });
+
+  it('renders auto-call UI and handles cancellation', () => {
+    render(<AlertScreen />);
+
+    // Check for auto-calling text (implied by having contacts now)
+    expect(screen.getByText(/Automatically calling/i)).toBeInTheDocument();
+
+    // Find slide to cancel area
+    const sliderText = screen.getByText(/Slide to Cancel/i);
+    expect(sliderText).toBeInTheDocument();
+  });
+
+  it('opens and closes the patient info modal', () => {
+    render(<AlertScreen />);
+
+    // Find the patient info button (it displays "Patient Name" by default from mock)
+    // The button has specific class names, but we can find it by text "Patient Name"
+    const infoButton = screen.getByText(/Patient Name/i);
+    fireEvent.click(infoButton);
+
+    // Verify modal content
+    expect(screen.getByText(/Medical Conditions/i)).toBeInTheDocument();
+
+    // Close modal
+    const closeButton = screen.getByText(/Close/i);
+    fireEvent.click(closeButton);
+
+    // Verify modal is gone (queryByText returns null)
+    expect(screen.queryByText(/Medical Conditions/i)).not.toBeInTheDocument();
   });
 });

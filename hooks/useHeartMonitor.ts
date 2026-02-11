@@ -6,7 +6,6 @@ export const useHeartMonitor = (triggerAlert: () => void) => {
   const { heartRate, connectedDevice } = useBLEContext();
   const [threshold] = useLocalStorage<number>('hr_threshold', 120);
   const [isWorkoutMode] = useLocalStorage<boolean>('workout_mode', false);
-  const [settings] = useLocalStorage<any>('app_settings', {});
 
   // Ref to prevent spamming triggers
   const lastTriggerTime = useRef<number>(0);

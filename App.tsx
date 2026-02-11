@@ -14,63 +14,67 @@ import { AppRouter } from './router/AppRouter';
 import { GlobalListeners } from './components/layout/GlobalListeners';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
+import { ErrorBoundary } from './components/ErrorBoundary';
+
 function App() {
   const { activeModal, screen, closeModal, openModal } = useUI();
 
   const [theme, toggleTheme] = useTheme();
 
   return (
-    <div
-      className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
-      onClick={() => {
-        // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContextClass) {
-          const ctx = new AudioContextClass();
-          ctx.resume().then(() => ctx.close()); // Just open-resume-close to verify intent
-        }
-      }}
-      onTouchStart={() => {
-        // Redundant touch handler for iOS safari which sometimes ignores onClick for audio unlocking
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContextClass) {
-          const ctx = new AudioContextClass();
-          ctx.resume().then(() => ctx.close());
-        }
-      }}
-    >
-      {/* Non-visual logic listeners */}
-      <GlobalListeners />
-      <OfflineIndicator />
+    <ErrorBoundary>
+      <div
+        className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
+        onClick={() => {
+          // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          if (AudioContextClass) {
+            const ctx = new AudioContextClass();
+            ctx.resume().then(() => ctx.close()); // Just open-resume-close to verify intent
+          }
+        }}
+        onTouchStart={() => {
+          // Redundant touch handler for iOS safari which sometimes ignores onClick for audio unlocking
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          if (AudioContextClass) {
+            const ctx = new AudioContextClass();
+            ctx.resume().then(() => ctx.close());
+          }
+        }}
+      >
+        {/* Non-visual logic listeners */}
+        <GlobalListeners />
+        <OfflineIndicator />
 
-      {/* Layout Elements */}
-      {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
+        {/* Layout Elements */}
+        {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
 
-      {/* Main Content Router */}
-      <AppRouter />
+        {/* Main Content Router */}
+        <AppRouter />
 
-      {/* Global UI Elements */}
-      <UniversalLanguageSwitcher />
-      <InstallPrompt />
-      <UpdateNotification />
+        {/* Global UI Elements */}
+        <UniversalLanguageSwitcher />
+        <InstallPrompt />
+        <UpdateNotification />
 
-      {/* Modals */}
-      <Chatbot isOpen={activeModal === 'chat'} onClose={closeModal} />
+        {/* Modals */}
+        <Chatbot isOpen={activeModal === 'chat'} onClose={closeModal} />
 
-      <SettingsScreen isOpen={activeModal === 'settings'} onClose={closeModal} />
+        <SettingsScreen isOpen={activeModal === 'settings'} onClose={closeModal} />
 
-      <ReportsScreen isOpen={activeModal === 'reports'} onClose={closeModal} />
+        <ReportsScreen isOpen={activeModal === 'reports'} onClose={closeModal} />
 
-      <DisclaimerModal isOpen={activeModal === 'disclaimer'} onClose={closeModal} />
+        <DisclaimerModal isOpen={activeModal === 'disclaimer'} onClose={closeModal} />
 
-      <AboutScreen
-        isOpen={activeModal === 'about'}
-        onClose={closeModal}
-        onOpenDisclosure={() => openModal('disclaimer')}
-      />
-    </div>
+        <AboutScreen
+          isOpen={activeModal === 'about'}
+          onClose={closeModal}
+          onOpenDisclosure={() => openModal('disclaimer')}
+        />
+      </div>
+    </ErrorBoundary>
   );
 }
 
