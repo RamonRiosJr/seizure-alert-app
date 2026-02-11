@@ -14,6 +14,8 @@ export const useHeartMonitor = (triggerAlert: () => void) => {
 
   // Ref to prevent spamming triggers
   const lastTriggerTime = useRef<number>(0);
+  // Ref for Low Power Mode throttling
+  const lastCheckTime = useRef<number>(0);
 
   const snooze = useCallback(
     (durationMs: number) => {
@@ -35,18 +37,19 @@ export const useHeartMonitor = (triggerAlert: () => void) => {
       return;
     }
 
+    const now = Date.now();
+
     // LOW POWER MODE OPTIMIZATION
     // If enabled, we only check HR every 5 seconds instead of on every packet
     if (lowPowerMode) {
-      const now = Date.now();
-      if (now - lastTriggerTime.current < 5000) {
+      if (now - lastCheckTime.current < 5000) {
         return;
       }
+      lastCheckTime.current = now;
     }
 
     // Check Threshold
     if (heartRate > threshold) {
-      const now = Date.now();
       // Debounce: Only trigger once every 60 seconds to allow user to handle it
       if (now - lastTriggerTime.current > 60000) {
         console.log(`[HeartMonitor] HR ${heartRate} > ${threshold}. Triggering Alert!`);

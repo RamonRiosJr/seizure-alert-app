@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useHeartMonitor } from '../useHeartMonitor';
 import { useBLEContext } from '../../contexts/BLEContext';
 import { useLocalStorage } from '../useLocalStorage';
@@ -23,6 +23,8 @@ describe('useHeartMonitor', () => {
   };
 
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-01-01T00:00:00Z')); // Ensure Date.now() is not 0
     vi.clearAllMocks();
     (useBLEContext as Mock).mockReturnValue(mockBLEState);
     (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: false });
@@ -78,5 +80,42 @@ describe('useHeartMonitor', () => {
     renderHook(() => useHeartMonitor(mockTriggerAlert));
 
     expect(mockTriggerAlert).not.toHaveBeenCalled();
+  });
+
+  it('should throttle HR checks when Low Power Mode is enabled', () => {
+    (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: true });
+
+    // 1. Initial HR below threshold (Processed, No Alert)
+    (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 100 });
+    const { rerender } = renderHook(() => useHeartMonitor(mockTriggerAlert));
+    expect(mockTriggerAlert).not.toHaveBeenCalled();
+
+    // 2. Advance time 1s (T=1000) - Update HR to ABOVE threshold
+    // Should be THROTTLED, so NO Alert despite high HR
+    (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 140 });
+    vi.advanceTimersByTime(1000);
+    rerender();
+    // Note: In real hook, it reacts to BLEContext updates. Rerender simulates this.
+    expect(mockTriggerAlert).not.toHaveBeenCalled();
+
+    // 3. Advance time to 60s+ (T=60001) - Update HR to 141 (New value to trigger effect)
+    // Should be Processed -> Alert!
+    (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 141 });
+    // Note: We need to wait > 60s to pass the debounce check (now - lastTriggerTime > 60000)
+    vi.advanceTimersByTime(60001);
+    rerender();
+    expect(mockTriggerAlert).toHaveBeenCalled();
+  });
+
+  it('should execute snooze function', () => {
+    const { result } = renderHook(() => useHeartMonitor(mockTriggerAlert));
+
+    const consoleSpy = vi.spyOn(console, 'log');
+
+    act(() => {
+      result.current.snooze(10000); // 10 seconds
+    });
+
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Snoozed alerts'));
   });
 });
