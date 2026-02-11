@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean = false) => {
+  const { lowPowerMode } = useSettings();
   const [isEnabled] = useLocalStorage('fallDetectionEnabled', false);
   const [sensitivity] = useLocalStorage('fallSensitivity', 'medium');
   const [lastImpactTime, setLastImpactTime] = useState<number>(0);
@@ -10,6 +12,7 @@ export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean
 
   // Use ref to track current monitoring state for timeout callback
   const isMonitoringRef = useRef(false);
+  const lastThrottleTime = useRef<number>(0);
 
   // Thresholds based on sensitivity
   const getThresholds = useCallback(() => {
@@ -37,6 +40,16 @@ export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean
 
       // Calculate G-force vector length
       const gForce = Math.sqrt(x * x + y * y + z * z);
+
+      // LOW POWER MODE OPTIMIZATION
+      // If enabled, we only process every 200ms to save CPU cycles
+      if (lowPowerMode) {
+        const now = Date.now();
+        if (now - lastThrottleTime.current < 200) {
+          return;
+        }
+        lastThrottleTime.current = now;
+      }
 
       // Update state for visualizer (throttle slightly in real usage if needed, but react handles it okay for now)
       setCurrentGForce(gForce);
@@ -67,7 +80,7 @@ export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean
         }
       }
     },
-    [isEnabled, isTestMode, getThresholds]
+    [isEnabled, isTestMode, getThresholds, lowPowerMode]
   );
 
   // Check for stillness timeout
@@ -99,7 +112,7 @@ export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean
     return () => {
       window.removeEventListener('devicemotion', handleMotion);
     };
-  }, [isEnabled, isTestMode, handleMotion]);
+  }, [isEnabled, isTestMode, handleMotion, lowPowerMode]);
 
   return {
     currentGForce,

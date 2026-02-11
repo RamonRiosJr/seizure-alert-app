@@ -1,8 +1,10 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useBLEContext } from '../contexts/BLEContext';
 import { useLocalStorage } from './useLocalStorage';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const useHeartMonitor = (triggerAlert: () => void) => {
+  const { lowPowerMode } = useSettings();
   const { heartRate, connectedDevice } = useBLEContext();
   const [threshold] = useLocalStorage<number>('hr_threshold', 120);
   const [isWorkoutMode] = useLocalStorage<boolean>('workout_mode', false);
@@ -33,6 +35,15 @@ export const useHeartMonitor = (triggerAlert: () => void) => {
       return;
     }
 
+    // LOW POWER MODE OPTIMIZATION
+    // If enabled, we only check HR every 5 seconds instead of on every packet
+    if (lowPowerMode) {
+      const now = Date.now();
+      if (now - lastTriggerTime.current < 5000) {
+        return;
+      }
+    }
+
     // Check Threshold
     if (heartRate > threshold) {
       const now = Date.now();
@@ -43,7 +54,15 @@ export const useHeartMonitor = (triggerAlert: () => void) => {
         lastTriggerTime.current = now;
       }
     }
-  }, [heartRate, connectedDevice, threshold, isWorkoutMode, triggerAlert, snoozeUntil]);
+  }, [
+    heartRate,
+    connectedDevice,
+    threshold,
+    isWorkoutMode,
+    triggerAlert,
+    snoozeUntil,
+    lowPowerMode,
+  ]);
 
   return {
     isMonitoring: !!connectedDevice && !isWorkoutMode,

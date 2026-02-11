@@ -41,10 +41,9 @@ describe('useBattery', () => {
 
     await waitFor(() => {
       expect(result.current.isSupported).toBe(true);
+      expect(result.current.level).toBe(0.5);
+      expect(result.current.charging).toBe(true);
     });
-
-    expect(result.current.level).toBe(0.5);
-    expect(result.current.charging).toBe(true);
   });
 
   it('should handles unsupported browser', async () => {
