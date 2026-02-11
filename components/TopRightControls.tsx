@@ -1,9 +1,19 @@
-import React from 'react';
-import { Settings, ClipboardList, AlertTriangle, Heart, Coffee, Battery, Zap } from 'lucide-react';
+import {
+  Settings,
+  ClipboardList,
+  AlertTriangle,
+  Heart,
+  Coffee,
+  Battery,
+  Zap,
+  Bluetooth,
+  BluetoothSearching,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useUI } from '../contexts/UIContext';
 import { useBattery } from '../hooks/useBattery';
 import { useSettings } from '../contexts/SettingsContext';
+import { useBLEContext } from '../contexts/BLEContext';
 
 interface TopRightControlsProps {
   theme: 'light' | 'dark';
@@ -69,8 +79,56 @@ export default function TopRightControls(_props: TopRightControlsProps) {
         <Settings className="w-6 h-6" />
       </button>
 
+      {/* Bluetooth Status Indicator */}
+      <BluetoothIndicator />
+
       {/* Battery Indicator */}
       <BatteryIndicator />
+    </div>
+  );
+}
+
+function BluetoothIndicator() {
+  const { connectedDevice, isReconnecting, scan } = useBLEContext();
+
+  // Decide Icon & Color
+  let icon = <Bluetooth className="w-6 h-6 text-gray-400" />;
+  let statusText = 'Disconnected';
+  let classes = 'bg-gray-200 dark:bg-gray-700';
+
+  if (isReconnecting) {
+    icon = <BluetoothSearching className="w-6 h-6 text-yellow-600 animate-pulse" />;
+    statusText = 'Reconnecting...';
+    classes = 'bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-500';
+  } else if (connectedDevice) {
+    icon = <Bluetooth className="w-6 h-6 text-blue-500" />;
+    statusText = `Connected: ${connectedDevice.name || 'Device'}`;
+    classes = 'bg-blue-100 dark:bg-blue-900/30 border-2 border-blue-500';
+  }
+
+  // Allow manual scan trigger by clicking icon if disconnected
+  const handleClick = () => {
+    if (!connectedDevice && !isReconnecting) {
+      scan();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleClick();
+    }
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      className={`flex flex-col items-center justify-center p-2 rounded-lg shadow-md transition-all cursor-pointer ${classes}`}
+      title={statusText}
+    >
+      {icon}
     </div>
   );
 }

@@ -12,6 +12,7 @@ interface BLEContextType {
   heartRate: number | null;
   error: string | null;
   isMock: boolean;
+  isReconnecting: boolean;
 }
 
 const BLEContext = createContext<BLEContextType | null>(null);
