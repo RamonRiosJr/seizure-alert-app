@@ -1,6 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import { useFallDetection } from '../useFallDetection';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, afterEach, Mock } from 'vitest';
+import * as SettingsContext from '../../contexts/SettingsContext';
+
+// Mock useSettings
+vi.mock('../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+  SettingsProvider: ({ children }: any) => children,
+}));
 
 describe('useFallDetection', () => {
   let addEventListenerSpy: any;
@@ -13,6 +20,11 @@ describe('useFallDetection', () => {
     addEventListenerSpy = vi.spyOn(window, 'addEventListener');
     removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     localStorage.clear();
+
+    // Default mock implementation
+    (SettingsContext.useSettings as Mock).mockReturnValue({
+      lowPowerMode: false,
+    });
   });
 
   afterEach(() => {

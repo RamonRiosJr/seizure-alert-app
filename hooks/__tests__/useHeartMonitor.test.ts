@@ -2,11 +2,16 @@ import { renderHook } from '@testing-library/react';
 import { useHeartMonitor } from '../useHeartMonitor';
 import { useBLEContext } from '../../contexts/BLEContext';
 import { useLocalStorage } from '../useLocalStorage';
+import * as SettingsContext from '../../contexts/SettingsContext';
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 
 // Mock Dependencies
 vi.mock('../../contexts/BLEContext');
 vi.mock('../useLocalStorage');
+vi.mock('../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+  SettingsProvider: ({ children }: any) => children,
+}));
 
 describe('useHeartMonitor', () => {
   const mockTriggerAlert = vi.fn();
@@ -20,11 +25,12 @@ describe('useHeartMonitor', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (useBLEContext as Mock).mockReturnValue(mockBLEState);
+    (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: false });
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
       // Simple mock implementation of useLocalStorage
       if (key === 'hr_threshold') return [120, vi.fn()];
       if (key === 'workout_mode') return [false, vi.fn()];
-      if (key === 'app_settings') return [{}, vi.fn()];
+      // if (key === 'app_settings') return [{}, vi.fn()];
       return [initialValue, vi.fn()];
     });
   });
