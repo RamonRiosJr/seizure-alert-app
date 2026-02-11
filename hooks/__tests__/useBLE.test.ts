@@ -47,13 +47,18 @@ describe('useBLE Auto-Reconnect', () => {
     const mockDevice = { deviceId: '123', name: 'TestHR' };
 
     // Start connect
+    let connectPromise: Promise<void>;
     await act(async () => {
-      await result.current.connect(mockDevice);
+      connectPromise = result.current.connect(mockDevice);
     });
 
     // Resolve the initial connection immediately
     await act(async () => {
       resolveConnect();
+    });
+
+    await act(async () => {
+      await connectPromise;
     });
 
     expect(result.current.connectedDevice).toEqual(mockDevice);
@@ -100,11 +105,17 @@ describe('useBLE Auto-Reconnect', () => {
     const mockDevice = { deviceId: '123', name: 'TestHR' };
 
     // 1. Connect
+    let connectPromise: Promise<void>;
     await act(async () => {
-      await result.current.connect(mockDevice);
+      connectPromise = result.current.connect(mockDevice);
     });
+
     await act(async () => {
       resolveConnect();
+    });
+
+    await act(async () => {
+      await connectPromise;
     });
 
     // 2. Manual Disconnect
