@@ -59,6 +59,8 @@ export const useBattery = () => {
       }
     };
 
+    if (!nav.getBattery) return;
+
     nav
       .getBattery()
       .then((battery) => {
