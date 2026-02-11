@@ -11,7 +11,7 @@ Fixes # (issue)
 - [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] 📚 Documentation update
 
-## ✅ Senior Engineer Checklist
+## ✅ Quality Checklist
 
 <!-- Failure to complete these items may result in PR rejection -->
 
