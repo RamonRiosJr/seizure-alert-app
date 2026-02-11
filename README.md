@@ -61,6 +61,11 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Shake to Alert:** Shake your phone 3 times to activte the emergency countdown (Enable in Settings).
 - **Quick Shortcuts:** Long-press the App Icon on your home screen to launch directly into Emergency Mode.
 
+### 📉 New: Fall Detection Visualizer & Snooze
+
+- **Test Mode:** Visualize your phone's sensor data in real-time to verify Fall Detection works without hurting yourself.
+- **Smart Snooze:** Prevent "Alert Fatigue" by snoozing high heart rate alerts for 15 minutes if you are safe.
+
 ### ✅ "I'm Safe" Check-in Button
 
 - **False Alarm? No Problem:** Quickly notify your emergency contact that you are okay.
@@ -97,7 +102,8 @@ Built with modern, production-grade tools to ensure speed, safety, and scalabili
 - **Styling:** Tailwind CSS, PostCSS, Lucide React (Icons)
 - **State & Internationalization:** React Context API, i18next (English/Spanish)
 - **PWA (Progressive Web App):** Vite PWA Plugin, Service Workers (Offline Capability)
-- **Testing:** Playwright (End-to-End), Vitest (Unit Testing)
+- **Testing:** Playwright (E2E), Vitest (Unit), Testing Library
+- **Quality:** ESLint (Strict), Prettier, Husky (Pre-commit hooks), Axe-Core (A11y)
 - **Deployment:** GitHub Pages (CI/CD)
 
 ---
@@ -114,8 +120,9 @@ This project follows **Clean Architecture** principles and **Modern Git Flow**:
 
 ### 🛡️ Quality Assurance
 
-- **CI/CD**: GitHub Actions pipeline runs `npm test` and `npm run build` on every Pull Request.
-- **Unit Tests**: Critical hooks (`useShake`, `useLocalStorage`) are tested with Vitest.
+- **CI/CD**: Enterprise-grade GitHub Actions pipeline runs `npm test`, `lint`, and `type-check` on every Pull Request.
+- **Accessibility**: Built with **WCAG AA** standards in mind, verified by `axe-core`.
+- **Unit Tests**: Critical logic (`useFallDetection`, `useHeartMonitor`, `useLocalStorage`) is fully tested.
 
 ---
 
