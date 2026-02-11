@@ -275,6 +275,7 @@ const AlertScreen: React.FC = () => {
                 <button
                   onClick={() => setIsInfoModalOpen(false)}
                   className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full"
+                  aria-label="Close"
                 >
                   <X className="w-6 h-6 text-gray-500" />
                 </button>

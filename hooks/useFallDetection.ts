@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export const useFallDetection = (onFallDetected: () => void) => {
+export const useFallDetection = (onFallDetected: () => void, isTestMode: boolean = false) => {
   const [isEnabled] = useLocalStorage('fallDetectionEnabled', false);
   const [sensitivity] = useLocalStorage('fallSensitivity', 'medium');
   const [lastImpactTime, setLastImpactTime] = useState<number>(0);
   const [isMonitoringStillness, setIsMonitoringStillness] = useState(false);
+  const [currentGForce, setCurrentGForce] = useState<number>(0);
 
   // Use ref to track current monitoring state for timeout callback
   const isMonitoringRef = useRef(false);
@@ -25,7 +26,8 @@ export const useFallDetection = (onFallDetected: () => void) => {
 
   const handleMotion = useCallback(
     (event: DeviceMotionEvent) => {
-      if (!isEnabled) return;
+      // In test mode, we ignore the global "isEnabled" flag
+      if (!isEnabled && !isTestMode) return;
 
       const { accelerationIncludingGravity } = event;
       if (!accelerationIncludingGravity) return;
@@ -35,6 +37,10 @@ export const useFallDetection = (onFallDetected: () => void) => {
 
       // Calculate G-force vector length
       const gForce = Math.sqrt(x * x + y * y + z * z);
+
+      // Update state for visualizer (throttle slightly in real usage if needed, but react handles it okay for now)
+      setCurrentGForce(gForce);
+
       const thresholds = getThresholds();
 
       // Use ref to check current monitoring state (avoids stale closure)
@@ -61,8 +67,8 @@ export const useFallDetection = (onFallDetected: () => void) => {
         }
       }
     },
-    [isEnabled, getThresholds]
-  ); // Added dependencies
+    [isEnabled, isTestMode, getThresholds]
+  );
 
   // Check for stillness timeout
   useEffect(() => {
@@ -87,11 +93,18 @@ export const useFallDetection = (onFallDetected: () => void) => {
 
   // Main Motion Listener
   useEffect(() => {
-    if (isEnabled) {
+    if (isEnabled || isTestMode) {
       window.addEventListener('devicemotion', handleMotion);
     }
     return () => {
       window.removeEventListener('devicemotion', handleMotion);
     };
-  }, [isEnabled, handleMotion]);
+  }, [isEnabled, isTestMode, handleMotion]);
+
+  return {
+    currentGForce,
+    isMonitoringStillness,
+    thresholds: getThresholds(),
+    sensitivity,
+  };
 };
