@@ -1,0 +1,80 @@
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useBLE.test.ts[24m[0m
+[0m    [2m1:27[22m  [33mwarning[39m  'waitFor' is defined but never used       [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m41:33[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m58:33[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m72:27[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m75:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m97:29[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m98:40[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m115:27[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m116:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m147:27[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m148:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useFallDetection.test.ts[24m[0m
+[0m   [2m6:28[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m7:31[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m8:27[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m43:14[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m67:14[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useHeartMonitor.test.ts[24m[0m
+[0m  [2m1:22[22m  [33mwarning[39m  'act' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useLocalStorage.test.ts[24m[0m
+[0m  [2m2:48[22m  [33mwarning[39m  'afterEach' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useShake.test.ts[24m[0m
+[0m    [2m7:7[22m   [33mwarning[39m  'removeEventListenerSpy' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m10:35[22m  [33mwarning[39m  Unexpected any. Specify a different type                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m66:14[22m  [33mwarning[39m  Unexpected any. Specify a different type                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m116:14[22m  [33mwarning[39m  Unexpected any. Specify a different type                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useTTS.test.ts[24m[0m
+[0m   [2m34:25[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m35:23[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m36:25[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m41:10[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m61:62[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m74:62[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m87:54[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m109:54[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useBLE.ts[24m[0m
+[0m   [2m66:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m73:56[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m90:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m110:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useChat.ts[24m[0m
+[0m  [2m110:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts[24m[0m
+[0m  [2m16:28[22m  [33mwarning[39m  Unexpected any. Specify a different type       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m20:17[22m  [33mwarning[39m  'setIsIOS' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m25:28[22m  [33mwarning[39m  Unexpected any. Specify a different type       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m36:28[22m  [33mwarning[39m  Unexpected any. Specify a different type       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m65:30[22m  [33mwarning[39m  Unexpected any. Specify a different type       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts[24m[0m
+[0m  [2m63:8[22m  [33mwarning[39m  'DeviceMotionEventWithAcceleration' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useSpeechRecognition.ts[24m[0m
+[0m   [2m4:14[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m4:51[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m10:33[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m21:36[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m26:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTTS.ts[24m[0m
+[0m  [2m11:65[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\src\vite-env.d.ts[24m[0m
+[0m  [2m10:31[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\tests\emergency-flow.spec.ts[24m[0m
+[0m  [2m35:14[22m  [33mwarning[39m  'e' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[33m[1m✖ 49 problems (0 errors, 49 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[0m

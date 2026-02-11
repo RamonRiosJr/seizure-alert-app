@@ -10,15 +10,30 @@ interface DisclaimerModalProps {
 const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
 
+  // Handle Escape key to close
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[70] backdrop-blur-sm"
       onClick={onClose}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */}
       <div
         className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md flex flex-col transform transition-all border-l-4 border-yellow-500 overflow-hidden"
+        role="dialog"
+        aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-700">

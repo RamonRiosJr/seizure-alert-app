@@ -45,6 +45,16 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSend = () => {
@@ -68,12 +78,16 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   const isApiKeyMissing = !apiKey;
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 transition-opacity duration-300 backdrop-blur-sm"
       onClick={onClose}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */}
       <div
         className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform transition-all"
+        role="dialog"
+        aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-lg">

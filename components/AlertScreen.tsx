@@ -194,15 +194,21 @@ const AlertScreen: React.FC = () => {
     }
   }, [isSpeaking, isMuted, toggleSound]);
 
+  // Global click listener for audio resume (replaces onClick on main div to avoid nesting issues)
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      if (!hasAudioPermission) attemptResume();
+    };
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, [hasAudioPermission, attemptResume]);
+
   return (
     <>
-      <div
-        className="h-[100dvh] w-screen alert-active flex flex-col box-border cursor-pointer overflow-hidden"
-        onClick={() => {
-          if (!hasAudioPermission) attemptResume();
-        }}
-      >
-        <audio autoPlay loop src={SILENT_AUDIO} className="hidden" />
+      <div className="h-[100dvh] w-screen alert-active flex flex-col box-border cursor-pointer overflow-hidden">
+        <audio autoPlay loop src={SILENT_AUDIO} className="hidden">
+          <track kind="captions" src="" label="Silence" />
+        </audio>
         <header className="relative text-center p-2 flex-shrink-0">
           <div className="absolute top-2 right-2">
             <button
@@ -243,15 +249,22 @@ const AlertScreen: React.FC = () => {
 
         {/* Patient Info Modal */}
         {isInfoModalOpen && (
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
             onClick={(e) => {
               e.stopPropagation();
               setIsInfoModalOpen(false);
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') setIsInfoModalOpen(false);
+            }}
           >
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */}
             <div
               className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-gray-700"
+              role="dialog"
+              aria-modal="true"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800">
