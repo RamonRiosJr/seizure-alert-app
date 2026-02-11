@@ -12,6 +12,7 @@ import {
   BatteryCharging,
   X,
   Info,
+  Clock,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
@@ -117,6 +118,9 @@ const AlertScreen: React.FC = () => {
     t('alertStatus')
   );
 
+  // Snooze setter
+  const [, setSnoozeUntil] = useLocalStorage<number>('hr_snooze_until', 0);
+
   const primaryContact = contacts.length > 0 ? contacts[0] : null;
   const [autoCallCountdown, setAutoCallCountdown] = useState(30);
   const [isAutoCallPending, setIsAutoCallPending] = useState(!!primaryContact);
@@ -187,6 +191,16 @@ const AlertScreen: React.FC = () => {
     setScreen('ready');
   };
 
+  const handleSnooze = () => {
+    // Snooze for 15 minutes (15 * 60 * 1000 ms)
+    const snoozeDuration = 15 * 60 * 1000;
+    const snoozeUntil = Date.now() + snoozeDuration;
+
+    setSnoozeUntil(snoozeUntil);
+
+    handleDeactivate();
+  };
+
   // Auto-mute siren when speaking starts
   useEffect(() => {
     if (isSpeaking && !isMuted) {
@@ -207,7 +221,7 @@ const AlertScreen: React.FC = () => {
     <>
       <div className="h-[100dvh] w-screen alert-active flex flex-col box-border cursor-pointer overflow-hidden">
         <audio autoPlay loop src={SILENT_AUDIO} className="hidden">
-          <track kind="captions" src="" label="Silence" />
+          <track kind="captions" src="data:text/vtt;base64,V0VCVlRVCg==" label="Silence" default />
         </audio>
         <header className="relative text-center p-2 flex-shrink-0">
           <div className="absolute top-2 right-2">
@@ -457,10 +471,17 @@ const AlertScreen: React.FC = () => {
           </div>
         </main>
 
-        <footer className="p-4 sm:p-6 flex-shrink-0">
+        <footer className="p-4 sm:p-6 flex-shrink-0 flex gap-4">
+          <button
+            onClick={handleSnooze}
+            className="flex-1 text-xl font-bold py-4 px-4 bg-gray-600 text-white rounded-lg shadow-lg hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-400 transition-colors flex items-center justify-center gap-2"
+          >
+            <Clock className="w-6 h-6" />
+            {t('snoozeButton') || 'Snooze 15m'}
+          </button>
           <button
             onClick={handleDeactivate}
-            className="w-full text-3xl font-bold py-4 px-8 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 transition-colors"
+            className="flex-[2] text-3xl font-bold py-4 px-8 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 transition-colors"
           >
             {t('imOkButton')}
           </button>

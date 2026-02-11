@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useHeartMonitor } from '../useHeartMonitor';
 import { useBLEContext } from '../../contexts/BLEContext';
 import { useLocalStorage } from '../useLocalStorage';
@@ -50,6 +50,21 @@ describe('useHeartMonitor', () => {
     // Mock Workout Mode = true
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
       if (key === 'workout_mode') return [true, vi.fn()];
+      if (key === 'hr_threshold') return [120, vi.fn()];
+      return [initialValue, vi.fn()];
+    });
+
+    renderHook(() => useHeartMonitor(mockTriggerAlert));
+
+    expect(mockTriggerAlert).not.toHaveBeenCalled();
+  });
+  it('should NOT trigger alert if Snooze is active', () => {
+    (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 150 });
+
+    // Mock Snooze until future
+    const futureTime = Date.now() + 10000;
+    (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
+      if (key === 'hr_snooze_until') return [futureTime, vi.fn()];
       if (key === 'hr_threshold') return [120, vi.fn()];
       return [initialValue, vi.fn()];
     });

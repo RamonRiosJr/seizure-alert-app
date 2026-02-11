@@ -20,6 +20,7 @@
   "emergencyContacts": "Contactos de Emergencia",
   "noContactsMessage": "No se han añadido contactos de emergencia. Por favor, añádelos en Configuración.",
   "imOkButton": "Estoy Bien",
+  "snoozeButton": "Posponer 15m",
   "sirenMute": "Silenciar sirena",
   "sirenUnmute": "Activar sirena",
   "aiButton": "IA",
