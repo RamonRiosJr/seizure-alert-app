@@ -58,7 +58,7 @@ describe('useTTS', () => {
     expect(mockSpeak).toHaveBeenCalled();
 
     // Check if the utterance was configured correctly
-    const utteranceInstance = mockSpeak.mock.calls[0][0] as any;
+    const utteranceInstance = mockSpeak.mock.calls[0]![0] as any;
     expect(utteranceInstance.text).toBe('Hello');
     expect(utteranceInstance.lang).toBe('en-US');
     expect(utteranceInstance.voice.name).toBe('English Voice');
@@ -71,7 +71,7 @@ describe('useTTS', () => {
       result.current.speak('Hola', 'es');
     });
 
-    const utteranceInstance = mockSpeak.mock.calls[0][0] as any;
+    const utteranceInstance = mockSpeak.mock.calls[0]![0] as any;
     expect(utteranceInstance.text).toBe('Hola');
     expect(utteranceInstance.lang).toBe('es-ES');
     expect(utteranceInstance.voice.name).toBe('Spanish Voice');
@@ -84,7 +84,7 @@ describe('useTTS', () => {
       result.current.speak('Test', 'en');
     });
 
-    const utterance = mockSpeak.mock.calls[0][0] as any;
+    const utterance = mockSpeak.mock.calls[0]![0] as any;
 
     // Simulate start
     act(() => {
@@ -106,7 +106,7 @@ describe('useTTS', () => {
       result.current.speak('Test', 'en');
     });
 
-    const utterance = mockSpeak.mock.calls[0][0] as any;
+    const utterance = mockSpeak.mock.calls[0]![0] as any;
 
     act(() => {
       if (utterance.onerror) utterance.onerror(new Event('error'));
