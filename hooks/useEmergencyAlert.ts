@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useCallback, useState } from 'react';
 
 export const useEmergencyAlert = () => {
@@ -36,7 +35,6 @@ export const useEmergencyAlert = () => {
   // Handle visibility change to resume audio if app comes back to foreground
   useEffect(() => {
     const handleVisibilityChange = () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (document.hidden === false && audioContextRef.current) {
         // 'visible' state check
         if (audioContextRef.current.state === 'suspended') {
@@ -57,10 +55,20 @@ export const useEmergencyAlert = () => {
 
     // Stop and disconnect Web Audio nodes
     if (mainOscillatorRef.current) {
-      try { mainOscillatorRef.current.stop(); mainOscillatorRef.current.disconnect(); } catch { /* ignore */ }
+      try {
+        mainOscillatorRef.current.stop();
+        mainOscillatorRef.current.disconnect();
+      } catch {
+        /* ignore */
+      }
     }
     if (lfoOscillatorRef.current) {
-      try { lfoOscillatorRef.current.stop(); lfoOscillatorRef.current.disconnect(); } catch { /* ignore */ }
+      try {
+        lfoOscillatorRef.current.stop();
+        lfoOscillatorRef.current.disconnect();
+      } catch {
+        /* ignore */
+      }
     }
     if (gainRef.current) {
       gainRef.current.disconnect();
@@ -153,7 +161,6 @@ export const useEmergencyAlert = () => {
 
       mainOsc.start();
       lfoOsc.start();
-
     } catch (e) {
       console.error('Web Audio API failed to initialize.', e);
     }

@@ -62,7 +62,9 @@ describe('useShake', () => {
 
     // Get the event listener
     expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
-    const handler = addEventListenerSpy.mock.calls.find((call) => call[0] === 'devicemotion')![1];
+    const handler = addEventListenerSpy.mock.calls.find(
+      (call: any[]) => call[0] === 'devicemotion'
+    )![1];
 
     // 1. Initial State (Rest)
     act(() => {
@@ -110,7 +112,9 @@ describe('useShake', () => {
     act(() => {
       result.current.setIsEnabled(true);
     });
-    const handler = addEventListenerSpy.mock.calls.find((call) => call[0] === 'devicemotion')![1];
+    const handler = addEventListenerSpy.mock.calls.find(
+      (call: any[]) => call[0] === 'devicemotion'
+    )![1];
 
     // First Shake
     act(() => {

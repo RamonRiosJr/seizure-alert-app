@@ -1,0 +1,2 @@
+hooks/__tests__/useShake.test.ts(65,58): error TS7006: Parameter 'call' implicitly has an 'any' type.
+hooks/__tests__/useShake.test.ts(113,58): error TS7006: Parameter 'call' implicitly has an 'any' type.

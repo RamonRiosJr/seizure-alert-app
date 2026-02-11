@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useEffect } from 'react';
 // import { GoogleGenAI, Modality } from '@google/genai'; // Removed for simplification
 import type { Language } from '../types';
@@ -39,9 +38,7 @@ export const useTTS = () => {
         title: 'Seizure Alert',
         artist: 'Aura Speaks AI',
         album: 'Emergency Alert',
-        artwork: [
-          { src: '/seizure-alert-logo.svg', sizes: '512x512', type: 'image/svg+xml' }
-        ]
+        artwork: [{ src: '/seizure-alert-logo.svg', sizes: '512x512', type: 'image/svg+xml' }],
       });
     }
   }, []);

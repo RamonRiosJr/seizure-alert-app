@@ -1,34 +1,53 @@
 # Contributing to Aura Speaks AI
 
-Thank you for your interest in contributing to **Aura Speaks AI**! We welcome contributions from everyone. This project is dedicated to providing a safe, reliable tool for seizure monitoring and communication.
+## 🌟 The "Enterprise" Standard
 
-## How to Contribute
+We adhere to strict engineering standards to ensure **Aura Speaks AI** is scalable, secure, and reliable. All contributors must follow these guidelines.
 
-### Reporting Bugs
+## 🌿 Branching Strategy (GitFlow-Lite)
 
-1. Check the [Issues](https://github.com/RamonRiosJr/seizure-alert-app/issues) page to see if the bug has already been reported.
-2. If not, open a new issue.
-3. Describe the bug clearly, including steps to reproduce it.
+We use a simplified strict branching model.
 
-### Suggesting Enhancements
+| Branch      | Protection | Description                                          |
+| ----------- | ---------- | ---------------------------------------------------- |
+| `main`      | **Locked** | Production-ready code. No direct commits. PRs only.  |
+| `feature/*` | Open       | For new features (e.g., `feature/voice-activation`). |
+| `fix/*`     | Open       | For bug fixes (e.g., `fix/login-crash`).             |
+| `chore/*`   | Open       | For maintenance (e.g., `chore/dependency-updates`).  |
 
-1. Open an issue to discuss your idea first.
-2. Explain why this enhancement would be useful.
+### Rules
 
-### Pull Requests
+1. Never commit directly to `main`.
+2. Always create a new branch from `main`.
+3. Branch names **MUST** be descriptive: `type/short-description`.
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
+## 💾 Commit Convention
 
-## Development Setup
+We follow [Conventional Commits](https://www.conventionalcommits.org/).
 
-1. Clone the repo: `git clone https://github.com/RamonRiosJr/seizure-alert-app.git`
-2. Install dependencies: `npm install`
-3. Run locally: `npm run dev`
+- `feat: add new voice command`
+- `fix: resolve crash on startup`
+- `docs: update readme architecture`
+- `style: format code with prettier`
+- `refactor: simplify auth logic`
+- `test: add unit tests for user hook`
+- `chore: update dependencies`
 
-## Code Style
+## Pull Request Process
 
-Please ensure your code is clean, commented, and follows the existing style (React + TypeScript).
+1. **Self-Review**: Run `npm run lint` and `npm run test` locally.
+2. **Template**: Fill out the PR template completely.
+3. **CI Checks**: All GitHub Actions (Lint, Type Check, Test) must pass.
+4. **Review**: At least one approval is required to merge.
+
+## 🛠️ Local Development Setup
+
+1. **Install**: `npm install --legacy-peer-deps`
+2. **Prepare**: `npm run prepare` (Sets up Husky hooks)
+3. **Dev Server**: `npm run dev`
+4. **Test**: `npm run test:run`
+
+## 🔒 Security
+
+- Do not commit secrets/keys.
+- Ensure no sensitive data is logged.
