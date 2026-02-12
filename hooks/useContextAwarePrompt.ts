@@ -1,10 +1,10 @@
 import { useLocalStorage } from './useLocalStorage';
 import type { AlertReport, PatientInfo } from '../types';
 
-import { activeProfile } from '../config';
+import { useConfig } from '../config';
 
 export const useContextAwarePrompt = () => {
-  const profile = activeProfile;
+  const profile = useConfig();
   const [patientInfo] = useLocalStorage<PatientInfo>('patient_info', {
     name: '',
     bloodType: '',

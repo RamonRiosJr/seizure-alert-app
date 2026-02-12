@@ -32,6 +32,8 @@ import { usePWAInstall } from '../hooks/usePWAInstall';
 import { useTranslation } from 'react-i18next';
 import { useShake } from '../hooks/useShake';
 import { DeviceManager } from './DeviceManager';
+import { useConfigContext } from '../contexts/ConfigContext';
+import { ConditionProfile } from '../config/types';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -82,6 +84,7 @@ const AlertMessageEditor = () => {
 };
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
+  const { activeProfile, setProfileId, availableProfiles } = useConfigContext();
   // Unused language import removed
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -203,6 +206,38 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
           {/* Patient Info Section */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+            {/* DEBUG MARKER */}
+            <div className="bg-red-500 text-white p-2 mb-4 font-bold rounded">
+              DEBUG: Settings Loaded. Profiles: {availableProfiles.length}
+            </div>
+
+            {/* --- NEW: Application Profile Mode --- */}
+            <div className="mb-6 bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
+              <h3 className="text-lg font-bold text-indigo-900 dark:text-indigo-200 mb-2 flex items-center gap-2">
+                <ShieldAlert className="w-5 h-5" />
+                Application Mode
+              </h3>
+              <p className="text-sm text-indigo-800 dark:text-indigo-300 mb-3">
+                Choose the safety mode that matches your needs. This changes the alerts and
+                terminology.
+              </p>
+              <div className="flex gap-2">
+                {availableProfiles.map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setProfileId(p.id)}
+                    className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all ${
+                      activeProfile.id === p.id
+                        ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-300 dark:ring-indigo-700'
+                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    {p.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
               <UserPlus className="w-5 h-5 text-blue-500" />
               {t('settingsPatientInfo')}
