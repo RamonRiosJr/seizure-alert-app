@@ -100,7 +100,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 Built with modern, production-grade tools to ensure speed, safety, and scalability.
 
 - **Core:** React 18, TypeScript, Vite
-- **Styling:** Tailwind CSS, PostCSS, Lucide React (Icons)
+- **Styling:** Tailwind CSS v4, PostCSS, Lucide React (Icons)
 - **State & Internationalization:** React Context API, i18next (English/Spanish)
 - **PWA (Progressive Web App):** Vite PWA Plugin, Service Workers (Offline Capability)
 - **Testing:** Playwright (E2E), Vitest (Unit), Testing Library
