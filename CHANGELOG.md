@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactored `ReportsScreen` and `pdfGenerator` to use dynamic terminology from the active profile.
 - Updated `SettingsScreen` to include the "Application Mode" dropdown.
+- **Migrated to Tailwind CSS v4**: Improved build performance and simplified configuration.
+- **Dependency Updates**: Upgraded `typescript`, `vite`, `capacitor`, `i18next`, and `actions` to latest versions.
+
+### Fixed
+
+- Resolved regression in `useHeartMonitor` causing incorrect localStorage key usage.
+- Fixed `DeviceManager` toggle for "Workout Mode".
 
 ## [0.1.0] - 2026-02-11
 
