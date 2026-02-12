@@ -6,8 +6,8 @@ import { useSettings } from '../contexts/SettingsContext';
 export const useHeartMonitor = (triggerAlert: () => void) => {
   const { lowPowerMode } = useSettings();
   const { heartRate, connectedDevice } = useBLEContext();
-  const [threshold] = useLocalStorage<number>('hr_threshold', 120);
-  const [isWorkoutMode] = useLocalStorage<boolean>('workout_mode', false);
+  const [threshold] = useLocalStorage<number>('hrThreshold', 100);
+  const [isWorkoutMode] = useLocalStorage<boolean>('workoutMode', false);
 
   // Snooze state (persisted)
   const [snoozeUntil, setSnoozeUntil] = useLocalStorage<number>('hr_snooze_until', 0);
