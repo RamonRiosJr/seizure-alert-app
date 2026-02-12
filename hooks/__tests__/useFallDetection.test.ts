@@ -6,13 +6,13 @@ import * as SettingsContext from '../../contexts/SettingsContext';
 // Mock useSettings
 vi.mock('../../contexts/SettingsContext', () => ({
   useSettings: vi.fn(),
-  SettingsProvider: ({ children }: any) => children,
+  SettingsProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 describe('useFallDetection', () => {
-  let addEventListenerSpy: any;
-  let removeEventListenerSpy: any;
-  let mockOnFallDetected: any;
+  let addEventListenerSpy: ReturnType<typeof vi.spyOn>;
+  let removeEventListenerSpy: ReturnType<typeof vi.spyOn>;
+  let mockOnFallDetected: Mock;
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -52,8 +52,8 @@ describe('useFallDetection', () => {
     renderHook(() => useFallDetection(mockOnFallDetected));
 
     const handleMotion = addEventListenerSpy.mock.calls.find(
-      (call: any) => call[0] === 'devicemotion'
-    )[1];
+      (call: unknown[]) => call[0] === 'devicemotion'
+    )![1];
 
     // 1. Simulate High G-Force (Impact)
     // Euclidean distance of (0, 0, 25) is 25, which > 20 (medium threshold)
@@ -76,8 +76,8 @@ describe('useFallDetection', () => {
     renderHook(() => useFallDetection(mockOnFallDetected));
 
     const handleMotion = addEventListenerSpy.mock.calls.find(
-      (call: any) => call[0] === 'devicemotion'
-    )[1];
+      (call: unknown[]) => call[0] === 'devicemotion'
+    )![1];
 
     // 1. Impact
     act(() => {
@@ -111,8 +111,8 @@ describe('useFallDetection', () => {
     renderHook(() => useFallDetection(mockOnFallDetected));
 
     const handleMotion = addEventListenerSpy.mock.calls.find(
-      (call: any) => call[0] === 'devicemotion'
-    )[1];
+      (call: unknown[]) => call[0] === 'devicemotion'
+    )![1];
 
     const consoleSpy = vi.spyOn(console, 'log');
 

@@ -32,7 +32,7 @@ test.describe('Emergency Alert Flow', () => {
       await closeInstallBtn.waitFor({ state: 'visible', timeout: 2000 });
       await closeInstallBtn.click();
       await page.waitForTimeout(500); // Allow closing animation
-    } catch (e) {
+    } catch {
       // Prompt didn't appear, ignore
     }
 

@@ -33,7 +33,6 @@ import { useTranslation } from 'react-i18next';
 import { useShake } from '../hooks/useShake';
 import { DeviceManager } from './DeviceManager';
 import { useConfigContext } from '../contexts/ConfigContext';
-import { ConditionProfile } from '../config/types';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -87,8 +86,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const { activeProfile, setProfileId, availableProfiles } = useConfigContext();
   // Unused language import removed
   const [contacts, setContacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [patientInfo, setPatientInfo] = useLocalStorage<any>('patient_info', {
+  const [patientInfo, setPatientInfo] = useLocalStorage<{
+    name: string;
+    bloodType: string;
+    medicalConditions: string;
+  }>('patient_info', {
     name: '',
     bloodType: '',
     medicalConditions: '',

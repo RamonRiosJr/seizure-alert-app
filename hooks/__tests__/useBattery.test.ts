@@ -3,7 +3,36 @@ import { useBattery } from '../useBattery';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 describe('useBattery', () => {
-  let mockBattery: any;
+  // Define local BatteryManager interface if missing
+  interface BatteryManager extends EventTarget {
+    charging: boolean;
+    chargingTime: number;
+    dischargingTime: number;
+    level: number;
+    addEventListener: (
+      type: string,
+      listener: EventListenerOrEventListenerObject | null,
+      options?: boolean | AddEventListenerOptions
+    ) => void;
+    removeEventListener: (
+      type: string,
+      listener: EventListenerOrEventListenerObject | null,
+      options?: boolean | EventListenerOptions
+    ) => void;
+  }
+
+  interface MockBatteryManager extends Omit<
+    Partial<BatteryManager>,
+    'addEventListener' | 'removeEventListener'
+  > {
+    addEventListener: ReturnType<typeof vi.fn>;
+    removeEventListener: ReturnType<typeof vi.fn>;
+    level: number;
+    charging: boolean;
+    chargingTime: number;
+    dischargingTime: number;
+  }
+  let mockBattery: MockBatteryManager;
 
   beforeEach(() => {
     let batteryLevel = 0.5;
@@ -65,9 +94,9 @@ describe('useBattery', () => {
     // Simulate event
     // We access the mock attached to the *specific* mockBattery instance in this test run
     const calls = mockBattery.addEventListener.mock.calls;
-    const levelChangeCall = calls.find((call: any[]) => call[0] === 'levelchange');
+    const levelChangeCall = calls.find((call: unknown[]) => call[0] === 'levelchange');
     expect(levelChangeCall).toBeDefined();
-    const levelChangeHandler = levelChangeCall[1];
+    const levelChangeHandler = levelChangeCall![1];
 
     act(() => {
       mockBattery.level = 0.8;

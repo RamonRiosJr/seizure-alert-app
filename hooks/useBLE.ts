@@ -73,13 +73,14 @@ export const useBLE = () => {
         });
         setIsScanning(false);
       }
-    } catch (e: any) {
-      setError(e.message || 'Scanning failed');
+    } catch (e: unknown) {
+      const err = e as Error;
+      setError(err.message || 'Scanning failed');
       setIsScanning(false);
     }
   };
 
-  const [mockIntervalId, setMockIntervalId] = useState<any>(null);
+  const [mockIntervalId, setMockIntervalId] = useState<NodeJS.Timeout | number | null>(null);
 
   const connect = async (device: BleDevice) => {
     try {
@@ -100,8 +101,9 @@ export const useBLE = () => {
         setLastConnectedDevice(device);
         await startStreaming(device.deviceId);
       }
-    } catch (e: any) {
-      setError(e.message || 'Connection failed');
+    } catch (e: unknown) {
+      const err = e as Error;
+      setError(err.message || 'Connection failed');
       setLastConnectedDevice(null);
     }
   };
@@ -126,7 +128,7 @@ export const useBLE = () => {
         setConnectedDevice(null);
         setHeartRate(null);
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
     }
   };

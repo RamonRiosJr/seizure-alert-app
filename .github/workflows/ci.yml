@@ -57,7 +57,7 @@ jobs:
 
       - name: 🔒 Security Audit
         # Checks for known vulnerabilities in dependencies
-        run: npm audit --audit-level=moderate || true
+        run: npm audit --audit-level=high
 
       - name: 🏗️ Logic Build Verification
         # Ensures the app actually builds without error

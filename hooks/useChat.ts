@@ -116,12 +116,13 @@ export const useChat = (language: Language) => {
             return prevMessages;
           });
         }
-      } catch (e: any) {
-        console.error('Gemini API error:', e);
+      } catch (e: unknown) {
+        const err = e as { message?: string };
+        console.error('Gemini API error:', err);
         let errorMessage = 'Sorry, connection failed. Please check your API Key in Settings.';
-        if (e.message?.includes('401') || e.message?.includes('API key')) {
+        if (err.message?.includes('401') || err.message?.includes('API key')) {
           errorMessage = 'Error: Invalid API Key. Please update it in Settings.';
-        } else if (e.message?.includes('quota') || e.message?.includes('429')) {
+        } else if (err.message?.includes('quota') || err.message?.includes('429')) {
           errorMessage = 'Error: Usage limit exceeded. Please try again later.';
         }
 

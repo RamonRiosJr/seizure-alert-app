@@ -38,10 +38,13 @@ interface BatteryManager extends EventTarget {
   ): void;
 }
 
+interface NavigatorWithBattery extends Navigator {
+  getBattery: () => Promise<BatteryManager>;
+}
+
 const useBatteryStatus = () => {
   const [batteryStatus, setBatteryStatus] = useState({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    isSupported: typeof navigator !== 'undefined' && 'getBattery' in (navigator as any),
+    isSupported: typeof navigator !== 'undefined' && 'getBattery' in navigator,
     level: null as number | null,
     charging: null as boolean | null,
   });
@@ -63,8 +66,7 @@ const useBatteryStatus = () => {
       }
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator as any).getBattery().then((manager: BatteryManager) => {
+    (navigator as unknown as NavigatorWithBattery).getBattery().then((manager: BatteryManager) => {
       batteryManager = manager;
       updateBatteryStatus();
 
@@ -92,8 +94,15 @@ const AlertScreen: React.FC = () => {
   const { t } = useTranslation();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);
   const [reports, setReports] = useLocalStorage<AlertReport[]>('alert_reports', []);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [patientInfo] = useLocalStorage<any>('patient_info', {});
+  const [patientInfo] = useLocalStorage<{
+    name: string;
+    bloodType: string;
+    medicalConditions: string;
+  }>('patient_info', {
+    name: '',
+    bloodType: '',
+    medicalConditions: '',
+  });
 
   const [timer, setTimer] = useState(0);
   const { level, charging, isSupported } = useBatteryStatus();

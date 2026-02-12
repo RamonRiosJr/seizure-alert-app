@@ -4,10 +4,14 @@ import { useShake } from '../useShake';
 
 describe('useShake', () => {
   let addEventListenerSpy: ReturnType<typeof vi.spyOn>;
-  let removeEventListenerSpy: ReturnType<typeof vi.spyOn>;
 
   // Helper to simulate motion event
-  const triggerMotion = (handler: any, x: number, y: number, z: number) => {
+  const triggerMotion = (
+    handler: (event: Partial<DeviceMotionEvent>) => void,
+    x: number,
+    y: number,
+    z: number
+  ) => {
     handler({
       accelerationIncludingGravity: { x, y, z },
       acceleration: { x: 0, y: 0, z: 0 },
@@ -19,7 +23,6 @@ describe('useShake', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     addEventListenerSpy = vi.spyOn(window, 'addEventListener');
-    removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
     // Mock DeviceMotionEvent presence
     Object.defineProperty(window, 'DeviceMotionEvent', {
@@ -63,8 +66,8 @@ describe('useShake', () => {
     // Get the event listener
     expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
     const handler = addEventListenerSpy.mock.calls.find(
-      (call: any[]) => call[0] === 'devicemotion'
-    )![1];
+      (call: unknown[]) => call[0] === 'devicemotion'
+    )![1] as (event: Partial<DeviceMotionEvent>) => void;
 
     // 1. Initial State (Rest)
     act(() => {
@@ -113,8 +116,8 @@ describe('useShake', () => {
       result.current.setIsEnabled(true);
     });
     const handler = addEventListenerSpy.mock.calls.find(
-      (call: any[]) => call[0] === 'devicemotion'
-    )![1];
+      (call: unknown[]) => call[0] === 'devicemotion'
+    )![1] as (event: Partial<DeviceMotionEvent>) => void;
 
     // First Shake
     act(() => {

@@ -8,7 +8,9 @@ export const useTTS = () => {
 
   // Helper to resume AudioContext if suspended (e.g., by OS or browser policy)
   const resumeAudioContext = useCallback(() => {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (AudioContextClass) {
       // Basic "resume" attempt for Web Audio API if we were using it directly.
       // For SpeechSynthesis, checking paused state help.

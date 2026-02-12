@@ -93,7 +93,7 @@ describe('useBLE Auto-Reconnect', () => {
   it('should NOT attempt reconnect if disconnected manually', async () => {
     // Setup Mock for Controlled Resolution
     let resolveConnect: (value?: unknown) => void = () => {};
-    let captureDisconnectCallback = (id: string) => {};
+    let captureDisconnectCallback = (_id: string) => {};
 
     (BleClient.connect as Mock).mockImplementation((id, cb) => {
       captureDisconnectCallback = cb;
