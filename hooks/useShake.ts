@@ -53,17 +53,6 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
     return true; // Implied true for non-iOS
   }, []);
 
-  // Polyfill type for older TS environments if needed
-  interface DeviceAcceleration {
-    x: number | null;
-    y: number | null;
-    z: number | null;
-  }
-
-  type DeviceMotionEventWithAcceleration = DeviceMotionEvent & {
-    accelerationIncludingGravity: DeviceAcceleration;
-  };
-
   const handleMotion = useCallback(
     (event: DeviceMotionEvent) => {
       if (!isEnabled) return;

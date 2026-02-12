@@ -10,7 +10,7 @@ vi.mock('../../contexts/BLEContext');
 vi.mock('../useLocalStorage');
 vi.mock('../../contexts/SettingsContext', () => ({
   useSettings: vi.fn(),
-  SettingsProvider: ({ children }: any) => children,
+  SettingsProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 describe('useHeartMonitor', () => {

@@ -1,0 +1,85 @@
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\components\SettingsScreen.tsx
+  36:10  warning  'ConditionProfile' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\ConfigContext.tsx
+  33:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\SettingsContext.tsx
+  21:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useBLE.test.ts
+  96:38  warning  'id' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useBattery.test.ts
+   6:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  68:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useFallDetection.test.ts
+    9:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   13:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   14:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   15:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   55:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   79:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useHeartMonitor.test.ts
+  13:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useLocalStorage.test.ts
+  2:48  warning  'afterEach' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useShake.test.ts
+    7:7   warning  'removeEventListenerSpy' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   10:35  error    Unexpected any. Specify a different type                     @typescript-eslint/no-explicit-any
+   66:14  error    Unexpected any. Specify a different type                     @typescript-eslint/no-explicit-any
+  116:14  error    Unexpected any. Specify a different type                     @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useTTS.test.ts
+   34:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   61:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  109:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useBLE.ts
+   76:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  129:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useChat.ts
+  119:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts
+  16:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  20:17  warning  'setIsIOS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  25:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  36:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  65:30  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts
+  63:8  warning  'DeviceMotionEventWithAcceleration' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useSpeechRecognition.ts
+   4:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   4:51  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useTTS.ts
+  11:65  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\src\vite-env.d.ts
+  10:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\tests\emergency-flow.spec.ts
+  35:14  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 46 problems (37 errors, 9 warnings)
+

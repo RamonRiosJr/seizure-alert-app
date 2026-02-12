@@ -23,8 +23,8 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.flatConfigs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      // Disable noisy rules for this project phase
-      '@typescript-eslint/no-explicit-any': 'warn',
+      // "Senior Engineer" Strictness
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/ban-ts-comment': 'off',
     },

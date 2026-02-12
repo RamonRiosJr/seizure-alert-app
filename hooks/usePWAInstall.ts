@@ -1,8 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
+
+interface NavigatorStandalone extends Navigator {
+  standalone?: boolean;
 }
 
 export const usePWAInstall = () => {
@@ -13,27 +17,27 @@ export const usePWAInstall = () => {
     if (typeof window === 'undefined') return false;
     return (
       window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone
+      (window.navigator as NavigatorStandalone).standalone
     );
   });
 
-  const [isIOS, setIsIOS] = useState(() => {
+  const isIOS = useMemo(() => {
     if (typeof window === 'undefined') return false;
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone;
+      (window.navigator as NavigatorStandalone).standalone;
     const isIosDevice =
       /iphone|ipad|ipod/.test(userAgent) ||
       (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
     return isIosDevice && !isStandalone;
-  });
+  }, []);
 
   const [showPrompt, setShowPrompt] = useState(() => {
     if (typeof window === 'undefined') return false;
     const isStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone;
+      (window.navigator as NavigatorStandalone).standalone;
     const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
 
     if (isStandalone) return false;
@@ -62,7 +66,7 @@ export const usePWAInstall = () => {
 
       const isStandalone =
         window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone;
+        (window.navigator as NavigatorStandalone).standalone;
       const hasDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
 
       if (!isStandalone && !hasDismissed) {

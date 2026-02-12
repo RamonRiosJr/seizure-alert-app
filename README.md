@@ -1,6 +1,7 @@
 # Aura Speaks AI 🗣️🚨
 
 [![CI/CD Pipeline](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/github/package-json/v/RamonRiosJr/seizure-alert-app)](package.json)
 [![Deploy Status](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml)
 [![codecov](https://codecov.io/gh/RamonRiosJr/seizure-alert-app/branch/main/graph/badge.svg)](https://codecov.io/gh/RamonRiosJr/seizure-alert-app)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
