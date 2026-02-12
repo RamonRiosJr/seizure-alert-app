@@ -114,7 +114,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [isApiKeyHelpOpen, setIsApiKeyHelpOpen] = useState(false);
   const [isApiKeyVisible, setIsApiKeyVisible] = useState(false);
 
-  const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
+  const { isInstallable, isAppInstalled, installApp, isIOS, showPrompt, dismissPrompt } =
+    usePWAInstall();
   const {
     isEnabled: isShakeEnabled,
     setIsEnabled: setShakeEnabled,
@@ -616,98 +617,110 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           </section>
 
           {/* App Installation Section */}
-          <section>
-            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <Smartphone className="w-6 h-6" />
-              App Installation
-            </h3>
-            <div className="space-y-3">
-              {isAppInstalled ? (
-                <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
-                  <Check className="w-5 h-5" />
-                  <span className="font-medium">App is installed and offline-ready.</span>
-                </div>
-              ) : (
-                <>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Install this app on your device for quick access and offline capabilities.
-                  </p>
+          {(showPrompt || isAppInstalled) && (
+            <section>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                  <Smartphone className="w-6 h-6" />
+                  App Installation
+                </h3>
+                {!isAppInstalled && (
+                  <button
+                    onClick={dismissPrompt}
+                    className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 underline"
+                  >
+                    Dismiss
+                  </button>
+                )}
+              </div>
+              <div className="space-y-3">
+                {isAppInstalled ? (
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
+                    <Check className="w-5 h-5" />
+                    <span className="font-medium">App is installed and offline-ready.</span>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Install this app on your device for quick access and offline capabilities.
+                    </p>
 
-                  {isInstallable && (
-                    <button
-                      onClick={installApp}
-                      className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
-                    >
-                      <Download className="w-5 h-5" />
-                      Install App
-                    </button>
-                  )}
+                    {isInstallable && (
+                      <button
+                        onClick={installApp}
+                        className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+                      >
+                        <Download className="w-5 h-5" />
+                        Install App
+                      </button>
+                    )}
 
-                  {isIOS && (
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
-                      <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
-                        <Smartphone className="w-5 h-5" />
-                        Install on iPhone / iPad:
-                      </h4>
-                      <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            1
-                          </span>
-                          <span>
-                            Tap the <Share className="w-4 h-4 inline mx-1" /> <strong>Share</strong>{' '}
-                            button in your browser toolbar.
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            2
-                          </span>
-                          <span>
-                            Scroll down and tap{' '}
-                            <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
-                            <PlusSquare className="w-4 h-4 inline mx-1" />.
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            3
-                          </span>
-                          <span>
-                            Confirm by tapping <strong>Add</strong> in the top corner.
-                          </span>
-                        </li>
-                      </ol>
-                    </div>
-                  )}
+                    {isIOS && (
+                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                        <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+                          <Smartphone className="w-5 h-5" />
+                          Install on iPhone / iPad:
+                        </h4>
+                        <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              1
+                            </span>
+                            <span>
+                              Tap the <Share className="w-4 h-4 inline mx-1" />{' '}
+                              <strong>Share</strong> button in your browser toolbar.
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              2
+                            </span>
+                            <span>
+                              Scroll down and tap{' '}
+                              <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
+                              <PlusSquare className="w-4 h-4 inline mx-1" />.
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              3
+                            </span>
+                            <span>
+                              Confirm by tapping <strong>Add</strong> in the top corner.
+                            </span>
+                          </li>
+                        </ol>
+                      </div>
+                    )}
 
-                  {!isInstallable && !isIOS && !isAppInstalled && (
-                    <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
-                      <p className="font-semibold mb-2">Can't see the install button?</p>
-                      <p>Try installing manually via your browser menu:</p>
-                      <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
-                        <li>
-                          <span className="font-bold">Chrome (Android):</span> Tap{' '}
-                          <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
-                          <span className="font-bold">Install App</span> or{' '}
-                          <span className="font-bold">Add to Home screen</span>.
-                        </li>
-                        <li>
-                          <span className="font-bold">Safari (iOS):</span> Tap{' '}
-                          <span className="font-bold">Share</span> &rarr;{' '}
-                          <span className="font-bold">Add to Home Screen</span>.
-                        </li>
-                        <li>
-                          <span className="font-bold">Desktop:</span> Look for an install icon in
-                          the address bar.
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </section>
+                    {!isInstallable && !isIOS && !isAppInstalled && (
+                      <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
+                        <p className="font-semibold mb-2">Can't see the install button?</p>
+                        <p>Try installing manually via your browser menu:</p>
+                        <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
+                          <li>
+                            <span className="font-bold">Chrome (Android):</span> Tap{' '}
+                            <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
+                            <span className="font-bold">Install App</span> or{' '}
+                            <span className="font-bold">Add to Home screen</span>.
+                          </li>
+                          <li>
+                            <span className="font-bold">Safari (iOS):</span> Tap{' '}
+                            <span className="font-bold">Share</span> &rarr;{' '}
+                            <span className="font-bold">Add to Home Screen</span>.
+                          </li>
+                          <li>
+                            <span className="font-bold">Desktop:</span> Look for an install icon in
+                            the address bar.
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </section>
+          )}
 
           {/* NFC Activation Section */}
           <section>
