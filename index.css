@@ -1,6 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --animate-pulse-border: pulse-border 1.5s infinite ease-in-out;
+  --animate-breathe-glow: breathe-glow 3s infinite ease-in-out;
+
+  @keyframes pulse-border {
+    0%,
+    100% {
+      border-color: #f87171;
+    }
+
+    50% {
+      border-color: #b91c1c;
+    }
+  }
+
+  @keyframes breathe-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 40px rgba(220, 38, 38, 0.4);
+      transform: scale(1);
+    }
+
+    50% {
+      box-shadow: 0 0 80px rgba(220, 38, 38, 0.8);
+      transform: scale(1.02);
+    }
+  }
+}
 
 @layer utilities {
   .alert-active {
