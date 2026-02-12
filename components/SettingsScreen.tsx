@@ -206,11 +206,6 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
           {/* Patient Info Section */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-            {/* DEBUG MARKER */}
-            <div className="bg-red-500 text-white p-2 mb-4 font-bold rounded">
-              DEBUG: Settings Loaded. Profiles: {availableProfiles.length}
-            </div>
-
             {/* --- NEW: Application Profile Mode --- */}
             <div className="mb-6 bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
               <h3 className="text-lg font-bold text-indigo-900 dark:text-indigo-200 mb-2 flex items-center gap-2">
@@ -221,20 +216,29 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 Choose the safety mode that matches your needs. This changes the alerts and
                 terminology.
               </p>
-              <div className="flex gap-2">
-                {availableProfiles.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => setProfileId(p.id)}
-                    className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all ${
-                      activeProfile.id === p.id
-                        ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-300 dark:ring-indigo-700'
-                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                    }`}
+
+              <div className="relative">
+                <select
+                  value={activeProfile.id}
+                  onChange={(e) => setProfileId(e.target.value)}
+                  className="w-full p-3 bg-white dark:bg-gray-800 border border-indigo-200 dark:border-indigo-700 rounded-lg shadow-sm text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none cursor-pointer"
+                >
+                  {availableProfiles.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+                {/* Custom Arrow Icon */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-indigo-600 dark:text-indigo-400">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
                   >
-                    {p.name}
-                  </button>
-                ))}
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
 
