@@ -3,9 +3,12 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useTranslation } from 'react-i18next';
 import type { ChatMessage, Language } from '../types';
 import { getSystemPrompt } from '../constants';
+import { useContextAwarePrompt } from './useContextAwarePrompt';
 
 export const useChat = (language: Language) => {
   const { t } = useTranslation();
+  const { getContextString } = useContextAwarePrompt();
+
   // Load initial state from localStorage or default to empty
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
@@ -70,11 +73,17 @@ export const useChat = (language: Language) => {
       }
 
       try {
+        const contextString = getContextString();
+        const baseSystemPrompt = getSystemPrompt(language);
+        const finalSystemPrompt = `${baseSystemPrompt}\n${contextString}`;
+
+        console.log('🤖 System Prompt with Context:', finalSystemPrompt);
+
         // Use the Browser-compatible SDK pattern
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({
           model: 'gemini-1.5-flash',
-          systemInstruction: getSystemPrompt(language),
+          systemInstruction: finalSystemPrompt,
         });
 
         // Construct history for the API from previous messages
@@ -128,7 +137,7 @@ export const useChat = (language: Language) => {
         setIsLoading(false);
       }
     },
-    [language, messages, t]
+    [language, messages, t, getContextString]
   ); // Added messages as dependency for history context
 
   return { messages, input, setInput, sendMessage, isLoading, error, clearChat };
