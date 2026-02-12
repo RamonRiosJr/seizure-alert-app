@@ -206,6 +206,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         <main className="flex-grow p-6 overflow-y-auto space-y-8">
           {/* Patient Info Section */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+            {/* DEBUG MARKER */}
+            <div className="bg-red-500 text-white p-2 mb-4 font-bold rounded">
+              DEBUG: Settings Loaded. Profiles: {availableProfiles.length}
+            </div>
+
             {/* --- NEW: Application Profile Mode --- */}
             <div className="mb-6 bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
               <h3 className="text-lg font-bold text-indigo-900 dark:text-indigo-200 mb-2 flex items-center gap-2">
