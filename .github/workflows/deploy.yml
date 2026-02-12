@@ -28,7 +28,7 @@ jobs:
         run: echo "exists=$(test -f package-lock.json && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           # Conditionally enable caching only if package-lock.json exists
