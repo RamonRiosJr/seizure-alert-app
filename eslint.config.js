@@ -30,7 +30,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/contexts/*.tsx', 'contexts/*.tsx'],
+    files: ['**/contexts/*.tsx'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
