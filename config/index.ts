@@ -1,9 +1,10 @@
-import { epilepsyProfile } from './profiles/epilepsy';
-import { ConditionProfile } from './types';
+import { useConfigContext } from '../contexts/ConfigContext';
+export type { ConditionProfile } from './types';
+export { epilepsyProfile } from './profiles/epilepsy';
+export { seniorProfile } from './profiles/senior';
 
-// In the future, this can be swapped at build time or via ENV variable
-export const activeProfile: ConditionProfile = epilepsyProfile;
-
+// Use the Context hook for dynamic profile access
 export const useConfig = () => {
+  const { activeProfile } = useConfigContext();
   return activeProfile;
 };

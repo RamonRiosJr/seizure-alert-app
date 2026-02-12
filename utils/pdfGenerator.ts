@@ -2,13 +2,15 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { AlertReport, Language } from '../types';
 import i18n from '@/i18n';
+import { ConditionProfile } from '../config/types';
 
-import { activeProfile } from '../config';
-
-export const generateSeizureReport = (reports: AlertReport[], language: Language) => {
+export const generateSeizureReport = (
+  reports: AlertReport[],
+  language: Language,
+  profile: ConditionProfile
+) => {
   const t = (key: string) => i18n.t(key, { lng: language });
   const doc = new jsPDF();
-  const profile = activeProfile;
 
   // Header - Logo & Title
   doc.setFontSize(22);

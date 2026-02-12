@@ -1,5 +1,6 @@
 import React from 'react';
 import Chatbot from './components/Chatbot';
+import { ConfigProvider } from './contexts/ConfigContext';
 import SettingsScreen from './components/SettingsScreen';
 import ReportsScreen from './components/ReportsScreen';
 import AboutScreen from './components/AboutScreen';
@@ -51,41 +52,43 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <SettingsProvider>
-        <div
-          className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
-        >
-          {/* Non-visual logic listeners */}
-          <GlobalListeners />
-          <OfflineIndicator />
+      <ConfigProvider>
+        <SettingsProvider>
+          <div
+            className={`min-h-[100dvh] transition-colors duration-200 ${theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-50'}`}
+          >
+            {/* Non-visual logic listeners */}
+            <GlobalListeners />
+            <OfflineIndicator />
 
-          {/* Layout Elements */}
-          {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
+            {/* Layout Elements */}
+            {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
 
-          {/* Main Content Router */}
-          <AppRouter />
+            {/* Main Content Router */}
+            <AppRouter />
 
-          {/* Global UI Elements */}
-          <UniversalLanguageSwitcher />
-          <InstallPrompt />
-          <UpdateNotification />
+            {/* Global UI Elements */}
+            <UniversalLanguageSwitcher />
+            <InstallPrompt />
+            <UpdateNotification />
 
-          {/* Modals */}
-          <Chatbot isOpen={activeModal === 'chat'} onClose={closeModal} />
+            {/* Modals */}
+            <Chatbot isOpen={activeModal === 'chat'} onClose={closeModal} />
 
-          <SettingsScreen isOpen={activeModal === 'settings'} onClose={closeModal} />
+            <SettingsScreen isOpen={activeModal === 'settings'} onClose={closeModal} />
 
-          <ReportsScreen isOpen={activeModal === 'reports'} onClose={closeModal} />
+            <ReportsScreen isOpen={activeModal === 'reports'} onClose={closeModal} />
 
-          <DisclaimerModal isOpen={activeModal === 'disclaimer'} onClose={closeModal} />
+            <DisclaimerModal isOpen={activeModal === 'disclaimer'} onClose={closeModal} />
 
-          <AboutScreen
-            isOpen={activeModal === 'about'}
-            onClose={closeModal}
-            onOpenDisclosure={() => openModal('disclaimer')}
-          />
-        </div>
-      </SettingsProvider>
+            <AboutScreen
+              isOpen={activeModal === 'about'}
+              onClose={closeModal}
+              onOpenDisclosure={() => openModal('disclaimer')}
+            />
+          </div>
+        </SettingsProvider>
+      </ConfigProvider>
     </ErrorBoundary>
   );
 }

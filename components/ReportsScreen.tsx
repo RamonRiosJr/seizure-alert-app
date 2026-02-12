@@ -41,7 +41,7 @@ const triggerMapping: Record<string, string> = {
   'Illness/Fever': 'triggers.illness',
 };
 
-import { activeProfile } from '../config';
+import { useConfig } from '../config';
 
 const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
   const { language } = useLanguage();
@@ -60,7 +60,7 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
     notes: '',
   });
 
-  const profile = activeProfile;
+  const profile = useConfig();
   const showTypes = profile.features.seizureTypes;
   const showTriggers = profile.features.triggers;
 
@@ -122,7 +122,7 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
       filteredReports = reports.filter((r) => new Date(r.date) >= cutoff);
     }
 
-    generateSeizureReport(filteredReports, language);
+    generateSeizureReport(filteredReports, language, profile);
     setIsExportModalOpen(false);
   };
 
