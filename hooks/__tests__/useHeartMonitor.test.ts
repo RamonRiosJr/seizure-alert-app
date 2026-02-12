@@ -30,8 +30,8 @@ describe('useHeartMonitor', () => {
     (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: false });
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
       // Simple mock implementation of useLocalStorage
-      if (key === 'hr_threshold') return [120, vi.fn()];
-      if (key === 'workout_mode') return [false, vi.fn()];
+      if (key === 'hrThreshold') return [120, vi.fn()];
+      if (key === 'workoutMode') return [false, vi.fn()];
       // if (key === 'app_settings') return [{}, vi.fn()];
       return [initialValue, vi.fn()];
     });
@@ -57,8 +57,8 @@ describe('useHeartMonitor', () => {
     (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 150 });
     // Mock Workout Mode = true
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
-      if (key === 'workout_mode') return [true, vi.fn()];
-      if (key === 'hr_threshold') return [120, vi.fn()];
+      if (key === 'workoutMode') return [true, vi.fn()];
+      if (key === 'hrThreshold') return [120, vi.fn()];
       return [initialValue, vi.fn()];
     });
 
@@ -73,7 +73,7 @@ describe('useHeartMonitor', () => {
     const futureTime = Date.now() + 10000;
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
       if (key === 'hr_snooze_until') return [futureTime, vi.fn()];
-      if (key === 'hr_threshold') return [120, vi.fn()];
+      if (key === 'hrThreshold') return [120, vi.fn()];
       return [initialValue, vi.fn()];
     });
 
