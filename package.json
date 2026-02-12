@@ -35,7 +35,7 @@
     "@capacitor-community/bluetooth-le": "^8.1.0",
     "@capacitor/android": "^8.0.2",
     "@capacitor/cli": "^8.0.2",
-    "@capacitor/core": "^8.0.2",
+    "@capacitor/core": "^8.1.0",
     "@capacitor/ios": "^8.0.2",
     "@google/generative-ai": "^0.24.1",
     "i18next": "^25.8.4",
