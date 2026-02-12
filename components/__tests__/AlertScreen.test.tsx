@@ -41,9 +41,10 @@ vi.mock('../../hooks/useTTS', () => ({
 
 // Mock useLocalStorage to return [initialValue, setValue]
 // We can use a simple implementation that just returns the initial value
+// Mock useLocalStorage to return [initialValue, setValue]
+// We can use a simple implementation that just returns the initial value
 vi.mock('../../hooks/useLocalStorage', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useLocalStorage: (key: string, initialValue: any) => {
+  useLocalStorage: <T,>(key: string, initialValue: T) => {
     if (key === 'emergency_contacts') {
       const mockContacts = [{ id: '1', name: 'Mom', phone: '1234567890', relation: 'Parent' }];
       return [mockContacts, vi.fn()];
@@ -55,10 +56,8 @@ vi.mock('../../hooks/useLocalStorage', () => ({
 // Mock react-i18next
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    t: (key: string, options?: any) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const translations: Record<string, any> = {
+    t: (key: string, options?: { returnObjects?: boolean }) => {
+      const translations: Record<string, string | string[]> = {
         alertTitle: 'MEDICAL EMERGENCY',
         alertStatus: 'I am having a seizure. I am not in control.',
         instructions: ['Stay calm. I should be okay in a few minutes.'],

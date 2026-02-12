@@ -102,8 +102,10 @@ export const useEmergencyAlert = () => {
 
     // 2. Siren sound effect (LFO Driven)
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      // WebkitAudioContext fallback for older Safari
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
 
       // Reuse existing context if available to maintain "unlocked" status
       if (!audioContextRef.current) {
@@ -182,8 +184,9 @@ export const useEmergencyAlert = () => {
 
     const enterFullscreen = async () => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const elem = document.documentElement as any;
+        const elem = document.documentElement as HTMLElement & {
+          webkitRequestFullscreen?: () => Promise<void>;
+        };
         if (!document.fullscreenElement) {
           if (elem.requestFullscreen) {
             await elem.requestFullscreen();
@@ -191,9 +194,12 @@ export const useEmergencyAlert = () => {
             await elem.webkitRequestFullscreen();
           }
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-        console.log(`Fullscreen request denied/failed: ${err.message}`);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.log(`Fullscreen request denied/failed: ${err.message}`);
+        } else {
+          console.log(`Fullscreen request denied/failed: ${String(err)}`);
+        }
       }
     };
     enterFullscreen();

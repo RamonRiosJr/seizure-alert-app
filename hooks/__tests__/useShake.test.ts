@@ -24,14 +24,17 @@ describe('useShake', () => {
     vi.useFakeTimers();
     addEventListenerSpy = vi.spyOn(window, 'addEventListener');
 
-    // Mock DeviceMotionEvent presence
+    // Mock DeviceMotionEvent presence with requestPermission method
+    const MockDeviceMotionEvent = class {
+      static requestPermission() {
+        return Promise.resolve('granted');
+      }
+    };
+
     Object.defineProperty(window, 'DeviceMotionEvent', {
-      value: class {
-        static requestPermission() {
-          return Promise.resolve('granted');
-        }
-      },
+      value: MockDeviceMotionEvent,
       writable: true,
+      configurable: true,
     });
   });
 
@@ -47,27 +50,37 @@ describe('useShake', () => {
     expect(result.current.isSupported).toBe(true);
   });
 
-  it('should detect shakes and trigger callback', () => {
+  it('should detect shakes and trigger callback', async () => {
     const onShake = vi.fn();
-    // Simulate Android (no requestPermission needed)
-    // @ts-ignore
-    window.DeviceMotionEvent.requestPermission = undefined;
+
+    // Simulate Android-like behavior (requestPermission absent or not a function)
+    // We need to override the class method for this specific test
+    Object.defineProperty(window, 'DeviceMotionEvent', {
+      value: class {
+        // No requestPermission method
+      },
+      writable: true,
+      configurable: true,
+    });
 
     // Sensitivity 10, 2 shakes required, 1000ms timeout
     const { result } = renderHook(() =>
       useShake(onShake, { threshold: 10, requiredShakes: 2, timeout: 1000 })
     );
 
-    // Enable
-    act(() => {
+    // Enable - wait for effect to run
+    await act(async () => {
       result.current.setIsEnabled(true);
     });
 
-    // Get the event listener
-    expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
-    const handler = addEventListenerSpy.mock.calls.find(
-      (call: unknown[]) => call[0] === 'devicemotion'
-    )![1] as (event: Partial<DeviceMotionEvent>) => void;
+    // Wait for the effect to attach listener
+    await vi.waitFor(() => {
+      expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
+    });
+    // Provide a fallback or more robust find
+    const call = addEventListenerSpy.mock.calls.find((c: unknown[]) => c[0] === 'devicemotion');
+    if (!call) throw new Error('devicemotion listener not found');
+    const handler = call[1] as (event: Partial<DeviceMotionEvent>) => void;
 
     // 1. Initial State (Rest)
     act(() => {
@@ -79,11 +92,7 @@ describe('useShake', () => {
 
     // 2. First Shake (Heavy motion)
     act(() => {
-      // Change > threshold (10).
-      // Previous sum = 9.8
-      // New sum must be significantly different.
-      // Speed calculation: abs(diff) / diffTime * 10000
-      // Let's create a massive spike
+      // massive spike
       triggerMotion(handler, 20, 20, 20);
     });
 
@@ -103,18 +112,31 @@ describe('useShake', () => {
     expect(onShake).toHaveBeenCalledTimes(1);
   });
 
-  it('should reset count if timeout expires', () => {
+  it('should reset count if timeout expires', async () => {
     const onShake = vi.fn();
-    // @ts-ignore
-    window.DeviceMotionEvent.requestPermission = undefined;
+
+    // Simulate Android-like behavior
+    Object.defineProperty(window, 'DeviceMotionEvent', {
+      value: class {
+        // No requestPermission
+      },
+      writable: true,
+      configurable: true,
+    });
 
     const { result } = renderHook(() =>
       useShake(onShake, { threshold: 10, requiredShakes: 2, timeout: 500 })
     );
 
-    act(() => {
+    await act(async () => {
       result.current.setIsEnabled(true);
     });
+
+    // Wait for the effect to attach listener
+    await vi.waitFor(() => {
+      expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
+    });
+
     const handler = addEventListenerSpy.mock.calls.find(
       (call: unknown[]) => call[0] === 'devicemotion'
     )![1] as (event: Partial<DeviceMotionEvent>) => void;
