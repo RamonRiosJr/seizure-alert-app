@@ -139,5 +139,8 @@
   "notNowButton": "Not Now",
   "updateAvailable": "Update Available",
   "updateDesc": "A new version of the app is available. Reload to update.",
-  "updateReload": "Reload"
+  "updateReload": "Reload",
+  "eventLabel": "Event",
+  "historyTitle": "Event History",
+  "logEventButton": "Log Event"
 }

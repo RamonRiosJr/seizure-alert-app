@@ -41,6 +41,8 @@ const triggerMapping: Record<string, string> = {
   'Illness/Fever': 'triggers.illness',
 };
 
+import { activeProfile } from '../config';
+
 const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
   const { language } = useLanguage();
   const { t } = useTranslation();
@@ -57,6 +59,10 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
     triggers: [] as string[],
     notes: '',
   });
+
+  const profile = activeProfile;
+  const showTypes = profile.features.seizureTypes;
+  const showTriggers = profile.features.triggers;
 
   const seizureTypes = Object.keys(seizureTypeMapping);
   const commonTriggers = Object.keys(triggerMapping);
@@ -293,44 +299,48 @@ const ReportsScreen: React.FC<ReportsScreenProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    {t('seizureType')}
-                  </label>
-                  <select
-                    value={newEntry.type}
-                    onChange={(e) => setNewEntry({ ...newEntry, type: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
-                  >
-                    {seizureTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {t(seizureTypeMapping[type] || 'seizureTypes.unknown')}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    {t('triggersLabel')}
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {commonTriggers.map((trig) => (
-                      <button
-                        key={trig}
-                        type="button"
-                        onClick={() => toggleTrigger(trig)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
-                          newEntry.triggers.includes(trig)
-                            ? 'bg-indigo-100 border-indigo-500 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200'
-                            : 'bg-gray-100 border-gray-300 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400'
-                        }`}
-                      >
-                        {t(triggerMapping[trig] || trig)}
-                      </button>
-                    ))}
+                {showTypes && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('seizureType')}
+                    </label>
+                    <select
+                      value={newEntry.type}
+                      onChange={(e) => setNewEntry({ ...newEntry, type: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+                    >
+                      {seizureTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {t(seizureTypeMapping[type] || 'seizureTypes.unknown')}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                </div>
+                )}
+
+                {showTriggers && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      {t('triggersLabel')}
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {commonTriggers.map((trig) => (
+                        <button
+                          key={trig}
+                          type="button"
+                          onClick={() => toggleTrigger(trig)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                            newEntry.triggers.includes(trig)
+                              ? 'bg-indigo-100 border-indigo-500 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200'
+                              : 'bg-gray-100 border-gray-300 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400'
+                          }`}
+                        >
+                          {t(triggerMapping[trig] || trig)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">

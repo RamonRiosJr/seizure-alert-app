@@ -3,17 +3,19 @@ import autoTable from 'jspdf-autotable';
 import { AlertReport, Language } from '../types';
 import i18n from '@/i18n';
 
+import { activeProfile } from '../config';
+
 export const generateSeizureReport = (reports: AlertReport[], language: Language) => {
   const t = (key: string) => i18n.t(key, { lng: language });
   const doc = new jsPDF();
+  const profile = activeProfile;
 
   // Header - Logo & Title
-  // Ideally load image here, but for now simple title enhancement
   doc.setFontSize(22);
-  doc.text(t('title') || 'Seizure Alert', 14, 20);
+  doc.text(t('title') || profile.name, 14, 20);
 
   doc.setFontSize(14);
-  doc.text('Seizure Report', 14, 30);
+  doc.text(`${profile.terminology.event} Report`, 14, 30);
 
   doc.setFontSize(10);
   const dateStr = new Date().toLocaleDateString();

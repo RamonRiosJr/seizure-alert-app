@@ -1,7 +1,10 @@
 import { useLocalStorage } from './useLocalStorage';
 import type { AlertReport, PatientInfo } from '../types';
 
+import { activeProfile } from '../config';
+
 export const useContextAwarePrompt = () => {
+  const profile = activeProfile;
   const [patientInfo] = useLocalStorage<PatientInfo>('patient_info', {
     name: '',
     bloodType: '',
@@ -26,7 +29,7 @@ export const useContextAwarePrompt = () => {
 
     // 2. Recent Seizures (Last 3)
     if (reports.length > 0) {
-      context += 'Recent Seizure History:\n';
+      context += `Recent ${profile.terminology.event} History:\n`;
       // Sort by date descending just in case, though they should be stored that way
       const recentReports = [...reports]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
