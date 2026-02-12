@@ -34,7 +34,7 @@
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^8.1.0",
     "@capacitor/android": "^8.0.2",
-    "@capacitor/cli": "^8.0.2",
+    "@capacitor/cli": "^8.1.0",
     "@capacitor/core": "^8.0.2",
     "@capacitor/ios": "^8.0.2",
     "@google/generative-ai": "^0.24.1",
