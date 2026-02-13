@@ -44,11 +44,11 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Works Offline:** Even if you have no internet, the voice instructions still work.
 - **Medical Info:** Shows your Name, Blood Type, and Allergies on the screen.
 
-### 🎭 Application Modes (New)
+### 🎭 Senior-Centric Information Architecture
 
 - **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
 - **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
-- **Switch Anywhere:** Toggle between modes instantly in **Settings**.
+- **Hub-and-Spoke Settings:** All controls are reorganized into 5 accessible actions: **Safety First**, **My People**, **My Devices**, **Aura AI**, and **Phone Care**.
 
 ### 🔋 Enterprise-Grade Power Management
 

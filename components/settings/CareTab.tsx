@@ -3,16 +3,10 @@ import { Card } from '../ui/Card';
 import { Switch } from '../ui/Switch';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../contexts/SettingsContext';
-import { Battery, Globe, Watch } from 'lucide-react';
+import { Battery, Globe } from 'lucide-react';
 import { Badge } from '../ui/Badge';
-import { SettingHeartRate } from './SettingHeartRate';
-import { SettingNFC } from './SettingNFC';
 
-interface SystemTabProps {
-  onOpenDeviceManager: () => void;
-}
-
-export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => {
+export const CareTab: React.FC = () => {
   const { i18n, t } = useTranslation();
   const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
 
@@ -30,9 +24,11 @@ export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => 
           </div>
           <div>
             <h3 className="text-lg font-medium text-white">
-              {t('powerPerformanceTitle', 'Power & Performance')}
+              {t('powerPerformanceTitle', 'Phone Care')}
             </h3>
-            <p className="text-sm text-slate-400">{t('batteryHealth', 'Manage battery usage')}</p>
+            <p className="text-sm text-slate-400">
+              {t('batteryHealth', 'Manage battery and power settings')}
+            </p>
           </div>
         </div>
 
@@ -40,13 +36,11 @@ export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <div className="flex items-center">
-                <span className="text-slate-200 mr-2">
-                  {t('preventSleepHeader', 'Prevent Sleep')}
-                </span>
-                <Badge variant="warning">{t('highUsage', 'High Usage')}</Badge>
+                <span className="text-slate-200 mr-2">{t('preventSleepHeader', 'Stay Awake')}</span>
+                <Badge variant="warning">{t('highUsage', 'High Power')}</Badge>
               </div>
               <p className="text-xs text-slate-500">
-                {t('preventSleepDescription', 'Keep screen awake while monitoring')}
+                {t('preventSleepDescription', 'Keep screen on to monitor safety continuously.')}
               </p>
             </div>
             <Switch checked={preventSleep} onCheckedChange={setPreventSleep} />
@@ -54,9 +48,9 @@ export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => 
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="text-slate-200">{t('lowPowerModeHeader', 'Low Power Mode')}</span>
+              <span className="text-slate-200">{t('lowPowerModeHeader', 'Battery Saver')}</span>
               <p className="text-xs text-slate-500">
-                {t('lowPowerModeDescription', 'Reduce sensor polling rate to save battery')}
+                {t('lowPowerModeDescription', 'Save power by checking sensors less often.')}
               </p>
             </div>
             <Switch checked={lowPowerMode} onCheckedChange={setLowPowerMode} />
@@ -64,44 +58,26 @@ export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => 
         </div>
       </Card>
 
-      {/* Heart Rate / Watch Settings */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-2">
-            <Watch className="w-5 h-5 text-blue-400" />
-            <h3 className="text-lg font-semibold text-white">
-              {t('heartRateSafetyTitle', 'Watch & Wearables')}
-            </h3>
-          </div>
-          <button
-            onClick={onOpenDeviceManager}
-            className="text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors bg-blue-400/10 px-3 py-1.5 rounded-full border border-blue-400/20"
-          >
-            {t('scanForDevices', 'Manage Devices')}
-          </button>
-        </div>
-        <SettingHeartRate />
-      </section>
-
-      <SettingNFC />
-
       <Card>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Globe className="h-5 w-5 text-purple-400" />
-            <span className="text-slate-200">Language / Idioma</span>
+            <div className="flex flex-col">
+              <span className="text-slate-200 font-medium">Language / Idioma</span>
+              <span className="text-xs text-slate-500">Choose your preferred language</span>
+            </div>
           </div>
           <button
             onClick={toggleLanguage}
-            className="px-3 py-1 rounded bg-slate-700 text-sm font-medium hover:bg-slate-600 transition-colors"
+            className="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-sm font-bold text-slate-200 hover:bg-slate-700 transition-colors shadow-sm active:scale-95"
           >
             {i18n.language === 'en' ? 'English' : 'Español'}
           </button>
         </div>
       </Card>
 
-      <div className="text-center py-4">
-        <p className="text-xs text-slate-600">Aura Speaks AI v0.3.1 (Alpha)</p>
+      <div className="text-center py-8">
+        <p className="text-xs text-slate-600 font-medium">Aura Speaks AI v0.3.5 (Expert UX)</p>
       </div>
     </div>
   );
