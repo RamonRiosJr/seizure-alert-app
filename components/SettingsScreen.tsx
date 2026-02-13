@@ -5,6 +5,7 @@ import { Battery } from 'lucide-react';
 import { SettingHeartRate } from './settings/SettingHeartRate';
 import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useBattery } from '../hooks/useBattery';
 import {
   X,
   Trash2,
@@ -122,9 +123,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     isSupported: isShakeSupported,
     permissionGranted: shakePermissionGranted,
     requestPermission: requestShakePermission,
-  } = useShake(() => {});
+  } = useShake(() => { });
 
-  const { lowPowerMode, setLowPowerMode } = useSettings();
+  const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
+  const { level, dischargeRate } = useBattery();
 
   const resetEditingState = () => {
     setEditingContactId(null);
@@ -369,9 +371,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       onChange={(e) =>
                         editingContactId
                           ? setEditingContactData({
-                              ...editingContactData!,
-                              relation: e.target.value,
-                            })
+                            ...editingContactData!,
+                            relation: e.target.value,
+                          })
                           : setNewContact({ ...newContact, relation: e.target.value })
                       }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
@@ -490,6 +492,45 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               Power & Performance
             </h3>
             <div className="space-y-3">
+              {/* Battery Health Card */}
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Battery Health</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {dischargeRate ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour` : 'Calculating discharge rate...'}
+                    </span>
+                  </div>
+                  <span className={`text-lg font-bold ${level < 0.2 ? 'text-red-500' : 'text-green-500'}`}>
+                    {(level * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                  <div
+                    className={`h-2.5 rounded-full ${level < 0.2 ? 'bg-red-500' : 'bg-green-500'}`}
+                    style={{ width: `${level * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Prevent Sleep Toggle */}
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                <div className="flex flex-col">
+                  <span className="font-medium text-gray-900 dark:text-white">Prevent Sleep</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Keep screen on during monitoring to ensure reliability.
+                  </span>
+                </div>
+                <button
+                  onClick={() => setPreventSleep(!preventSleep)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${preventSleep ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-600'}`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${preventSleep ? 'translate-x-6' : 'translate-x-1'}`}
+                  />
+                </button>
+              </div>
+
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                 <div className="flex flex-col">
                   <span className="font-medium text-gray-900 dark:text-white">Low Power Mode</span>
@@ -562,13 +603,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     value={apiKeyInput}
                     onChange={(e) => setApiKeyInput(e.target.value)}
                     placeholder={t('settingsAPIKeyPlaceholder')}
-                    className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 pr-10 ${
-                      apiKeyInput && apiKeyInput.startsWith('AIza')
-                        ? 'border-green-500 focus:ring-green-500'
-                        : apiKeyInput && !apiKeyInput.startsWith('AIza')
-                          ? 'border-red-500 focus:ring-red-500'
-                          : ''
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 pr-10 ${apiKeyInput && apiKeyInput.startsWith('AIza')
+                      ? 'border-green-500 focus:ring-green-500'
+                      : apiKeyInput && !apiKeyInput.startsWith('AIza')
+                        ? 'border-red-500 focus:ring-red-500'
+                        : ''
+                      }`}
                   />
                   <button
                     onClick={() => setIsApiKeyVisible(!isApiKeyVisible)}
@@ -582,11 +622,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 {/* Validation Feedback */}
                 {apiKeyInput && (
                   <div
-                    className={`text-xs flex items-center gap-1 ${
-                      apiKeyInput.startsWith('AIza')
-                        ? 'text-green-600 dark:text-green-400'
-                        : 'text-red-600 dark:text-red-400'
-                    }`}
+                    className={`text-xs flex items-center gap-1 ${apiKeyInput.startsWith('AIza')
+                      ? 'text-green-600 dark:text-green-400'
+                      : 'text-red-600 dark:text-red-400'
+                      }`}
                   >
                     {apiKeyInput.startsWith('AIza') ? (
                       <>
@@ -603,11 +642,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 <button
                   onClick={handleSaveApiKey}
                   disabled={!apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0}
-                  className={`w-full sm:w-auto px-4 py-2 text-white rounded-md flex items-center justify-center gap-2 transition-colors ${
-                    !apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-green-600 hover:bg-green-700'
-                  }`}
+                  className={`w-full sm:w-auto px-4 py-2 text-white rounded-md flex items-center justify-center gap-2 transition-colors ${!apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700'
+                    }`}
                 >
                   <Save className="w-5 h-5" />
                   {t('settingsSave')}
@@ -748,8 +786,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     if (!('NDEFReader' in window)) {
                       alert(
                         'NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' +
-                          window.location.href +
-                          '?emergency=true'
+                        window.location.href +
+                        '?emergency=true'
                       );
                       return;
                     }

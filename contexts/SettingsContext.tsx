@@ -4,15 +4,23 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 interface SettingsContextType {
   lowPowerMode: boolean;
   setLowPowerMode: (value: boolean) => void;
+  preventSleep: boolean;
+  setPreventSleep: (value: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
 
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [lowPowerMode, setLowPowerMode] = useLocalStorage<boolean>('low_power_mode', false);
+  const [preventSleep, setPreventSleep] = useLocalStorage<boolean>('prevent_sleep', false);
 
   return (
-    <SettingsContext.Provider value={{ lowPowerMode, setLowPowerMode }}>
+    <SettingsContext.Provider value={{
+      lowPowerMode,
+      setLowPowerMode,
+      preventSleep,
+      setPreventSleep
+    }}>
       {children}
     </SettingsContext.Provider>
   );
