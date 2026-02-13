@@ -1,0 +1,18 @@
+
+> aura-speaks-ai@0.0.0 test:run
+> vitest run components/__tests__/SettingsScreen.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app[39m
+
+[90mstdout[2m | components/__tests__/SettingsScreen.test.tsx[2m > [22m[2mSettingsHub[2m > [22m[2mrenders SettingsHub title
+[22m[39mRendering SettingsHub directly
+
+ [31mΓ¥»[39m components/__tests__/SettingsScreen.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 32[2mms[22m[39m
+[31m     [31m├ù[31m renders SettingsHub title[39m[32m 31[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 01:37:35
+[2m   Duration [22m 1.98s[2m (transform 163ms, setup 144ms, import 295ms, tests 32ms, environment 1.26s)[22m
+
