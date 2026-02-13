@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import SettingsScreen from '../SettingsScreen';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
@@ -22,11 +22,37 @@ vi.mock('lucide-react', () => {
   return {
     ...Object.fromEntries(
       [
-        'User', 'Bell', 'Cpu', 'Brain',
-        'Battery', 'Zap', 'Moon', 'Globe', 'Smartphone', 'Download', 'Check',
-        'Phone', 'Activity', 'Trash2', 'UserPlus', 'Key', 'Pencil', 'PlusSquare', 'Upload', 'Cloud', 'ExternalLink', 'ShieldAlert', 'X', 'Loader2'
-      ].map(name => [name, (props: any) => <div data-testid={`icon-${name.toLowerCase()}`} {...props} />])
-    )
+        'User',
+        'Bell',
+        'Cpu',
+        'Brain',
+        'Battery',
+        'Zap',
+        'Moon',
+        'Globe',
+        'Smartphone',
+        'Download',
+        'Check',
+        'Phone',
+        'Activity',
+        'Trash2',
+        'UserPlus',
+        'Key',
+        'Pencil',
+        'PlusSquare',
+        'Upload',
+        'Cloud',
+        'ExternalLink',
+        'ShieldAlert',
+        'X',
+        'Loader2',
+      ].map((name) => [
+        name,
+        (props: React.ComponentProps<'div'>) => (
+          <div data-testid={`icon-${name.toLowerCase()}`} {...props} />
+        ),
+      ])
+    ),
   };
 });
 
@@ -97,13 +123,13 @@ describe('SettingsScreen', () => {
   });
 
   it('renders correctly when open', () => {
-    render(<SettingsScreen isOpen={true} onClose={() => { }} />);
+    render(<SettingsScreen isOpen={true} onClose={() => {}} />);
     expect(screen.getByText('settings.title')).toBeDefined();
-    expect(screen.getByTestId('icon-x')).toBeDefined(); // Close button 
+    expect(screen.getByTestId('icon-x')).toBeDefined(); // Close button
   });
 
   it('renders nothing when closed', () => {
-    const { container } = render(<SettingsScreen isOpen={false} onClose={() => { }} />);
+    const { container } = render(<SettingsScreen isOpen={false} onClose={() => {}} />);
     expect(container.firstChild).toBeNull();
   });
 
@@ -131,7 +157,7 @@ describe('SettingsScreen', () => {
 
     // Validated manually - flaky in JSDOM due to selector/render timing
     it.skip('renders battery info and toggles', () => {
-      render(<SettingsScreen isOpen={true} onClose={() => { }} />);
+      render(<SettingsScreen isOpen={true} onClose={() => {}} />);
 
       // Check for content using NEW keys from SystemTab.tsx
       expect(screen.getByText('settings.power.title')).toBeDefined();
@@ -139,12 +165,12 @@ describe('SettingsScreen', () => {
     });
 
     it.skip('toggles prevent sleep', () => {
-      render(<SettingsScreen isOpen={true} onClose={() => { }} />);
+      render(<SettingsScreen isOpen={true} onClose={() => {}} />);
 
       const switches = screen.getAllByRole('switch');
       const preventSleepSwitch = switches[0];
 
-      fireEvent.click(preventSleepSwitch);
+      fireEvent.click(preventSleepSwitch!);
       expect(mockSetPreventSleep).toHaveBeenCalledWith(true);
     });
   });
