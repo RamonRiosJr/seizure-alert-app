@@ -44,23 +44,22 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Works Offline:** Even if you have no internet, the voice instructions still work.
 - **Medical Info:** Shows your Name, Blood Type, and Allergies on the screen.
 
+### 🎭 Application Modes (New)
+
+- **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
+- **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
+- **Switch Anywhere:** Toggle between modes instantly in **Settings**.
+
+### 🔋 Power & Performance
+
+- **Battery Health:** Monitor your battery level and discharge rate directly in the app to ensure you have enough power for monitoring.
+- **Prevent Sleep:** Optional "Wake Lock" keeps your screen on during active monitoring to guarantee sensors stay active.
+
 ### 🤖 "Aura" - Your AI Helper
 
-- **Ask Questions:** "Aura" is a smart assistant inside the app.
-- **Voice or Text:** You or a helper can ask questions like "What do I do safely?" using your voice.
-- **Note:** Aura needs an internet connection to work.
-
-### ⚙️ Easy to Install (PWA)
-
-- **No App Store Needed:** You can install this directly from your browser.
-- **iPhone & Android:** Works on almost any phone.
-- **Manual Install Button:** Go to **Settings** > **App Installation** to see a big "Install" button or instructions for your phone.
-
-### 📡 New: Tap-to-Alert (NFC) & Quick Actions
-
-- **Instant Start:** Program an NFC tag to trigger the alarm instantly.
-- **Shake to Alert:** Shake your phone 3 times to activte the emergency countdown (Enable in Settings).
-- **Quick Shortcuts:** Long-press the App Icon on your home screen to launch directly into Emergency Mode.
+- **Smart Assistant:** Ask questions like "What do I do safely?" or "How do I perform CPR?".
+- **Guided Setup:** No coding required! Use the new **"Connect Aura AI"** wizard in Settings to set up your free Google Gemini API key securely.
+- **Privacy First:** Your API key is stored locally on your device.
 
 ### 📉 New: Fall Detection Visualizer & Snooze
 

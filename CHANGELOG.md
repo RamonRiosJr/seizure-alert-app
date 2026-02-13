@@ -9,16 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Battery Telemetry & Wake Lock**:
+  - `useBattery` hook now tracks discharge rate (%/hour).
+  - `useWakeLock` hook ensures screen stays awake during active monitoring.
+  - **Settings UI**: New "Power & Performance" section with Battery Health card and "Prevent Sleep" toggle.
+- **Strict TypeScript Mode**: Enforced `no-explicit-any` across critical hooks (`useShake`, `useEmergencyAlert`) and components for robust type safety.
 - **API Key Wizard**: Added a guided "Bring Your Own Key" setup flow with auto-validation for Google Gemini (Zero Cost for Devs).
 - **Runtime Profile Switching**: Users can now switch between "Aura Seizure" and "Aura Senior" modes in Settings.
 - **Aura Senior Profile**: A new configured profile optimized for Fall Detection with simplified UI and terminology.
 - `ConfigContext`: Global state management for active profiles.
-- **Strict TypeScript**: Enforced `no-explicit-any` across critical hooks (`useShake`, `useEmergencyAlert`) and components.
 
 ### Changed
 
+- **PWA Installation**: Distinct improvements for mobile:
+  - **iOS**: Displays platform-specific "Add to Home Screen" instructions.
+  - **Android**: Shows native install prompt or manual button.
 - **Settings UI**: Replaced raw API Key input with "Connect Aura AI" workflow; added clear "Connected/Disconnected" status.
-- **PWA Installation**: Enhanced install prompts for iOS (manual instructions) and Android (native prompt).
 - Refactored `ReportsScreen` and `pdfGenerator` to use dynamic terminology from the active profile.
 - Updated `SettingsScreen` to include the "Application Mode" dropdown.
 - **Migrated to Tailwind CSS v4**: Improved build performance and simplified configuration.

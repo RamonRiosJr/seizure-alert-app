@@ -5,6 +5,7 @@ import { Battery } from 'lucide-react';
 import { SettingHeartRate } from './settings/SettingHeartRate';
 import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useBattery } from '../hooks/useBattery';
 import {
   X,
   Trash2,
@@ -22,10 +23,7 @@ import {
   Upload,
   Cloud,
   Activity,
-  Eye,
-  EyeOff,
 } from 'lucide-react';
-import { ApiKeyHelpModal } from './settings/ApiKeyHelpModal';
 import { generateBackup, restoreBackup } from '../utils/backupUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePWAInstall } from '../hooks/usePWAInstall';
@@ -33,6 +31,7 @@ import { useTranslation } from 'react-i18next';
 import { useShake } from '../hooks/useShake';
 import { DeviceManager } from './DeviceManager';
 import { useConfigContext } from '../contexts/ConfigContext';
+import { ApiKeyWizard } from './ApiKeyWizard';
 
 interface SettingsScreenProps {
   isOpen: boolean;
@@ -46,13 +45,6 @@ const AlertMessageEditor = () => {
   const [message, setMessage] = useState('');
 
   // Initialize state only once or when language/defaults change.
-  // We use a key-based approach for localStorage initial value to avoid effect sync issues if possible,
-  // but since we need to support dynamic language changes, an effect is okay IF we avoid the loop.
-  // The persistent linter error "Calling setState synchronously" is because we are calling it immediately.
-  // We can wrap it in a condition or use `useLayoutEffect` or just ignore if it's actually safe.
-  // Better: Initialize state lazily.
-  // const [initialized, setInitialized] = useState(false); // Removed unused state
-
   React.useEffect(() => {
     const saved = localStorage.getItem(`seizure_alert_status_message_${language}`);
     setMessage(saved || t('alertStatus'));
@@ -95,12 +87,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     bloodType: '',
     medicalConditions: '',
   });
+  // We read the key directly from local storage via hook to keep UI in sync
   const [apiKey, setApiKey] = useLocalStorage<string>('gemini_api_key', '');
 
   const { t } = useTranslation();
 
   const [newContact, setNewContact] = useState({ name: '', relation: '', phone: '' });
-  const [apiKeyInput, setApiKeyInput] = useState(apiKey);
 
   const [editingContactId, setEditingContactId] = useState<string | null>(null);
   const [editingContactData, setEditingContactData] = useState<{
@@ -111,8 +103,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   const [editError, setEditError] = useState<string | null>(null);
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [isDeviceManagerOpen, setIsDeviceManagerOpen] = useState(false);
-  const [isApiKeyHelpOpen, setIsApiKeyHelpOpen] = useState(false);
-  const [isApiKeyVisible, setIsApiKeyVisible] = useState(false);
+
+  // Replaced help modal with Wizard
+  const [isApiKeyWizardOpen, setIsApiKeyWizardOpen] = useState(false);
 
   const { isInstallable, isAppInstalled, installApp, isIOS, showPrompt, dismissPrompt } =
     usePWAInstall();
@@ -124,7 +117,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     requestPermission: requestShakePermission,
   } = useShake(() => {});
 
-  const { lowPowerMode, setLowPowerMode } = useSettings();
+  const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
+  const { level, dischargeRate } = useBattery();
 
   const resetEditingState = () => {
     setEditingContactId(null);
@@ -156,10 +150,6 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
 
   const handleDeleteContact = (id: string) => {
     setContacts(contacts.filter((c) => c.id !== id));
-  };
-
-  const handleSaveApiKey = () => {
-    setApiKey(apiKeyInput);
   };
 
   const handleStartEditing = (contact: EmergencyContact) => {
@@ -490,6 +480,51 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               Power & Performance
             </h3>
             <div className="space-y-3">
+              {/* Battery Health Card */}
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Battery Health
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {dischargeRate
+                        ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour`
+                        : 'Calculating discharge rate...'}
+                    </span>
+                  </div>
+                  <span
+                    className={`text-lg font-bold ${level < 0.2 ? 'text-red-500' : 'text-green-500'}`}
+                  >
+                    {(level * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                  <div
+                    className={`h-2.5 rounded-full ${level < 0.2 ? 'bg-red-500' : 'bg-green-500'}`}
+                    style={{ width: `${level * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Prevent Sleep Toggle */}
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                <div className="flex flex-col">
+                  <span className="font-medium text-gray-900 dark:text-white">Prevent Sleep</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Keep screen on during monitoring to ensure reliability.
+                  </span>
+                </div>
+                <button
+                  onClick={() => setPreventSleep(!preventSleep)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${preventSleep ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-600'}`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${preventSleep ? 'translate-x-6' : 'translate-x-1'}`}
+                  />
+                </button>
+              </div>
+
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                 <div className="flex flex-col">
                   <span className="font-medium text-gray-900 dark:text-white">Low Power Mode</span>
@@ -530,89 +565,55 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               <Key className="w-6 h-6" />
               {t('settingsAPIKey')}
             </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label htmlFor="api-key" className="font-medium text-gray-700 dark:text-gray-300">
-                  {t('settingsAPIKeyLabel')}
-                </label>
-                <button
-                  onClick={() => setIsApiKeyHelpOpen(true)}
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  {t('settingsAPIKeyHelp')}
-                </button>
-              </div>
-
+            <div className="space-y-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">{t('settingsAPIKeyDesc')}</p>
 
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-md border border-yellow-200 dark:border-yellow-800/50 text-sm text-yellow-800 dark:text-yellow-200 flex gap-2 items-start">
-                <ShieldAlert className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>
-                  Your API key is stored <strong>locally</strong> on your device. It is never shared
-                  with us.
-                </span>
-              </div>
-
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id="api-key"
-                    type={isApiKeyVisible ? 'text' : 'password'}
-                    value={apiKeyInput}
-                    onChange={(e) => setApiKeyInput(e.target.value)}
-                    placeholder={t('settingsAPIKeyPlaceholder')}
-                    className={`w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 pr-10 ${
-                      apiKeyInput && apiKeyInput.startsWith('AIza')
-                        ? 'border-green-500 focus:ring-green-500'
-                        : apiKeyInput && !apiKeyInput.startsWith('AIza')
-                          ? 'border-red-500 focus:ring-red-500'
-                          : ''
-                    }`}
-                  />
+              {apiKey ? (
+                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-green-100 dark:bg-green-800 p-2 rounded-full">
+                      <Check className="w-5 h-5 text-green-600 dark:text-green-300" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-green-900 dark:text-green-100">
+                        Aura AI Connected
+                      </h4>
+                      <p className="text-xs text-green-700 dark:text-green-300">
+                        Key ends in ...{apiKey.slice(-4)}
+                      </p>
+                    </div>
+                  </div>
                   <button
-                    onClick={() => setIsApiKeyVisible(!isApiKeyVisible)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                    aria-label={isApiKeyVisible ? 'Hide API Key' : 'Show API Key'}
+                    onClick={() => {
+                      if (confirm('Disconnect Aura AI? Voice features will stop working.')) {
+                        setApiKey('');
+                        localStorage.removeItem('gemini_api_key');
+                      }
+                    }}
+                    className="text-sm text-red-500 hover:text-red-600 underline"
                   >
-                    {isApiKeyVisible ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    Disconnect
                   </button>
                 </div>
-
-                {/* Validation Feedback */}
-                {apiKeyInput && (
-                  <div
-                    className={`text-xs flex items-center gap-1 ${
-                      apiKeyInput.startsWith('AIza')
-                        ? 'text-green-600 dark:text-green-400'
-                        : 'text-red-600 dark:text-red-400'
-                    }`}
-                  >
-                    {apiKeyInput.startsWith('AIza') ? (
-                      <>
-                        <Check className="w-3 h-3" /> {t('apiKeyValidationValid')}
-                      </>
-                    ) : (
-                      <>
-                        <X className="w-3 h-3" /> {t('apiKeyValidationInvalid')}
-                      </>
-                    )}
+              ) : (
+                <div className="bg-gray-50 dark:bg-gray-700/50 p-6 rounded-xl border border-gray-200 dark:border-gray-600 text-center space-y-4">
+                  <div className="mx-auto w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                    <Key className="w-6 h-6 text-gray-400" />
                   </div>
-                )}
-
-                <button
-                  onClick={handleSaveApiKey}
-                  disabled={!apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0}
-                  className={`w-full sm:w-auto px-4 py-2 text-white rounded-md flex items-center justify-center gap-2 transition-colors ${
-                    !apiKeyInput.startsWith('AIza') && apiKeyInput.length > 0
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-green-600 hover:bg-green-700'
-                  }`}
-                >
-                  <Save className="w-5 h-5" />
-                  {t('settingsSave')}
-                </button>
-              </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 dark:text-white">Not Connected</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Connect to enable voice assistant features.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setIsApiKeyWizardOpen(true)}
+                    className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2"
+                  >
+                    Connect Aura AI <ExternalLink className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </section>
 
@@ -842,7 +843,16 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
         </main>
       </div>
       {isDeviceManagerOpen && <DeviceManager onClose={() => setIsDeviceManagerOpen(false)} />}
-      <ApiKeyHelpModal isOpen={isApiKeyHelpOpen} onClose={() => setIsApiKeyHelpOpen(false)} />
+
+      <ApiKeyWizard
+        isOpen={isApiKeyWizardOpen}
+        onClose={() => setIsApiKeyWizardOpen(false)}
+        onSuccess={() => {
+          // Force refresh of key from storage
+          const newKey = localStorage.getItem('gemini_api_key');
+          if (newKey) setApiKey(JSON.parse(newKey));
+        }}
+      />
     </div>
   );
 };
