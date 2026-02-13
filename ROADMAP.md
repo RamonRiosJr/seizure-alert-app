@@ -20,6 +20,7 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 - [ ] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
+- [ ] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
 
 ## ✨ Phase 3: Strategic Feature Set
 
@@ -29,6 +30,20 @@ Expansion of the platform's utility as a comprehensive medical-grade assistant.
 - [ ] **Wearable Integration**: Synchronized monitoring for Apple Watch and WearOS to leverage wrist-based PPG and accelerometer data.
 - [ ] **Clinical Dashboard**: Anonymized data visualization layer for seizure history and biometric trends to facilitate doctor-patient consultations.
 - [ ] **Offline Synchronization UI**: Enhanced visual feedback for PWA service worker status and asset updates.
+
+## 🏥 Phase 4: Clinical Ecosystem & Caregiver Loop
+
+Developing Aura into a holistic management platform for patient and caregiver synchronization.
+
+- [ ] **Smart Medication Management**:
+  - Offline-first medication schedules with high-priority "Critical Window" alarms.
+  - Intelligent snooze and escalation protocols for missed doses.
+- [ ] **Clinical Calendar Integration**:
+  - Secure tracking of specialist appointments with automated pre-appointment biometric summaries.
+- [ ] **Caregiver Alert System**:
+  - Multi-channel notifications (Push, Email, SMS) for missed medication or emergency triggers, utilizing a secure, privacy-preserving bridge.
+- [ ] **Proactive AI Reminders**:
+  - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
 
 ---
 
