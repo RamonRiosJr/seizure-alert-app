@@ -3,11 +3,17 @@ import { Card } from '../ui/Card';
 import { Switch } from '../ui/Switch';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../contexts/SettingsContext';
-import { Battery, Globe, Moon } from 'lucide-react';
+import { Battery, Globe, Watch } from 'lucide-react';
 import { Badge } from '../ui/Badge';
+import { SettingHeartRate } from './SettingHeartRate';
+import { SettingNFC } from './SettingNFC';
 
-export const SystemTab: React.FC = () => {
-  const { i18n } = useTranslation();
+interface SystemTabProps {
+  onOpenDeviceManager: () => void;
+}
+
+export const SystemTab: React.FC<SystemTabProps> = ({ onOpenDeviceManager }) => {
+  const { i18n, t } = useTranslation();
   const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
 
   const toggleLanguage = () => {
@@ -16,15 +22,17 @@ export const SystemTab: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="space-y-6">
       <Card>
         <div className="flex items-center space-x-4 mb-4">
           <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
             <Battery className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-lg font-medium text-white">Power & Performance</h3>
-            <p className="text-sm text-slate-400">Manage battery usage</p>
+            <h3 className="text-lg font-medium text-white">
+              {t('powerPerformanceTitle', 'Power & Performance')}
+            </h3>
+            <p className="text-sm text-slate-400">{t('batteryHealth', 'Manage battery usage')}</p>
           </div>
         </div>
 
@@ -32,23 +40,50 @@ export const SystemTab: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <div className="flex items-center">
-                <span className="text-slate-200 mr-2">Prevent Sleep</span>
-                <Badge variant="warning">High Usage</Badge>
+                <span className="text-slate-200 mr-2">
+                  {t('preventSleepHeader', 'Prevent Sleep')}
+                </span>
+                <Badge variant="warning">{t('highUsage', 'High Usage')}</Badge>
               </div>
-              <p className="text-xs text-slate-500">Keep screen awake while monitoring</p>
+              <p className="text-xs text-slate-500">
+                {t('preventSleepDescription', 'Keep screen awake while monitoring')}
+              </p>
             </div>
             <Switch checked={preventSleep} onCheckedChange={setPreventSleep} />
           </div>
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="text-slate-200">Low Power Mode</span>
-              <p className="text-xs text-slate-500">Reduce sensor polling rate to save battery</p>
+              <span className="text-slate-200">{t('lowPowerModeHeader', 'Low Power Mode')}</span>
+              <p className="text-xs text-slate-500">
+                {t('lowPowerModeDescription', 'Reduce sensor polling rate to save battery')}
+              </p>
             </div>
             <Switch checked={lowPowerMode} onCheckedChange={setLowPowerMode} />
           </div>
         </div>
       </Card>
+
+      {/* Heart Rate / Watch Settings */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-2">
+            <Watch className="w-5 h-5 text-blue-400" />
+            <h3 className="text-lg font-semibold text-white">
+              {t('heartRateSafetyTitle', 'Watch & Wearables')}
+            </h3>
+          </div>
+          <button
+            onClick={onOpenDeviceManager}
+            className="text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors bg-blue-400/10 px-3 py-1.5 rounded-full border border-blue-400/20"
+          >
+            {t('scanForDevices', 'Manage Devices')}
+          </button>
+        </div>
+        <SettingHeartRate />
+      </section>
+
+      <SettingNFC />
 
       <Card>
         <div className="flex items-center justify-between">
@@ -66,8 +101,8 @@ export const SystemTab: React.FC = () => {
       </Card>
 
       <div className="text-center py-4">
-        <p className="text-xs text-slate-600">Aura Speaks AI v0.1.0 (Alpha)</p>
+        <p className="text-xs text-slate-600">Aura Speaks AI v0.3.1 (Alpha)</p>
       </div>
-    </>
+    </div>
   );
 };
