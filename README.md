@@ -112,9 +112,12 @@ This project follows **Clean Architecture** principles and **Modern Git Flow**:
 
 ### 📂 Modular Structure
 
+### 📂 Modular Structure
+
 - `components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
 - `router`: dedicated `AppRouter` for screen management.
 - `contexts`: State management via React Context (UI, Theme).
+- **[View System Architecture](./docs/ARCHITECTURE.md)**: Detailed breakdown of the Hub-and-Spoke settings model and data flow.
 
 ### 🛡️ Quality Assurance
 
