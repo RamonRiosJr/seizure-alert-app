@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Language } from '../types';

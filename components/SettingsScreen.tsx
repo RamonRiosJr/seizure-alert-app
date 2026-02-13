@@ -5,6 +5,7 @@ import { Battery } from 'lucide-react';
 import { SettingHeartRate } from './settings/SettingHeartRate';
 import type { EmergencyContact } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useBattery } from '../hooks/useBattery';
 import {
   X,
   Trash2,
@@ -106,16 +107,18 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   // Replaced help modal with Wizard
   const [isApiKeyWizardOpen, setIsApiKeyWizardOpen] = useState(false);
 
-  const { isInstallable, isAppInstalled, installApp, isIOS } = usePWAInstall();
+  const { isInstallable, isAppInstalled, installApp, isIOS, showPrompt, dismissPrompt } =
+    usePWAInstall();
   const {
     isEnabled: isShakeEnabled,
     setIsEnabled: setShakeEnabled,
     isSupported: isShakeSupported,
     permissionGranted: shakePermissionGranted,
     requestPermission: requestShakePermission,
-  } = useShake(() => {});
+  } = useShake(() => { });
 
-  const { lowPowerMode, setLowPowerMode } = useSettings();
+  const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
+  const { level, dischargeRate } = useBattery();
 
   const resetEditingState = () => {
     setEditingContactId(null);
@@ -356,9 +359,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       onChange={(e) =>
                         editingContactId
                           ? setEditingContactData({
-                              ...editingContactData!,
-                              relation: e.target.value,
-                            })
+                            ...editingContactData!,
+                            relation: e.target.value,
+                          })
                           : setNewContact({ ...newContact, relation: e.target.value })
                       }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
@@ -477,6 +480,45 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               Power & Performance
             </h3>
             <div className="space-y-3">
+              {/* Battery Health Card */}
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Battery Health</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {dischargeRate ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour` : 'Calculating discharge rate...'}
+                    </span>
+                  </div>
+                  <span className={`text-lg font-bold ${level < 0.2 ? 'text-red-500' : 'text-green-500'}`}>
+                    {(level * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                  <div
+                    className={`h-2.5 rounded-full ${level < 0.2 ? 'bg-red-500' : 'bg-green-500'}`}
+                    style={{ width: `${level * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Prevent Sleep Toggle */}
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+                <div className="flex flex-col">
+                  <span className="font-medium text-gray-900 dark:text-white">Prevent Sleep</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Keep screen on during monitoring to ensure reliability.
+                  </span>
+                </div>
+                <button
+                  onClick={() => setPreventSleep(!preventSleep)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${preventSleep ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-600'}`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${preventSleep ? 'translate-x-6' : 'translate-x-1'}`}
+                  />
+                </button>
+              </div>
+
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                 <div className="flex flex-col">
                   <span className="font-medium text-gray-900 dark:text-white">Low Power Mode</span>
@@ -570,98 +612,110 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           </section>
 
           {/* App Installation Section */}
-          <section>
-            <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <Smartphone className="w-6 h-6" />
-              App Installation
-            </h3>
-            <div className="space-y-3">
-              {isAppInstalled ? (
-                <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
-                  <Check className="w-5 h-5" />
-                  <span className="font-medium">App is installed and offline-ready.</span>
-                </div>
-              ) : (
-                <>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Install this app on your device for quick access and offline capabilities.
-                  </p>
+          {(showPrompt || isAppInstalled) && (
+            <section>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                  <Smartphone className="w-6 h-6" />
+                  App Installation
+                </h3>
+                {!isAppInstalled && (
+                  <button
+                    onClick={dismissPrompt}
+                    className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 underline"
+                  >
+                    Dismiss
+                  </button>
+                )}
+              </div>
+              <div className="space-y-3">
+                {isAppInstalled ? (
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
+                    <Check className="w-5 h-5" />
+                    <span className="font-medium">App is installed and offline-ready.</span>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Install this app on your device for quick access and offline capabilities.
+                    </p>
 
-                  {isInstallable && (
-                    <button
-                      onClick={installApp}
-                      className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
-                    >
-                      <Download className="w-5 h-5" />
-                      Install App
-                    </button>
-                  )}
+                    {isInstallable && (
+                      <button
+                        onClick={installApp}
+                        className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+                      >
+                        <Download className="w-5 h-5" />
+                        Install App
+                      </button>
+                    )}
 
-                  {isIOS && (
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
-                      <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
-                        <Smartphone className="w-5 h-5" />
-                        Install on iPhone / iPad:
-                      </h4>
-                      <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            1
-                          </span>
-                          <span>
-                            Tap the <Share className="w-4 h-4 inline mx-1" /> <strong>Share</strong>{' '}
-                            button in your browser toolbar.
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            2
-                          </span>
-                          <span>
-                            Scroll down and tap{' '}
-                            <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
-                            <PlusSquare className="w-4 h-4 inline mx-1" />.
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
-                            3
-                          </span>
-                          <span>
-                            Confirm by tapping <strong>Add</strong> in the top corner.
-                          </span>
-                        </li>
-                      </ol>
-                    </div>
-                  )}
+                    {isIOS && (
+                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                        <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+                          <Smartphone className="w-5 h-5" />
+                          Install on iPhone / iPad:
+                        </h4>
+                        <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              1
+                            </span>
+                            <span>
+                              Tap the <Share className="w-4 h-4 inline mx-1" />{' '}
+                              <strong>Share</strong> button in your browser toolbar.
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              2
+                            </span>
+                            <span>
+                              Scroll down and tap{' '}
+                              <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
+                              <PlusSquare className="w-4 h-4 inline mx-1" />.
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
+                              3
+                            </span>
+                            <span>
+                              Confirm by tapping <strong>Add</strong> in the top corner.
+                            </span>
+                          </li>
+                        </ol>
+                      </div>
+                    )}
 
-                  {!isInstallable && !isIOS && !isAppInstalled && (
-                    <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
-                      <p className="font-semibold mb-2">Can't see the install button?</p>
-                      <p>Try installing manually via your browser menu:</p>
-                      <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
-                        <li>
-                          <span className="font-bold">Chrome (Android):</span> Tap{' '}
-                          <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
-                          <span className="font-bold">Install App</span> or{' '}
-                          <span className="font-bold">Add to Home screen</span>.
-                        </li>
-                        <li>
-                          <span className="font-bold">Safari (iOS):</span> Tap{' '}
-                          <span className="font-bold">Share</span> &rarr;{' '}
-                          <span className="font-bold">Add to Home Screen</span>.
-                        </li>
-                        <li>
-                          <span className="font-bold">Desktop:</span> Look for an install icon in
-                          the address bar.
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </section>
+                    {!isInstallable && !isIOS && !isAppInstalled && (
+                      <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
+                        <p className="font-semibold mb-2">Can't see the install button?</p>
+                        <p>Try installing manually via your browser menu:</p>
+                        <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
+                          <li>
+                            <span className="font-bold">Chrome (Android):</span> Tap{' '}
+                            <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
+                            <span className="font-bold">Install App</span> or{' '}
+                            <span className="font-bold">Add to Home screen</span>.
+                          </li>
+                          <li>
+                            <span className="font-bold">Safari (iOS):</span> Tap{' '}
+                            <span className="font-bold">Share</span> &rarr;{' '}
+                            <span className="font-bold">Add to Home Screen</span>.
+                          </li>
+                          <li>
+                            <span className="font-bold">Desktop:</span> Look for an install icon in
+                            the address bar.
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </section>
+          )}
 
           {/* NFC Activation Section */}
           <section>
@@ -689,8 +743,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     if (!('NDEFReader' in window)) {
                       alert(
                         'NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' +
-                          window.location.href +
-                          '?emergency=true'
+                        window.location.href +
+                        '?emergency=true'
                       );
                       return;
                     }

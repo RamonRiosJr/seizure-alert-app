@@ -465,7 +465,7 @@ define(['exports'], function (exports) {
     value,
     // Need general type to do check later.
     expectedClass,
-
+    // eslint-disable-line
     details
   ) => {
     const error = new WorkboxError('not-array-of-class', details);
@@ -1003,7 +1003,11 @@ define(['exports'], function (exports) {
           if (Array.isArray(params) && params.length === 0) {
             // Instead of passing an empty array in as params, use undefined.
             params = undefined;
-          } else if (matchResult.constructor === Object && Object.keys(matchResult).length === 0) {
+          } else if (
+            matchResult.constructor === Object &&
+            // eslint-disable-line
+            Object.keys(matchResult).length === 0
+          ) {
             // Instead of passing an empty object in as params, use undefined.
             params = undefined;
           } else if (typeof matchResult === 'boolean') {
@@ -1414,11 +1418,11 @@ define(['exports'], function (exports) {
     constructor({ precacheController }) {
       this.cacheKeyWillBeUsed = async ({ request, params }) => {
         // Params is type any, can't change right now.
-
+        /* eslint-disable */
         const cacheKey =
           (params === null || params === void 0 ? void 0 : params.cacheKey) ||
           this._precacheController.getCacheKeyForURL(request.url);
-
+        /* eslint-enable */
         return cacheKey
           ? new Request(cacheKey, {
               headers: request.headers,
@@ -2110,7 +2114,7 @@ define(['exports'], function (exports) {
               request: effectiveRequest,
               event: this.event,
               // params has a type any can't change right now.
-              params: this.params,
+              params: this.params, // eslint-disable-line
             })
           );
         }

@@ -19,10 +19,14 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
 
   const [permissionGranted, setPermissionGranted] = useState<boolean>(() => {
     if (typeof window === 'undefined' || !('DeviceMotionEvent' in window)) return false;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const DME = (window as any).DeviceMotionEvent;
-    // If requestPermission is NOT a function, it's likely non-iOS (Android) or old iOS where perms are auto-granted
-    return typeof DME?.requestPermission !== 'function';
+    // Check if the device is iOS 13+ which requires permission
+    if (
+      typeof (window as unknown as { DeviceMotionEvent: { requestPermission: unknown } })
+        .DeviceMotionEvent?.requestPermission === 'function'
+    ) {
+      return false; // Valid requestPermission found, so we must wait for user interaction
+    }
+    return true; // Non-iOS or old iOS (no requestPermission) means permission is effectively granted
   });
 
   // Shake detection state
@@ -36,11 +40,17 @@ export const useShake = (onShake: () => void, options: ShakeOptions = {}) => {
   // Remove useEffect that was setting these values
 
   const requestPermission = useCallback(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const DME = window.DeviceMotionEvent as any;
-    if (typeof DME.requestPermission === 'function') {
+    // IOS 13+ specific permission request
+    // We cast to unknown first to avoid TS errors on non-standard properties
+    const DeviceMotionEvent = (
+      window as unknown as {
+        DeviceMotionEvent: { requestPermission: () => Promise<PermissionState> };
+      }
+    ).DeviceMotionEvent;
+
+    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
       try {
-        const permissionState = await DME.requestPermission();
+        const permissionState = await DeviceMotionEvent.requestPermission();
         if (permissionState === 'granted') {
           setPermissionGranted(true);
           return true;
