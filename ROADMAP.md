@@ -31,6 +31,9 @@ Expansion of the platform's utility as a comprehensive medical-grade assistant.
 - [ ] **Wearable Integration**: Synchronized monitoring for Apple Watch and WearOS to leverage wrist-based PPG and accelerometer data.
 - [ ] **Clinical Dashboard**: Anonymized data visualization layer for seizure history and biometric trends to facilitate doctor-patient consultations.
 - [ ] **Offline Synchronization UI**: Enhanced visual feedback for PWA service worker status and asset updates.
+- [ ] **Voice Intelligence (Paid Tier)**:
+  - **Audio Journaling**: One-tap voice recording for post-seizure notes or daily symptom logging using Web Speech API.
+  - **Doctor Summaries**: AI-driven compilation of voice notes and telemetry into a concise "Clinical Handover" PDF.
 
 ## 🏥 Phase 4: Clinical Ecosystem & Caregiver Loop
 
@@ -57,6 +60,16 @@ Finalizing a premium, clinical-grade aesthetic that rivals top-tier medical PWA/
 - [ ] **Adaptive "Panic" Interaction**: Moving the Emergency button to a high-visibility but non-obstructive location (e.g., Floating Action Button or dedicated Nav anchor).
 - [ ] **Component Library Migration**: Leveraging **Shadcn/UI** or **Headless UI** for standardized, accessible, and themeable UI components (Modals, Tabs, Cards).
 - [ ] **Glassmorphism & Micro-animations**: Enhancing the "Premium" feel with subtle depth, blur effects, and state-change animations to reduce patient anxiety.
+
+## 💎 Phase 6: Commercial Infrastructure (Freemium Model)
+
+Infrastructure to support the sustainability of the platform (Free Core + Paid Premium).
+
+- [ ] **Subscription Gatekeeper**: Implementation of a lightweight entitlement engine (Free vs. Pro flags) managed locally with server-side validation.
+- [ ] **Secure Cloud Backup (Paid Tier)**:
+  - End-to-End Encrypted (E2EE) synchronization of patient history to secure cloud storage.
+  - "Restore from Cloud" capability for device migration.
+- [ ] **Payment Processing**: Integration of Stripe/RevenueCat for handling the $4.99/mo AI & Backup subscription.
 
 ---
 
