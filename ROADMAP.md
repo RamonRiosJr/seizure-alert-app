@@ -42,6 +42,9 @@ Developing Aura into a holistic management platform for patient and caregiver sy
   - Secure tracking of specialist appointments with automated pre-appointment biometric summaries.
 - [ ] **Caregiver Alert System**:
   - Multi-channel notifications (Push, Email, SMS) for missed medication or emergency triggers, utilizing a secure, privacy-preserving bridge.
+- [ ] **Compliance-First Email Infrastructure**:
+  - Integration of a HIPAA-compliant email bridging service for general app notifications (e.g., weekly health summaries, system alerts).
+  - End-to-end encryption for any PHI (Protected Health Information) delivered via automated internal mailers to ensure audit readiness.
 - [ ] **Proactive AI Reminders**:
   - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
 
