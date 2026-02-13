@@ -3,8 +3,16 @@ import { useBattery } from '../useBattery';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 describe('useBattery', () => {
-  let getBatteryMock: any;
-  let batteryMock: any;
+  let getBatteryMock: ReturnType<typeof vi.fn>;
+  let batteryMock: {
+    level: number;
+    charging: boolean;
+    chargingTime: number;
+    dischargingTime: number;
+    addEventListener: ReturnType<typeof vi.fn>;
+    removeEventListener: ReturnType<typeof vi.fn>;
+    [key: string]: unknown;
+  };
 
   beforeEach(() => {
     batteryMock = {
@@ -33,7 +41,7 @@ describe('useBattery', () => {
     const { result } = renderHook(() => useBattery());
 
     // Wait for promise to resolve
-    await act(async () => { });
+    await act(async () => {});
 
     expect(result.current.isSupported).toBe(true);
     expect(result.current.level).toBe(1);
@@ -43,7 +51,7 @@ describe('useBattery', () => {
     vi.useFakeTimers();
     const { result } = renderHook(() => useBattery());
 
-    await act(async () => { });
+    await act(async () => {});
 
     // Simulate 50% drop over 1 hour
     // Initial: 1.0 at T=0
@@ -52,7 +60,9 @@ describe('useBattery', () => {
     vi.advanceTimersByTime(30 * 60 * 1000);
     batteryMock.level = 0.75;
     // Trigger event
-    const levelChangeHandler = batteryMock.addEventListener.mock.calls.find((call: any) => call[0] === 'levelchange')[1];
+    const levelChangeHandler = batteryMock.addEventListener.mock.calls.find(
+      (call: unknown[]) => call[0] === 'levelchange'
+    )?.[1];
 
     await act(async () => {
       levelChangeHandler();
@@ -64,7 +74,7 @@ describe('useBattery', () => {
 
     // Advance another 30 mins, drop to 0.50
     vi.advanceTimersByTime(30 * 60 * 1000);
-    batteryMock.level = 0.50;
+    batteryMock.level = 0.5;
 
     await act(async () => {
       levelChangeHandler();
