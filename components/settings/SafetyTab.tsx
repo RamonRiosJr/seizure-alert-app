@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Switch } from '../ui/Switch';
 import { useTranslation } from 'react-i18next';
-import { Bell, Pencil, Save } from 'lucide-react';
+import { Bell, Pencil, Save, Volume2, VolumeX } from 'lucide-react';
 import { SettingShake } from './SettingShake';
 import { SettingFallDetection } from './SettingFallDetection';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useEmergencyAlert } from '../../hooks/useEmergencyAlert';
 
 const AlertMessageEditor = () => {
   const { language } = useLanguage();
@@ -42,9 +43,28 @@ const AlertMessageEditor = () => {
   );
 };
 
-export const AlertsTab: React.FC = () => {
+export const SafetyTab: React.FC = () => {
   const { t } = useTranslation();
   const [sirenEnabled, setSirenEnabled] = useLocalStorage('siren_enabled', true);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const { startAlert, stopAlert } = useEmergencyAlert();
+
+  const handleTogglePreview = () => {
+    if (isPreviewing) {
+      stopAlert();
+      setIsPreviewing(false);
+    } else {
+      startAlert();
+      setIsPreviewing(true);
+    }
+  };
+
+  // Ensure sound stops if component unmounts
+  React.useEffect(() => {
+    return () => {
+      stopAlert();
+    };
+  }, [stopAlert]);
 
   return (
     <div className="space-y-6">
@@ -53,25 +73,35 @@ export const AlertsTab: React.FC = () => {
           <div className="h-10 w-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
             <Bell className="h-5 w-5" />
           </div>
-          <div>
-            <h3 className="text-lg font-medium text-white">
-              {t('powerPerformanceTitle', 'Emergency Alerts')}
-            </h3>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-white">{t('sirenTitle', 'Emergency Siren')}</h3>
             <p className="text-sm text-slate-400">
-              {t('settingsAppModeDesc', 'Configure siren and notifications')}
+              {t('sirenDesc', 'Sound a loud alarm during emergencies')}
             </p>
           </div>
+          <button
+            onClick={handleTogglePreview}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+              isPreviewing
+                ? 'bg-red-500 text-white border-red-400 animate-pulse'
+                : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
+            }`}
+          >
+            {isPreviewing ? (
+              <VolumeX className="w-3.5 h-3.5" />
+            ) : (
+              <Volume2 className="w-3.5 h-3.5" />
+            )}
+            {isPreviewing ? t('stopTest', 'Stop Test') : t('testSiren', 'Test Siren')}
+          </button>
         </div>
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <span className="text-slate-200">{t('sirenMute', 'Loud Siren')}</span>
+              <span className="text-slate-200">{t('sirenMute', 'Active Siren')}</span>
               <p className="text-xs text-slate-500">
-                {t(
-                  'sirenUnmute',
-                  'Play a loud alarm sound even when the device is in Do Not Disturb mode.'
-                )}
+                {t('sirenUnmute', 'Sound will play even if your phone is set to quiet mode.')}
               </p>
             </div>
             <Switch checked={sirenEnabled} onCheckedChange={setSirenEnabled} />
@@ -92,7 +122,7 @@ export const AlertsTab: React.FC = () => {
           <p className="text-sm text-slate-400 mb-4">
             {t(
               'customAlertMsgDesc',
-              'This message will be displayed on the screen during an emergency.'
+              'This message will be shown on the screen when an alert is triggered.'
             )}
           </p>
           <AlertMessageEditor />

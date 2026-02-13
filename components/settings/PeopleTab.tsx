@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card } from '../ui/Card';
-import { User, ShieldAlert } from 'lucide-react';
+import { User, ShieldAlert, Users } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTranslation } from 'react-i18next';
 import { SettingContacts } from './SettingContacts';
 import { useConfigContext } from '../../contexts/ConfigContext';
 
-export const ProfileTab: React.FC = () => {
+export const PeopleTab: React.FC = () => {
   const { t } = useTranslation();
   const { activeProfile, setProfileId, availableProfiles } = useConfigContext();
   const [patientInfo, setPatientInfo] = useLocalStorage<{
@@ -29,10 +29,10 @@ export const ProfileTab: React.FC = () => {
           </div>
           <div>
             <h3 className="text-xl font-bold text-white">
-              {t('settingsPatientInfo', 'Patient Profile')}
+              {t('settingsPatientInfo', 'My Profile')}
             </h3>
             <p className="text-sm text-slate-400">
-              {t('settingsAppModeDesc', 'Configure your medical profile')}
+              {t('settingsAppModeDesc', 'Information for emergency responders')}
             </p>
           </div>
         </div>
@@ -52,6 +52,7 @@ export const ProfileTab: React.FC = () => {
             <select
               value={activeProfile.id}
               onChange={(e) => setProfileId(e.target.value)}
+              aria-label={t('settingsAppMode', 'Safety Mode')}
               className="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             >
               {availableProfiles.map((p) => (
@@ -82,6 +83,7 @@ export const ProfileTab: React.FC = () => {
             <select
               value={patientInfo.bloodType}
               onChange={(e) => setPatientInfo({ ...patientInfo, bloodType: e.target.value })}
+              aria-label={t('settingsBloodType', 'Blood Type')}
               className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
             >
               <option value="">{t('settingsBloodTypePlaceholder', 'Select Blood Type')}</option>
@@ -109,7 +111,15 @@ export const ProfileTab: React.FC = () => {
         </div>
       </Card>
 
-      <SettingContacts />
+      <section className="space-y-4">
+        <div className="flex items-center gap-2 px-1">
+          <Users className="w-6 h-6 text-green-400" />
+          <h3 className="text-xl font-bold text-white">
+            {t('settingsContacts', 'Emergency Contacts')}
+          </h3>
+        </div>
+        <SettingContacts />
+      </section>
     </div>
   );
 };
