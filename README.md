@@ -52,8 +52,10 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ### 🔋 Power & Performance
 
+- **Battery Status Card:** Front-and-center battery monitoring on the main screen shows level, charging status, discharge rate, estimated time remaining, and active features.
 - **Battery Health:** Monitor your battery level and discharge rate directly in the app to ensure you have enough power for monitoring.
 - **Prevent Sleep:** Optional "Wake Lock" keeps your screen on during active monitoring to guarantee sensors stay active.
+- **Low Power Mode:** Optimize battery usage when not actively monitoring.
 
 ### 🤖 "Aura" - Your AI Helper
 
