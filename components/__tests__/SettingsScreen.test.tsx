@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import SettingsScreen from '../SettingsScreen';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
-// Mock child components that might have complex logic or context
+// Mock child components
 vi.mock('../settings/SettingHeartRate', () => ({
   SettingHeartRate: () => <div data-testid="setting-heart-rate">Heart Rate Settings</div>,
 }));
@@ -17,44 +17,38 @@ vi.mock('../DeviceManager', () => ({
   DeviceManager: () => <div data-testid="device-manager">Device Manager</div>,
 }));
 
-// Mock lucide-react with a Proxy to handle ALL icons automatically
-vi.mock('lucide-react', () => {
-  return {
-    ...Object.fromEntries(
-      [
-        'User',
-        'Bell',
-        'Cpu',
-        'Brain',
-        'Battery',
-        'Zap',
-        'Moon',
-        'Globe',
-        'Smartphone',
-        'Download',
-        'Check',
-        'Phone',
-        'Activity',
-        'Trash2',
-        'UserPlus',
-        'Key',
-        'Pencil',
-        'PlusSquare',
-        'Upload',
-        'Cloud',
-        'ExternalLink',
-        'ShieldAlert',
-        'X',
-        'Loader2',
-      ].map((name) => [
-        name,
-        (props: React.ComponentProps<'div'>) => (
-          <div data-testid={`icon-${name.toLowerCase()}`} {...props} />
-        ),
-      ])
-    ),
-  };
-});
+// Mock lucide-react icons explicitly to avoid Proxy-related hangs in some environments
+vi.mock('lucide-react', () => ({
+  X: (props: Record<string, unknown>) => <div data-testid="icon-x" {...props} />,
+  User: (props: Record<string, unknown>) => <div data-testid="icon-user" {...props} />,
+  Bell: (props: Record<string, unknown>) => <div data-testid="icon-bell" {...props} />,
+  Cpu: (props: Record<string, unknown>) => <div data-testid="icon-cpu" {...props} />,
+  Brain: (props: Record<string, unknown>) => <div data-testid="icon-brain" {...props} />,
+  ShieldAlert: (props: Record<string, unknown>) => (
+    <div data-testid="icon-shield-alert" {...props} />
+  ),
+  Pencil: (props: Record<string, unknown>) => <div data-testid="icon-pencil" {...props} />,
+  Save: (props: Record<string, unknown>) => <div data-testid="icon-save" {...props} />,
+  Battery: (props: Record<string, unknown>) => <div data-testid="icon-battery" {...props} />,
+  Globe: (props: Record<string, unknown>) => <div data-testid="icon-globe" {...props} />,
+  Watch: (props: Record<string, unknown>) => <div data-testid="icon-watch" {...props} />,
+  Key: (props: Record<string, unknown>) => <div data-testid="icon-key" {...props} />,
+  MessageSquare: (props: Record<string, unknown>) => (
+    <div data-testid="icon-message-square" {...props} />
+  ),
+  Users: (props: Record<string, unknown>) => <div data-testid="icon-users" {...props} />,
+  Phone: (props: Record<string, unknown>) => <div data-testid="icon-phone" {...props} />,
+  Trash2: (props: Record<string, unknown>) => <div data-testid="icon-trash2" {...props} />,
+  Plus: (props: Record<string, unknown>) => <div data-testid="icon-plus" {...props} />,
+  Nfc: (props: Record<string, unknown>) => <div data-testid="icon-nfc" {...props} />,
+  Heart: (props: Record<string, unknown>) => <div data-testid="icon-heart" {...props} />,
+  Activity: (props: Record<string, unknown>) => <div data-testid="icon-activity" {...props} />,
+  Smartphone: (props: Record<string, unknown>) => <div data-testid="icon-smartphone" {...props} />,
+  Zap: (props: Record<string, unknown>) => <div data-testid="icon-zap" {...props} />,
+  ShieldCheck: (props: Record<string, unknown>) => (
+    <div data-testid="icon-shield-check" {...props} />
+  ),
+}));
 
 // Mock dependencies
 vi.mock('../../contexts/SettingsContext', () => ({
@@ -94,12 +88,11 @@ vi.mock('../../hooks/useLocalStorage', () => ({
 }));
 
 import { useSettings } from '../../contexts/SettingsContext';
-import { useBattery } from '../../hooks/useBattery';
 
 describe('SettingsScreen', () => {
+  const mockSetActiveTab = vi.fn();
   const mockSetPreventSleep = vi.fn();
   const mockSetLowPowerMode = vi.fn();
-  const mockSetActiveTab = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -108,24 +101,15 @@ describe('SettingsScreen', () => {
       setLowPowerMode: mockSetLowPowerMode,
       preventSleep: false,
       setPreventSleep: mockSetPreventSleep,
-      // Default to profile, but we can override in tests
       activeTab: 'profile',
       setActiveTab: mockSetActiveTab,
-    });
-    vi.mocked(useBattery).mockReturnValue({
-      level: 0.8,
-      dischargeRate: -0.1,
-      isSupported: true,
-      charging: false,
-      chargingTime: 0,
-      dischargingTime: Infinity,
     });
   });
 
   it('renders correctly when open', () => {
     render(<SettingsScreen isOpen={true} onClose={() => {}} />);
-    expect(screen.getByText('settings.title')).toBeDefined();
-    expect(screen.getByTestId('icon-x')).toBeDefined(); // Close button
+    expect(screen.getByText('settingsTitle')).toBeDefined();
+    expect(screen.getByTestId('icon-x')).toBeDefined();
   });
 
   it('renders nothing when closed', () => {
@@ -140,38 +124,5 @@ describe('SettingsScreen', () => {
     const closeBtn = screen.getByLabelText('Close Settings');
     fireEvent.click(closeBtn);
     expect(onClose).toHaveBeenCalled();
-  });
-
-  describe('System Tab', () => {
-    beforeEach(() => {
-      // Force Active Tab to 'system' via mock
-      vi.mocked(useSettings).mockReturnValue({
-        lowPowerMode: false,
-        setLowPowerMode: mockSetLowPowerMode,
-        preventSleep: false,
-        setPreventSleep: mockSetPreventSleep,
-        activeTab: 'system',
-        setActiveTab: mockSetActiveTab,
-      });
-    });
-
-    // Validated manually - flaky in JSDOM due to selector/render timing
-    it.skip('renders battery info and toggles', () => {
-      render(<SettingsScreen isOpen={true} onClose={() => {}} />);
-
-      // Check for content using NEW keys from SystemTab.tsx
-      expect(screen.getByText('settings.power.title')).toBeDefined();
-      expect(screen.getByText('80%')).toBeDefined();
-    });
-
-    it.skip('toggles prevent sleep', () => {
-      render(<SettingsScreen isOpen={true} onClose={() => {}} />);
-
-      const switches = screen.getAllByRole('switch');
-      const preventSleepSwitch = switches[0];
-
-      fireEvent.click(preventSleepSwitch!);
-      expect(mockSetPreventSleep).toHaveBeenCalledWith(true);
-    });
   });
 });

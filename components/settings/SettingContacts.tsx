@@ -12,7 +12,7 @@ interface Contact {
 
 export const SettingContacts: React.FC = () => {
   const { t } = useTranslation();
-  const [contacts, setContacts] = useLocalStorage<Contact[]>('emergencyContacts', []);
+  const [contacts, setContacts] = useLocalStorage<Contact[]>('emergency_contacts', []);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newContact, setNewContact] = useState<Omit<Contact, 'id'>>({
