@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
-import { Download, X, Share } from 'lucide-react';
+import { Download, X, Share, PlusSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const InstallPrompt: React.FC = () => {
