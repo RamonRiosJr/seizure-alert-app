@@ -24,7 +24,6 @@ Each tab is a self-contained component responsible for a specific domain.
 - **`ProfileTab.tsx`**:
   - **Domain:** User identity, medical profile, emergency contacts.
   - **Dependencies:** `useConfigContext` (Profiles), `lucide-react` (Icons).
-  
 - **`AlertsTab.tsx`**:
   - **Domain:** Notification preferences, siren configuration, fall detection sensitivity.
   - **Dependencies:** Local component state (for now), `useSettings` (Future).
@@ -35,7 +34,6 @@ Each tab is a self-contained component responsible for a specific domain.
     - Real-time Battery Health & Discharge Rate (`useBattery`).
     - Wake Lock Toggle (`useWakeLock`).
     - Power Mode configuration.
-  
 - **`AIHubTab.tsx`**:
   - **Domain:** External AI integrations (Gemini API).
   - **Features:** API Key management (`ApiKeyWizard`), Voice Activation settings.
