@@ -4,7 +4,7 @@ import '@/i18n';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { GlobalErrorBoundary } from './components/GlobalErrorBoundary';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UIProvider } from './contexts/UIContext';
 import { BLEProvider } from './contexts/BLEContext';
@@ -23,7 +23,7 @@ if (import.meta.env.DEV) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
+    <GlobalErrorBoundary>
       <Suspense
         fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}
       >
@@ -35,6 +35,6 @@ root.render(
           </UIProvider>
         </LanguageProvider>
       </Suspense>
-    </ErrorBoundary>
+    </GlobalErrorBoundary>
   </React.StrictMode>
 );

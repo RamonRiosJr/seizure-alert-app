@@ -21,22 +21,27 @@ The Settings UI has been refactored from a monolithic `SettingsScreen.tsx` into 
 
 Each tab is a self-contained component responsible for a specific domain.
 
-- **`ProfileTab.tsx`**:
-  - **Domain:** User identity, medical profile, emergency contacts.
-  - **Dependencies:** `useConfigContext` (Profiles), `lucide-react` (Icons).
-- **`AlertsTab.tsx`**:
-  - **Domain:** Notification preferences, siren configuration, fall detection sensitivity.
-  - **Dependencies:** Local component state (for now), `useSettings` (Future).
+- **`SafetyTab.tsx`**:
+  - **Domain:** Emergency alert management, siren preview, and message configuration.
+  - **Features:** Siren test engine, SOS message editor.
+  - **Dependencies:** `useEmergencyAlert`, `useLocalStorage`.
 
-- **`SystemTab.tsx`**:
-  - **Domain:** Hardware telemetry and power management.
-  - **Features:**
-    - Real-time Battery Health & Discharge Rate (`useBattery`).
-    - Wake Lock Toggle (`useWakeLock`).
-    - Power Mode configuration.
+- **`PeopleTab.tsx`**:
+  - **Domain:** Circle of Care, patient profile, and emergency responders.
+  - **Dependencies:** `useConfigContext` (Profiles), `SettingContacts`.
+
+- **`DevicesTab.tsx`**:
+  - **Domain:** Dedicated hardware home for wearables and peripherals.
+  - **Features:** Smart Watch (Heart Rate) monitoring, NFC programming.
+  - **Dependencies:** `DeviceManager`, `SettingNFC`.
+
 - **`AIHubTab.tsx`**:
-  - **Domain:** External AI integrations (Gemini API).
-  - **Features:** API Key management (`ApiKeyWizard`), Voice Activation settings.
+  - **Domain:** Aura Intelligence domain (Gemini API).
+  - **Features:** API Key management (`ApiKeyWizard`), Voice Activation ("Hey Aura") placeholders.
+
+- **`CareTab.tsx`**:
+  - **Domain:** Phone care and environment settings.
+  - **Features:** Battery health telemetry (`useBattery`), Wake Lock (`useWakeLock`), and Language selection.
 
 #### 3. Shared UI Pattern (`components/ui/`)
 

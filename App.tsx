@@ -15,7 +15,7 @@ import { AppRouter } from './router/AppRouter';
 import { GlobalListeners } from './components/layout/GlobalListeners';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { GlobalErrorBoundary } from './components/GlobalErrorBoundary';
 import { SettingsProvider } from './contexts/SettingsContext';
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
   }, []);
 
   return (
-    <ErrorBoundary>
+    <GlobalErrorBoundary>
       <ConfigProvider>
         <SettingsProvider>
           <div
@@ -89,7 +89,7 @@ function App() {
           </div>
         </SettingsProvider>
       </ConfigProvider>
-    </ErrorBoundary>
+    </GlobalErrorBoundary>
   );
 }
 
