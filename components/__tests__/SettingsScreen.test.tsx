@@ -17,20 +17,38 @@ vi.mock('../DeviceManager', () => ({
   DeviceManager: () => <div data-testid="device-manager">Device Manager</div>,
 }));
 
-// Mock lucide-react with a Proxy to handle ALL icons automatically
-vi.mock('lucide-react', () => {
-  return new Proxy(
-    {},
-    {
-      get: (target, name: string) => {
-        if (name === '__esModule') return true;
-        return (props: Record<string, unknown>) => (
-          <div data-testid={`icon-${name.toLowerCase()}`} {...props} />
-        );
-      },
-    }
-  );
-});
+// Mock lucide-react icons explicitly to avoid Proxy-related hangs in some environments
+vi.mock('lucide-react', () => ({
+  X: (props: Record<string, unknown>) => <div data-testid="icon-x" {...props} />,
+  User: (props: Record<string, unknown>) => <div data-testid="icon-user" {...props} />,
+  Bell: (props: Record<string, unknown>) => <div data-testid="icon-bell" {...props} />,
+  Cpu: (props: Record<string, unknown>) => <div data-testid="icon-cpu" {...props} />,
+  Brain: (props: Record<string, unknown>) => <div data-testid="icon-brain" {...props} />,
+  ShieldAlert: (props: Record<string, unknown>) => (
+    <div data-testid="icon-shield-alert" {...props} />
+  ),
+  Pencil: (props: Record<string, unknown>) => <div data-testid="icon-pencil" {...props} />,
+  Save: (props: Record<string, unknown>) => <div data-testid="icon-save" {...props} />,
+  Battery: (props: Record<string, unknown>) => <div data-testid="icon-battery" {...props} />,
+  Globe: (props: Record<string, unknown>) => <div data-testid="icon-globe" {...props} />,
+  Watch: (props: Record<string, unknown>) => <div data-testid="icon-watch" {...props} />,
+  Key: (props: Record<string, unknown>) => <div data-testid="icon-key" {...props} />,
+  MessageSquare: (props: Record<string, unknown>) => (
+    <div data-testid="icon-message-square" {...props} />
+  ),
+  Users: (props: Record<string, unknown>) => <div data-testid="icon-users" {...props} />,
+  Phone: (props: Record<string, unknown>) => <div data-testid="icon-phone" {...props} />,
+  Trash2: (props: Record<string, unknown>) => <div data-testid="icon-trash2" {...props} />,
+  Plus: (props: Record<string, unknown>) => <div data-testid="icon-plus" {...props} />,
+  Nfc: (props: Record<string, unknown>) => <div data-testid="icon-nfc" {...props} />,
+  Heart: (props: Record<string, unknown>) => <div data-testid="icon-heart" {...props} />,
+  Activity: (props: Record<string, unknown>) => <div data-testid="icon-activity" {...props} />,
+  Smartphone: (props: Record<string, unknown>) => <div data-testid="icon-smartphone" {...props} />,
+  Zap: (props: Record<string, unknown>) => <div data-testid="icon-zap" {...props} />,
+  ShieldCheck: (props: Record<string, unknown>) => (
+    <div data-testid="icon-shield-check" {...props} />
+  ),
+}));
 
 // Mock dependencies
 vi.mock('../../contexts/SettingsContext', () => ({
