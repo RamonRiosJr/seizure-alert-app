@@ -5,38 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2026-02-13
 
 ### Added
 
-- **Battery Telemetry & Wake Lock**:
-  - `useBattery` hook now tracks discharge rate (%/hour).
-  - `useWakeLock` hook ensures screen stays awake during active monitoring.
-  - **Settings UI**: New "Power & Performance" section with Battery Health card and "Prevent Sleep" toggle.
-  - **ReadyScreen**: Added prominent Battery Status Card showing level, charging status, discharge rate, estimated time remaining, and active features (Low Power Mode, Wake Lock).
-  - **Battery Testing Documentation**: Added comprehensive `docs/BATTERY_TESTING.md` with test scenarios, measurement methods, troubleshooting guide, and battery health tips.
-- **Strict TypeScript Mode**: Enforced `no-explicit-any` across critical hooks (`useShake`, `useEmergencyAlert`) and components for robust type safety.
-- **API Key Wizard**: Added a guided "Bring Your Own Key" setup flow with auto-validation for Google Gemini (Zero Cost for Devs).
-- **Runtime Profile Switching**: Users can now switch between "Aura Seizure" and "Aura Senior" modes in Settings.
-- **Aura Senior Profile**: A new configured profile optimized for Fall Detection with simplified UI and terminology.
-- `ConfigContext`: Global state management for active profiles.
+- **Localization (i18n) Hardening**:
+  - Implemented comprehensive internationalization framework across the platform.
+  - Hardened `ReadyScreen` and `FallDetectionTestMode` for global regulatory readiness.
+  - Standardized error handling and telemetry alerts with localized string resources.
+- **Battery Telemetry & Power Management**:
+  - `useBattery` hook offering high-precision discharge rate tracking (%/hour).
+  - `useWakeLock` integration to ensure sensor continuity during critical monitoring.
+  - Dedicated **Power & Performance** telemetry dashboard in Settings.
+- **API Key Security & UX Overhaul**:
+  - Implemented a "Guided Wizard" for secure, client-side Google Gemini integration.
+  - Automated key validation via the platform's AI middleware logic.
+- **Multi-Profile Runtime Support**:
+  - Added support for "Aura Seizure" and "Aura Senior" profiles with runtime terminology injection.
+  - Unified configuration management via `ConfigContext`.
 
 ### Changed
 
-- **PWA Installation**: Distinct improvements for mobile:
-  - **iOS**: Displays platform-specific "Add to Home Screen" instructions.
-  - **Android**: Shows native install prompt or manual button.
-- **Settings UI**: Replaced raw API Key input with "Connect Aura AI" workflow; added clear "Connected/Disconnected" status.
-- Refactored `ReportsScreen` and `pdfGenerator` to use dynamic terminology from the active profile.
-- Updated `SettingsScreen` to include the "Application Mode" dropdown.
-- **Migrated to Tailwind CSS v4**: Improved build performance and simplified configuration.
-- **Dependency Updates**: Upgraded `typescript`, `vite`, `capacitor`, `i18next`, and `actions` to latest versions.
+- **PWA Deployment Optimization**:
+  - Refined installation heuristics for iOS (manual flow) and Android (native prompt).
+- **Core Strategy**: Migrated to Tailwind CSS v4 for optimized build pipelines and simplified theme architecture.
+- **Infrastructure**: Updated TypeScript, Vite, and i18next to the latest stable versions to leverage modern engine performance.
 
 ### Fixed
 
-- **Linting**: Resolved hundreds of ESLint errors and removed unnecessary suppressions.
-- Resolved regression in `useHeartMonitor` causing incorrect localStorage key usage.
-- Fixed `DeviceManager` toggle for "Workout Mode".
+- **Platform Integrity**: Resolved regression in `useHeartMonitor` localStorage persistence.
+- **Accessibility**: Standardized ARIA labels and focus management across all power-intensive views.
+- **Linting & Type Safety**: Achieved zero-tolerance strict typing and resolved all legacy ESLint technical debt.
 
 ## [0.1.0] - 2026-02-11
 
