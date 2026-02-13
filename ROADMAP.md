@@ -20,6 +20,8 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 - [ ] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
+- [ ] **Dashboard Transformation**: Transition from a button-heavy ReadyScreen to a modular **"Health Command Center"** with a Bottom Navigation Bar for primary app domains.
+- [ ] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
 
 ## ✨ Phase 3: Strategic Feature Set
 
@@ -29,6 +31,45 @@ Expansion of the platform's utility as a comprehensive medical-grade assistant.
 - [ ] **Wearable Integration**: Synchronized monitoring for Apple Watch and WearOS to leverage wrist-based PPG and accelerometer data.
 - [ ] **Clinical Dashboard**: Anonymized data visualization layer for seizure history and biometric trends to facilitate doctor-patient consultations.
 - [ ] **Offline Synchronization UI**: Enhanced visual feedback for PWA service worker status and asset updates.
+- [ ] **Voice Intelligence (Paid Tier)**:
+  - **Audio Journaling**: One-tap voice recording for post-seizure notes or daily symptom logging using Web Speech API.
+  - **Doctor Summaries**: AI-driven compilation of voice notes and telemetry into a concise "Clinical Handover" PDF.
+
+## 🏥 Phase 4: Clinical Ecosystem & Caregiver Loop
+
+Developing Aura into a holistic management platform for patient and caregiver synchronization.
+
+- [ ] **Smart Medication Management**:
+  - Offline-first medication schedules with high-priority "Critical Window" alarms.
+  - Intelligent snooze and escalation protocols for missed doses.
+- [ ] **Clinical Calendar Integration**:
+  - Secure tracking of specialist appointments with automated pre-appointment biometric summaries.
+- [ ] **Caregiver Alert System**:
+  - Multi-channel notifications (Push, Email, SMS) for missed medication or emergency triggers, utilizing a secure, privacy-preserving bridge.
+- [ ] **Compliance-First Email Infrastructure**:
+  - Integration of a HIPAA-compliant email bridging service for general app notifications (e.g., weekly health summaries, system alerts).
+  - End-to-end encryption for any PHI (Protected Health Information) delivered via automated internal mailers to ensure audit readiness.
+- [ ] **Proactive AI Reminders**:
+  - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
+
+## 🎨 Phase 5: Aura Design System (UX/UI Evolution)
+
+Finalizing a premium, clinical-grade aesthetic that rivals top-tier medical PWA/Mobile apps.
+
+- [ ] **Modern Navigation Framework**: Implementation of a persistent Bottom Tab Bar (Dashboard, Meds, Calendar, Settings).
+- [ ] **Adaptive "Panic" Interaction**: Moving the Emergency button to a high-visibility but non-obstructive location (e.g., Floating Action Button or dedicated Nav anchor).
+- [ ] **Component Library Migration**: Leveraging **Shadcn/UI** or **Headless UI** for standardized, accessible, and themeable UI components (Modals, Tabs, Cards).
+- [ ] **Glassmorphism & Micro-animations**: Enhancing the "Premium" feel with subtle depth, blur effects, and state-change animations to reduce patient anxiety.
+
+## 💎 Phase 6: Commercial Infrastructure (Freemium Model)
+
+Infrastructure to support the sustainability of the platform (Free Core + Paid Premium).
+
+- [ ] **Subscription Gatekeeper**: Implementation of a lightweight entitlement engine (Free vs. Pro flags) managed locally with server-side validation.
+- [ ] **Secure Cloud Backup (Paid Tier)**:
+  - End-to-End Encrypted (E2EE) synchronization of patient history to secure cloud storage.
+  - "Restore from Cloud" capability for device migration.
+- [ ] **Payment Processing**: Integration of Stripe/RevenueCat for handling the $4.99/mo AI & Backup subscription.
 
 ---
 
