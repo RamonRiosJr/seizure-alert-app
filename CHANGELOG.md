@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-02-13
+
+### Added
+
+- **Architecture Documentation**:
+  - Published `docs/ARCHITECTURE.md` detailing the Hub-and-Spoke component model and data flow.
+  - Linked architecture standards directly in `README.md`.
+- **Settings UI Modularization**:
+  - Refactored monolithic `SettingsScreen` into `SettingsHub` with atomic tabs (`SystemTab`, `ProfileTab`, `AlertsTab`).
+  - Implemented scalable tab navigation architecture.
+
 ## [0.2.0] - 2026-02-13
 
 ### Added

@@ -17,11 +17,11 @@ High-priority items focused on safety-critical requisites and regulatory readine
 Enhancing the scalability, maintainability, and quality assurance thresholds of the platform.
 
 - [ ] **Test Coverage Expansion**: Targeted increase of unit and integration test coverage from ~60% to **80%+**, focusing on complex hardware hooks.
-- [ ] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
+- [x] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
 - [ ] **Dashboard Transformation**: Transition from a button-heavy ReadyScreen to a modular **"Health Command Center"** with a Bottom Navigation Bar for primary app domains.
-- [ ] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
+- [x] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
 
 ## ✨ Phase 3: Strategic Feature Set
 
