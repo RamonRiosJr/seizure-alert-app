@@ -52,7 +52,7 @@ const AlertMessageEditor = () => {
 
   const handleSave = () => {
     localStorage.setItem(`seizure_alert_status_message_${language}`, message);
-    alert('Message saved!');
+    alert(t('settingsSaveSuccess'));
   };
 
   return (
@@ -61,7 +61,7 @@ const AlertMessageEditor = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none"
-        placeholder="Enter custom alert message..."
+        placeholder={t('customAlertPlaceholder')}
       />
       <button
         onClick={handleSave}
@@ -168,7 +168,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     if (!editingContactId || !editingContactData) return;
 
     if (!editingContactData.name.trim() || !editingContactData.phone.trim()) {
-      setEditError('Name and Phone Number are required fields.');
+      setEditError(t('settingsErrorRequired'));
       return;
     }
 
@@ -190,7 +190,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <button
             onClick={handleClose}
             className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
-            aria-label="Close settings"
+            aria-label={t('ariaCloseSettings')}
           >
             <X className="w-6 h-6" />
           </button>
@@ -203,11 +203,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
             <div className="mb-6 bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
               <h3 className="text-lg font-bold text-indigo-900 dark:text-indigo-200 mb-2 flex items-center gap-2">
                 <ShieldAlert className="w-5 h-5" />
-                Application Mode
+                {t('settingsAppMode')}
               </h3>
               <p className="text-sm text-indigo-800 dark:text-indigo-300 mb-3">
-                Choose the safety mode that matches your needs. This changes the alerts and
-                terminology.
+                {t('settingsAppModeDesc')}
               </p>
 
               <div className="relative">
@@ -249,7 +248,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   value={patientInfo.name}
                   onChange={(e) => setPatientInfo({ ...patientInfo, name: e.target.value })}
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 dark:text-white"
-                  placeholder="e.g. John Doe"
+                  placeholder={t('settingsPatientNamePlaceholder')}
                 />
               </div>
 
@@ -285,7 +284,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     setPatientInfo({ ...patientInfo, medicalConditions: e.target.value })
                   }
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500 h-24 resize-none dark:text-white"
-                  placeholder="e.g. Epilepsy, Peanut Allergy..."
+                  placeholder={t('settingsMedicalConditionsPlaceholder')}
                 />
               </div>
             </div>
@@ -419,12 +418,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
 
               {!isShakeSupported ? (
                 <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md border border-red-200 dark:border-red-800">
-                  Device motion not supported on this device.
+                  {t('deviceMotionNotSupported')}
                 </div>
               ) : (
                 <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                   <span className="font-medium text-gray-900 dark:text-white">
-                    Enable Shake to Alert
+                    {t('shakeAlertEnable')}
                   </span>
                   <button
                     onClick={() => setShakeEnabled(!isShakeEnabled)}
@@ -455,7 +454,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Activity className="w-6 h-6 text-orange-500" />
-              Fall Detection
+              {t('fallDetectionTitle')}
             </h3>
             <div className="space-y-3">
               <SettingFallDetection />
@@ -466,7 +465,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Activity className="w-6 h-6" />
-              Heart Rate Safety
+              {t('heartRateSafetyTitle')}
             </h3>
             <div className="space-y-3">
               <SettingHeartRate />
@@ -477,7 +476,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Battery className="w-6 h-6 text-green-500" />
-              Power & Performance
+              {t('powerPerformanceTitle')}
             </h3>
             <div className="space-y-3">
               {/* Battery Health Card */}
@@ -485,12 +484,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Battery Health
+                      {t('batteryLevel')}
                     </span>
                     <span className="text-xs text-gray-500 dark:text-gray-400">
                       {dischargeRate
-                        ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour`
-                        : 'Calculating discharge rate...'}
+                        ? t('dischargeRateLabel', {
+                            rate: Math.abs(dischargeRate * 100).toFixed(1),
+                          })
+                        : t('batteryCalculating')}
                     </span>
                   </div>
                   <span
@@ -510,9 +511,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               {/* Prevent Sleep Toggle */}
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                 <div className="flex flex-col">
-                  <span className="font-medium text-gray-900 dark:text-white">Prevent Sleep</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {t('preventSleepHeader')}
+                  </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Keep screen on during monitoring to ensure reliability.
+                    {t('preventSleepDescription')}
                   </span>
                 </div>
                 <button
@@ -527,9 +530,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
 
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
                 <div className="flex flex-col">
-                  <span className="font-medium text-gray-900 dark:text-white">Low Power Mode</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {t('lowPowerModeHeader')}
+                  </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Reduces visualizer updates and background checks to save battery.
+                    {t('lowPowerModeDescription')}
                   </span>
                 </div>
                 <button
@@ -548,12 +553,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Pencil className="w-6 h-6" />
-              Custom Alert Message
+              {t('customAlertMsgTitle')}
             </h3>
             <div className="space-y-3">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                This message will be displayed on the screen during an emergency.
-              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('customAlertMsgDesc')}</p>
               {/* Alert Message Editor */}
               <AlertMessageEditor />
             </div>
@@ -576,7 +579,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     </div>
                     <div>
                       <h4 className="font-bold text-green-900 dark:text-green-100">
-                        Aura AI Connected
+                        {t('auraAiConnected')}
                       </h4>
                       <p className="text-xs text-green-700 dark:text-green-300">
                         Key ends in ...{apiKey.slice(-4)}
@@ -585,14 +588,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   </div>
                   <button
                     onClick={() => {
-                      if (confirm('Disconnect Aura AI? Voice features will stop working.')) {
+                      if (confirm(t('disconnectAuraConfirm'))) {
                         setApiKey('');
                         localStorage.removeItem('gemini_api_key');
                       }
                     }}
                     className="text-sm text-red-500 hover:text-red-600 underline"
                   >
-                    Disconnect
+                    {t('disconnectLink')}
                   </button>
                 </div>
               ) : (
@@ -601,16 +604,18 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     <Key className="w-6 h-6 text-gray-400" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white">Not Connected</h4>
+                    <h4 className="font-bold text-gray-900 dark:text-white">
+                      {t('auraAiNotConnected')}
+                    </h4>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Connect to enable voice assistant features.
+                      {t('settingsAuraNotConnectedDesc')}
                     </p>
                   </div>
                   <button
                     onClick={() => setIsApiKeyWizardOpen(true)}
                     className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2"
                   >
-                    Connect Aura AI <ExternalLink className="w-4 h-4" />
+                    {t('auraAiConnectBtn')} <ExternalLink className="w-4 h-4" />
                   </button>
                 </div>
               )}
@@ -623,14 +628,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                   <Smartphone className="w-6 h-6" />
-                  App Installation
+                  {t('appInstallationTitle')}
                 </h3>
                 {!isAppInstalled && (
                   <button
                     onClick={dismissPrompt}
                     className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 underline"
                   >
-                    Dismiss
+                    {t('dismissBtn')}
                   </button>
                 )}
               </div>
@@ -638,12 +643,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                 {isAppInstalled ? (
                   <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md flex items-center gap-2 border border-green-200 dark:border-green-800">
                     <Check className="w-5 h-5" />
-                    <span className="font-medium">App is installed and offline-ready.</span>
+                    <span className="font-medium">{t('appInstalledStatus')}</span>
                   </div>
                 ) : (
                   <>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Install this app on your device for quick access and offline capabilities.
+                      {t('appInstallationDesc')}
                     </p>
 
                     {isInstallable && (
@@ -652,7 +657,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                         className="w-full sm:w-auto px-4 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-gray-600 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
                       >
                         <Download className="w-5 h-5" />
-                        Install App
+                        {t('installAppBtn')}
                       </button>
                     )}
 
@@ -660,35 +665,26 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
                         <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
                           <Smartphone className="w-5 h-5" />
-                          Install on iPhone / iPad:
+                          {t('iosInstallTitle')}
                         </h4>
                         <ol className="space-y-4 text-sm text-blue-900 dark:text-blue-100">
                           <li className="flex items-center gap-3">
                             <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
                               1
                             </span>
-                            <span>
-                              Tap the <Share className="w-4 h-4 inline mx-1" />{' '}
-                              <strong>Share</strong> button in your browser toolbar.
-                            </span>
+                            <span>{t('iosStep1')}</span>
                           </li>
                           <li className="flex items-center gap-3">
                             <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
                               2
                             </span>
-                            <span>
-                              Scroll down and tap{' '}
-                              <strong className="whitespace-nowrap">Add to Home Screen</strong>{' '}
-                              <PlusSquare className="w-4 h-4 inline mx-1" />.
-                            </span>
+                            <span>{t('iosStep2')}</span>
                           </li>
                           <li className="flex items-center gap-3">
                             <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-200 dark:bg-blue-800 rounded-full font-bold text-xs">
                               3
                             </span>
-                            <span>
-                              Confirm by tapping <strong>Add</strong> in the top corner.
-                            </span>
+                            <span>{t('iosStep3')}</span>
                           </li>
                         </ol>
                       </div>
@@ -696,23 +692,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
 
                     {!isInstallable && !isIOS && !isAppInstalled && (
                       <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-sm text-gray-600 dark:text-gray-400">
-                        <p className="font-semibold mb-2">Can't see the install button?</p>
-                        <p>Try installing manually via your browser menu:</p>
+                        <p className="font-semibold mb-2">{t('manualInstallTitle')}</p>
+                        <p>{t('manualInstallDesc')}</p>
                         <ul className="list-disc list-inside mt-1 ml-1 space-y-1">
                           <li>
-                            <span className="font-bold">Chrome (Android):</span> Tap{' '}
-                            <span className="font-bold">⋮</span> (three dots) &rarr;{' '}
-                            <span className="font-bold">Install App</span> or{' '}
-                            <span className="font-bold">Add to Home screen</span>.
+                            <span className="font-bold">{t('chromeAndroid')}</span>{' '}
+                            {t('chromeAndroidSteps')}
                           </li>
                           <li>
-                            <span className="font-bold">Safari (iOS):</span> Tap{' '}
-                            <span className="font-bold">Share</span> &rarr;{' '}
-                            <span className="font-bold">Add to Home Screen</span>.
+                            <span className="font-bold">{t('safariIOS')}</span>{' '}
+                            {t('safariIOSSteps')}
                           </li>
                           <li>
-                            <span className="font-bold">Desktop:</span> Look for an install icon in
-                            the address bar.
+                            <span className="font-bold">{t('desktop')}</span> {t('desktopSteps')}
                           </li>
                         </ul>
                       </div>
@@ -727,19 +719,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Smartphone className="w-6 h-6" />
-              NFC Activation (Tap-to-Alert)
+              {t('nfcActivationTitle')}
             </h3>
             <div className="space-y-3">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Program an NFC tag to instantly launch this app in Emergency Mode when tapped.
-              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('nfcActivationDesc')}</p>
 
               <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
-                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-2">How to use:</h4>
+                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-2">
+                  {t('nfcHowToUse')}
+                </h4>
                 <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-300">
-                  <li>Tap the button below.</li>
-                  <li>When prompted, hold your phone near a writable NFC tag.</li>
-                  <li>The tag will be programmed with the "Emergency Link".</li>
+                  <li>{t('nfcStep1')}</li>
+                  <li>{t('nfcStep2')}</li>
+                  <li>{t('nfcStep3')}</li>
                 </ol>
               </div>
 
@@ -748,9 +740,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   try {
                     if (!('NDEFReader' in window)) {
                       alert(
-                        'NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' +
-                          window.location.href +
-                          '?emergency=true'
+                        t('settingsNFCNotSupported', {
+                          url: window.location.href + '?emergency=true',
+                        })
                       );
                       return;
                     }
@@ -766,15 +758,15 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                         },
                       ],
                     });
-                    alert('✅ Success! Tag programmed. Tap it to test.');
+                    alert(t('nfcSuccess'));
                   } catch (error) {
                     console.error(error);
-                    alert('❌ Write failed. Make sure NFC is on and the tag is unlocked.');
+                    alert(t('nfcWriteFailed'));
                   }
                 }}
                 className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
               >
-                Start NFC Programming
+                {t('nfcStartBtn')}
               </button>
             </div>
           </section>
@@ -783,44 +775,38 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Cloud className="w-6 h-6" />
-              Data Management
+              {t('dataManagementTitle')}
             </h3>
             <div className="space-y-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Export your data to a file for safekeeping, or transfer it to another device.
+                {t('dataManagementDesc')}
                 <br />
-                <span className="text-xs italic opacity-80">
-                  Note: Data is exported as a plain JSON file. Keep it safe.
-                </span>
+                <span className="text-xs italic opacity-80">{t('dataManagementNote')}</span>
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   onClick={() => {
                     const success = generateBackup();
-                    if (success) alert('Backup file generated! Please save it.');
-                    else alert('Backup generation failed.');
+                    if (success) alert(t('backupSuccess'));
+                    else alert(t('backupFailed'));
                   }}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
                 >
                   <Download className="w-5 h-5" />
-                  Backup Data (Export)
+                  {t('backupDataBtn')}
                 </button>
 
                 <div className="relative">
                   <input
                     type="file"
                     accept=".json"
-                    aria-label="Restore Backup File"
+                    aria-label={t('restoreAria')}
                     onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
 
-                      if (
-                        confirm(
-                          'WARNING: This will overwrite your current app data with the backup file. Are you sure?'
-                        )
-                      ) {
+                      if (confirm(t('restoreConfirm'))) {
                         const result = await restoreBackup(file);
                         alert(result.message);
                         if (result.success) {
@@ -834,7 +820,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                   />
                   <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors pointer-events-none">
                     <Upload className="w-5 h-5" />
-                    Restore Data (Import)
+                    {t('restoreDataBtn')}
                   </button>
                 </div>
               </div>

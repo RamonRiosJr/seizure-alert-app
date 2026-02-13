@@ -1,8 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 // import { GoogleGenAI, Modality } from '@google/genai'; // Removed for simplification
 import type { Language } from '../types';
 
 export const useTTS = () => {
+  const { t } = useTranslation();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,55 +39,58 @@ export const useTTS = () => {
   useEffect(() => {
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: 'Seizure Alert',
-        artist: 'Aura Speaks AI',
-        album: 'Emergency Alert',
+        title: t('mediaTitle'),
+        artist: t('mediaArtist'),
+        album: t('mediaAlbum'),
         artwork: [{ src: '/seizure-alert-logo.svg', sizes: '512x512', type: 'image/svg+xml' }],
       });
     }
-  }, []);
+  }, [t]);
 
-  const speakNative = useCallback((text: string, language: Language) => {
-    if (typeof window === 'undefined' || !window.speechSynthesis) {
-      setError('Text-to-speech not supported in this browser.');
-      setIsSpeaking(false);
-      return;
-    }
-
-    // Cancel any current speaking
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = language === 'es' ? 'es-ES' : 'en-US';
-
-    // Attempt to find a matching voice
-    const voices = window.speechSynthesis.getVoices();
-    const matchingVoice = voices.find((v) => v.lang.startsWith(language));
-    if (matchingVoice) {
-      utterance.voice = matchingVoice;
-    }
-
-    utterance.onstart = () => {
-      setIsSpeaking(true);
-      // Ensure screen lock doesn't kill it immediately (best effort)
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
+  const speakNative = useCallback(
+    (text: string, language: Language) => {
+      if (typeof window === 'undefined' || !window.speechSynthesis) {
+        setError(t('ttsErrorNotSupported'));
+        setIsSpeaking(false);
+        return;
       }
-    };
-    utterance.onend = () => {
-      setIsSpeaking(false);
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'none';
-      }
-    };
-    utterance.onerror = (e) => {
-      console.error('Native TTS Error:', e);
-      setIsSpeaking(false);
-      setError('Native text-to-speech failed.');
-    };
 
-    window.speechSynthesis.speak(utterance);
-  }, []);
+      // Cancel any current speaking
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === 'es' ? 'es-ES' : 'en-US';
+
+      // Attempt to find a matching voice
+      const voices = window.speechSynthesis.getVoices();
+      const matchingVoice = voices.find((v) => v.lang.startsWith(language));
+      if (matchingVoice) {
+        utterance.voice = matchingVoice;
+      }
+
+      utterance.onstart = () => {
+        setIsSpeaking(true);
+        // Ensure screen lock doesn't kill it immediately (best effort)
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'playing';
+        }
+      };
+      utterance.onend = () => {
+        setIsSpeaking(false);
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'none';
+        }
+      };
+      utterance.onerror = (e) => {
+        console.error('Native TTS Error:', e);
+        setIsSpeaking(false);
+        setError(t('ttsErrorFailed'));
+      };
+
+      window.speechSynthesis.speak(utterance);
+    },
+    [t]
+  );
 
   /*
    * SIMPLIFIED: Using Native Browser TTS for reliability and offline support.

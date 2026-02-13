@@ -83,15 +83,17 @@ describe('SettingsScreen - Battery & Power', () => {
   it('renders battery health section', () => {
     render(<SettingsScreen isOpen={true} onClose={() => {}} />);
 
-    expect(screen.getByText('Battery Health')).toBeDefined();
+    expect(screen.getByText('powerPerformanceTitle')).toBeDefined();
     expect(screen.getByText('80%')).toBeDefined();
-    expect(screen.getByText(/Discharging: 10.0% \/ hour/)).toBeDefined();
+    expect(screen.getByText(/dischargeRateLabel/)).toBeDefined();
   });
 
   it('toggles prevent sleep setting', () => {
     render(<SettingsScreen isOpen={true} onClose={() => {}} />);
 
-    const preventSleepToggle = screen.getByText('Prevent Sleep').closest('div')?.nextElementSibling;
+    const preventSleepToggle = screen
+      .getByText('preventSleepHeader')
+      .closest('div')?.nextElementSibling;
     expect(preventSleepToggle).toBeDefined();
 
     if (preventSleepToggle) fireEvent.click(preventSleepToggle);

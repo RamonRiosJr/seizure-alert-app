@@ -2,6 +2,10 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useTTS } from '../useTTS';
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 describe('useTTS', () => {
   const mockSpeak = vi.fn();
   const mockCancel = vi.fn();
@@ -112,7 +116,7 @@ describe('useTTS', () => {
       if (utterance.onerror) utterance.onerror(new Event('error') as SpeechSynthesisErrorEvent);
     });
 
-    expect(result.current.error).toBe('Native text-to-speech failed.');
+    expect(result.current.error).toBe('ttsErrorFailed');
     expect(result.current.isSpeaking).toBe(false);
   });
 
@@ -125,6 +129,6 @@ describe('useTTS', () => {
       result.current.speak('Test', 'en');
     });
 
-    expect(result.current.error).toBe('Text-to-speech not supported in this browser.');
+    expect(result.current.error).toBe('ttsErrorNotSupported');
   });
 });
