@@ -115,7 +115,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
     isSupported: isShakeSupported,
     permissionGranted: shakePermissionGranted,
     requestPermission: requestShakePermission,
-  } = useShake(() => { });
+  } = useShake(() => {});
 
   const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
   const { level, dischargeRate } = useBattery();
@@ -359,9 +359,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                       onChange={(e) =>
                         editingContactId
                           ? setEditingContactData({
-                            ...editingContactData!,
-                            relation: e.target.value,
-                          })
+                              ...editingContactData!,
+                              relation: e.target.value,
+                            })
                           : setNewContact({ ...newContact, relation: e.target.value })
                       }
                       className="w-full px-3 py-2 border rounded-md dark:bg-gray-600 dark:border-gray-500"
@@ -484,12 +484,18 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex flex-col">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Battery Health</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Battery Health
+                    </span>
                     <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {dischargeRate ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour` : 'Calculating discharge rate...'}
+                      {dischargeRate
+                        ? `Discharging: ${Math.abs(dischargeRate * 100).toFixed(1)}% / hour`
+                        : 'Calculating discharge rate...'}
                     </span>
                   </div>
-                  <span className={`text-lg font-bold ${level < 0.2 ? 'text-red-500' : 'text-green-500'}`}>
+                  <span
+                    className={`text-lg font-bold ${level < 0.2 ? 'text-red-500' : 'text-green-500'}`}
+                  >
                     {(level * 100).toFixed(0)}%
                   </span>
                 </div>
@@ -743,8 +749,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
                     if (!('NDEFReader' in window)) {
                       alert(
                         'NFC is not supported on this device/browser. Try using Chrome on Android, or a dedicated NFC Tools app to write this URL: ' +
-                        window.location.href +
-                        '?emergency=true'
+                          window.location.href +
+                          '?emergency=true'
                       );
                       return;
                     }

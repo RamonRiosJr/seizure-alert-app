@@ -15,12 +15,14 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [preventSleep, setPreventSleep] = useLocalStorage<boolean>('prevent_sleep', false);
 
   return (
-    <SettingsContext.Provider value={{
-      lowPowerMode,
-      setLowPowerMode,
-      preventSleep,
-      setPreventSleep
-    }}>
+    <SettingsContext.Provider
+      value={{
+        lowPowerMode,
+        setLowPowerMode,
+        preventSleep,
+        setPreventSleep,
+      }}
+    >
       {children}
     </SettingsContext.Provider>
   );

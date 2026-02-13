@@ -58,7 +58,7 @@ export const useBattery = () => {
 
     // Improve accuracy by keeping only last 60 minutes of data
     const oneHourAgo = now - 60 * 60 * 1000;
-    batteryHistory = batteryHistory.filter(p => p.time > oneHourAgo);
+    batteryHistory = batteryHistory.filter((p) => p.time > oneHourAgo);
 
     if (batteryHistory.length < 2) return null;
 
@@ -76,10 +76,9 @@ export const useBattery = () => {
     return parseFloat((levelDiff / timeDiffHours).toFixed(3));
   };
 
-
   useEffect(() => {
     if (!isSupported) {
-      // console.warn('[useBattery] Battery Status API not supported'); 
+      // console.warn('[useBattery] Battery Status API not supported');
       // check if we want to log this warning or just fail silently
       return;
     }
@@ -96,7 +95,7 @@ export const useBattery = () => {
           charging: batteryManager.charging,
           chargingTime: batteryManager.chargingTime,
           dischargingTime: batteryManager.dischargingTime,
-          dischargeRate: rate
+          dischargeRate: rate,
         });
       }
     };
