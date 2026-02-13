@@ -35,11 +35,17 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 - **Funciona Sin Conexión:** Incluso si no tienes internet, las instrucciones de voz siguen funcionando.
 - **Info Médica:** Muestra tu Nombre, Tipo de Sangre y Alergias en la pantalla.
 
-### 🤖 "Aura" - Tu Asistente de IA
+### 🔋 Gestión de Energía de Grado Empresarial
 
-- **Haz Preguntas:** "Aura" es un asistente inteligente dentro de la app.
-- **Voz o Texto:** Tú o un ayudante pueden hacer preguntas como "¿Qué hago de manera segura?" usando su voz.
-- **Nota:** Aura necesita una conexión a internet para funcionar.
+- **Telemetría Unificada:** Monitoreo centralizado del estado de la batería, tasas de descarga (% por hora) y tiempo de ejecución estimado.
+- **Continuidad de Sensores:** Integración de la API "Wake Lock" para evitar que el sistema operativo entre en modo de espera durante el monitoreo activo.
+- **Optimización de Rendimiento:** Herísticas de Modo de Bajo Consumo para reducir la carga de CPU fuera de los períodos críticos de monitoreo.
+
+### 🤖 Asistencia Inteligente de Salud
+
+- **IA Consciente del Contexto:** Potenciado por el motor `gemini-1.5-flash` para orientación de primeros auxilios localizada.
+- **Integración Segura:** Un asistente guiado de "Conectar IA Aura" simplifica la integración de claves API con validación automatizada.
+- **Arquitectura de Privacidad:** Modelo de seguridad local-first donde todas las claves y registros se persisten exclusivamente en el almacenamiento local seguro.
 
 ### ⚙️ Fácil de Instalar (PWA)
 
@@ -58,22 +64,20 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 ---
 
-## 🚧 Estado: Compatibilidad Móvil y PWA (Correcciones Activas)
+## 🚀 Disponibilidad de la Plataforma
 
-> **⚠️ NOTA IMPORTANTE PARA USUARIOS MÓVILES:**
-> Actualmente, la función **"Instalar App" (PWA)** puede no estar funcionando correctamente en algunos dispositivos móviles (iPhone/Android). Estamos investigando esto lo antes posible.
->
-> **Solución Temporal:**
->
-> 1. Abre el enlace en tu navegador (Chrome/Safari).
-> 2. **Marca la página como favorita** para un acceso rápido.
-> 3. Escribe "Aura Speaks" en la barra de tu navegador para encontrarla rápidamente.
+Aura Speaks AI está diseñado para ofrecer fiabilidad de grado de producción en entornos web y móviles modernos.
 
-**Estado Actual:**
+- **✅ Certificación PWA:** Instalable en iOS (Safari) y Android (Chrome) con capacidades completas sin conexión.
+- **✅ Núcleo Globalizado:** Soporte de internacionalización (i18n) endurecido para inglés y español (Listo para regulaciones).
+- **✅ Rendimiento Optimizado:** Ajustado para respuesta de baja latencia en iPhone 11+ y hardware Android contemporáneo.
+- **✅ Tipado Seguro:** Implementación 100% TypeScript con cumplimiento arquitectónico estricto.
 
-- **✅ Chrome de Escritorio:** Totalmente Funcional.
-- **✅ Navegadores Móviles:** ¡Instalación PWA arreglada! Ahora puedes instalar la aplicación en tu pantalla de inicio en iOS y Android.
-- **Rendimiento:** Probado en iPhone 11+ y Androids modernos.
+---
+
+## 🗺️ Hoja de Ruta del Proyecto
+
+Consulta nuestra [Hoja de Ruta Técnica](./ROADMAP.md) para conocer las mejoras arquitectónicas planificadas, incluyendo la expansión de la cobertura de pruebas y la integración con dispositivos wearables.
 
 ---
 
