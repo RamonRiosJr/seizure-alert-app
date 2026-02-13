@@ -20,6 +20,7 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 - [ ] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
+- [ ] **Dashboard Transformation**: Transition from a button-heavy ReadyScreen to a modular **"Health Command Center"** with a Bottom Navigation Bar for primary app domains.
 - [ ] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
 
 ## ✨ Phase 3: Strategic Feature Set
@@ -47,6 +48,15 @@ Developing Aura into a holistic management platform for patient and caregiver sy
   - End-to-end encryption for any PHI (Protected Health Information) delivered via automated internal mailers to ensure audit readiness.
 - [ ] **Proactive AI Reminders**:
   - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
+
+## 🎨 Phase 5: Aura Design System (UX/UI Evolution)
+
+Finalizing a premium, clinical-grade aesthetic that rivals top-tier medical PWA/Mobile apps.
+
+- [ ] **Modern Navigation Framework**: Implementation of a persistent Bottom Tab Bar (Dashboard, Meds, Calendar, Settings).
+- [ ] **Adaptive "Panic" Interaction**: Moving the Emergency button to a high-visibility but non-obstructive location (e.g., Floating Action Button or dedicated Nav anchor).
+- [ ] **Component Library Migration**: Leveraging **Shadcn/UI** or **Headless UI** for standardized, accessible, and themeable UI components (Modals, Tabs, Cards).
+- [ ] **Glassmorphism & Micro-animations**: Enhancing the "Premium" feel with subtle depth, blur effects, and state-change animations to reduce patient anxiety.
 
 ---
 
