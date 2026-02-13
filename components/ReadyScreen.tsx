@@ -35,12 +35,13 @@ const ReadyScreen: React.FC = () => {
             </span>
           </button>
 
-          {/* Chatbot Trigger - 1 o'clock position */}
+          {/* AI Health Assistant Trigger */}
           <button
             onClick={() => openModal('chat')}
-            className="absolute top-0 right-0 transform -translate-y-2 translate-x-2 bg-blue-600 text-white p-0 w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-400 z-10 font-black text-lg"
-            aria-label="Open AI Health Assistant"
+            className="fixed bottom-24 right-6 p-4 rounded-full bg-blue-600/20 border border-blue-400/30 backdrop-blur-md shadow-lg hover:scale-110 active:scale-90 transition-all z-40 group"
+            aria-label={t('ariaOpenChat')}
           >
+            {/* Icon or text for the AI button */}
             {t('aiButton')}
           </button>
         </div>
@@ -95,7 +96,11 @@ const BatteryStatusCard: React.FC = () => {
       }}
       role="button"
       tabIndex={0}
-      aria-label={`Battery ${percentage}%, ${charging ? 'charging' : 'discharging'}. Tap to open battery settings.`}
+      aria-label={t('ariaBatteryStatus', {
+        percentage,
+        status: charging ? t('batteryCharging') : t('batteryDischarging'),
+        action: t('batteryTapSettings'),
+      })}
       className={`mt-6 w-full max-w-md cursor-pointer transition-all hover:scale-105 active:scale-95 rounded-xl border-2 ${borderColor} ${bgColor} backdrop-blur-sm p-4 shadow-lg`}
     >
       <div className="flex items-center justify-between mb-3">
@@ -105,7 +110,7 @@ const BatteryStatusCard: React.FC = () => {
           ) : (
             <Battery className="w-6 h-6" />
           )}
-          {t('batteryHealth') || 'Battery Health'}
+          {t('batteryHealth')}
         </h3>
         <span className="text-2xl font-bold">{percentage}%</span>
       </div>
@@ -115,16 +120,16 @@ const BatteryStatusCard: React.FC = () => {
         {charging && (
           <div className="flex items-center gap-2 text-green-400">
             <Zap className="w-4 h-4 fill-green-400" />
-            <span className="font-semibold">{t('charging') || 'Charging'}</span>
+            <span className="font-semibold">{t('batteryCharging')}</span>
           </div>
         )}
 
         {/* Discharge Rate */}
         {!charging && dischargeRate && dischargeRate < 0 && (
           <div className="flex items-center justify-between opacity-90">
-            <span>{t('drainRate') || 'Drain Rate'}:</span>
+            <span>{t('drainRate')}</span>
             <span className="font-mono font-semibold">
-              {Math.abs(dischargeRate * 100).toFixed(1)}% {t('perHour') || 'per hour'}
+              {Math.abs(dischargeRate * 100).toFixed(1)}% {t('perHour')}
             </span>
           </div>
         )}
@@ -132,9 +137,11 @@ const BatteryStatusCard: React.FC = () => {
         {/* Estimated Time Remaining */}
         {estimatedHours && (
           <div className="flex items-center justify-between opacity-90">
-            <span>{t('estTime') || 'Est. Time'}:</span>
+            <span>{t('estTime')}</span>
             <span className="font-semibold">
-              ~{Math.floor(estimatedHours)}h {Math.round((estimatedHours % 1) * 60)}m
+              ~{Math.floor(estimatedHours)}
+              {t('hoursShort')} {Math.round((estimatedHours % 1) * 60)}
+              {t('minutesShort')}
             </span>
           </div>
         )}
@@ -143,7 +150,9 @@ const BatteryStatusCard: React.FC = () => {
         {lowPowerMode && (
           <div className="flex items-center gap-2 text-green-400 mt-2 pt-2 border-t border-white/10">
             <span className="text-lg">💚</span>
-            <span className="font-semibold">{t('lowPowerMode') || 'Low Power Mode'}: ON</span>
+            <span className="font-semibold">
+              {t('lowPowerMode')}: {t('statusOn')}
+            </span>
           </div>
         )}
 
@@ -151,14 +160,14 @@ const BatteryStatusCard: React.FC = () => {
         {preventSleep && (
           <div className="flex items-center gap-2 text-amber-400 mt-2 pt-2 border-t border-white/10">
             {preventSleep ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
-            <span className="font-semibold">{t('screenLock') || 'Screen Lock'}: Prevented</span>
+            <span className="font-semibold">
+              {t('preventSleep')}: {t('statusPrevented')}
+            </span>
           </div>
         )}
       </div>
 
-      <p className="text-xs opacity-60 mt-3 text-center">
-        {t('tapForSettings') || 'Tap to open Battery Settings'}
-      </p>
+      <p className="text-xs opacity-60 mt-3 text-center">{t('tapForSettings')}</p>
     </div>
   );
 };

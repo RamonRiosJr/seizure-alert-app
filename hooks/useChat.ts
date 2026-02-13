@@ -119,11 +119,11 @@ export const useChat = (language: Language) => {
       } catch (e: unknown) {
         const err = e as { message?: string };
         console.error('Gemini API error:', err);
-        let errorMessage = 'Sorry, connection failed. Please check your API Key in Settings.';
+        let errorMessage = t('chatErrorConnection');
         if (err.message?.includes('401') || err.message?.includes('API key')) {
-          errorMessage = 'Error: Invalid API Key. Please update it in Settings.';
+          errorMessage = t('chatErrorInvalidKey');
         } else if (err.message?.includes('quota') || err.message?.includes('429')) {
-          errorMessage = 'Error: Usage limit exceeded. Please try again later.';
+          errorMessage = t('chatErrorQuota');
         }
 
         setError(errorMessage);
