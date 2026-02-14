@@ -71,7 +71,6 @@ export const useFallDetectionCore = ({
       if (isMonitoringRef.current) {
         // If movement detected (variance from 1G > 2)
         if (Math.abs(gForce - 9.8) > 2) {
-          console.log(`Movement detected during stillness check: ${gForce.toFixed(2)}`);
           setIsMonitoringStillness(false);
           isMonitoringRef.current = false;
           setLastImpactTime(0);
@@ -81,7 +80,6 @@ export const useFallDetectionCore = ({
       // Impact Detection Phase
       else {
         if (gForce > thresholds.impact) {
-          console.log(`High Impact Detected: ${gForce.toFixed(2)}`);
           setLastImpactTime(Date.now());
           setIsMonitoringStillness(true);
           isMonitoringRef.current = true;
