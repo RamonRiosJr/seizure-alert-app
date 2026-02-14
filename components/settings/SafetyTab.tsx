@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Switch } from '../ui/Switch';
 import { useTranslation } from 'react-i18next';
-import { Bell, Pencil, Save, Volume2, VolumeX } from 'lucide-react';
+import { Bell, Pencil, Save, Volume2, VolumeX, Mic } from 'lucide-react';
+import { useSettings } from '../../contexts/SettingsContext';
 import { SettingShake } from './SettingShake';
 import { SettingFallDetection } from './SettingFallDetection';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
@@ -45,6 +46,7 @@ const AlertMessageEditor = () => {
 
 export const SafetyTab: React.FC = () => {
   const { t } = useTranslation();
+  const { voiceActivationEnabled, setVoiceActivationEnabled, picovoiceAccessKey } = useSettings();
   const [sirenEnabled, setSirenEnabled] = useLocalStorage('siren_enabled', true);
   const [isPreviewing, setIsPreviewing] = useState(false);
   const { startAlert, stopAlert } = useEmergencyAlert();
@@ -112,6 +114,27 @@ export const SafetyTab: React.FC = () => {
       <SettingShake />
 
       <SettingFallDetection />
+
+      <Card>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div
+              className={`p-2 rounded-lg transition-colors ${voiceActivationEnabled ? 'bg-blue-500/20 text-blue-400' : 'bg-slate-800 text-slate-500'}`}
+            >
+              <Mic className="h-5 w-5" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-slate-200 font-medium">Hands-Free Trigger</span>
+              <p className="text-xs text-slate-500">Start alert by saying "Hey Aura"</p>
+            </div>
+          </div>
+          <Switch
+            checked={voiceActivationEnabled}
+            onCheckedChange={setVoiceActivationEnabled}
+            disabled={!picovoiceAccessKey}
+          />
+        </div>
+      </Card>
 
       <section>
         <h3 className="text-xl font-semibold mb-4 text-white flex items-center gap-2 px-1">

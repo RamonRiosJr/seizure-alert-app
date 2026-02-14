@@ -27,7 +27,19 @@ describe('useHeartMonitor', () => {
     vi.setSystemTime(new Date('2024-01-01T00:00:00Z')); // Ensure Date.now() is not 0
     vi.clearAllMocks();
     (useBLEContext as Mock).mockReturnValue(mockBLEState);
-    (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: false });
+    const mockSettings: SettingsContext.SettingsContextType = {
+      lowPowerMode: false,
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'care',
+      setActiveTab: vi.fn(),
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    (SettingsContext.useSettings as Mock).mockReturnValue(mockSettings);
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
       // Simple mock implementation of useLocalStorage
       if (key === 'hrThreshold') return [120, vi.fn()];
@@ -83,7 +95,19 @@ describe('useHeartMonitor', () => {
   });
 
   it('should throttle HR checks when Low Power Mode is enabled', () => {
-    (SettingsContext.useSettings as Mock).mockReturnValue({ lowPowerMode: true });
+    const mockLowPowerSettings: SettingsContext.SettingsContextType = {
+      lowPowerMode: true,
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'care',
+      setActiveTab: vi.fn(),
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    (SettingsContext.useSettings as Mock).mockReturnValue(mockLowPowerSettings);
 
     // 1. Initial HR below threshold (Processed, No Alert)
     (useBLEContext as Mock).mockReturnValue({ ...mockBLEState, heartRate: 100 });

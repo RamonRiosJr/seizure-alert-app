@@ -37,19 +37,36 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string, def?: string) => def || key }),
 }));
 
+vi.mock('../../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(() => {
+    const mockSettings: SettingsContextType = {
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+      lowPowerMode: false,
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'ai',
+      setActiveTab: vi.fn(),
+    };
+    return mockSettings;
+  }),
+}));
+
+import { useSettings, SettingsContextType } from '../../../contexts/SettingsContext';
+
 describe('AIHubTab', () => {
   it('renders AI info and beta warnings', () => {
     render(<AIHubTab />);
     expect(screen.getByRole('heading', { name: /Aura Intelligence/i })).toBeDefined();
-    expect(
-      screen.getByText((content) => content.includes('Requires a Gemini API Key'))
-    ).toBeDefined();
-    expect(screen.getByTestId('ui-button')).toBeDefined();
+    expect(screen.getByLabelText(/Picovoice Access Key/i)).toBeDefined();
   });
 
-  it('renders coming soon features as disabled', () => {
+  it('renders voice activation features as disabled when no key', () => {
     render(<AIHubTab />);
-    expect(screen.getByText(/Voice Activation/i)).toBeDefined();
+    expect(screen.getByText(/Hands-Free Trigger/i)).toBeDefined();
     const voiceSwitch = screen.getByTestId('ui-switch');
     expect(voiceSwitch).toBeDisabled();
   });

@@ -7,14 +7,39 @@ import { useSettings } from '../contexts/SettingsContext';
 import { Battery, BatteryCharging, Zap, Lock, Unlock } from 'lucide-react';
 
 import { useUI } from '../contexts/UIContext';
+import { useWakeWord } from '../hooks/useWakeWord';
+import { Mic, MicOff } from 'lucide-react';
 
 const ReadyScreen: React.FC = () => {
   const { language } = useLanguage();
   const { setScreen, openModal } = useUI();
   const { t } = useTranslation();
+  const { isListening } = useWakeWord();
 
   return (
     <div className="relative flex flex-col items-center justify-center h-dvh w-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white text-center p-4 overflow-hidden">
+      {/* Voice Activation Status */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20">
+        <div
+          className={`flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all duration-500 ${isListening ? 'bg-blue-500/10 border-blue-400/50 text-blue-400' : 'bg-slate-800/50 border-slate-700/50 text-slate-500'}`}
+        >
+          {isListening ? (
+            <>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              <Mic className="w-3 h-3" />
+              Aura is Listening
+            </>
+          ) : (
+            <>
+              <MicOff className="w-3 h-3" />
+              Voice Trigger Off
+            </>
+          )}
+        </div>
+      </div>
       <main className="flex flex-col items-center justify-center flex-grow min-h-0 -mt-16">
         <img
           src={language === 'es' ? 'Aura-Habla-IA.png' : 'Aura-Speaks-AI.png'}

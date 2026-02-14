@@ -15,8 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Settings UI Modularization**:
   - Refactored monolithic `SettingsScreen` into `SettingsHub` with atomic tabs (`SystemTab`, `ProfileTab`, `AlertsTab`).
   - Implemented scalable tab navigation architecture.
+- **Voice Activation ("Hey Aura")**:
+  - Integrated Picovoice Porcupine for local, privacy-first wake-word detection.
+  - Implemented `useWakeWord` hook and `GlobalWakeWordListener` for persistent, hands-free triggering.
+  - Added visual "Aura is Listening" indicator to the `ReadyScreen`.
+  - Integrated voice activation controls into `AIHubTab` and `SafetyTab`.
 
-## [0.2.0] - 2026-02-13
+## [0.2.0] - 2026-02-13 (i18n & Telemetry)
 
 ### Added
 

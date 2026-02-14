@@ -13,6 +13,7 @@ import { InstallPrompt } from './components/InstallPrompt';
 import { UpdateNotification } from './components/UpdateNotification';
 import { AppRouter } from './router/AppRouter';
 import { GlobalListeners } from './components/layout/GlobalListeners';
+import { GlobalWakeWordListener } from './components/layout/GlobalWakeWordListener';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
 import { GlobalErrorBoundary } from './components/GlobalErrorBoundary';
@@ -59,6 +60,7 @@ function App() {
           >
             {/* Non-visual logic listeners */}
             <GlobalListeners />
+            <GlobalWakeWordListener />
             <OfflineIndicator />
 
             {/* Layout Elements */}

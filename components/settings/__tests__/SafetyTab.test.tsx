@@ -1,8 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { SafetyTab } from '../SafetyTab';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
-// Mock Setting components
+// Mock UI components
 vi.mock('../SettingShake', () => ({
   SettingShake: () => <div data-testid="setting-shake">Shake Settings</div>,
 }));
@@ -20,6 +18,7 @@ vi.mock('lucide-react', () => ({
   Save: () => <div data-testid="icon-save" />,
   Volume2: () => <div data-testid="icon-volume2" />,
   VolumeX: () => <div data-testid="icon-volumex" />,
+  Mic: () => <div data-testid="icon-mic" />,
 }));
 
 // Mock hooks
@@ -35,10 +34,17 @@ vi.mock('../../../hooks/useEmergencyAlert', () => ({
   useEmergencyAlert: vi.fn(),
 }));
 
+vi.mock('../../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+}));
+
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 
+import { render, screen, fireEvent } from '@testing-library/react';
+import { SafetyTab } from '../SafetyTab';
+import { useSettings, SettingsContextType } from '../../../contexts/SettingsContext';
 import { useEmergencyAlert } from '../../../hooks/useEmergencyAlert';
 
 describe('SafetyTab', () => {
@@ -55,6 +61,19 @@ describe('SafetyTab', () => {
       hasAudioPermission: true,
       attemptResume: vi.fn(),
     });
+    const mockSettings: SettingsContextType = {
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+      lowPowerMode: false,
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'safety',
+      setActiveTab: vi.fn(),
+    };
+    vi.mocked(useSettings).mockReturnValue(mockSettings);
   });
 
   it('renders all safety sections', () => {
