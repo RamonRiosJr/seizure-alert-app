@@ -1,43 +1,82 @@
-# Walkthrough: Phase 16 - Voice Activation ("Hey Aura")
+# Engineering Walkthrough & Development History
+
+This document provides a comprehensive history of the engineering phases, security audits, and quality gates implemented during the development of Aura Speaks AI.
+
+## Overview
+
+This project has undergone rigorous iteration, transitioning from a basic prototype to a medical-grade Progressive Web App with 80+ unit tests, strict TypeScript enforcement, and senior-centric UX design.
+
+---
+
+## 21. Voice Activation ("Hey Aura") Integration (v0.4.0)
 
 Successfully implemented on-device, privacy-first voice activation using **Picovoice Porcupine**. This allows users to trigger emergency alerts hands-free by saying "Hey Aura".
 
-## Key Changes
+### 🎙️ Key Changes
 
-### 1. Global Voice Activation Engine
+- **Global Voice Activation Engine**: Created `useWakeWord` hook and `GlobalWakeWordListener` for persistent, cross-screen listening.
+- **Visual Feedback**: Added a breathing blue indicator to the `ReadyScreen` to show active sensor status.
+- **Privacy-First**: Used Porcupine Web SDK for 100% on-device processing.
+- **Configuration Hub**: Integrated secure Access Key input and feature toggles in `AIHubTab` and `SafetyTab`.
 
-- Created `useWakeWord` hook to manage the Picovoice Porcupine worker.
-- Implemented `GlobalWakeWordListener` in `App.tsx` for persistent listening across all screens.
-- Added a visual indicator on the `ReadyScreen` to show when Aura is listening.
+### ✅ Verification
 
-### 2. User Configuration
+- [x] On-device detection triggers `startAlert()` immediately.
+- [x] Sensors stay in sync across settings tabs via `SettingsContext`.
+- [x] Zero-latency visual feedback on the main dashboard.
 
-- Updated `SettingsContext` to persist the Picovoice Access Key and activation state.
-- Enhanced `AIHubTab` with an Access Key input field and local-processing information.
-- Added a "Hands-Free Trigger" toggle to `SafetyTab`.
+---
 
-### 3. Privacy & Performance
+## 20. Safety Tab & iOS UX Fix (v0.3.8)
 
-- Used **Porcupine Web SDK** for 100% on-device wake-word detection.
-- Audio data never leaves the device, adhering to our "Local First" philosophy.
-- Fixed React effect warnings to ensure efficient battery usage.
+Resolved critical bugs in the Safety tab behavior, enabled safety sensors by default for improved out-of-the-box reliability, and optimized the layout for high-end iOS devices (iPhone 11 Pro Max+).
 
-## Visual Proof
+### 🐛 Bug Fixes
 
-### Ready Screen Indicator
+- **Safety Tab Auto-Trigger:** Refactored `useEmergencyAlert` with an `autoStart` parameter.
+- **Alert Screen Integrity:** Ensured `AlertScreen` correctly passes `autoStart: true` to maintain immediate alarm activation.
 
-The new status bar shows Aura's listening state:
+### ✨ UX & Platform Improvements
 
-- **Blue Breathing Indicator**: "Aura is Listening" (Active)
-- **Grey Icon**: "Voice Trigger Off" (Disabled)
+- **Default Sensors:** Updated `Shake to Alert` and `Fall Detection` to be enabled by default.
+- **iOS Safe Area Support:** Added `viewport-fit=cover` and safe area CSS utilities.
 
-### Settings Integration
+---
 
-Users can securely provide their Picovoice Access Key in the AI Hub.
+## 19. Documentation Sync & Reliability (v0.3.7)
 
-## Verification
+Synchronized technical documentation and implemented medical-grade reliability features.
 
-- [x] **Initialization**: Hook correctly initializes only when enabled and key is present.
-- [x] **Detection**: Logic triggers `startAlert()` upon "Hey Aura" (placeholder "Computer" used for local dev).
-- [x] **Cleanup**: Microphone and workers are properly terminated when disabled or on unmount.
-- [x] **UI Sync**: Toggles in `AIHubTab` and `SafetyTab` stay in sync via `SettingsContext`.
+- **Global Error Boundary:** Refactored into a premium `GlobalErrorBoundary` with senior-friendly recovery options.
+- **Content Security Policy (CSP):** Tightened headers to authorize essential services (Gemini, Google Fonts).
+
+---
+
+## 18. Coverage Recovery & QA (v0.3.6)
+
+Implemented comprehensive testing for the new modular architecture.
+
+- **Line Coverage:** 78.12%
+- **Function Coverage:** 69.00%
+
+---
+
+## 17. Senior-Centric UX Reorganization (v0.3.5)
+
+Reorganized 15+ settings into 5 action-oriented categories: **Safety First**, **My People**, **My Devices**, **Aura Brain**, and **Phone Care**.
+
+---
+
+## 11. Settings UI Modularization (v0.3.0)
+
+Refactored the monolithic `SettingsScreen.tsx` into a modular, tab-based "Hub and Spoke" architecture.
+
+---
+
+## 6. Strict Type Safety
+
+Enforced zero-tolerance for `any` types. Updated hardware hooks (`useShake`, `useEmergencyAlert`) and test mocks to use precise TypeScript generics.
+
+---
+
+_(Historical logs from phases 1-10 are archived in internal development records.)_
