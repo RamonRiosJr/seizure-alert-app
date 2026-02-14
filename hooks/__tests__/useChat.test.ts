@@ -27,6 +27,13 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
+// Mock useContextAwarePrompt
+vi.mock('../useContextAwarePrompt', () => ({
+  useContextAwarePrompt: () => ({
+    getContextString: () => 'Mock Context',
+  }),
+}));
+
 describe('useChat', () => {
   beforeEach(() => {
     window.localStorage.clear();

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useChat } from '../hooks/useChat';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useSessionStorage } from '../hooks/useSessionStorage';
 import { X, Send, Mic, Sparkles, User, Flag, Trash2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   const { transcript, isListening, startListening, hasRecognitionSupport } = useSpeechRecognition();
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
   const [showPriorityOptions, setShowPriorityOptions] = useState(false);
-  const [apiKey] = useLocalStorage<string>('gemini_api_key', '');
+  const [apiKey] = useSessionStorage<string>('gemini_api_key', '');
   const { t } = useTranslation();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);

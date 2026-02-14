@@ -68,8 +68,9 @@ describe('ApiKeyWizard', () => {
       expect(mockOnClose).toHaveBeenCalled();
     });
 
-    // Check localStorage
-    expect(localStorage.getItem('gemini_api_key')).toBe(JSON.stringify('AIzaTestKey123'));
+    // Check sessionStorage (moved for security)
+    expect(sessionStorage.getItem('gemini_api_key')).toBe(JSON.stringify('AIzaTestKey123'));
+    expect(localStorage.getItem('gemini_api_key')).toBeNull();
   });
 
   it('handles invalid key input', async () => {
@@ -96,6 +97,7 @@ describe('ApiKeyWizard', () => {
 
     // Ensure success was NOT called
     expect(mockOnSuccess).not.toHaveBeenCalled();
+    expect(sessionStorage.getItem('gemini_api_key')).toBeNull();
     expect(localStorage.getItem('gemini_api_key')).toBeNull();
   });
 });
