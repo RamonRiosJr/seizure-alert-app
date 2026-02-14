@@ -87,7 +87,7 @@ vi.mock('../../hooks/useLocalStorage', () => ({
   useLocalStorage: (key: string, init: unknown) => [init, vi.fn()],
 }));
 
-import { useSettings } from '../../contexts/SettingsContext';
+import { useSettings, SettingsContextType } from '../../contexts/SettingsContext';
 
 describe('SettingsScreen', () => {
   const mockSetActiveTab = vi.fn();
@@ -96,14 +96,19 @@ describe('SettingsScreen', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useSettings).mockReturnValue({
+    const mockSettings: SettingsContextType = {
       lowPowerMode: false,
       setLowPowerMode: mockSetLowPowerMode,
       preventSleep: false,
       setPreventSleep: mockSetPreventSleep,
       activeTab: 'profile',
       setActiveTab: mockSetActiveTab,
-    });
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    vi.mocked(useSettings).mockReturnValue(mockSettings);
   });
 
   it('renders correctly when open', () => {

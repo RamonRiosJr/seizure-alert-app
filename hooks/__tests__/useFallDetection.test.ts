@@ -22,9 +22,19 @@ describe('useFallDetection', () => {
     localStorage.clear();
 
     // Default mock implementation
-    (SettingsContext.useSettings as Mock).mockReturnValue({
+    const mockSettings: SettingsContext.SettingsContextType = {
       lowPowerMode: false,
-    });
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'care',
+      setActiveTab: vi.fn(),
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    (SettingsContext.useSettings as Mock).mockReturnValue(mockSettings);
   });
 
   afterEach(() => {
@@ -104,9 +114,19 @@ describe('useFallDetection', () => {
 
   it('should throttle motion events when Low Power Mode is enabled', () => {
     // Enable Low Power Mode
-    (SettingsContext.useSettings as Mock).mockReturnValue({
+    const mockLowPowerSettings: SettingsContext.SettingsContextType = {
       lowPowerMode: true,
-    });
+      setLowPowerMode: vi.fn(),
+      preventSleep: false,
+      setPreventSleep: vi.fn(),
+      activeTab: 'care',
+      setActiveTab: vi.fn(),
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    (SettingsContext.useSettings as Mock).mockReturnValue(mockLowPowerSettings);
     localStorage.setItem('fallDetectionEnabled', 'true');
     renderHook(() => useFallDetection(mockOnFallDetected));
 

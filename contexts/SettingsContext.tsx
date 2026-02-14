@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-interface SettingsContextType {
+export interface SettingsContextType {
   lowPowerMode: boolean;
   setLowPowerMode: (value: boolean) => void;
   preventSleep: boolean;

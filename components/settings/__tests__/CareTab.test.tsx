@@ -47,7 +47,7 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-import { useSettings } from '../../../contexts/SettingsContext';
+import { useSettings, SettingsContextType } from '../../../contexts/SettingsContext';
 
 describe('CareTab', () => {
   const mockSetLowPowerMode = vi.fn();
@@ -55,14 +55,19 @@ describe('CareTab', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useSettings).mockReturnValue({
+    const mockSettings: SettingsContextType = {
       lowPowerMode: false,
       setLowPowerMode: mockSetLowPowerMode,
       preventSleep: false,
       setPreventSleep: mockSetPreventSleep,
       activeTab: 'care',
       setActiveTab: vi.fn(),
-    });
+      voiceActivationEnabled: false,
+      setVoiceActivationEnabled: vi.fn(),
+      picovoiceAccessKey: '',
+      setPicovoiceAccessKey: vi.fn(),
+    };
+    vi.mocked(useSettings).mockReturnValue(mockSettings);
   });
 
   it('renders phone care sections', () => {
