@@ -32,12 +32,12 @@ describe('useFallDetectionCore Performance', () => {
 
     // Simulate 60 events in 1 second (16.6ms intervals)
     for (let i = 0; i < 60; i++) {
-        act(() => {
-             vi.advanceTimersByTime(16);
-             handleMotion({
-                accelerationIncludingGravity: { x: 0, y: 9.8 + (i % 2) * 0.1, z: 0 },
-            } as unknown as DeviceMotionEvent);
-        });
+      act(() => {
+        vi.advanceTimersByTime(16);
+        handleMotion({
+          accelerationIncludingGravity: { x: 0, y: 9.8 + (i % 2) * 0.1, z: 0 },
+        } as unknown as DeviceMotionEvent);
+      });
     }
 
     expect(onSensorReading.mock.calls.length).toBeGreaterThanOrEqual(9);
@@ -60,28 +60,28 @@ describe('useFallDetectionCore Performance', () => {
 
     // 1. Initial event (Updates)
     act(() => {
-        vi.advanceTimersByTime(16);
-        handleMotion({
-            accelerationIncludingGravity: { x: 0, y: 9.8, z: 0 },
-        } as unknown as DeviceMotionEvent);
+      vi.advanceTimersByTime(16);
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 9.8, z: 0 },
+      } as unknown as DeviceMotionEvent);
     });
     expect(onSensorReading).toHaveBeenCalledTimes(1);
 
     // 2. Second event (Throttled)
     act(() => {
-        vi.advanceTimersByTime(16);
-        handleMotion({
-            accelerationIncludingGravity: { x: 0, y: 9.8, z: 0 },
-        } as unknown as DeviceMotionEvent);
+      vi.advanceTimersByTime(16);
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 9.8, z: 0 },
+      } as unknown as DeviceMotionEvent);
     });
     expect(onSensorReading).toHaveBeenCalledTimes(1); // Still 1
 
     // 3. IMPACT event (Should FORCE Update)
     act(() => {
-        vi.advanceTimersByTime(16);
-        handleMotion({
-            accelerationIncludingGravity: { x: 0, y: 30, z: 0 },
-        } as unknown as DeviceMotionEvent);
+      vi.advanceTimersByTime(16);
+      handleMotion({
+        accelerationIncludingGravity: { x: 0, y: 30, z: 0 },
+      } as unknown as DeviceMotionEvent);
     });
     expect(onSensorReading).toHaveBeenCalledTimes(2); // Should be 2 now
     expect(onSensorReading).toHaveBeenLastCalledWith(30);
