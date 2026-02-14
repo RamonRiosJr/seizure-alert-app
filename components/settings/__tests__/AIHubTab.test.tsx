@@ -55,7 +55,7 @@ vi.mock('../../../contexts/SettingsContext', () => ({
   }),
 }));
 
-import { useSettings, SettingsContextType } from '../../../contexts/SettingsContext';
+import { SettingsContextType } from '../../../contexts/SettingsContext';
 
 describe('AIHubTab', () => {
   it('renders AI info and beta warnings', () => {

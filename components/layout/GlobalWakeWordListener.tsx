@@ -7,6 +7,7 @@ import { useWakeWord } from '../../hooks/useWakeWord';
  */
 export const GlobalWakeWordListener: React.FC = () => {
   // Activating the hook at the top level
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isListening, error } = useWakeWord();
 
   // Log errors globally for debugging in dev

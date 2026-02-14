@@ -23,7 +23,7 @@ vi.mock('../../contexts/BLEContext', () => ({
 // Mock useTranslation
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string, options?: any) => {
+    t: (key: string, options?: Record<string, string | number>) => {
       // Handle keys with options manually
       if (key === 'ariaBatteryStatus' && options) {
         return `Battery ${options.percentage}%, ${options.status}, ${options.action}`;
@@ -47,15 +47,15 @@ vi.mock('react-i18next', () => ({
 
 // Mock lucide-react icons
 vi.mock('lucide-react', () => ({
-  Settings: (props: any) => <div data-testid="icon-settings" {...props} />,
-  ClipboardList: (props: any) => <div data-testid="icon-clipboard" {...props} />,
-  AlertTriangle: (props: any) => <div data-testid="icon-alert" {...props} />,
-  Heart: (props: any) => <div data-testid="icon-heart" {...props} />,
-  Coffee: (props: any) => <div data-testid="icon-coffee" {...props} />,
-  Battery: (props: any) => <div data-testid="icon-battery" {...props} />,
-  Zap: (props: any) => <div data-testid="icon-zap" {...props} />,
-  Bluetooth: (props: any) => <div data-testid="icon-bluetooth" {...props} />,
-  BluetoothSearching: (props: any) => <div data-testid="icon-bluetooth-searching" {...props} />,
+  Settings: (props: Record<string, unknown>) => <div data-testid="icon-settings" {...props} />,
+  ClipboardList: (props: Record<string, unknown>) => <div data-testid="icon-clipboard" {...props} />,
+  AlertTriangle: (props: Record<string, unknown>) => <div data-testid="icon-alert" {...props} />,
+  Heart: (props: Record<string, unknown>) => <div data-testid="icon-heart" {...props} />,
+  Coffee: (props: Record<string, unknown>) => <div data-testid="icon-coffee" {...props} />,
+  Battery: (props: Record<string, unknown>) => <div data-testid="icon-battery" {...props} />,
+  Zap: (props: Record<string, unknown>) => <div data-testid="icon-zap" {...props} />,
+  Bluetooth: (props: Record<string, unknown>) => <div data-testid="icon-bluetooth" {...props} />,
+  BluetoothSearching: (props: Record<string, unknown>) => <div data-testid="icon-bluetooth-searching" {...props} />,
 }));
 
 import { useUI } from '../../contexts/UIContext';
