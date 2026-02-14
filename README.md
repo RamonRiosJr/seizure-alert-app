@@ -106,18 +106,22 @@ Built with modern, production-grade tools to ensure speed, safety, and scalabili
 
 ---
 
-## 🏗️ Architecture & Standards
+## 🏗️ Engineering & Documentation
 
-This project follows **Clean Architecture** principles and **Modern Git Flow**:
+This project follows **Clean Architecture** principles and maintains rigorous medical-grade standards.
 
-### 📂 Modular Structure
+### 📚 Technical Resources
+
+- **[System Architecture](./docs/ARCHITECTURE.md)**: Detailed breakdown of the Hub-and-Spoke settings model and data flow.
+- **[Project Roadmap](./ROADMAP.md)**: Strategic objectives and specialized version development.
+- **[Project Backlog](./BACKLOG.md)**: Mission-critical task tracking and transparency.
+- **[Accessibility (A11y)](./ACCESSIBILITY.md)**: Compliance standards for senior-centric user interfaces.
 
 ### 📂 Modular Structure
 
 - `components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
-- `router`: dedicated `AppRouter` for screen management.
-- `contexts`: State management via React Context (UI, Theme).
-- **[View System Architecture](./docs/ARCHITECTURE.md)**: Detailed breakdown of the Hub-and-Spoke settings model and data flow.
+- `router`: Dedicated `AppRouter` for reactive screen management.
+- `contexts`: State management via React Context (Safety, UI, Theme).
 
 ### 🛡️ Quality Assurance
 
