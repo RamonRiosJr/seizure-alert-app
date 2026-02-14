@@ -55,6 +55,9 @@ export default defineConfig(({ mode: _mode }) => {
             },
           ],
         },
+        workbox: {
+          maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB limit for large AI assets
+        },
         devOptions: {
           enabled: true,
         },

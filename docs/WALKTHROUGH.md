@@ -30,6 +30,7 @@ The integration of voice activation introduced new properties to `SettingsContex
 
 **Final Verification Results:**
 
+- **PWA Build Stabilization**: Increased `maximumFileSizeToCacheInBytes` to 10MB in `vite.config.ts` to allow precaching of the 4.4MB AI-heavy bundle.
 - **Vitest**: 19 test files passed, 81 total tests passed (100% success).
 - **TypeScript**: `npx tsc --noEmit` completed with zero errors across the entire project.
 
