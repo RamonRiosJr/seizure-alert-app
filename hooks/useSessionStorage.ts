@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Logger } from '../services/logger';
 
 export function useSessionStorage<T>(
   key: string,
@@ -12,7 +13,7 @@ export function useSessionStorage<T>(
       const item = window.sessionStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.error(error);
+      Logger.error('Failed to read from sessionStorage', error);
       return initialValue;
     }
   });
@@ -25,7 +26,7 @@ export function useSessionStorage<T>(
         window.sessionStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.error(error);
+      Logger.error('Failed to write to sessionStorage', error);
     }
   };
 
