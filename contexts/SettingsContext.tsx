@@ -1,5 +1,7 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useSessionStorage } from '../hooks/useSessionStorage';
+import { Logger } from '../services/logger';
 
 export interface SettingsContextType {
   lowPowerMode: boolean;
@@ -24,10 +26,30 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     'voice_activation_enabled',
     false
   );
-  const [picovoiceAccessKey, setPicovoiceAccessKey] = useLocalStorage<string>(
+  const [picovoiceAccessKey, setPicovoiceAccessKey] = useSessionStorage<string>(
     'picovoice_access_key',
     ''
   );
+
+  // Migration: Move Picovoice Access Key from localStorage to sessionStorage if it exists
+  useEffect(() => {
+    try {
+      const legacyKey = window.localStorage.getItem('picovoice_access_key');
+      if (legacyKey) {
+        // Only migrate if sessionStorage is currently empty
+        const currentSessionKey = window.sessionStorage.getItem('picovoice_access_key');
+        if (!currentSessionKey || currentSessionKey === '""') {
+          window.sessionStorage.setItem('picovoice_access_key', legacyKey);
+          // Update state to reflect migrated value
+          setPicovoiceAccessKey(JSON.parse(legacyKey));
+        }
+        window.localStorage.removeItem('picovoice_access_key');
+        Logger.info('🔒 Picovoice Access Key migrated to secure session storage.');
+      }
+    } catch (e) {
+      Logger.error('Failed to migrate Picovoice key', e);
+    }
+  }, [setPicovoiceAccessKey]);
 
   return (
     <SettingsContext.Provider

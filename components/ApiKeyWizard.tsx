@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Key, ExternalLink, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Logger } from '../services/logger';
 
 interface ApiKeyWizardProps {
   isOpen: boolean;
@@ -31,12 +32,13 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       await model.generateContent('Hello');
 
-      // If success, save and close
-      localStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
+      // If success, save and close to secure session storage
+      sessionStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
+      localStorage.removeItem('gemini_api_key');
       onSuccess();
       onClose();
     } catch (e: unknown) {
-      console.error('API Verification failed:', e);
+      Logger.error('API Verification failed', e);
       setError('Invalid API Key. Please check and try again.');
     } finally {
       setIsValidating(false);

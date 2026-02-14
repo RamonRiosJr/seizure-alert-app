@@ -56,12 +56,24 @@ export const useChat = (language: Language) => {
 
       let apiKey: string | null = null;
       try {
-        const keyItem = localStorage.getItem('gemini_api_key');
+        // Try session storage first (secure)
+        let keyItem = sessionStorage.getItem('gemini_api_key');
+
+        // Fallback to migration from localStorage
+        if (!keyItem) {
+          keyItem = localStorage.getItem('gemini_api_key');
+          if (keyItem) {
+            sessionStorage.setItem('gemini_api_key', keyItem);
+            localStorage.removeItem('gemini_api_key');
+            Logger.info('🔒 Gemini API Key migrated to secure session storage.');
+          }
+        }
+
         if (keyItem) {
           apiKey = JSON.parse(keyItem);
         }
-      } catch {
-        Logger.error('Could not parse API Key from localStorage');
+      } catch (e) {
+        Logger.error('Could not parse API Key from storage', e);
       }
 
       if (!apiKey) {

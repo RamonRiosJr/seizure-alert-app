@@ -8,7 +8,6 @@ export const generateBackup = () => {
         emergencyContacts: JSON.parse(localStorage.getItem('emergency_contacts') || '[]'),
         patientInfo: JSON.parse(localStorage.getItem('patient_info') || '{}'),
         seizureLogs: JSON.parse(localStorage.getItem('seizure_logs') || '[]'),
-        apiKey: JSON.parse(localStorage.getItem('gemini_api_key') || '""'),
         customAlertMessage: Object.keys(localStorage)
           .filter((key) => key.startsWith('seizure_alert_status_message_'))
           .reduce(
@@ -61,7 +60,6 @@ export const restoreBackup = async (file: File): Promise<{ success: boolean; mes
           localStorage.setItem('patient_info', JSON.stringify(data.patientInfo));
         if (data.seizureLogs)
           localStorage.setItem('seizure_logs', JSON.stringify(data.seizureLogs));
-        if (data.apiKey) localStorage.setItem('gemini_api_key', JSON.stringify(data.apiKey));
 
         // Restore custom messages
         if (data.customAlertMessage) {
