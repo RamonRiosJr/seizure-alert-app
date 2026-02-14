@@ -51,8 +51,8 @@ describe('useChat', () => {
     });
 
     expect(result.current.error).toBeNull();
-    const modelMessages = result.current.messages.filter(m => m.role === 'model');
-    expect(modelMessages.some(m => m.text.includes('Hello from AI'))).toBe(true);
+    const modelMessages = result.current.messages.filter((m) => m.role === 'model');
+    expect(modelMessages.some((m) => m.text.includes('Hello from AI'))).toBe(true);
   });
 
   it('should migrate API key from localStorage to sessionStorage', async () => {
