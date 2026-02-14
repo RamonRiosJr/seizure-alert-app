@@ -17,10 +17,7 @@ import {
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
 import { useTranslation } from 'react-i18next';
-
-// Silent audio MP3 base64 (approx 0.5s of silence)
-const SILENT_AUDIO =
-  'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD//////////////////////////////////////////////////////////////////wAAAP//OEAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAABHAAAARwAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAABHAAAARwAAAAAAAAAAAAAA';
+import { SILENT_AUDIO } from '../constants';
 
 // --- Battery Status Hook ---
 interface BatteryManager extends EventTarget {
