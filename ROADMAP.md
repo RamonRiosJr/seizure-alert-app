@@ -23,6 +23,7 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 - [ ] **Dashboard Transformation**: Transition from a button-heavy ReadyScreen to a modular **"Health Command Center"** with a Bottom Navigation Bar for primary app domains.
 - [ ] **AI-Augmented Development (Jules Integration)**: Leverage the "Jules" AI agent for specialized task execution, focusing on rapid UX prototyping and test coverage expansion via curated Master Prompts.
 - [x] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
+- [ ] **Mandatory PIN Infrastructure**: Implementation of a secure, local-only PIN/Biometric gate for sensitive health domains to satisfy FDA/HIPAA-grade privacy standards.
 
 ## ✨ Phase 3: Strategic Feature Set
 
@@ -50,13 +51,31 @@ Developing Aura into a holistic management platform for patient and caregiver sy
 - [ ] **Compliance-First Email Infrastructure**:
   - Integration of a HIPAA-compliant email bridging service for general app notifications (e.g., weekly health summaries, system alerts).
   - End-to-end encryption for any PHI (Protected Health Information) delivered via automated internal mailers to ensure audit readiness.
-- [ ] **Proactive AI Reminders**:
+- [ ] **Patient 360: Comprehensive Medical Background**:
+  - Longitudinal medical history checklists (Conditions, Surgeries, Hereditary Risks).
+  - Specialized Doctor Directory with full contact telemetry (Type, Address, Web, VoIP).
+  - **Downloadable Health Records (DHR)**: Exportable, standardized PDF/JSON summaries for first-time doctor visits.
+- [ ] **Proactive AI Care Coordination**:
   - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
+  - "Knowledge Base" awareness: Aura can answer "Who is my neurologist?" or "What surgeries have I had?" using the secure Vault data.
 
 ## 🎨 Phase 5: Aura Design System (UX/UI Evolution)
 
 Finalizing a premium, clinical-grade aesthetic that rivals top-tier medical PWA/Mobile apps.
 
+- [ ] **Aura Command Center: Adaptive Grid UI**:
+  - Implementation of a **Dynamic Module Engine** that scales from 3x3 to 4x4.
+  - Guided "User-Friendly" Blocks:
+    - **Block 1: Patient** (Secure Medical Vault/PIN Access)
+    - **Block 2: Contacts** (Emergency Circles)
+    - **Block 3: Safety** (Alert Trigger & Siren Controls)
+    - **Block 4: Aura AI** (Gemini API Configuration & Intelligence)
+    - **Block 5: Devices** (BLE Wearables & Watch Sync)
+    - **Block 6: Phone Care** (Battery Telemetry & Low Power Mode)
+    - **Block 7: Calendars** (Doctor Appointments)
+    - **Block 8: Medication** (Dose Schedules & Reminders)
+    - **Block 9: Doctors** (Rich Specialist Directory)
+  - Auto-scaling heuristics: Maintain 44x44px minimum hit targets as new blocks (Pharmacy/Insurance) are added.
 - [ ] **Modern Navigation Framework**: Implementation of a persistent Bottom Tab Bar (Dashboard, Meds, Calendar, Settings).
 - [ ] **Adaptive "Panic" Interaction**: Moving the Emergency button to a high-visibility but non-obstructive location (e.g., Floating Action Button or dedicated Nav anchor).
 - [ ] **Component Library Migration**: Leveraging **Shadcn/UI** or **Headless UI** for standardized, accessible, and themeable UI components (Modals, Tabs, Cards).
@@ -70,7 +89,23 @@ Infrastructure to support the sustainability of the platform (Free Core + Paid P
 - [ ] **Secure Cloud Backup (Paid Tier)**:
   - End-to-End Encrypted (E2EE) synchronization of patient history to secure cloud storage.
   - "Restore from Cloud" capability for device migration.
-- [ ] **Payment Processing**: Integration of Stripe/RevenueCat for handling the $4.99/mo AI & Backup subscription.
+- [ ] **Payment Processing**: Integration of Stripe/RevenueCat for handling the $4.99/mo AI & Subscription model.
+
+## 🏥 Phase 7: Institutional Ecosystem (Aura 360)
+
+The transformation from a personal tool to a clinical standard.
+
+- [ ] **Clinical Handshake Protocol**: Secure QR-based or ID-based data sharing. Doctors ask: _"Do you have an Aura account?"_ to instantly ingest validated patient history.
+- [ ] **Caregiver Portals**: Multi-role access control (Admin/Caregiver/Viewer) with PIN-gate synchronization.
+- [ ] **Data Interoperability**: Integration with FHIR/HL7 standards for seamless EMR (Electronic Medical Record) syncing.
+
+## 💊 Phase 8: Strategic Partnerships (Pharmacy Integration)
+
+Direct-to-patient service bridges.
+
+- [ ] **Pharmacy Push Hub**: Selective integration with pharmacy APIs (Walgreens, CVS, etc.).
+- [ ] **Automated Med-Ready Alerts**: Soft-push notifications when prescriptions are ready for pickup, integrated into the Aura Calendar.
+- [ ] **Insurance Verification Bridge**: Secure vault for digital insurance cards and pharmacy benefit verification.
 
 ---
 

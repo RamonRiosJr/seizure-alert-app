@@ -20,7 +20,8 @@ export const Switch: React.FC<SwitchProps> = ({
       type="button"
       role="switch"
       id={id}
-      aria-checked={checked}
+      aria-checked={checked ? 'true' : 'false'}
+      aria-label={id || 'Toggle switch'}
       disabled={disabled}
       onClick={() => onCheckedChange(!checked)}
       className={`

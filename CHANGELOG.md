@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2026-02-13
 
-### Added
+### [0.3.0] Features
 
 - **Architecture Documentation**:
   - Published `docs/ARCHITECTURE.md` detailing the Hub-and-Spoke component model and data flow.
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] - 2026-02-13 (i18n & Telemetry)
 
-### Added
+### [0.2.0] Features
 
 - **Localization (i18n) Hardening**:
   - Implemented comprehensive internationalization framework across the platform.

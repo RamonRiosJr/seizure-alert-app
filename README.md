@@ -8,9 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Read in Spanish](https://img.shields.io/badge/Leer_en_Español-🇵🇷-red)](README.es.md)
 
-<div align="center">
-  <img src="public/Aura-Speaks-AI.png" alt="Aura Speaks AI Logo" width="400" />
-</div>
+![Aura Speaks AI Logo](public/Aura-Speaks-AI.png)
 
 > **"When I cannot speak, Aura speaks for me."**
 >
@@ -28,7 +26,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ### 🆘 The "Big Red Button"
 
-<img width="602" height="1127" alt="image" src="https://github.com/user-attachments/assets/8538a33a-df7c-4736-8268-b4ad098e05be" />
+![SOS Button](https://github.com/user-attachments/assets/8538a33a-df7c-4736-8268-b4ad098e05be)
 
 - **One-Tap Help:** Just press the big red button if you feel a seizure coming.
 - **Safe:** You have to slide to cancel, so you don't call by accident.
@@ -37,8 +35,8 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 ### 🏥 Helping the Helpers (Bystanders)
 
-<img width="604" height="1129" alt="image" src="https://github.com/user-attachments/assets/9bbe9509-b0a7-49f1-9d2e-548052609eaa" />
-<img width="599" height="1135" alt="image" src="https://github.com/user-attachments/assets/be8e49b6-5b3d-4b18-a4c4-5f3fb033f113" />
+![Bystander Instructions](https://github.com/user-attachments/assets/9bbe9509-b0a7-49f1-9d2e-548052609eaa)
+![Patient Info Card](https://github.com/user-attachments/assets/be8e49b6-5b3d-4b18-a4c4-5f3fb033f113)
 
 - **Talks for You:** The phone speaks out loud, telling people exactly what to do (like "Turn them on their side").
 - **Works Offline:** Even if you have no internet, the voice instructions still work.
@@ -48,7 +46,10 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 - **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
 - **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
-- **Hub-and-Spoke Settings:** All controls are reorganized into 5 accessible actions: **Safety First**, **My People**, **My Devices**, **Aura AI**, and **Phone Care**.
+- **Adaptive Command Center (Aura 2.0):** Transitions to a high-impact, modular grid system focused on user-friendly navigation. The core blocks include:
+  - **Row 1 (Life Core):** Patient (Medical Vault) | Contacts (Circle of Care) | Safety (Alerts)
+  - **Row 2 (Intelligence):** **Aura AI (Gemini API Field)** | Devices (Hardware) | Phone Care (Battery/Telemetry)
+  - **Row 3 (Clinical):** Calendars | Medication | Doctors (Specialist Directory)
 
 ### 🔋 Enterprise-Grade Power Management
 
@@ -61,6 +62,7 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Context-Aware AI:** Leveraging the `gemini-1.5-flash` engine for localized first aid guidance.
 - **Secure Onboarding:** A guided "Connect Aura AI" wizard simplifies client-side API integration with automated validation.
 - **Privacy-First Architecture:** Zero-trust model where all keys and medical logs are persisted exclusively in secure local storage.
+- **Medical Vault Security:** Mandatory PIN-gate for sensitive patient data, satisfying FDA/HIPAA-grade privacy expectations.
 
 ### 📉 New: Fall Detection Visualizer & Snooze
 
@@ -165,29 +167,11 @@ This project is a labor of love, but it costs money to keep online (servers, AI 
 
 If this tool gives you peace of mind, please consider buying me a coffee to keep it going.
 
-<a href="https://buymeacoffee.com/RamonRiosJr" target="_blank">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
-</a>
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/RamonRiosJr)
 
 **[☕ Click here to Buy Me a Coffee](https://buymeacoffee.com/RamonRiosJr)**
 
 ---
-
-## ✨ Meet the Creator
-
-<div align="center">
-  <img src="public/Ramon Rios.png" alt="Ramon Rios" width="150" style="border-radius: 50%; border: 4px solid #b91c1c; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" />
-  
-  <br />
-  <br />
-
-> **"We cannot control the challenges we face, but we can control how we respond. Let this tool be your voice when you need it most."**
->
-> — _Ramon Rios Jr_
-
-</div>
-
-<br />
 
 ---
 
