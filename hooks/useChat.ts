@@ -15,7 +15,7 @@ export const useChat = (language: Language) => {
     try {
       const saved = localStorage.getItem('chat_history');
       return saved ? JSON.parse(saved) : [];
-    } catch (e) {
+    } catch {
       Logger.error('Failed to load chat history');
       return [];
     }
@@ -60,7 +60,7 @@ export const useChat = (language: Language) => {
         if (keyItem) {
           apiKey = JSON.parse(keyItem);
         }
-      } catch (e) {
+      } catch {
         Logger.error('Could not parse API Key from localStorage');
       }
 
@@ -120,7 +120,7 @@ export const useChat = (language: Language) => {
         // Sanitize error message to avoid leaking API key if it's included in the error message
         const safeMessage = err.message?.includes('API key')
           ? 'Invalid API Key or authentication error'
-          : (err.message || 'Unknown error');
+          : err.message || 'Unknown error';
         Logger.error('Gemini API error', safeMessage);
         let errorMessage = t('chatErrorConnection');
         if (err.message?.includes('401') || err.message?.includes('API key')) {
