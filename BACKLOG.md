@@ -32,7 +32,7 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
 
 ## ✨ Features & "Wow" Factor
 
-1. [ ] **Voice Activation ("Hey Aura")**:
+1. [x] **Voice Activation ("Hey Aura")**:
    - **Goal**: Hands-free trigger for users with motor control loss.
 2. [ ] **Smart Watch Integration**:
    - **Goal**: Companion app for Apple Watch / WearOS for heart rate and fall detection.
