@@ -11,8 +11,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="w-full max-w-4xl h-[85vh] rounded-2xl overflow-hidden shadow-2xl relative border border-slate-700/50">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 pb-safe">
+      <div className="w-full max-w-4xl h-[85dvh] rounded-2xl overflow-hidden shadow-2xl relative border border-slate-700/50">
         {/* Close Button Overlay */}
         <button
           onClick={onClose}

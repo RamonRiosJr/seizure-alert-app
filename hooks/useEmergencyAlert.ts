@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 
-export const useEmergencyAlert = () => {
+export const useEmergencyAlert = (options: { autoStart?: boolean } = {}) => {
+  const { autoStart = false } = options;
   const audioContextRef = useRef<AudioContext | null>(null);
   const mainOscillatorRef = useRef<OscillatorNode | null>(null);
   const lfoOscillatorRef = useRef<OscillatorNode | null>(null);
@@ -179,8 +180,9 @@ export const useEmergencyAlert = () => {
   }, [isMuted]);
 
   useEffect(() => {
-    // Start alert on mount
-    startAlert();
+    if (autoStart) {
+      startAlert();
+    }
 
     const enterFullscreen = async () => {
       try {
@@ -207,7 +209,7 @@ export const useEmergencyAlert = () => {
     return () => {
       stopAlert();
     };
-  }, [startAlert, stopAlert]);
+  }, [startAlert, stopAlert, autoStart]);
 
   return {
     isMuted,

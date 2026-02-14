@@ -52,8 +52,13 @@ describe('useEmergencyAlert', () => {
     const { result } = renderHook(() => useEmergencyAlert());
 
     expect(result.current.hasAudioPermission).toBe(true);
-    // Vibration should start immediately on hook creation in AlertMode if intended,
-    // though typically the hook manages state.
+    // Should NOT automatically start vibration/sound if autoStart is false (default)
+    expect(navigator.vibrate).not.toHaveBeenCalled();
+  });
+
+  it('automatically starts when requested', () => {
+    renderHook(() => useEmergencyAlert({ autoStart: true }));
+    expect(navigator.vibrate).toHaveBeenCalled();
   });
 
   it('toggles sound (mute/unmute)', () => {

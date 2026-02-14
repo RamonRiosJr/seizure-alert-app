@@ -7,7 +7,7 @@ import { FallDetectionTestMode } from '../FallDetectionTestMode';
 
 export const SettingFallDetection: React.FC = () => {
   const { t } = useTranslation();
-  const [isEnabled, setIsEnabled] = useLocalStorage('fallDetectionEnabled', false);
+  const [isEnabled, setIsEnabled] = useLocalStorage('fallDetectionEnabled', true);
   const [sensitivity, setSensitivity] = useLocalStorage('fallSensitivity', 'medium');
   const [showTestMode, setShowTestMode] = useState(false);
 
