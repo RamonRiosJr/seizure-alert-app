@@ -17,6 +17,8 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
    - **Goal**: Regulatory compliance (CE Mark/FDA readiness). (Done)
 4. [x] **Content Security Policy (CSP)**:
    - **Action**: Add strict CSP meta tags to `index.html` to prevent XSS. (Done)
+5. **Medical Vault PIN**:
+   - **Action**: Implement a secure gate for medical history and doctor data to ensure HIPAA-ready local privacy.
 
 ## 🏗️ Architecture & Standards (The "Real Architect" Standard)
 
@@ -36,10 +38,19 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
    - **Goal**: Hands-free trigger for users with motor control loss.
 2. [ ] **Smart Watch Integration**:
    - **Goal**: Companion app for Apple Watch / WearOS for heart rate and fall detection.
-3. [ ] **Dashboard Analytics**:
-   - **Goal**: Visualizing seizure history and trends for clinicians.
-4. [ ] **Offline Cache UI**:
-   - **Goal**: Visible "Offline Ready" status and update management.
+3. [ ] **Patient 360 & Doctor Directory**:
+   - **Goal**: Full medical history checklist + rich doctor contact profiles.
+4. [ ] **Guided Blocks UI (3x3 Grid)**:
+   - **Goal**: "Command Center" navigation for Patient/Contacts/Safety, Aura AI/Devices/Phone Care, etc.
+5. [ ] **Pharmacy Integration MVP**:
+   - **Goal**: Mock notifications for Walgreens/CVS "Med Ready" status.
+6. [ ] **Clinical Pulse (Doctor Porta)**:
+   - **Goal**: Secure PIN-admin access for data sharing with medical professionals.
+7. [ ] **AI "Health Agent" Integration**:
+   - **Goal**: Aura answers on behalf of medical data ("When is my next surgery?").
+8. [ ] **Smart Calendar & Medicines**:
+
+- **Goal**: Integrated scheduler for appointments and pill reminders with notifications.
 
 ## 🔧 Technical Debt & Clean Up
 

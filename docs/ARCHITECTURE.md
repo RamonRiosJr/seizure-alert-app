@@ -2,20 +2,20 @@
 
 ## Overview
 
-The application follows a **Modular Monolith** architecture within a React/Vite/Capacitor ecosystem. The core philosophy is **"Local-First, Privacy-First"**, ensuring all critical logic (seizure detection, logging, settings) functions without an internet connection.
+The application follows a **Modular Monolith** architecture within a React/Vite ecosystem. The core philosophy is **"Local-First, Privacy-First"**, ensuring all critical logic functions without an internet connection. Aura 2.0 introduces the **"Medical Vault"** security layer and the **"Adaptive Command Center"** UI engine.
 
 ## Component Architecture
 
 ### Settings Module (`components/settings/`)
 
-The Settings UI has been refactored from a monolithic `SettingsScreen.tsx` into a **Hub-and-Spoke** model to improve maintainability and scalability.
+The Settings UI has been evolved from a monolithic `SettingsScreen.tsx` into a **Hub-and-Spoke** model, transitioning into an **Adaptive Command Center** for Aura 2.0.
 
 #### 1. The Hub (`SettingsHub.tsx`)
 
 - **Responsibility:** Acts as the central orchestrator for the settings domain.
 - **State Management:** Consumes `SettingsContext` to manage the `activeTab`.
-- **Layout:** Renders the persistent `Tabs` navigation and the active tab's content.
-- **Lazy Loading:** (Future) Designed to support code-splitting for heavy tabs.
+- **Adaptive Grid Heuristic:** Uses a `ModuleRegistry` to dynamically render high-affordance blocks based on screen size and feature flags (3x3 vs 4x4 scale).
+- **Lazy Loading:** Supports code-splitting for heavy domains like Medical History.
 
 #### 2. Atomic Tabs
 
@@ -52,7 +52,19 @@ We utilize atomic, reusable UI components to ensure consistency.
 - **`Switch`**: Accessible toggle input.
 - **`Badge`**: Status indicator (e.g., "Pro", "Beta").
 
-## Data Flow
+## Security & Privacy (Aura Vault)
+
+To maintain FDA/HIPAA-ready standards, Aura 2.0 introduces a tiered access model.
+
+### 1. The PIN Gate
+
+- **Mechanism:** A mandatory local-only PIN protects sensitive domains (Medical Background, Doctor Directory).
+- **Encryption:** (Future) Application-level encryption of `localStorage` segments using a PBKDF2-derived key from the user PIN.
+
+### 2. Multi-Role Profiles
+
+- **Clinical View:** A specialized UI mode for scanning by medical professionals (Caregiver/Doctor).
+- **Owner View:** full administrative access to monitoring thresholds and alert logic.
 
 ### 1. Settings Persistence
 

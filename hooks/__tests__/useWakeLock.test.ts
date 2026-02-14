@@ -8,9 +8,11 @@ describe('useWakeLock', () => {
     addEventListener: ReturnType<typeof vi.fn>;
     removeEventListener: ReturnType<typeof vi.fn>;
   };
+  let consoleSpy: ReturnType<typeof vi.spyOn>;
   let requestMock: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
+    consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     wakeLockMock = {
       release: vi.fn().mockResolvedValue(undefined),
       addEventListener: vi.fn(),
@@ -29,6 +31,7 @@ describe('useWakeLock', () => {
   });
 
   afterEach(() => {
+    consoleSpy.mockRestore();
     vi.clearAllMocks();
   });
 

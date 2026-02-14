@@ -60,6 +60,7 @@ export const Tabs: React.FC<TabsProps> = ({
 export const TabsList: React.FC<TabsListProps> = ({ children, className = '' }) => {
   return (
     <div
+      role="tablist"
       className={`inline-flex h-10 items-center justify-center rounded-lg bg-slate-800 p-1 text-slate-400 ${className}`}
     >
       {children}
@@ -82,7 +83,9 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({
     <button
       type="button"
       role="tab"
-      aria-selected={isActive}
+      aria-selected={isActive ? 'true' : 'false'}
+      aria-controls={`panel-${value}`}
+      id={`tab-${value}`}
       disabled={disabled}
       onClick={() => context.onValueChange(value)}
       className={`
@@ -107,6 +110,8 @@ export const TabsContent: React.FC<TabsContentProps> = ({ value, children, class
   return (
     <div
       role="tabpanel"
+      id={`panel-${value}`}
+      aria-labelledby={`tab-${value}`}
       className={`mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 ${className}`}
     >
       {children}
