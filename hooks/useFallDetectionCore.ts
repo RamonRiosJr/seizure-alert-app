@@ -37,6 +37,7 @@ export const useFallDetectionCore = ({
 
   // Use ref for internal state tracking in high-frequency event loop
   const isMonitoringRef = useRef(false);
+  const lastThrottleTime = useRef<number>(0);
 
   const getThresholds = useCallback((): Thresholds => {
     switch (sensitivity) {
@@ -64,8 +65,14 @@ export const useFallDetectionCore = ({
 
       // Calculate G-force
       const gForce = Math.sqrt(x * x + y * y + z * z);
-      setCurrentGForce(gForce);
-      if (onSensorReading) onSensorReading(gForce);
+      const now = Date.now();
+
+      // OPTIMIZATION: Throttle UI updates to ~10Hz (100ms)
+      if (now - lastThrottleTime.current > 100) {
+        setCurrentGForce(gForce);
+        if (onSensorReading) onSensorReading(gForce);
+        lastThrottleTime.current = now;
+      }
 
       // Stillness Monitoring Phase
       if (isMonitoringRef.current) {
@@ -80,6 +87,11 @@ export const useFallDetectionCore = ({
       // Impact Detection Phase
       else {
         if (gForce > thresholds.impact) {
+          // Force update UI on impact to ensure peak value is shown
+          setCurrentGForce(gForce);
+          if (onSensorReading) onSensorReading(gForce);
+          lastThrottleTime.current = now;
+
           setLastImpactTime(Date.now());
           setIsMonitoringStillness(true);
           isMonitoringRef.current = true;
