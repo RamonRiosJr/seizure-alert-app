@@ -33,9 +33,13 @@ Expansion of the platform's utility as a comprehensive medical-grade assistant.
 - [ ] **Wearable Integration**: Synchronized monitoring for Apple Watch and WearOS to leverage wrist-based PPG and accelerometer data.
 - [ ] **Clinical Dashboard**: Anonymized data visualization layer for seizure history and biometric trends to facilitate doctor-patient consultations.
 - [ ] **Offline Synchronization UI**: Enhanced visual feedback for PWA service worker status and asset updates.
-- [ ] **Voice Intelligence (Paid Tier)**:
-  - **Audio Journaling**: One-tap voice recording for post-seizure notes or daily symptom logging using Web Speech API.
-  - **Doctor Summaries**: AI-driven compilation of voice notes and telemetry into a concise "Clinical Handover" PDF.
+- [ ] **Aura Health Journaling (Clinical Memory)**:
+  - **Voice-to-Journal**: One-tap (or voice-triggered) entry for symptom logging ("I woke up with sinus and headache").
+  - **Clinical Translation**: AI automatically "cleans up" entries for doctors, adding context and time-stamping.
+  - **Emergency Heuristics**: If the user logs a fall or severe symptom, Aura suggests immediate 911/SOS escalation.
+- [ ] **Doctor Summaries (Aura 360)**:
+  - AI-driven compilation of the last 30 days of journaling and telemetry into a concise "Clinical Handover" PDF.
+  - Solves the "90% Memory Loss" problem for doctor visits.
 
 ## 🏥 Phase 4: Clinical Ecosystem & Caregiver Loop
 
