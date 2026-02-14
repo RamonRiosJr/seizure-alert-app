@@ -21,6 +21,7 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
 - [ ] **Dashboard Transformation**: Transition from a button-heavy ReadyScreen to a modular **"Health Command Center"** with a Bottom Navigation Bar for primary app domains.
+- [ ] **AI-Augmented Development (Jules Integration)**: Leverage the "Jules" AI agent for specialized task execution, focusing on rapid UX prototyping and test coverage expansion via curated Master Prompts.
 - [x] **Settings UI Modularization**: Refactor the monolithic Settings view into a tabbed/hub-based architecture for improved scannability and future-proofing.
 
 ## ✨ Phase 3: Strategic Feature Set
