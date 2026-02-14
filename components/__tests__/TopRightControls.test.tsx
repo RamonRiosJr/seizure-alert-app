@@ -30,15 +30,15 @@ vi.mock('react-i18next', () => ({
       }
 
       const translations: Record<string, string> = {
-        'aboutTitle': 'About Aura',
-        'openReports': 'View Reports',
-        'settings': 'Settings',
-        'bluetoothDisconnected': 'Bluetooth Disconnected',
-        'bluetoothReconnecting': 'Bluetooth Reconnecting...',
-        'bluetoothConnected': 'Connected',
-        'batteryCharging': 'Charging',
-        'batteryDischarging': 'Discharging',
-        'batteryTapSettings': 'Tap for settings',
+        aboutTitle: 'About Aura',
+        openReports: 'View Reports',
+        settings: 'Settings',
+        bluetoothDisconnected: 'Bluetooth Disconnected',
+        bluetoothReconnecting: 'Bluetooth Reconnecting...',
+        bluetoothConnected: 'Connected',
+        batteryCharging: 'Charging',
+        batteryDischarging: 'Discharging',
+        batteryTapSettings: 'Tap for settings',
       };
       return translations[key] || key;
     },
@@ -48,14 +48,18 @@ vi.mock('react-i18next', () => ({
 // Mock lucide-react icons
 vi.mock('lucide-react', () => ({
   Settings: (props: Record<string, unknown>) => <div data-testid="icon-settings" {...props} />,
-  ClipboardList: (props: Record<string, unknown>) => <div data-testid="icon-clipboard" {...props} />,
+  ClipboardList: (props: Record<string, unknown>) => (
+    <div data-testid="icon-clipboard" {...props} />
+  ),
   AlertTriangle: (props: Record<string, unknown>) => <div data-testid="icon-alert" {...props} />,
   Heart: (props: Record<string, unknown>) => <div data-testid="icon-heart" {...props} />,
   Coffee: (props: Record<string, unknown>) => <div data-testid="icon-coffee" {...props} />,
   Battery: (props: Record<string, unknown>) => <div data-testid="icon-battery" {...props} />,
   Zap: (props: Record<string, unknown>) => <div data-testid="icon-zap" {...props} />,
   Bluetooth: (props: Record<string, unknown>) => <div data-testid="icon-bluetooth" {...props} />,
-  BluetoothSearching: (props: Record<string, unknown>) => <div data-testid="icon-bluetooth-searching" {...props} />,
+  BluetoothSearching: (props: Record<string, unknown>) => (
+    <div data-testid="icon-bluetooth-searching" {...props} />
+  ),
 }));
 
 import { useUI } from '../../contexts/UIContext';
@@ -119,7 +123,9 @@ describe('TopRightControls', () => {
     render(<TopRightControls theme="dark" toggleTheme={() => {}} />);
 
     // With updated mock, label should be 'Battery 80%, Discharging, Tap for settings'
-    const batteryBtn = screen.getByRole('button', { name: /Battery 80%, Discharging, Tap for settings/i });
+    const batteryBtn = screen.getByRole('button', {
+      name: /Battery 80%, Discharging, Tap for settings/i,
+    });
     expect(batteryBtn).toBeInTheDocument();
 
     fireEvent.click(batteryBtn);
