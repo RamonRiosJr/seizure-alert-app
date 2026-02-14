@@ -101,11 +101,12 @@ describe('TopRightControls', () => {
   it('renders standard buttons with accessible labels', () => {
     render(<TopRightControls theme="dark" toggleTheme={() => {}} />);
 
-    expect(screen.getByRole('button', { name: /About Aura/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Buy me a coffee/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Medical Disclaimer/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /View Reports/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Settings/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'About Aura' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Buy me a coffee' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Medical Disclaimer' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'View Reports' })).toBeInTheDocument();
+    // Use exact match to differentiate from "Tap for settings"
+    expect(screen.getByRole('button', { name: /^Settings$/ })).toBeInTheDocument();
   });
 
   it('renders Bluetooth indicator as a button and triggers scan', () => {
