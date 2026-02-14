@@ -89,7 +89,9 @@ const useBatteryStatus = () => {
 const AlertScreen: React.FC = () => {
   const { setScreen } = useUI();
   const { language } = useLanguage();
-  const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert();
+  const { isMuted, toggleSound, hasAudioPermission, attemptResume } = useEmergencyAlert({
+    autoStart: true,
+  });
   const { speak, isSpeaking } = useTTS();
   const { t } = useTranslation();
   const [contacts] = useLocalStorage<EmergencyContact[]>('emergency_contacts', []);

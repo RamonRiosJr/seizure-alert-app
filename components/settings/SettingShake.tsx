@@ -6,7 +6,7 @@ import { Smartphone, Check } from 'lucide-react';
 
 export const SettingShake: React.FC = () => {
   const { t } = useTranslation();
-  const [isEnabled, setIsEnabled] = useLocalStorage('shakeEnabled', false);
+  const [isEnabled, setIsEnabled] = useLocalStorage('shakeEnabled', true);
   const { requestPermission, isIOS } = useShake(() => {});
 
   return (

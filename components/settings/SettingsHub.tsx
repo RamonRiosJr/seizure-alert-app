@@ -57,7 +57,7 @@ export const SettingsHub: React.FC = () => {
         </div>
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar pt-2 pb-24 safe-area-bottom">
+        <div className="flex-1 overflow-y-auto custom-scrollbar pt-2 pb-24 pb-safe">
           <div className="max-w-2xl mx-auto px-4 w-full">
             <TabsContent value="people" className="mt-0">
               <PeopleTab />
