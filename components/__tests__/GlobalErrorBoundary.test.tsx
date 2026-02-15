@@ -19,17 +19,22 @@ describe('GlobalErrorBoundary', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
     // Mock window.location
-    // @ts-ignore
-    delete window.location;
-    window.location = {
-      reload: vi.fn(),
-      href: 'http://localhost/',
-    } as any;
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: {
+        reload: vi.fn(),
+        href: 'http://localhost/',
+      },
+    });
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    window.location = originalLocation;
+    // Restore window.location
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: originalLocation,
+    });
     vi.unstubAllEnvs();
   });
 
