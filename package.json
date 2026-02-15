@@ -41,7 +41,7 @@
     "@picovoice/porcupine-web": "^4.0.0",
     "@picovoice/web-voice-processor": "^4.0.9",
     "framer-motion": "^12.34.0",
-    "i18next": "^25.8.5",
+    "i18next": "^25.8.8",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
     "jspdf": "^4.1.0",
