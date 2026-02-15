@@ -12,6 +12,20 @@ export interface BleDevice {
   name?: string;
 }
 
+// Mock & Configuration Constants
+export const MOCK_SCAN_DELAY = 1500;
+export const MOCK_HEART_RATE_INTERVAL = 1000;
+export const MOCK_HEART_RATE_MIN = 65;
+export const MOCK_HEART_RATE_MAX = 95;
+export const MAX_RECONNECT_ATTEMPTS = 3;
+export const RECONNECT_DELAY = 2000;
+export const MOCK_RECONNECT_DELAY = 1500;
+
+export const MOCK_DEVICES: BleDevice[] = [
+  { deviceId: 'mock-1', name: 'Simulated HR Monitor' },
+  { deviceId: 'mock-2', name: 'Polar H10 (Demo)' },
+];
+
 export const useBLE = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [devices, setDevices] = useState<BleDevice[]>([]);
@@ -60,12 +74,9 @@ export const useBLE = () => {
     try {
       if (isMock) {
         setTimeout(() => {
-          setDevices([
-            { deviceId: 'mock-1', name: 'Simulated HR Monitor' },
-            { deviceId: 'mock-2', name: 'Polar H10 (Demo)' },
-          ]);
+          setDevices(MOCK_DEVICES);
           setIsScanning(false);
-        }, 1500);
+        }, MOCK_SCAN_DELAY);
       } else {
         await BleClient.requestDevice({
           services: [HEART_RATE_SERVICE],
@@ -92,8 +103,12 @@ export const useBLE = () => {
         setLastConnectedDevice(device);
 
         const id = setInterval(() => {
-          setHeartRate(Math.floor(Math.random() * (95 - 65 + 1) + 65));
-        }, 1000);
+          setHeartRate(
+            Math.floor(
+              Math.random() * (MOCK_HEART_RATE_MAX - MOCK_HEART_RATE_MIN + 1) + MOCK_HEART_RATE_MIN
+            )
+          );
+        }, MOCK_HEART_RATE_INTERVAL);
         setMockIntervalId(id);
       } else {
         await BleClient.connect(device.deviceId, (deviceId) => onDisconnect(deviceId));
@@ -144,12 +159,12 @@ export const useBLE = () => {
     setIsReconnecting(true);
     console.log(`Attempting to reconnect to ${deviceId}...`);
 
-    // Retry 3 times
-    for (let i = 0; i < 3; i++) {
+    // Retry attempts
+    for (let i = 0; i < MAX_RECONNECT_ATTEMPTS; i++) {
       try {
         if (isMock) {
           // Mock reconnect
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          await new Promise((resolve) => setTimeout(resolve, MOCK_RECONNECT_DELAY));
           // Success!
           connect(lastDevice);
           setIsReconnecting(false);
@@ -164,7 +179,7 @@ export const useBLE = () => {
         }
       } catch (e) {
         console.warn(`Reconnect attempt ${i + 1} failed`, e);
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait 2s
+        await new Promise((resolve) => setTimeout(resolve, RECONNECT_DELAY)); // Wait
       }
     }
 

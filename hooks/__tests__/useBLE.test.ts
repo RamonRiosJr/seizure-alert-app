@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useBLE } from '../useBLE';
+import { useBLE, MOCK_SCAN_DELAY, MOCK_HEART_RATE_INTERVAL } from '../useBLE';
 import { BleClient } from '@capacitor-community/bluetooth-le';
 import { Capacitor } from '@capacitor/core';
 import { vi, describe, it, expect, beforeEach, afterEach, Mock } from 'vitest';
@@ -261,7 +261,7 @@ describe('useBLE Web/Mock Mode', () => {
 
     await act(async () => {
       await result.current.scan(); // This triggers setTimeout
-      vi.advanceTimersByTime(1600); // Advance past 1500ms
+      vi.advanceTimersByTime(MOCK_SCAN_DELAY + 100); // Advance past 1500ms
     });
 
     expect(result.current.devices.length).toBeGreaterThan(0);
@@ -280,7 +280,7 @@ describe('useBLE Web/Mock Mode', () => {
 
     // Check if HR updates
     await act(async () => {
-      vi.advanceTimersByTime(1100);
+      vi.advanceTimersByTime(MOCK_HEART_RATE_INTERVAL + 100);
     });
 
     expect(result.current.heartRate).not.toBeNull();
