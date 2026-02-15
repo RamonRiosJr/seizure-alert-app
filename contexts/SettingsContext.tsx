@@ -14,6 +14,8 @@ export interface SettingsContextType {
   setVoiceActivationEnabled: (value: boolean) => void;
   picovoiceAccessKey: string;
   setPicovoiceAccessKey: (value: string) => void;
+  geminiApiKey: string;
+  setGeminiApiKey: (value: string) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
@@ -30,26 +32,36 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     'picovoice_access_key',
     ''
   );
+  const [geminiApiKey, setGeminiApiKey] = useSessionStorage<string>('gemini_api_key', '');
 
-  // Migration: Move Picovoice Access Key from localStorage to sessionStorage if it exists
+  // Migration: Move keys from localStorage to sessionStorage if they exist
   useEffect(() => {
-    try {
-      const legacyKey = window.localStorage.getItem('picovoice_access_key');
-      if (legacyKey) {
-        // Only migrate if sessionStorage is currently empty
-        const currentSessionKey = window.sessionStorage.getItem('picovoice_access_key');
-        if (!currentSessionKey || currentSessionKey === '""') {
-          window.sessionStorage.setItem('picovoice_access_key', legacyKey);
-          // Update state to reflect migrated value
-          setPicovoiceAccessKey(JSON.parse(legacyKey));
+    const migrateKey = (
+      keyName: string,
+      setter: (val: string) => void,
+      label: string
+    ) => {
+      try {
+        const legacyKey = window.localStorage.getItem(keyName);
+        if (legacyKey) {
+          // Only migrate if sessionStorage is currently empty
+          const currentSessionKey = window.sessionStorage.getItem(keyName);
+          if (!currentSessionKey || currentSessionKey === '""') {
+            window.sessionStorage.setItem(keyName, legacyKey);
+            // Update state to reflect migrated value
+            setter(JSON.parse(legacyKey));
+          }
+          window.localStorage.removeItem(keyName);
+          Logger.info(`🔒 ${label} migrated to secure session storage.`);
         }
-        window.localStorage.removeItem('picovoice_access_key');
-        Logger.info('🔒 Picovoice Access Key migrated to secure session storage.');
+      } catch (e) {
+        Logger.error(`Failed to migrate ${label}`, e);
       }
-    } catch (e) {
-      Logger.error('Failed to migrate Picovoice key', e);
-    }
-  }, [setPicovoiceAccessKey]);
+    };
+
+    migrateKey('picovoice_access_key', setPicovoiceAccessKey, 'Picovoice Access Key');
+    migrateKey('gemini_api_key', setGeminiApiKey, 'Gemini API Key');
+  }, [setPicovoiceAccessKey, setGeminiApiKey]);
 
   return (
     <SettingsContext.Provider
@@ -64,6 +76,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         setVoiceActivationEnabled,
         picovoiceAccessKey,
         setPicovoiceAccessKey,
+        geminiApiKey,
+        setGeminiApiKey,
       }}
     >
       {children}

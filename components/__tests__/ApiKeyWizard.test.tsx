@@ -1,14 +1,19 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ApiKeyWizard } from '../ApiKeyWizard';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { useSettings } from '../../contexts/SettingsContext';
 
-// Define mocks hoisted variable
+// Mock useSettings
+vi.mock('../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+}));
+
+// Mock GoogleGenerativeAI
 const generateContentMock = vi.fn();
 const getGenerativeModelMock = vi.fn(() => ({
   generateContent: generateContentMock,
 }));
 
-// Mock the module using a class
 vi.mock('@google/generative-ai', () => {
   return {
     GoogleGenerativeAI: class {
@@ -20,10 +25,13 @@ vi.mock('@google/generative-ai', () => {
 describe('ApiKeyWizard', () => {
   const mockOnClose = vi.fn();
   const mockOnSuccess = vi.fn();
+  const mockSetGeminiApiKey = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    localStorage.clear();
+    (useSettings as any).mockReturnValue({
+      setGeminiApiKey: mockSetGeminiApiKey,
+    });
     // Default success
     generateContentMock.mockResolvedValue({});
   });
@@ -68,9 +76,9 @@ describe('ApiKeyWizard', () => {
       expect(mockOnClose).toHaveBeenCalled();
     });
 
-    // Check sessionStorage (moved for security)
-    expect(sessionStorage.getItem('gemini_api_key')).toBe(JSON.stringify('AIzaTestKey123'));
-    expect(localStorage.getItem('gemini_api_key')).toBeNull();
+    // Check if setGeminiApiKey was called
+    expect(mockSetGeminiApiKey).toHaveBeenCalledWith('AIzaTestKey123');
+    // We assume setGeminiApiKey handles the secure storage
   });
 
   it('handles invalid key input', async () => {
@@ -97,7 +105,6 @@ describe('ApiKeyWizard', () => {
 
     // Ensure success was NOT called
     expect(mockOnSuccess).not.toHaveBeenCalled();
-    expect(sessionStorage.getItem('gemini_api_key')).toBeNull();
-    expect(localStorage.getItem('gemini_api_key')).toBeNull();
+    expect(mockSetGeminiApiKey).not.toHaveBeenCalled();
   });
 });

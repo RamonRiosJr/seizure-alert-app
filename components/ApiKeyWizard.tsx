@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Key, ExternalLink, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Logger } from '../services/logger';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface ApiKeyWizardProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface ApiKeyWizardProps {
 }
 
 export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onSuccess }) => {
+  const { setGeminiApiKey } = useSettings();
   const [step, setStep] = useState(1);
   const [apiKey, setApiKey] = useState('');
   const [isValidating, setIsValidating] = useState(false);
@@ -33,7 +35,7 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
       await model.generateContent('Hello');
 
       // If success, save and close to secure session storage
-      sessionStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
+      setGeminiApiKey(apiKey);
       localStorage.removeItem('gemini_api_key');
       onSuccess();
       onClose();
