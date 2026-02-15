@@ -50,6 +50,8 @@ vi.mock('../../../contexts/SettingsContext', () => ({
       setPreventSleep: vi.fn(),
       activeTab: 'ai',
       setActiveTab: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     return mockSettings;
   }),
