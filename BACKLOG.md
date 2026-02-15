@@ -49,8 +49,20 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
 7. [ ] **AI "Health Agent" Integration**:
    - **Goal**: Aura answers on behalf of medical data ("When is my next surgery?").
 8. [ ] **Smart Calendar & Medicines**:
+   - **Goal**: Integrated scheduler for appointments and pill reminders with notifications.
+9. [ ] **Use Case #1: Paperless Intake Bridge**:
+   - **Action**: Implement "Export DHR to Email/JSON" logic.
+10. [ ] **Use Case #2: Clinical Memory (Journaling)**:
 
-- **Goal**: Integrated scheduler for appointments and pill reminders with notifications.
+- **Action**: Implement voice-to-vault auto-save. Solves "90% Memory Loss".
+
+11. [ ] **Use Case #3: Bystander Education (Voice)**:
+
+- **Action**: Add specialized voice scripts for strangers helping during a seizure.
+
+12. [ ] **Use Case #4: Un SOLO Protocol**:
+
+- **Action**: Create "Doctor Office Setup Mode" for clinical onboarding.
 
 ## 🔧 Technical Debt & Clean Up
 

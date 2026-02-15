@@ -9,6 +9,8 @@ High-priority items focused on safety-critical requisites and regulatory readine
 - [x] **Secure API Integration**: Implemented a client-side guided setup ("Bring Your Own Key" model) with automated validation to ensure zero-cost infrastructure and maximum privacy.
 - [x] **Precision Battery Telemetry**: Integrated discharge rate tracking and Wake Lock API to guarantee sensor continuity during monitoring.
 - [x] **Localization (i18n) Hardening**: Standardized all UI and telemetry strings for multi-language support (English/Spanish).
+- [ ] **Global Medical ID (Traveler’s Safety Net)**: Multi-language (English/Spanish) "Helper Cards" and emergency contacts for foreign responders.
+- [ ] **Bystander Life-Line (Immediate Education)**: Implementation of real-time voice instructions during SOS to tell bystanders exactly how to help (Use Case #3).
 - [ ] **Content Security Policy (CSP)**: Implementation of strict meta tags to mitigate XSS risks and enforce secure resource loading.
 - [ ] **Global Error Boundary**: Top-level crash recovery UI to ensure "Safe Mode" availability during unexpected failures.
 
@@ -55,13 +57,13 @@ Developing Aura into a holistic management platform for patient and caregiver sy
 - [ ] **Compliance-First Email Infrastructure**:
   - Integration of a HIPAA-compliant email bridging service for general app notifications (e.g., weekly health summaries, system alerts).
   - End-to-end encryption for any PHI (Protected Health Information) delivered via automated internal mailers to ensure audit readiness.
-- [ ] **Patient 360: Comprehensive Medical Background**:
+- [ ] **Patient 360 & Paperless Intake (Clinical Efficiency)**:
   - Longitudinal medical history checklists (Conditions, Surgeries, Hereditary Risks).
   - Specialized Doctor Directory with full contact telemetry (Type, Address, Web, VoIP).
-  - **Downloadable Health Records (DHR)**: Exportable, standardized PDF/JSON summaries for first-time doctor visits.
-- [ ] **Proactive AI Care Coordination**:
-  - The Aura AI assistant shifts from reactive (answering questions) to proactive (reminding of upcoming triggers or appointments based on historical trends).
-  - "Knowledge Base" awareness: Aura can answer "Who is my neurologist?" or "What surgeries have I had?" using the secure Vault data.
+  - **Downloadable Health Records (DHR)**: Exportable PDF/JSON summaries to eliminate 15-20 minutes of paper intake (Use Case #1).
+  - **Email-to-Office Bridge**: Direct delivery of patient history to medical providers before the appointment.
+- [ ] **AI Health Consultant (Local Q&A)**: Aura answers "Who is my neurologist?" or "What surgeries have I had?" using the secure Vault data (Use Case #7).
+- [ ] **Caregiver Peace of Mind (Remote Check-in)**: One-tap status notification with GPS location to reduce caregiver fatigue (Use Case #9).
 
 ## 🎨 Phase 5: Aura Design System (UX/UI Evolution)
 
@@ -100,8 +102,8 @@ Infrastructure to support the sustainability of the platform (Free Core + Paid P
 The transformation from a personal tool to a clinical standard.
 
 - [ ] **Clinical Handshake Protocol**: Secure QR-based or ID-based data sharing. Doctors ask: _"Do you have an Aura account?"_ to instantly ingest validated patient history.
-- [ ] **Caregiver Portals**: Multi-role access control (Admin/Caregiver/Viewer) with PIN-gate synchronization.
-- [ ] **Data Interoperability**: Integration with FHIR/HL7 standards for seamless EMR (Electronic Medical Record) syncing.
+- [ ] **The "Un SOLO" Standard (Global Unity)**: Direct onboarding kits for clinics to educate patients on using Aura as their primary record (Use Case #4).
+- [ ] **Data Interoperability (Research-Ready)**: Integration with FHIR/HL7 standards for research-fidelity symptom exports (Use Case #10).
 
 ## 💊 Phase 8: Strategic Partnerships (Pharmacy Integration)
 
