@@ -33,6 +33,8 @@ describe('useFallDetection', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     (SettingsContext.useSettings as Mock).mockReturnValue(mockSettings);
   });
@@ -125,6 +127,8 @@ describe('useFallDetection', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     (SettingsContext.useSettings as Mock).mockReturnValue(mockLowPowerSettings);
     localStorage.setItem('fallDetectionEnabled', 'true');

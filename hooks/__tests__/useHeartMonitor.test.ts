@@ -38,6 +38,8 @@ describe('useHeartMonitor', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     (SettingsContext.useSettings as Mock).mockReturnValue(mockSettings);
     (useLocalStorage as Mock).mockImplementation((key, initialValue) => {
@@ -106,6 +108,8 @@ describe('useHeartMonitor', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     (SettingsContext.useSettings as Mock).mockReturnValue(mockLowPowerSettings);
 

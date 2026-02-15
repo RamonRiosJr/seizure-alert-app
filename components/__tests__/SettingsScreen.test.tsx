@@ -107,6 +107,8 @@ describe('SettingsScreen', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     vi.mocked(useSettings).mockReturnValue(mockSettings);
   });

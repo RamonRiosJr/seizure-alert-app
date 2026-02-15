@@ -54,7 +54,7 @@ describe('useChat', () => {
 
   it('should load initial greeting if no history', () => {
     const { result } = renderHook(() => useChat('en'));
-    expect(result.current.messages[0].text).toBe('chatInitialGreeting');
+    expect(result.current.messages[0]?.text).toBe('chatInitialGreeting');
   });
 
   it('should use API key from useSettings', async () => {

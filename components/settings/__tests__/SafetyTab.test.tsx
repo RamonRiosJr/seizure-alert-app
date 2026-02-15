@@ -72,6 +72,8 @@ describe('SafetyTab', () => {
       setPreventSleep: vi.fn(),
       activeTab: 'safety',
       setActiveTab: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     vi.mocked(useSettings).mockReturnValue(mockSettings);
   });
