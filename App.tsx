@@ -7,7 +7,6 @@ import AboutScreen from './components/AboutScreen';
 import { useTheme } from './hooks/useTheme';
 import DisclaimerModal from './components/DisclaimerModal';
 import { useUI } from './contexts/UIContext';
-import TopRightControls from './components/TopRightControls';
 import UniversalLanguageSwitcher from './components/UniversalLanguageSwitcher';
 import { InstallPrompt } from './components/InstallPrompt';
 import { UpdateNotification } from './components/UpdateNotification';
@@ -22,7 +21,7 @@ import { SettingsProvider } from './contexts/SettingsContext';
 function App() {
   const { activeModal, screen, closeModal, openModal } = useUI();
 
-  const [theme, toggleTheme] = useTheme();
+  const [theme] = useTheme();
 
   // Universal "Warm Up" for AudioContext (unlocks the browser autoplay policy)
   // Moved to useEffect to avoid a11y issues with onClick on non-interactive elements
@@ -63,8 +62,7 @@ function App() {
             <GlobalWakeWordListener />
             <OfflineIndicator />
 
-            {/* Layout Elements */}
-            {screen === 'ready' && <TopRightControls theme={theme} toggleTheme={toggleTheme} />}
+            {/* Layout Elements - TopRightControls Removed */}
 
             {/* Main Content Router */}
             <AppRouter />

@@ -9,7 +9,7 @@ import { useEmergencyAlert } from './useEmergencyAlert';
  * Manages the Picovoice Porcupine wake-word engine for "Hey Aura" detection.
  */
 export const useWakeWord = () => {
-  const { voiceActivationEnabled, picovoiceAccessKey } = useSettings();
+  const { voiceActivationEnabled, setVoiceActivationEnabled, picovoiceAccessKey } = useSettings();
   const { startAlert } = useEmergencyAlert();
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,5 +75,9 @@ export const useWakeWord = () => {
     };
   }, [voiceActivationEnabled, picovoiceAccessKey, initEngine, stopEngine]);
 
-  return { isListening, error };
+  const toggleListening = useCallback(() => {
+    setVoiceActivationEnabled(!voiceActivationEnabled);
+  }, [voiceActivationEnabled, setVoiceActivationEnabled]);
+
+  return { isListening, error, toggleListening };
 };
