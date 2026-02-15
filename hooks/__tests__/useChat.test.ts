@@ -1,5 +1,5 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { useChat } from '../useChat';
 import { useSettings } from '../../contexts/SettingsContext';
 
@@ -47,7 +47,7 @@ describe('useChat', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useSettings as any).mockReturnValue({
+    (useSettings as Mock).mockReturnValue({
       geminiApiKey: mockGeminiApiKey,
     });
   });
@@ -70,7 +70,7 @@ describe('useChat', () => {
   });
 
   it('should show error if API key is missing', async () => {
-    (useSettings as any).mockReturnValue({
+    (useSettings as Mock).mockReturnValue({
       geminiApiKey: '',
     });
 
