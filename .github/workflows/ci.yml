@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: 📦 Install Dependencies
         # 'npm ci' is faster and more reliable than 'npm install' for CI

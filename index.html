@@ -1,39 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Aura Speaks AI</title>
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="Aura Speaks AI - When I cannot speak, Aura speaks for me. Seizure safety diary and assistant."
+    />
+    <meta
+      name="keywords"
+      content="Aura Speaks AI, Seizure Diary, Epilepsy, Medical Safety, Coqui Cloud, RamonRios.NET"
+    />
+    <meta name="author" content="Ramon Rios Jr / Coqui Cloud Dev Co" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://generativelanguage.googleapis.com https://*.googleapis.com https://cdn.buymeacoffee.com; connect-src 'self' https://generativelanguage.googleapis.com https://*.googleapis.com https://web-voice-processor.picovoice.ai https://porcupine.picovoice.ai; font-src 'self' data: https://fonts.gstatic.com;"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Aura Speaks AI</title>
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="description"
-    content="Aura Speaks AI - When I cannot speak, Aura speaks for me. Seizure safety diary and assistant." />
-  <meta name="keywords" content="Aura Speaks AI, Seizure Diary, Epilepsy, Medical Safety, Coqui Cloud, RamonRios.NET" />
-  <meta name="author" content="Ramon Rios Jr / Coqui Cloud Dev Co" />
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://generativelanguage.googleapis.com https://*.googleapis.com https://cdn.buymeacoffee.com; connect-src 'self' https://generativelanguage.googleapis.com https://*.googleapis.com https://web-voice-processor.picovoice.ai https://porcupine.picovoice.ai; font-src 'self' data: https://fonts.gstatic.com;" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Aura Speaks AI" />
+    <link rel="apple-touch-icon" href="Aura-Speaks-AI.png" />
+    <link rel="icon" type="image/png" href="Aura-Speaks-AI.png" />
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Aura Speaks AI">
-  <link rel="apple-touch-icon" href="Aura-Speaks-AI.png">
-  <link rel="icon" type="image/png" href="Aura-Speaks-AI.png">
+    <script>
+      // Prevent FOUC by setting theme class before React loads
+      (function () {
+        const theme =
+          localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
 
-  <script>
-    // Prevent FOUC by setting theme class before React loads
-    (function () {
-      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-    })();
-  </script>
-</head>
-
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <script type="module" src="index.tsx"></script>
-</body>
-
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  </body>
 </html>

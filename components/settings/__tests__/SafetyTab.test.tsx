@@ -66,6 +66,8 @@ describe('SafetyTab', () => {
       setVoiceActivationEnabled: vi.fn(),
       picovoiceAccessKey: '',
       setPicovoiceAccessKey: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
       lowPowerMode: false,
       setLowPowerMode: vi.fn(),
       preventSleep: false,
