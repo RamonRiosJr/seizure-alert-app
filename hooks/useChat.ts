@@ -32,9 +32,18 @@ export const useChat = (language: Language) => {
     }
   }, [t, messages.length]);
 
-  // Persist messages to localStorage whenever they change
+  // Persist messages to localStorage whenever they change, debounced to avoid
+  // excessive synchronous I/O during chat streaming.
   useEffect(() => {
-    localStorage.setItem('chat_history', JSON.stringify(messages));
+    const timeoutId = setTimeout(() => {
+      try {
+        localStorage.setItem('chat_history', JSON.stringify(messages));
+      } catch (err) {
+        Logger.error('Failed to persist chat history', err);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
   }, [messages]);
 
   const clearChat = useCallback(() => {
