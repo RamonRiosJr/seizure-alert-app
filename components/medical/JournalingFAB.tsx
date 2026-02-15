@@ -1,47 +1,38 @@
-import React from 'react';
-import { Mic, Globe, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface JournalingFABProps {
-    isRecording?: boolean;
-    onPress: () => void;
-    lang?: 'en' | 'es';
+  onStartRecording: () => void;
+  isRecording: boolean;
+  className?: string; // Allow positioning overrides
 }
 
-/**
- * A floating action button for instant voice journaling.
- * Pulsates when recording and shows language toggle.
- */
 export const JournalingFAB: React.FC<JournalingFABProps> = ({
-    isRecording = false,
-    onPress,
-    lang = 'en'
+  onStartRecording,
+  isRecording,
+  className = '',
 }) => {
-    return (
-        <div className="fixed bottom-24 right-6 z-50">
-            <button
-                onClick={onPress}
-                className={`relative flex items-center justify-center w-16 h-16 rounded-full shadow-xl transition-all duration-300 ${isRecording
-                        ? 'bg-red-500 scale-110 shadow-red-500/50 animate-pulse'
-                        : 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/40 hover:scale-105'
-                    }`}
-                aria-label={isRecording ? "Stop Recording" : "Start Voice Journal"}
-            >
-                {isRecording ? (
-                    <div className="absolute inset-0 rounded-full border-4 border-white/30 animate-ping" />
-                ) : null}
-
-                {isRecording ? (
-                    <X className="w-8 h-8 text-white relative z-10" />
-                ) : (
-                    <Mic className="w-8 h-8 text-white relative z-10" />
-                )}
-            </button>
-
-            {/* Language Badge */}
-            <div className="absolute -top-2 -right-2 bg-white dark:bg-slate-800 text-xs font-bold px-2 py-1 rounded-full shadow-md border border-slate-200 dark:border-slate-700 flex items-center gap-1">
-                <Globe className="w-3 h-3 text-indigo-500" />
-                {lang.toUpperCase()}
-            </div>
-        </div>
-    );
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onStartRecording}
+      className={`fixed bottom-24 right-6 w-14 h-14 rounded-full shadow-xl flex items-center justify-center z-50 transition-colors duration-300 ${isRecording ? 'bg-red-500 hover:bg-red-600 animate-pulse' : 'bg-primary-600 hover:bg-primary-700'} text-white ${className}`}
+      aria-label={isRecording ? 'Stop Recording' : 'Start Voice Journal'}
+    >
+      {isRecording ? (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <rect x="6" y="6" width="12" height="12" rx="2" strokeWidth={2} />
+        </svg>
+      ) : (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+          />
+        </svg>
+      )}
+    </motion.button>
+  );
 };
