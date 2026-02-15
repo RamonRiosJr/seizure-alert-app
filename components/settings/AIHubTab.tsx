@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { Brain, Mic } from 'lucide-react';
+import { Brain, Mic, Sparkles } from 'lucide-react';
 import { useSettings } from '../../contexts/SettingsContext';
 import { Switch } from '../ui/Switch';
+import { ApiKeyWizard } from '../ApiKeyWizard';
 
 export const AIHubTab: React.FC = () => {
   const {
@@ -11,18 +12,51 @@ export const AIHubTab: React.FC = () => {
     setVoiceActivationEnabled,
     picovoiceAccessKey,
     setPicovoiceAccessKey,
+    geminiApiKey,
   } = useSettings();
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
 
   return (
     <div className="space-y-6">
+      {/* Gemini AI Settings */}
+      <Card variant="glass" className="border-purple-500/30">
+        <div className="flex items-center space-x-4 mb-4">
+          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white shadow-lg">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white">Gemini AI Connection</h3>
+            <p className="text-sm text-purple-200">Generative AI Capabilities</p>
+          </div>
+        </div>
+
+        <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700/50 flex items-center justify-between">
+          <div>
+            <p className="text-sm text-slate-300 font-medium">
+              {geminiApiKey ? '✅ Connected to Gemini AI' : '🔴 Not Connected'}
+            </p>
+            <p className="text-xs text-slate-500 mt-1">
+              Required for advanced chat and analysis.
+            </p>
+          </div>
+          <button
+            onClick={() => setIsWizardOpen(true)}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold rounded-lg transition-colors"
+          >
+            {geminiApiKey ? 'Update Key' : 'Connect'}
+          </button>
+        </div>
+      </Card>
+
+      {/* Picovoice Settings */}
       <Card variant="glass" className="border-blue-500/30">
         <div className="flex items-center space-x-4 mb-4">
           <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
             <Brain className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white">Aura Intelligence</h3>
-            <p className="text-sm text-blue-200">Smart diagnostics & assistance</p>
+            <h3 className="text-lg font-bold text-white">Voice Activation</h3>
+            <p className="text-sm text-blue-200">"Hey Aura" Wake Word</p>
           </div>
           <div className="ml-auto">
             <Badge variant="default">Beta</Badge>
@@ -82,6 +116,12 @@ export const AIHubTab: React.FC = () => {
           />
         </div>
       </Card>
+
+      <ApiKeyWizard
+        isOpen={isWizardOpen}
+        onClose={() => setIsWizardOpen(false)}
+        onSuccess={() => setIsWizardOpen(false)}
+      />
 
       {!picovoiceAccessKey && (
         <Card variant="default" className="border-amber-500/20 bg-amber-500/5">

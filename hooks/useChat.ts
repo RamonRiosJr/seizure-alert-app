@@ -5,10 +5,12 @@ import { Logger } from '../services/logger';
 import type { ChatMessage, Language } from '../types';
 import { getSystemPrompt } from '../constants';
 import { useContextAwarePrompt } from './useContextAwarePrompt';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const useChat = (language: Language) => {
   const { t } = useTranslation();
   const { getContextString } = useContextAwarePrompt();
+  const { geminiApiKey } = useSettings();
 
   // Load initial state from localStorage or default to empty
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -54,29 +56,7 @@ export const useChat = (language: Language) => {
 
       setMessages((prev) => [...prev, { role: 'user', text: userMessage, priority }]);
 
-      let apiKey: string | null = null;
-      try {
-        // Try session storage first (secure)
-        let keyItem = sessionStorage.getItem('gemini_api_key');
-
-        // Fallback to migration from localStorage
-        if (!keyItem) {
-          keyItem = localStorage.getItem('gemini_api_key');
-          if (keyItem) {
-            sessionStorage.setItem('gemini_api_key', keyItem);
-            localStorage.removeItem('gemini_api_key');
-            Logger.info('🔒 Gemini API Key migrated to secure session storage.');
-          }
-        }
-
-        if (keyItem) {
-          apiKey = JSON.parse(keyItem);
-        }
-      } catch (e) {
-        Logger.error('Could not parse API Key from storage', e);
-      }
-
-      if (!apiKey) {
+      if (!geminiApiKey) {
         const errorMsg =
           t('chatAPIKeyMissing') || 'API Key not found. Please set it in the settings.';
         setError(errorMsg);
@@ -91,7 +71,7 @@ export const useChat = (language: Language) => {
         const finalSystemPrompt = `${baseSystemPrompt}\n${contextString}`;
 
         // Use the Browser-compatible SDK pattern
-        const genAI = new GoogleGenerativeAI(apiKey);
+        const genAI = new GoogleGenerativeAI(geminiApiKey);
         const model = genAI.getGenerativeModel({
           model: 'gemini-1.5-flash',
           systemInstruction: finalSystemPrompt,
@@ -153,7 +133,7 @@ export const useChat = (language: Language) => {
         setIsLoading(false);
       }
     },
-    [language, messages, t, getContextString]
+    [language, messages, t, getContextString, geminiApiKey]
   ); // Added messages as dependency for history context
 
   return { messages, input, setInput, sendMessage, isLoading, error, clearChat };

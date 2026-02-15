@@ -1,22 +1,25 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useChat } from '../useChat';
+import { useSettings } from '../../contexts/SettingsContext';
 
 // Mock GoogleGenerativeAI
 vi.mock('@google/generative-ai', () => {
   return {
-    GoogleGenerativeAI: vi.fn().mockImplementation(() => ({
-      getGenerativeModel: vi.fn().mockImplementation(() => ({
-        startChat: vi.fn().mockImplementation(() => ({
-          sendMessageStream: vi.fn().mockImplementation(() => ({
-            stream: (async function* () {
-              yield { text: () => 'Hello' };
-              yield { text: () => ' from AI' };
-            })(),
-          })),
-        })),
-      })),
-    })),
+    GoogleGenerativeAI: class {
+      getGenerativeModel() {
+        return {
+          startChat: () => ({
+            sendMessageStream: async () => ({
+              stream: (async function* () {
+                yield { text: () => 'Hello' };
+                yield { text: () => ' from AI' };
+              })(),
+            }),
+          }),
+        };
+      }
+    },
   };
 });
 
@@ -34,23 +37,27 @@ vi.mock('../useContextAwarePrompt', () => ({
   }),
 }));
 
+// Mock useSettings
+vi.mock('../../contexts/SettingsContext', () => ({
+  useSettings: vi.fn(),
+}));
+
 describe('useChat', () => {
+  const mockGeminiApiKey = 'test-api-key';
+
   beforeEach(() => {
-    window.localStorage.clear();
-    window.sessionStorage.clear();
     vi.clearAllMocks();
+    (useSettings as any).mockReturnValue({
+      geminiApiKey: mockGeminiApiKey,
+    });
   });
 
   it('should load initial greeting if no history', () => {
     const { result } = renderHook(() => useChat('en'));
-    // Use non-null assertion for messages[0] as we expect it to be initialized
-    expect(result.current.messages[0]!.text).toBe('chatInitialGreeting');
+    expect(result.current.messages[0].text).toBe('chatInitialGreeting');
   });
 
-  it('should use API key from sessionStorage', async () => {
-    const apiKey = 'test-api-key';
-    window.sessionStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
-
+  it('should use API key from useSettings', async () => {
     const { result } = renderHook(() => useChat('en'));
 
     await act(async () => {
@@ -62,22 +69,11 @@ describe('useChat', () => {
     expect(modelMessages.some((m) => m.text.includes('Hello from AI'))).toBe(true);
   });
 
-  it('should migrate API key from localStorage to sessionStorage', async () => {
-    const apiKey = 'legacy-api-key';
-    window.localStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
-
-    const { result } = renderHook(() => useChat('en'));
-
-    await act(async () => {
-      await result.current.sendMessage('Hello');
+  it('should show error if API key is missing', async () => {
+    (useSettings as any).mockReturnValue({
+      geminiApiKey: '',
     });
 
-    expect(window.sessionStorage.getItem('gemini_api_key')).toBe(JSON.stringify(apiKey));
-    expect(window.localStorage.getItem('gemini_api_key')).toBeNull();
-    expect(result.current.error).toBeNull();
-  });
-
-  it('should show error if API key is missing', async () => {
     const { result } = renderHook(() => useChat('en'));
 
     await act(async () => {

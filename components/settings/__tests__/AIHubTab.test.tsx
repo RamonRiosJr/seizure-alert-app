@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { AIHubTab } from '../AIHubTab';
 import { vi, describe, it, expect } from 'vitest';
+import React from 'react';
 
 // Mock UI components
 vi.mock('../../ui/Card', () => ({
@@ -27,10 +28,16 @@ vi.mock('../../ui/Switch', () => ({
   ),
 }));
 
+// Mock ApiKeyWizard
+vi.mock('../ApiKeyWizard', () => ({
+  ApiKeyWizard: () => <div data-testid="api-key-wizard" />,
+}));
+
 // Mock icons
 vi.mock('lucide-react', () => ({
   Brain: () => <div data-testid="icon-brain" />,
   Mic: () => <div data-testid="icon-mic" />,
+  Sparkles: () => <div data-testid="icon-sparkles" />,
 }));
 
 vi.mock('react-i18next', () => ({
@@ -50,6 +57,8 @@ vi.mock('../../../contexts/SettingsContext', () => ({
       setPreventSleep: vi.fn(),
       activeTab: 'ai',
       setActiveTab: vi.fn(),
+      geminiApiKey: '',
+      setGeminiApiKey: vi.fn(),
     };
     return mockSettings;
   }),
@@ -58,15 +67,20 @@ vi.mock('../../../contexts/SettingsContext', () => ({
 import { SettingsContextType } from '../../../contexts/SettingsContext';
 
 describe('AIHubTab', () => {
-  it('renders AI info and beta warnings', () => {
+  it('renders Gemini AI connection and Voice Activation info', () => {
     render(<AIHubTab />);
-    expect(screen.getByRole('heading', { name: /Aura Intelligence/i })).toBeDefined();
+    // Check for Gemini card
+    expect(screen.getByRole('heading', { name: /Gemini AI Connection/i })).toBeDefined();
+    // Check for Picovoice card
+    expect(screen.getByRole('heading', { name: /Voice Activation/i })).toBeDefined();
     expect(screen.getByLabelText(/Picovoice Access Key/i)).toBeDefined();
   });
 
   it('renders voice activation features as disabled when no key', () => {
     render(<AIHubTab />);
     expect(screen.getByText(/Hands-Free Trigger/i)).toBeDefined();
+    // Use getAllByTestId because there might be multiple switches if Gemini added one (it didn't, but just in case)
+    // Actually Switch is mocked with data-testid="ui-switch"
     const voiceSwitch = screen.getByTestId('ui-switch');
     expect(voiceSwitch).toBeDisabled();
   });
