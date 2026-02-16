@@ -2,6 +2,11 @@
 
 _Focus: Maximum Value, Safety-Critical Reliability, and "Shine"_
 
+> **See also:**
+>
+> - [Strategic Roadmap](./ROADMAP.md) (High-Level Phases)
+> - [Changelog](./CHANGELOG.md) (Release History)
+
 ## 🚨 Critical Priority (The "Colonel's" Demands)
 
 _Items identified as "You're Fired" risks or Regulatory Requirements._
@@ -56,11 +61,11 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
 
 - **Action**: Implement voice-to-vault auto-save. Solves "90% Memory Loss".
 
-11. [ ] **Use Case #3: Bystander Education (Voice)**:
+1. [ ] **Use Case #3: Bystander Education (Voice)**:
 
 - **Action**: Add specialized voice scripts for strangers helping during a seizure.
 
-12. [ ] **Use Case #4: Un SOLO Protocol**:
+1. [ ] **Use Case #4: Un SOLO Protocol**:
 
 - **Action**: Create "Doctor Office Setup Mode" for clinical onboarding.
 

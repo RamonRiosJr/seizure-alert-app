@@ -14,13 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Changed**: Updated `vite.config.ts` and `tsconfig.json` to use strict `@/` path aliases pointing to `src/`.
 - **Changed**: Consolidated all unit tests into `test/` directory.
 
-### ✨ New Features (from Phase 1 & 2)
-
-- **Added**: **API Key UX Overhaul** - Client-side "Bring Your Own Key" validation wizard.
-- **Added**: **Localization (i18n)** - Full English/Spanish support for all UI text and logs.
-- **Added**: **Battery Telemetry** - Real-time discharge rate monitoring and Wake Lock integration.
-- **Added**: **Global Error Boundary** - "Safe Mode" UI for app crashes.
-
 ### 🧹 Housekeeping
 
 - **Removed**: Deleted `test-results/` and other temporary build artifacts from root.

@@ -14,11 +14,19 @@ High-priority items focused on safety-critical requisites and regulatory readine
 - [ ] **Content Security Policy (CSP)**: Implementation of strict meta tags to mitigate XSS risks and enforce secure resource loading.
 - [ ] **Global Error Boundary**: Top-level crash recovery UI to ensure "Safe Mode" availability during unexpected failures.
 
+### ✅ Completed in Phase 1
+
+- [x] **API Key UX Overhaul**: Implemented client-side "Bring Your Own Key" validation.
+- [x] **Localization (i18n)**: Full English/Spanish support for UI and Logs.
+- [x] **Battery Management**: Front-and-center telemetry and Wake Lock integration.
+
 ## 🏗️ Phase 2: Architectural Excellence
 
 Enhancing the scalability, maintainability, and quality assurance thresholds of the platform.
 
 - [ ] **Test Coverage Expansion**: Targeted increase of unit and integration test coverage from ~60% to **80%+**, focusing on complex hardware hooks.
+- [x] **Source Code Migration**: Consolidated all application logic into a standard `src/` directory structure.
+- [x] **Test Suite Consolidation**: Unified unit tests into `test/` with strict `@/` path aliases.
 - [x] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.

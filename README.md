@@ -127,9 +127,10 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 
 ### 📂 Modular Structure
 
-- `components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
-- `router`: Dedicated `AppRouter` for reactive screen management.
-- `contexts`: State management via React Context (Safety, UI, Theme).
+- `src/`: **Core Application Code** (Standardized React/Vite structure).
+- `src/components/layout`: Global logic listeners (Shake, URL Params) detached from UI.
+- `src/router`: Dedicated `AppRouter` for reactive screen management.
+- `src/contexts`: State management via React Context (Safety, UI, Theme).
 
 ### 🛡️ Quality Assurance
 

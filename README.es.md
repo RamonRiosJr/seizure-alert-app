@@ -130,9 +130,10 @@ Si esta herramienta te da tranquilidad, por favor considera invitarme un café p
   <br />
 ### 📂 Estructura Modular
 
-- `components/layout`: Lógica global (Shake, URL Params) separada de la UI.
-- `router`: `AppRouter` dedicado para gestión de pantallas.
-- `contexts`: Gestión de estado vía React Context (UI, Tema).
+- `src/`: **Código Núcleo de la App** (Estructura estándar React/Vite).
+- `src/components/layout`: Lógica global (Shake, URL Params) separada de la UI.
+- `src/router`: `AppRouter` dedicado para gestión de pantallas.
+- `src/contexts`: Gestión de estado vía React Context (UI, Tema).
 - **[Ver Arquitectura del Sistema](./docs/ARCHITECTURE.md)**: Desglose detallado del modelo de configuración Hub-and-Spoke y flujo de datos.
 
 > **"No podemos controlar los desafíos que enfrentamos, pero podemos controlar cómo respondemos. Deja que esta herramienta sea tu voz cuando más la necesites."**
