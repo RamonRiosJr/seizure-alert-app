@@ -39,7 +39,9 @@ Enhancing the scalability, maintainability, and quality assurance thresholds of 
 
 Expansion of the platform's utility as a comprehensive medical-grade assistant.
 
-- [ ] **Bio-Hands-Free Activation**: Voice-triggered ("Hey Aura") alert activation for users with significant motor control limitations.
+- [ ] **Bio-Hands-Free Activation (Mockup/Research)**:
+  - **Constraint**: Enterprise Voice Engines (Picovoice) are cost-prohibitive ($6000/yr) for current stage.
+  - **Pivot**: Implement UI/UX Mockup for "Hey Aura" and investigate free alternatives (Web Speech API).
 - [ ] **Wearable Integration**: Synchronized monitoring for Apple Watch and WearOS to leverage wrist-based PPG and accelerometer data.
 - [ ] **Clinical Dashboard**: Anonymized data visualization layer for seizure history and biometric trends to facilitate doctor-patient consultations.
 - [ ] **Offline Synchronization UI**: Enhanced visual feedback for PWA service worker status and asset updates.
@@ -109,7 +111,9 @@ Infrastructure to support the sustainability of the platform (Free Core + Paid P
 
 The transformation from a personal tool to a clinical standard.
 
-- [ ] **Clinical Handshake Protocol**: Secure QR-based or ID-based data sharing. Doctors ask: _"Do you have an Aura account?"_ to instantly ingest validated patient history.
+- [ ] **Clinical Handshake Protocol (QR Bridge)**:
+  - **Concept**: Secure, air-gapped data transfer. Patient generates a QR code; Doctor scans it to ingest history without email.
+  - **Formats**: Support for raw JSON (Aura-to-Aura) and standardized HL7/FHIR snippets for EMR integration.
 - [ ] **Caregiver Portals**: Multi-role access control (Admin/Caregiver/Viewer) with PIN-gate synchronization.
 - [ ] **The "Un SOLO" Standard (Global Unity)**: Direct onboarding kits for clinics to educate patients on using Aura as their primary record (Use Case #4).
 - [ ] **Data Interoperability (Research-Ready)**: Integration with FHIR/HL7 standards for research-fidelity symptom exports (Use Case #10).
@@ -121,6 +125,19 @@ Direct-to-patient service bridges.
 - [ ] **Pharmacy Push Hub**: Selective integration with pharmacy APIs (Walgreens, CVS, etc.).
 - [ ] **Automated Med-Ready Alerts**: Soft-push notifications when prescriptions are ready for pickup, integrated into the Aura Calendar.
 - [ ] **Insurance Verification Bridge**: Secure vault for digital insurance cards and pharmacy benefit verification.
+
+## 📡 Phase 10: DevOps & Observability (Self-Hosted)
+
+_Leveraging custom infrastructure for data sovereignty and "Pro" monitoring._
+
+- [ ] **Error Tracking (GlitchTip/Sentry)**:
+  - **Goal**: Self-hosted exception logging on user's VMs.
+  - **Benefit**: Catch crashes in production without sharing data with third parties.
+- [ ] **Product Analytics (PostHog OS)**:
+  - **Goal**: Self-hosted user behavior analytics on **Utility VM** (Odoo VM is dedicated).
+  - **Benefit**: Understand feature usage (e.g., "Do users find the SOS button?") while maintaining privacy.
+- [ ] **Infrastructure Monitoring (Grafana/Prometheus)**:
+  - **Goal**: Real-time health metrics of the Odoo/Utility VMs (Hosted on Utility VM).
 
 ---
 
