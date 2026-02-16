@@ -109,7 +109,9 @@ Infrastructure to support the sustainability of the platform (Free Core + Paid P
 
 The transformation from a personal tool to a clinical standard.
 
-- [ ] **Clinical Handshake Protocol**: Secure QR-based or ID-based data sharing. Doctors ask: _"Do you have an Aura account?"_ to instantly ingest validated patient history.
+- [ ] **Clinical Handshake Protocol (QR Bridge)**:
+  - **Concept**: Secure, air-gapped data transfer. Patient generates a QR code; Doctor scans it to ingest history without email.
+  - **Formats**: Support for raw JSON (Aura-to-Aura) and standardized HL7/FHIR snippets for EMR integration.
 - [ ] **Caregiver Portals**: Multi-role access control (Admin/Caregiver/Viewer) with PIN-gate synchronization.
 - [ ] **The "Un SOLO" Standard (Global Unity)**: Direct onboarding kits for clinics to educate patients on using Aura as their primary record (Use Case #4).
 - [ ] **Data Interoperability (Research-Ready)**: Integration with FHIR/HL7 standards for research-fidelity symptom exports (Use Case #10).

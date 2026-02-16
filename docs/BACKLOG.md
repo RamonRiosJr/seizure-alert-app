@@ -69,6 +69,12 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
 
 - **Action**: Create "Doctor Office Setup Mode" for clinical onboarding.
 
+1. [ ] **Use Case #5: Secure QR Data Bridge**:
+
+- **Problem**: Unencrypted emails are risky for HIPAA.
+- **Solution**: Generate a dynamic QR code containing the last 30 days of seizure logs (JSON/Text).
+- **Benefit**: Doctor scans screen -> Data transfers instantly (Air-Gapped).
+
 ## 🔧 Technical Debt & Clean Up
 
 1. [ ] **Stale Branch Cleanup**:
