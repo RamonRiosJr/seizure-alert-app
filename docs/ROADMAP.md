@@ -19,6 +19,8 @@ High-priority items focused on safety-critical requisites and regulatory readine
 Enhancing the scalability, maintainability, and quality assurance thresholds of the platform.
 
 - [ ] **Test Coverage Expansion**: Targeted increase of unit and integration test coverage from ~60% to **80%+**, focusing on complex hardware hooks.
+- [x] **Source Code Migration**: Consolidated all application logic into a standard `src/` directory structure.
+- [x] **Test Suite Consolidation**: Unified unit tests into `test/` with strict `@/` path aliases.
 - [x] **Architectural Documentation**: Technical deep-dives utilizing Mermaid diagrams for data-flow visualization (Sensor Data → Hook Processing → Local Storage → Alert Dispatch).
 - [ ] **CI/CD Hardening**: Integration of Husky and lint-staged to enforce architectural standards at the commit level.
 - [ ] **Automated Accessibility Checks**: Integration of Lighthouse CI to maintain "A" grade WCAG compliance.
