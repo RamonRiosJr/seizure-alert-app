@@ -69,7 +69,7 @@ export default defineConfig(({ mode: _mode }) => {
     // },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(__dirname, './src'),
       },
     },
     build: {
@@ -85,7 +85,7 @@ export default defineConfig(({ mode: _mode }) => {
         'hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
         'components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
       ],
-      exclude: ['tests/**', 'node_modules/**'],
+      exclude: ['tests/**', 'node_modules/**', 'test/**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       coverage: {
         provider: 'v8',
         reporter: ['text', 'json', 'html', 'lcov'],
