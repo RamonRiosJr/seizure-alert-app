@@ -41,6 +41,10 @@ _Items identified as "You're Fired" risks or Regulatory Requirements._
 
 1. [x] **Voice Activation ("Hey Aura")**:
    - **Goal**: Hands-free trigger for users with motor control loss.
+
+- **Constraint**: **$0 Budget**. (Picovoice is $6k/yr).
+- **Strategy**: UI Mockup + Web Speech API (Free) investigation.
+
 2. [ ] **Smart Watch Integration**:
    - **Goal**: Companion app for Apple Watch / WearOS for heart rate and fall detection.
 3. [ ] **Patient 360 & Doctor Directory**:
