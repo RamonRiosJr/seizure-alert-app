@@ -1,3 +1,0 @@
-test/hooks/useFallDetection.test.ts(4,34): error TS2307: Cannot find module '@/../contexts/SettingsContext' or its corresponding type declarations.
-test/hooks/useHeartMonitor.test.ts(3,31): error TS2307: Cannot find module '@/../contexts/BLEContext' or its corresponding type declarations.
-test/hooks/useHeartMonitor.test.ts(5,34): error TS2307: Cannot find module '@/../contexts/SettingsContext' or its corresponding type declarations.
