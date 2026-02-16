@@ -5,61 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.0] - 2026-02-13
+## [v2.0.0-candidate] - 2026-02-16
 
-### [0.3.0] Features
+### 🏗️ Architectural Restructure (The Great Migration)
 
-- **Architecture Documentation**:
-  - Published `docs/ARCHITECTURE.md` detailing the Hub-and-Spoke component model and data flow.
-  - Linked architecture standards directly in `README.md`.
-- **Settings UI Modularization**:
-  - Refactored monolithic `SettingsScreen` into `SettingsHub` with atomic tabs (`SystemTab`, `ProfileTab`, `AlertsTab`).
-  - Implemented scalable tab navigation architecture.
-- **Voice Activation ("Hey Aura")**:
-  - Integrated Picovoice Porcupine for local, privacy-first wake-word detection.
-  - Implemented `useWakeWord` hook and `GlobalWakeWordListener` for persistent, hands-free triggering.
-  - Added visual "Aura is Listening" indicator to the `ReadyScreen`.
-  - Integrated voice activation controls into `AIHubTab` and `SafetyTab`.
+- **Changed**: Moved all application source code (`components`, `hooks`, `contexts`, `utils`) to `src/`.
+- **Changed**: Renamed entry point from `index.tsx` to `src/main.tsx`.
+- **Changed**: Updated `vite.config.ts` and `tsconfig.json` to use strict `@/` path aliases pointing to `src/`.
+- **Changed**: Consolidated all unit tests into `test/` directory.
 
-## [0.2.0] - 2026-02-13 (i18n & Telemetry)
+### ✨ New Features (from Phase 1 & 2)
 
-### [0.2.0] Features
+- **Added**: **API Key UX Overhaul** - Client-side "Bring Your Own Key" validation wizard.
+- **Added**: **Localization (i18n)** - Full English/Spanish support for all UI text and logs.
+- **Added**: **Battery Telemetry** - Real-time discharge rate monitoring and Wake Lock integration.
+- **Added**: **Global Error Boundary** - "Safe Mode" UI for app crashes.
 
-- **Localization (i18n) Hardening**:
-  - Implemented comprehensive internationalization framework across the platform.
-  - Hardened `ReadyScreen` and `FallDetectionTestMode` for global regulatory readiness.
-  - Standardized error handling and telemetry alerts with localized string resources.
-- **Battery Telemetry & Power Management**:
-  - `useBattery` hook offering high-precision discharge rate tracking (%/hour).
-  - `useWakeLock` integration to ensure sensor continuity during critical monitoring.
-  - Dedicated **Power & Performance** telemetry dashboard in Settings.
-- **API Key Security & UX Overhaul**:
-  - Implemented a "Guided Wizard" for secure, client-side Google Gemini integration.
-  - Automated key validation via the platform's AI middleware logic.
-- **Multi-Profile Runtime Support**:
-  - Added support for "Aura Seizure" and "Aura Senior" profiles with runtime terminology injection.
-  - Unified configuration management via `ConfigContext`.
+### 🧹 Housekeeping
 
-### Changed
+- **Removed**: Deleted `test-results/` and other temporary build artifacts from root.
+- **Removed**: Deleted duplicate `ARCHITECTURE.md` and `ROADMAP.md` from root (consolidated to `docs/`).
+- **Added**: Created `.editorconfig` for consistent coding standards.
 
-- **PWA Deployment Optimization**:
-  - Refined installation heuristics for iOS (manual flow) and Android (native prompt).
-- **Core Strategy**: Migrated to Tailwind CSS v4 for optimized build pipelines and simplified theme architecture.
-- **Infrastructure**: Updated TypeScript, Vite, and i18next to the latest stable versions to leverage modern engine performance.
-
-### Fixed
-
-- **Platform Integrity**: Resolved regression in `useHeartMonitor` localStorage persistence.
-- **Accessibility**: Standardized ARIA labels and focus management across all power-intensive views.
-- **Linting & Type Safety**: Achieved zero-tolerance strict typing and resolved all legacy ESLint technical debt.
-
-## [0.1.0] - 2026-02-11
+## [v1.5.0] - 2026-02-14
 
 ### Added
 
-- Initial PWA Release with Offline support.
-- "Big Red Button" emergency alert logic.
-- Fall Detection algorithm using device accelerometer.
-- Heart Rate monitoring via Bluetooth (BLE).
-- AI Assistant ("Aura") integration for context-aware help.
-- English and Spanish localization.
+- **UI**: Added `BottomNavigation` component for better mobile navigation.
+- **Feature**: Implemented "Health Command Center" grid layout.
+- **Docs**: Added `WALKTHROUGH.md` and updated `README.md`.
+
+## [v1.0.0] - 2026-01-01
+
+### Added
+
+- Initial Release of Aura Speaks AI.
