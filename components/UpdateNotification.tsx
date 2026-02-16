@@ -10,10 +10,10 @@ export const UpdateNotification: React.FC = () => {
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
   } = useRegisterSW({
-    onRegistered(r) {
-      console.log('SW Registered: ' + r);
+    onRegistered(r: ServiceWorkerRegistration | undefined) {
+      if (r) console.log('SW Registered: ' + r);
     },
-    onRegisterError(error) {
+    onRegisterError(error: Error) {
       console.log('SW registration error', error);
     },
   });
