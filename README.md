@@ -51,6 +51,12 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
   - **Row 2 (Intelligence):** **Aura AI (Gemini API Field)** | Devices (Hardware) | Phone Care (Battery/Telemetry)
   - **Row 3 (Clinical):** Calendars | Medication | Doctors (Specialist Directory)
 
+### ✅ Health Command Center (Grid UI)
+
+- **Modular Dashboard:** A responsive, adaptive grid system for quick access to critical functions.
+- **Modern Navigation:** Persistent bottom tab bar for seamless switching between Dashboard, Medications, Calendar, and Settings.
+- **Panic Interaction:** Adaptive emergency button placement for accessibility.
+
 ### 🔋 Enterprise-Grade Power Management
 
 - **Unified Telemetry:** Front-and-center monitoring of battery health, discharge rates (% per hour), and estimated runtime.
@@ -90,7 +96,7 @@ Aura Speaks AI is engineered for production-grade reliability across modern web 
 
 ## 🗺️ Project Roadmap
 
-View our [Technical Roadmap](./ROADMAP.md) for planned architectural enhancements, including coverage expansion and wearable integration.
+View our [Technical Roadmap](./docs/ROADMAP.md) for planned architectural enhancements, including coverage expansion and wearable integration.
 
 ---
 
@@ -102,7 +108,7 @@ Built with modern, production-grade tools to ensure speed, safety, and scalabili
 - **Styling:** Tailwind CSS v4, PostCSS, Lucide React (Icons)
 - **State & Internationalization:** React Context API, i18next (English/Spanish)
 - **PWA (Progressive Web App):** Vite PWA Plugin, Service Workers (Offline Capability)
-- **Testing:** Playwright (E2E), Vitest (Unit), Testing Library
+- **Testing:** Playwright (E2E), Vitest (Unit - located in `test/`), Testing Library
 - **Quality:** ESLint (Strict), Prettier, Husky (Pre-commit hooks), Axe-Core (A11y)
 - **Deployment:** GitHub Pages (CI/CD)
 
@@ -115,9 +121,9 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 ### 📚 Technical Resources
 
 - **[System Architecture](./docs/ARCHITECTURE.md)**: Detailed breakdown of the Hub-and-Spoke settings model and data flow.
-- **[Project Roadmap](./ROADMAP.md)**: Strategic objectives and specialized version development.
-- **[Project Backlog](./BACKLOG.md)**: Mission-critical task tracking and transparency.
-- **[Accessibility (A11y)](./ACCESSIBILITY.md)**: Compliance standards for senior-centric user interfaces.
+- **[Project Roadmap](./docs/ROADMAP.md)**: Strategic objectives and specialized version development.
+- **[Project Backlog](./docs/BACKLOG.md)**: Mission-critical task tracking and transparency.
+- **[Accessibility (A11y)](./docs/ACCESSIBILITY.md)**: Compliance standards for senior-centric user interfaces.
 
 ### 📂 Modular Structure
 

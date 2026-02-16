@@ -78,10 +78,10 @@ export default defineConfig(({ mode: _mode }) => {
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: './src/test/setup.ts',
+      setupFiles: './test/setup.ts',
       css: true,
       include: [
-        'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+        'test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
         'hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
         'components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
       ],
@@ -95,7 +95,7 @@ export default defineConfig(({ mode: _mode }) => {
           '**/*.config.{js,ts}',
           '**/*.d.ts',
           'tests/**',
-          'src/test/**',
+          'test/**',
         ],
         thresholds: {
           lines: 70,

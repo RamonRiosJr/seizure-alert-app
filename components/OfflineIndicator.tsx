@@ -10,10 +10,10 @@ export const OfflineIndicator: React.FC = () => {
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
   } = useRegisterSW({
-    onRegistered(_r) {
+    onRegistered(_r: ServiceWorkerRegistration | undefined) {
       // console.log('SW Registered: ' + r);
     },
-    onRegisterError(error) {
+    onRegisterError(error: Error) {
       console.error('SW registration error', error);
     },
   });
