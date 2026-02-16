@@ -45,16 +45,3 @@ src/main.tsx(9,28): error TS2307: Cannot find module './contexts/UIContext' or i
 src/main.tsx(10,29): error TS2307: Cannot find module './contexts/BLEContext' or its corresponding type declarations.
 src/router/AppRouter.tsx(2,23): error TS2307: Cannot find module '../contexts/UIContext' or its corresponding type declarations.
 src/utils/pdfGenerator.ts(5,34): error TS2307: Cannot find module '../config/types' or its corresponding type declarations.
-test/hooks/useBattery.test.ts(2,28): error TS2307: Cannot find module '@/useBattery' or its corresponding type declarations.
-test/hooks/useBLE.test.ts(2,67): error TS2307: Cannot find module '@/useBLE' or its corresponding type declarations.
-test/hooks/useEmergencyAlert.test.ts(2,35): error TS2307: Cannot find module '@/useEmergencyAlert' or its corresponding type declarations.
-test/hooks/useFallDetection.test.ts(2,34): error TS2307: Cannot find module '@/useFallDetection' or its corresponding type declarations.
-test/hooks/useFallDetectionCore.test.ts(2,38): error TS2307: Cannot find module '@/useFallDetectionCore' or its corresponding type declarations.
-test/hooks/useHeartMonitor.test.ts(2,33): error TS2307: Cannot find module '@/useHeartMonitor' or its corresponding type declarations.
-test/hooks/useHeartMonitor.test.ts(4,33): error TS2307: Cannot find module '@/useLocalStorage' or its corresponding type declarations.
-test/hooks/useLocalStorage.test.ts(3,33): error TS2307: Cannot find module '@/useLocalStorage' or its corresponding type declarations.
-test/hooks/useLocalStorage.test.ts(38,26): error TS7006: Parameter 'prev' implicitly has an 'any' type.
-test/hooks/usePWAInstall.test.ts(3,31): error TS2307: Cannot find module '@/usePWAInstall' or its corresponding type declarations.
-test/hooks/useShake.test.ts(3,26): error TS2307: Cannot find module '@/useShake' or its corresponding type declarations.
-test/hooks/useTTS.test.ts(3,24): error TS2307: Cannot find module '@/useTTS' or its corresponding type declarations.
-test/hooks/useWakeLock.test.ts(2,29): error TS2307: Cannot find module '@/useWakeLock' or its corresponding type declarations.

@@ -1,14 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
-import { useHeartMonitor } from '@/useHeartMonitor';
-import { useBLEContext } from '@/../contexts/BLEContext';
-import { useLocalStorage } from '@/useLocalStorage';
-import * as SettingsContext from '@/../contexts/SettingsContext';
+import { useHeartMonitor } from '@/hooks/useHeartMonitor';
+import { useBLEContext } from '@/contexts/BLEContext';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import * as SettingsContext from '@/contexts/SettingsContext';
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 
 // Mock Dependencies
-vi.mock('@/../contexts/BLEContext');
-vi.mock('@/useLocalStorage');
-vi.mock('@/../contexts/SettingsContext', () => ({
+vi.mock('@/contexts/BLEContext');
+vi.mock('@/hooks/useLocalStorage');
+vi.mock('@/contexts/SettingsContext', () => ({
   useSettings: vi.fn(),
   SettingsProvider: ({ children }: { children: React.ReactNode }) => children,
 }));

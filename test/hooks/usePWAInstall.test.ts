@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { usePWAInstall } from '@/usePWAInstall';
+import { usePWAInstall } from '@/hooks/usePWAInstall';
 
 describe('usePWAInstall', () => {
   let addEventListenerSpy: ReturnType<typeof vi.spyOn>;

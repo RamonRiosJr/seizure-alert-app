@@ -1,1 +1,0 @@
-hooks/__tests__/useBattery.test.ts(88,32): error TS18048: 'levelChangeCall' is possibly 'undefined'.

@@ -11,7 +11,6 @@ src/components/BottomNavigation.tsx(14,23): error TS2307: Cannot find module '..
 src/components/BottomNavigation.tsx(16,29): error TS2307: Cannot find module '../contexts/SettingsContext' or its corresponding type declarations.
 src/components/Chatbot.tsx(6,29): error TS2307: Cannot find module '../contexts/LanguageContext' or its corresponding type declarations.
 src/components/DeviceManager.tsx(2,31): error TS2307: Cannot find module '../contexts/BLEContext' or its corresponding type declarations.
-src/components/DeviceManager.tsx(142,31): error TS7006: Parameter 'device' implicitly has an 'any' type.
 src/components/layout/GlobalListeners.tsx(2,23): error TS2307: Cannot find module '../../contexts/UIContext' or its corresponding type declarations.
 src/components/layout/GlobalListeners.tsx(6,29): error TS2307: Cannot find module '../../contexts/SettingsContext' or its corresponding type declarations.
 src/components/layout/GlobalListeners.tsx(7,31): error TS2307: Cannot find module '../../contexts/BLEContext' or its corresponding type declarations.
@@ -26,7 +25,6 @@ src/components/settings/__tests__/SafetyTab.test.tsx(47,50): error TS2307: Canno
 src/components/settings/AIHubTab.tsx(5,29): error TS2307: Cannot find module '../../contexts/SettingsContext' or its corresponding type declarations.
 src/components/settings/CareTab.tsx(5,29): error TS2307: Cannot find module '../../contexts/SettingsContext' or its corresponding type declarations.
 src/components/settings/PeopleTab.tsx(8,34): error TS2307: Cannot find module '../../contexts/ConfigContext' or its corresponding type declarations.
-src/components/settings/PeopleTab.tsx(58,39): error TS7006: Parameter 'p' implicitly has an 'any' type.
 src/components/settings/SafetyTab.tsx(6,29): error TS2307: Cannot find module '../../contexts/SettingsContext' or its corresponding type declarations.
 src/components/settings/SafetyTab.tsx(10,29): error TS2307: Cannot find module '../../contexts/LanguageContext' or its corresponding type declarations.
 src/components/settings/SettingsHub.tsx(3,29): error TS2307: Cannot find module '../../contexts/SettingsContext' or its corresponding type declarations.
@@ -53,8 +51,10 @@ test/hooks/useFallDetectionCore.test.ts(2,38): error TS2307: Cannot find module 
 test/hooks/useHeartMonitor.test.ts(2,33): error TS2307: Cannot find module '@/useHeartMonitor' or its corresponding type declarations.
 test/hooks/useHeartMonitor.test.ts(4,33): error TS2307: Cannot find module '@/useLocalStorage' or its corresponding type declarations.
 test/hooks/useLocalStorage.test.ts(3,33): error TS2307: Cannot find module '@/useLocalStorage' or its corresponding type declarations.
-test/hooks/useLocalStorage.test.ts(38,26): error TS7006: Parameter 'prev' implicitly has an 'any' type.
 test/hooks/usePWAInstall.test.ts(3,31): error TS2307: Cannot find module '@/usePWAInstall' or its corresponding type declarations.
 test/hooks/useShake.test.ts(3,26): error TS2307: Cannot find module '@/useShake' or its corresponding type declarations.
 test/hooks/useTTS.test.ts(3,24): error TS2307: Cannot find module '@/useTTS' or its corresponding type declarations.
 test/hooks/useWakeLock.test.ts(2,29): error TS2307: Cannot find module '@/useWakeLock' or its corresponding type declarations.
+tsconfig.json(1,1): error TS5092: The root value of a 'tsconfig.json' file must be an object.
+tsconfig.json(34,5): error TS1005: ',' expected.
+tsconfig.json(40,1): error TS1012: Unexpected token.

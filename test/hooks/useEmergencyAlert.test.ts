@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useEmergencyAlert } from '@/useEmergencyAlert';
+import { useEmergencyAlert } from '@/hooks/useEmergencyAlert';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock AudioContext and related nodes

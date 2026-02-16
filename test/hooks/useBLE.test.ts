@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useBLE, MOCK_SCAN_DELAY, MOCK_HEART_RATE_INTERVAL } from '@/useBLE';
+import { useBLE, MOCK_SCAN_DELAY, MOCK_HEART_RATE_INTERVAL } from '@/hooks/useBLE';
 import { BleClient } from '@capacitor-community/bluetooth-le';
 import { Capacitor } from '@capacitor/core';
 import { vi, describe, it, expect, beforeEach, afterEach, Mock } from 'vitest';

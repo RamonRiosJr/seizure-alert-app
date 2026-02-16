@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useFallDetectionCore } from '@/useFallDetectionCore';
+import { useFallDetectionCore } from '@/hooks/useFallDetectionCore';
 import { vi, describe, it, expect, beforeEach, afterEach, MockInstance } from 'vitest';
 
 describe('useFallDetectionCore Performance', () => {

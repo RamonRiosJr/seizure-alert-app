@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useBattery } from '@/useBattery';
+import { useBattery } from '@/hooks/useBattery';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 describe('useBattery', () => {

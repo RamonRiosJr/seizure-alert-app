@@ -1,10 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
-import { useFallDetection } from '@/useFallDetection';
+import { useFallDetection } from '@/hooks/useFallDetection';
 import { vi, describe, it, expect, beforeEach, afterEach, Mock } from 'vitest';
-import * as SettingsContext from '@/../contexts/SettingsContext';
+import * as SettingsContext from '@/contexts/SettingsContext';
 
 // Mock useSettings
-vi.mock('@/../contexts/SettingsContext', () => ({
+vi.mock('@/contexts/SettingsContext', () => ({
   useSettings: vi.fn(),
   SettingsProvider: ({ children }: { children: React.ReactNode }) => children,
 }));

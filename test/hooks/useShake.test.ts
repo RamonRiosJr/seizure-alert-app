@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { useShake } from '@/useShake';
+import { useShake } from '@/hooks/useShake';
 
 describe('useShake', () => {
   let addEventListenerSpy: ReturnType<typeof vi.spyOn>;
