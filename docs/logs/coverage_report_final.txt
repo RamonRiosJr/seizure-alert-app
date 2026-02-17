@@ -1,0 +1,32 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+[90mstdout[2m | hooks/__tests__/useBLE.test.ts[2m > [22m[2museBLE Auto-Reconnect[2m > [22m[2mshould attempt reconnect if disconnected accidentally
+[22m[39mSimulating disconnect...
+device 123 disconnected
+Accidental disconnect detected. Initiating auto-reconnect...
+Attempting to reconnect to 123...
+
+[90mstdout[2m | hooks/__tests__/useBLE.test.ts[2m > [22m[2museBLE Auto-Reconnect[2m > [22m[2mshould attempt reconnect if disconnected accidentally
+[22m[39mReconnected successfully!
+
+[90mstdout[2m | hooks/__tests__/useBLE.test.ts[2m > [22m[2museBLE Auto-Reconnect[2m > [22m[2mshould NOT attempt reconnect if disconnected manually
+[22m[39mdevice 123 disconnected
+Manual disconnect completed.
+
+ [32mΓ£ô[39m hooks/__tests__/useBLE.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 15:58:49
+[2m   Duration [22m 4.25s[2m (transform 79ms, setup 425ms, import 392ms, tests 39ms, environment 3.01s)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   80.88 |    69.44 |      85 |   83.07 |                   
+ useBLE.ts         |   81.66 |    71.42 |   82.35 |   84.21 | ...71,180-181,212 
+ ...ocalStorage.ts |      75 |     62.5 |     100 |      75 | 9,15-16,28        
+-------------------|---------|----------|---------|---------|-------------------

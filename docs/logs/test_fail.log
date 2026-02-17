@@ -1,0 +1,50 @@
+
+> aura-speaks-ai@0.3.0 test
+> vitest components/__tests__/SettingsScreen.test.tsx --run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app[39m
+
+ [31mΓ¥»[39m components/__tests__/SettingsScreen.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 56[2mms[22m[39m
+[31m     [31m├ù[31m renders correctly when open[39m[32m 41[2mms[22m[39m
+     [32mΓ£ô[39m renders nothing when closed[32m 2[2mms[22m[39m
+[31m     [31m├ù[31m calls onClose when close button clicked[39m[32m 11[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 2 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  components/__tests__/SettingsScreen.test.tsx > SettingsScreen > renders correctly when open
+ FAIL  components/__tests__/SettingsScreen.test.tsx > SettingsScreen > calls onClose when close button clicked
+Error: [vitest] No "Plus" export is defined on the "lucide-react" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("lucide-react"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ Γ¥» SettingContacts components/settings/SettingContacts.tsx:62:14
+     60|             aria-label="Add Contact"
+     61|           >
+     62|             <Plus className="w-5 h-5" />
+       |              ^
+     63|           </button>
+     64|         )}
+ Γ¥» Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ Γ¥» renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ Γ¥» updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ Γ¥» beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ Γ¥» runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ Γ¥» performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ Γ¥» workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/2]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 14:47:43
+[2m   Duration [22m 1.92s[2m (transform 254ms, setup 140ms, import 408ms, tests 56ms, environment 1.10s)[22m
+

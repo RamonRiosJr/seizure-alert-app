@@ -1,0 +1,33 @@
+
+> aura-speaks-ai@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+Error: Cannot apply unknown utility class `animate-pulse-border`
+    at onInvalidCandidate (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:21:1511)
+    at Te (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:16:36652)
+    at C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:21:355
+    at Rr (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:3:1718)
+    at _ (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:3:1377)
+    at $e (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:21:172)
+    at un (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:38:294)
+    at async cn (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\tailwindcss\dist\lib.js:38:631)
+    at async Xr (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\@tailwindcss\node\dist\index.js:10:3417)
+    at async I (C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\node_modules\@tailwindcss\postcss\dist\index.js:10:3977)
+[32mΓ£ô[39m 60 modules transformed.
+Γ£ù Build failed in 495ms
+error during build:
+[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] index.css (1:0): There was an error during the build:
+  [postcss] tailwindcss: C:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app/index.css:1:1: Cannot apply unknown utility class `animate-pulse-border`
+Additionally, handling the error in the 'buildEnd' hook caused the following error:
+  [postcss] tailwindcss: C:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app/index.css:1:1: Cannot apply unknown utility class `animate-pulse-border`
+file: C:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app/index.css:1:0
+    at getRollupError (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/rollup/dist/es/shared/parseAst.js:402:41)
+    at file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/rollup/dist/es/shared/node-entry.js:23444:39
+    at async catchUnfinishedHookActions (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/rollup/dist/es/shared/node-entry.js:22902:16)
+    at async rollupInternal (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/rollup/dist/es/shared/node-entry.js:23427:5)
+    at async buildEnvironment (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/vite/dist/node/chunks/config.js:33541:12)
+    at async Object.build (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/vite/dist/node/chunks/config.js:33900:19)
+    at async Object.buildApp (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/vite/dist/node/chunks/config.js:33897:153)
+    at async CAC.<anonymous> (file:///C:/Users/localadmin/OneDrive%20-%20Coqui%20Cloud/Documents/GitHub/seizure-alert-app/node_modules/vite/dist/node/cli.js:629:3)

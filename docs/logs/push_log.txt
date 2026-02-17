@@ -1,0 +1,12 @@
+Pushing to https://github.com/RamonRiosJr/seizure-alert-app.git
+POST git-receive-pack (6661 bytes)
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: Review all repository rules at https://github.com/RamonRiosJr/seizure-alert-app/rules?ref=refs%2Fheads%2Fmain        
+remote: 
+remote: - Changes must be made through a pull request.        
+remote: 
+remote: - Required status check "≡ƒ¢í∩╕Å Quality Gate (20.x)" is expected.        
+remote: 
+To https://github.com/RamonRiosJr/seizure-alert-app.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'https://github.com/RamonRiosJr/seizure-alert-app.git'

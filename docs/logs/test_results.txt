@@ -1,0 +1,57 @@
+
+> aura-speaks-ai@0.0.0 test
+> vitest --run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app[39m
+
+ [32mΓ£ô[39m hooks/__tests__/useLocalStorage.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32mΓ£ô[39m hooks/__tests__/useShake.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+[90mstdout[2m | hooks/__tests__/useFallDetection.test.ts[2m > [22m[2museFallDetection[2m > [22m[2mshould trigger alert after High G-Force then Stillness
+[22m[39mHigh Impact Detected: 25.00m/s┬▓
+Fall Confirmed: Impact + Stillness
+
+[90mstdout[2m | hooks/__tests__/useFallDetection.test.ts[2m > [22m[2museFallDetection[2m > [22m[2mshould CANCEL alert if Motion occurs after Impact
+[22m[39mHigh Impact Detected: 25.00m/s┬▓
+Fall Confirmed: Impact + Stillness
+
+ [31mΓ¥»[39m hooks/__tests__/useFallDetection.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 44[2mms[22m[39m
+     [32mΓ£ô[39m should NOT listen to devicemotion by default (disabled)[32m 22[2mms[22m[39m
+     [32mΓ£ô[39m should listen to devicemotion when enabled[32m 4[2mms[22m[39m
+     [32mΓ£ô[39m should trigger alert after High G-Force then Stillness[32m 6[2mms[22m[39m
+[31m     [31m├ù[31m should CANCEL alert if Motion occurs after Impact[39m[32m 10[2mms[22m[39m
+[90mstdout[2m | hooks/__tests__/useHeartMonitor.test.ts[2m > [22m[2museHeartMonitor[2m > [22m[2mshould trigger alert when HR is above threshold (120)
+[22m[39m[HeartMonitor] HR 130 > 120. Triggering Alert!
+
+ [32mΓ£ô[39m hooks/__tests__/useHeartMonitor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 1 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  hooks/__tests__/useFallDetection.test.ts > useFallDetection > should CANCEL alert if Motion occurs after Impact
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st vi.fn() call:
+
+    Array []
+
+
+Number of calls: 1
+
+ Γ¥» hooks/__tests__/useFallDetection.test.ts:86:40
+     84|         });
+     85| 
+     86|         expect(mockOnFallDetected).not.toHaveBeenCalled();
+       |                                        ^
+     87|     });
+     88| });
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/1]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m15 passed[39m[22m[90m (16)[39m
+[2m   Start at [22m 00:00:03
+[2m   Duration [22m 2.82s[2m (transform 290ms, setup 831ms, import 888ms, tests 131ms, environment 6.27s)[22m
+
