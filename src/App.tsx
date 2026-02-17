@@ -1,5 +1,8 @@
 import React from 'react';
 import Chatbot from './components/Chatbot';
+import { useVoiceMock } from './hooks/useVoiceMock';
+import { VoiceTriggerFAB } from './components/voice/VoiceTriggerFAB';
+import { ListeningOverlay } from './components/voice/ListeningOverlay';
 import { ConfigProvider } from './contexts/ConfigContext';
 import SettingsScreen from './components/SettingsScreen';
 import ReportsScreen from './components/ReportsScreen';
@@ -19,7 +22,8 @@ import { GlobalErrorBoundary } from './components/GlobalErrorBoundary';
 import { SettingsProvider } from './contexts/SettingsContext';
 
 function App() {
-  const { activeModal, screen, closeModal, openModal } = useUI();
+  const { activeModal, closeModal, openModal } = useUI();
+  const { isListening, startListening, stopListening, command } = useVoiceMock();
 
   const [theme] = useTheme();
 
@@ -85,6 +89,16 @@ function App() {
               isOpen={activeModal === 'about'}
               onClose={closeModal}
               onOpenDisclosure={() => openModal('disclaimer')}
+            />
+            {/* Voice Activation Mockup */}
+            <VoiceTriggerFAB
+              isListening={isListening}
+              onPress={() => (isListening ? stopListening() : startListening())}
+            />
+            <ListeningOverlay
+              isOpen={isListening}
+              onClose={stopListening}
+              recognizedCommand={command}
             />
           </div>
         </SettingsProvider>
