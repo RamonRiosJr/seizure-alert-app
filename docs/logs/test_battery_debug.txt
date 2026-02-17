@@ -1,0 +1,38 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/localadmin/OneDrive - Coqui Cloud/Documents/GitHub/seizure-alert-app[39m
+
+stderr | hooks/__tests__/useBattery.test.ts > useBattery > should handles unsupported browser
+[useBattery] Battery Status API not supported
+
+ [31mΓ¥»[39m hooks/__tests__/useBattery.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 25[2mms[22m[39m
+     [32mΓ£ô[39m should return initial battery state and support status[32m 14[2mms[22m[39m
+     [32mΓ£ô[39m should handles unsupported browser[32m 2[2mms[22m[39m
+[31m     [31m├ù[31m should update state on battery events[39m[32m 8[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 1 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  hooks/__tests__/useBattery.test.ts > useBattery > should update state on battery events
+AssertionError: expected 0.5 to be 0.8 // Object.is equality
+
+- Expected
++ Received
+
+- 0.8
++ 0.5
+
+ Γ¥» hooks/__tests__/useBattery.test.ts:71:38
+     69|         });
+     70| 
+     71|         expect(result.current.level).toBe(0.8);
+       |                                      ^
+     72|     });
+     73| });
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/1]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 08:18:25
+[2m   Duration [22m 2.29s[2m (transform 45ms, setup 141ms, import 147ms, tests 25ms, environment 1.24s)[22m
+

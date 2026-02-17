@@ -1,0 +1,30 @@
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\ConfigContext.tsx
+  33:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\contexts\SettingsContext.tsx
+  21:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useBLE.test.ts
+  96:38  warning  'id' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useLocalStorage.test.ts
+  2:48  warning  'afterEach' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\__tests__\useShake.test.ts
+  7:7  warning  'removeEventListenerSpy' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\usePWAInstall.ts
+  24:17  warning  'setIsIOS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  29:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  40:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  69:30  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\hooks\useShake.ts
+  63:8  warning  'DeviceMotionEventWithAcceleration' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\localadmin\OneDrive - Coqui Cloud\Documents\GitHub\seizure-alert-app\tests\emergency-flow.spec.ts
+  35:14  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 11 problems (3 errors, 8 warnings)
+
