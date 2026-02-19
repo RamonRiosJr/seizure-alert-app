@@ -4,6 +4,20 @@
   --animate-pulse-border: pulse-border 1.5s infinite ease-in-out;
   --animate-breathe-glow: breathe-glow 3s infinite ease-in-out;
 
+  /* Aura Glass Tokens */
+  --color-glass-base: rgba(255, 255, 255, 0.65);
+  --color-glass-active: rgba(255, 255, 255, 0.85);
+  --color-glass-border: rgba(255, 255, 255, 0.4);
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+
+  /* Gradients */
+  --image-gradient-calm: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+  --image-gradient-alert: linear-gradient(135deg, #ffedd5 0%, #fecaca 100%);
+
+  /* Typography */
+  --font-satoshi: 'Satoshi', sans-serif;
+
   @keyframes pulse-border {
     0%,
     100% {
@@ -27,6 +41,21 @@
       transform: scale(1.02);
     }
   }
+}
+
+@utility glass-panel {
+  background: var(--color-glass-base);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+}
+
+@utility glass-card {
+  @apply glass-panel rounded-3xl;
+}
+
+@utility glass-pill {
+  @apply glass-panel rounded-full;
 }
 
 @layer utilities {
@@ -55,4 +84,5 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-satoshi);
 }

@@ -1,7 +1,7 @@
 # Aura Speaks AI 🗣️🚨
 
 [![CI/CD Pipeline](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/github/package-json/v/RamonRiosJr/seizure-alert-app)](package.json)
+[![Version: v2.0-candidate](https://img.shields.io/badge/Version-v2.0--candidate-blue)](package.json)
 [![Deploy Status](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml)
 [![codecov](https://codecov.io/gh/RamonRiosJr/seizure-alert-app/branch/main/graph/badge.svg)](https://codecov.io/gh/RamonRiosJr/seizure-alert-app)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -63,6 +63,17 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Sensor Continuity:** Integrated "Wake Lock" API to prevent OS-level sleep during active monitoring.
 - **Performance Optimization:** Low Power Mode heuristics to reduce CPU overhead when outside critical monitoring windows.
 
+### 🎙️ Emergency Voice Activation (New)
+
+- **"Hey Aura" Mockup:** High-fidelity voice trigger simulation for hands-free activation.
+- **Listening Visualizer:** Clear, animated overlay that confirms the app is listening to commands.
+- **Privacy First:** No audio is recorded or sent to the cloud in this version.
+
+### 🛡️ Senior-Grade Security (Audit Certified)
+
+- **Zero-Trust Storage:** Hiring/Performance reports and sensitive logs are strictly sterilized from the codebase.
+- **Hardened Git:** "Senior Architect" grade `.gitignore` prevents secret leakage.
+
 ### 🤖 Intelligent Health Assistance
 
 - **Context-Aware AI:** Leveraging the `gemini-1.5-flash` engine for localized first aid guidance.
@@ -96,7 +107,8 @@ Aura Speaks AI is engineered for production-grade reliability across modern web 
 
 ## 🗺️ Project Roadmap
 
-View our [Technical Roadmap](./docs/ROADMAP.md) for planned architectural enhancements, including coverage expansion and wearable integration.
+- **[Project Roadmap](./docs/ROADMAP.md)**: Strategic objectives and specialized version development.
+- **[Changelog](./docs/CHANGELOG.md)**: Version history and notable changes.
 
 ---
 
@@ -124,6 +136,7 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 - **[Project Roadmap](./docs/ROADMAP.md)**: Strategic objectives and specialized version development.
 - **[Project Backlog](./docs/BACKLOG.md)**: Mission-critical task tracking and transparency.
 - **[Accessibility (A11y)](./docs/ACCESSIBILITY.md)**: Compliance standards for senior-centric user interfaces.
+- **[Changelog](./docs/CHANGELOG.md)**: Detailed version history.
 
 ### 📂 Modular Structure
 
