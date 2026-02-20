@@ -12,7 +12,7 @@ import { BottomNavigation } from './BottomNavigation'; // New Component
 
 const ReadyScreen: React.FC = () => {
   const { language } = useLanguage();
-  const { setScreen } = useUI();
+  const { setScreen, openModal } = useUI();
   const { t } = useTranslation();
   const { heartRate, connectedDevice } = useBLEContext();
   const { geminiApiKey } = useSettings();
@@ -63,10 +63,15 @@ const ReadyScreen: React.FC = () => {
           className="w-72 h-auto md:w-96 md:h-auto mb-10 rounded-3xl shadow-lg"
         />
 
-        {/* Friendly Instructions (Subtitle) */}
-        <p className="text-gray-400 text-sm md:text-base font-medium mb-8 px-4 opacity-90">
-          {t('subtitle')}
-        </p>
+        {/* AI Chat Button */}
+        <button
+          onClick={() => openModal('chat')}
+          className="relative flex items-center justify-center w-16 h-16 mb-8 group transition-transform hover:scale-105 active:scale-95"
+          aria-label="AI Chat"
+        >
+          <Heart className="w-16 h-16 text-purple-500 fill-purple-500 drop-shadow-lg" />
+          <span className="absolute text-white font-bold text-lg drop-shadow-md">AI</span>
+        </button>
 
         {/* Emergency Button - The Focal Point */}
         <div className="relative">
