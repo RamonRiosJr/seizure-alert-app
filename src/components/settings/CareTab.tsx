@@ -3,12 +3,14 @@ import { Card } from '../ui/Card';
 import { Switch } from '../ui/Switch';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../contexts/SettingsContext';
+import { useBattery } from '../../hooks/useBattery';
 import { Battery, Globe } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
 export const CareTab: React.FC = () => {
   const { i18n, t } = useTranslation();
   const { lowPowerMode, setLowPowerMode, preventSleep, setPreventSleep } = useSettings();
+  const { level, charging, dischargeRate, dischargingTime, chargingTime } = useBattery();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'es' : 'en';
@@ -54,6 +56,114 @@ export const CareTab: React.FC = () => {
               </p>
             </div>
             <Switch checked={lowPowerMode} onCheckedChange={setLowPowerMode} />
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="flex items-center space-x-4 mb-4">
+          <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+            <Battery className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-lg font-medium text-white">
+              {t('batteryDiagnostics', 'Battery Diagnostics')}
+            </h3>
+            <p className="text-sm text-slate-400">
+              {t('realTimePowerStats', 'Real-time power consumption stats')}
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">
+              {t('currentLevel', 'Current Level')}
+            </span>
+            <span className="text-xl font-mono text-white">{Math.round(level * 100)}%</span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">{t('status', 'Status')}</span>
+            <span
+              className={`text-xl font-medium ${charging ? 'text-green-400' : 'text-slate-300'}`}
+            >
+              {charging ? t('charging', 'Charging') : t('discharging', 'Discharging')}
+            </span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">
+              {t('dischargeRate', 'Discharge Rate')}
+            </span>
+            <span className="text-lg font-mono text-white">
+              {dischargeRate ? `${dischargeRate > 0 ? '+' : ''}${dischargeRate}%/hr` : '--'}
+            </span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">{t('estTime', 'Est. Time')}</span>
+            <span className="text-lg font-mono text-white">
+              {dischargingTime && dischargingTime !== Infinity
+                ? `${Math.round(dischargingTime / 60)}m`
+                : chargingTime && chargingTime !== Infinity
+                  ? `${Math.round(chargingTime / 60)}m`
+                  : '--'}
+            </span>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="flex items-center space-x-4 mb-4">
+          <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+            <Battery className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-lg font-medium text-white">
+              {t('batteryDiagnostics', 'Battery Diagnostics')}
+            </h3>
+            <p className="text-sm text-slate-400">
+              {t('realTimePowerStats', 'Real-time power consumption stats')}
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">
+              {t('currentLevel', 'Current Level')}
+            </span>
+            <span className="text-xl font-mono text-white">{Math.round(level * 100)}%</span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">{t('status', 'Status')}</span>
+            <span
+              className={`text-xl font-medium ${charging ? 'text-green-400' : 'text-slate-300'}`}
+            >
+              {charging ? t('charging', 'Charging') : t('discharging', 'Discharging')}
+            </span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">
+              {t('dischargeRate', 'Discharge Rate')}
+            </span>
+            <span className="text-lg font-mono text-white">
+              {dischargeRate ? `${dischargeRate > 0 ? '+' : ''}${dischargeRate}%/hr` : '--'}
+            </span>
+          </div>
+
+          <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-500 block mb-1">{t('estTime', 'Est. Time')}</span>
+            <span className="text-lg font-mono text-white">
+              {dischargingTime && dischargingTime !== Infinity
+                ? `${Math.round(dischargingTime / 60)}m`
+                : chargingTime && chargingTime !== Infinity
+                  ? `${Math.round(chargingTime / 60)}m`
+                  : '--'}
+            </span>
           </div>
         </div>
       </Card>

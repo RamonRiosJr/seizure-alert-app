@@ -46,7 +46,9 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 - **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
 - **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
-- **Adaptive Command Center (Aura 2.0):** Transitions to a high-impact, modular grid system focused on user-friendly navigation. The core blocks include:
+- **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
+- **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
+- **Adaptive Command Center:** Transitions to a high-impact, modular grid system focused on user-friendly navigation. The core blocks include:
   - **Row 1 (Life Core):** Patient (Medical Vault) | Contacts (Circle of Care) | Safety (Alerts)
   - **Row 2 (Intelligence):** **Aura AI (Gemini API Field)** | Devices (Hardware) | Phone Care (Battery/Telemetry)
   - **Row 3 (Clinical):** Calendars | Medication | Doctors (Specialist Directory)
@@ -166,7 +168,7 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 
 ## 🔒 Privacy & Safety
 
-**"Local First, Privacy Always."**
+### "Local First, Privacy Always."
 
 - **Your Data Stays With You:** All your contacts and medical info are saved **only on your phone**. We don't see it. We don't steal it.
 - **No Tracking:** We don't track where you go or what you do.
