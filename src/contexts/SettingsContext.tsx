@@ -1,6 +1,5 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { useSessionStorage } from '../hooks/useSessionStorage';
 
 export interface SettingsContextType {
   lowPowerMode: boolean;
@@ -31,7 +30,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     'picovoice_access_key',
     ''
   );
-  const [geminiApiKey, setGeminiApiKey] = useSessionStorage<string>('gemini_api_key', '');
+  const [geminiApiKey, setGeminiApiKey] = useLocalStorage<string>('gemini_api_key', '');
 
   return (
     <SettingsContext.Provider
