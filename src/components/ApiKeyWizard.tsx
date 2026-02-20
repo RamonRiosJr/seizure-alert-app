@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 interface ApiKeyWizardProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (key?: string) => void;
 }
 
 export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onSuccess }) => {
@@ -33,7 +33,7 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
 
       // If success, save and close
       localStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
-      onSuccess();
+      onSuccess(apiKey);
       onClose();
     } catch (e: unknown) {
       console.error('API Verification failed:', e);
