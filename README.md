@@ -1,7 +1,7 @@
 # Aura Speaks AI 🗣️🚨
 
 [![CI/CD Pipeline](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/github/package-json/v/RamonRiosJr/seizure-alert-app)](package.json)
+[![Version: v2.0-candidate](https://img.shields.io/badge/Version-v2.0--candidate-blue)](package.json)
 [![Deploy Status](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/RamonRiosJr/seizure-alert-app/actions/workflows/deploy.yml)
 [![codecov](https://codecov.io/gh/RamonRiosJr/seizure-alert-app/branch/main/graph/badge.svg)](https://codecov.io/gh/RamonRiosJr/seizure-alert-app)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -46,7 +46,9 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 
 - **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
 - **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
-- **Adaptive Command Center (Aura 2.0):** Transitions to a high-impact, modular grid system focused on user-friendly navigation. The core blocks include:
+- **Aura Seizure (Standard):** Optimized for epilepsy management. Features "Seizure" terminology and rapid response tools.
+- **Aura Senior (Fall Safety):** Optimized for elderly care. Features "Emergency" terminology, larger text, and simplified Fall Detection controls.
+- **Adaptive Command Center:** Transitions to a high-impact, modular grid system focused on user-friendly navigation. The core blocks include:
   - **Row 1 (Life Core):** Patient (Medical Vault) | Contacts (Circle of Care) | Safety (Alerts)
   - **Row 2 (Intelligence):** **Aura AI (Gemini API Field)** | Devices (Hardware) | Phone Care (Battery/Telemetry)
   - **Row 3 (Clinical):** Calendars | Medication | Doctors (Specialist Directory)
@@ -62,6 +64,17 @@ Developed by **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net](ht
 - **Unified Telemetry:** Front-and-center monitoring of battery health, discharge rates (% per hour), and estimated runtime.
 - **Sensor Continuity:** Integrated "Wake Lock" API to prevent OS-level sleep during active monitoring.
 - **Performance Optimization:** Low Power Mode heuristics to reduce CPU overhead when outside critical monitoring windows.
+
+### 🎙️ Emergency Voice Activation (New)
+
+- **"Hey Aura" Mockup:** High-fidelity voice trigger simulation for hands-free activation.
+- **Listening Visualizer:** Clear, animated overlay that confirms the app is listening to commands.
+- **Privacy First:** No audio is recorded or sent to the cloud in this version.
+
+### 🛡️ Senior-Grade Security (Audit Certified)
+
+- **Zero-Trust Storage:** Hiring/Performance reports and sensitive logs are strictly sterilized from the codebase.
+- **Hardened Git:** "Senior Architect" grade `.gitignore` prevents secret leakage.
 
 ### 🤖 Intelligent Health Assistance
 
@@ -96,7 +109,8 @@ Aura Speaks AI is engineered for production-grade reliability across modern web 
 
 ## 🗺️ Project Roadmap
 
-View our [Technical Roadmap](./docs/ROADMAP.md) for planned architectural enhancements, including coverage expansion and wearable integration.
+- **[Project Roadmap](./docs/ROADMAP.md)**: Strategic objectives and specialized version development.
+- **[Changelog](./docs/CHANGELOG.md)**: Version history and notable changes.
 
 ---
 
@@ -124,6 +138,7 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 - **[Project Roadmap](./docs/ROADMAP.md)**: Strategic objectives and specialized version development.
 - **[Project Backlog](./docs/BACKLOG.md)**: Mission-critical task tracking and transparency.
 - **[Accessibility (A11y)](./docs/ACCESSIBILITY.md)**: Compliance standards for senior-centric user interfaces.
+- **[Changelog](./docs/CHANGELOG.md)**: Detailed version history.
 
 ### 📂 Modular Structure
 
@@ -153,7 +168,7 @@ This project follows **Clean Architecture** principles and maintains rigorous me
 
 ## 🔒 Privacy & Safety
 
-**"Local First, Privacy Always."**
+### "Local First, Privacy Always."
 
 - **Your Data Stays With You:** All your contacts and medical info are saved **only on your phone**. We don't see it. We don't steal it.
 - **No Tracking:** We don't track where you go or what you do.

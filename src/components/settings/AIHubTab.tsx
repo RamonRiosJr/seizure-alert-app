@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { Brain, Mic } from 'lucide-react';
+import { Brain, Mic, Key } from 'lucide-react';
 import { useSettings } from '../../contexts/SettingsContext';
 import { Switch } from '../ui/Switch';
+import { ApiKeyWizard } from '../ApiKeyWizard';
 
 export const AIHubTab: React.FC = () => {
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
   const {
     voiceActivationEnabled,
     setVoiceActivationEnabled,
     picovoiceAccessKey,
     setPicovoiceAccessKey,
+    geminiApiKey,
+    setGeminiApiKey,
   } = useSettings();
 
   return (
@@ -26,6 +30,51 @@ export const AIHubTab: React.FC = () => {
           </div>
           <div className="ml-auto">
             <Badge variant="default">Beta</Badge>
+          </div>
+        </div>
+
+        <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700/50 mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <p className="text-sm font-semibold text-slate-200">Google AI Studio Key</p>
+              <p className="text-xs text-slate-400">
+                Required for advanced analysis and diagnostics.
+              </p>
+            </div>
+            {geminiApiKey ? (
+              <Badge
+                variant="default"
+                className="bg-green-500/20 text-green-400 border-green-500/30"
+              >
+                Connected
+              </Badge>
+            ) : (
+              <Badge
+                variant="default"
+                className="bg-amber-500/20 text-amber-400 border-amber-500/30"
+              >
+                Required
+              </Badge>
+            )}
+          </div>
+          <div className="mt-4 flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <input
+                id="gemini-api-key"
+                type="password"
+                value={geminiApiKey}
+                onChange={(e) => setGeminiApiKey(e.target.value)}
+                placeholder="Enter your Gemini API Key"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              />
+            </div>
+            <button
+              onClick={() => setIsWizardOpen(true)}
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+            >
+              <Key className="w-4 h-4" />
+              Setup Wizard
+            </button>
           </div>
         </div>
 
@@ -54,7 +103,7 @@ export const AIHubTab: React.FC = () => {
               <a
                 href="https://console.picovoice.ai/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 className="text-blue-400 underline"
               >
                 console.picovoice.ai
@@ -91,6 +140,14 @@ export const AIHubTab: React.FC = () => {
           </p>
         </Card>
       )}
+
+      <ApiKeyWizard
+        isOpen={isWizardOpen}
+        onClose={() => setIsWizardOpen(false)}
+        onSuccess={(key) => {
+          if (key) setGeminiApiKey(key);
+        }}
+      />
     </div>
   );
 };

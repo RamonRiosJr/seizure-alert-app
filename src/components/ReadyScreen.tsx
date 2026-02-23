@@ -1,19 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Heart, Triangle } from 'lucide-react';
+import { Heart, Triangle, Brain } from 'lucide-react';
 
 import { useBLEContext } from '../contexts/BLEContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUI } from '../contexts/UIContext';
+import { useSettings } from '../contexts/SettingsContext';
 import { BottomNavigation } from './BottomNavigation'; // New Component
 
 const ReadyScreen: React.FC = () => {
   const { language } = useLanguage();
-  const { setScreen } = useUI();
+  const { setScreen, openModal } = useUI();
   const { t } = useTranslation();
   const { heartRate, connectedDevice } = useBLEContext();
+  const { geminiApiKey } = useSettings();
   const [fallDetectionEnabled] = useLocalStorage('fallDetectionEnabled', false);
 
   return (
@@ -44,6 +46,15 @@ const ReadyScreen: React.FC = () => {
           >
             <Triangle className={`w-6 h-6 ${fallDetectionEnabled ? 'fill-current' : ''}`} />
           </div>
+
+          {/* Gemini API Status */}
+          <div
+            className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+              geminiApiKey ? 'bg-purple-500/20 text-purple-500' : 'bg-gray-800/50 text-gray-500'
+            }`}
+          >
+            <Brain className="w-6 h-6" />
+          </div>
         </div>
 
         <img
@@ -51,6 +62,16 @@ const ReadyScreen: React.FC = () => {
           alt={`${t('title')} Logo`}
           className="w-72 h-auto md:w-96 md:h-auto mb-10 rounded-3xl shadow-lg"
         />
+
+        {/* AI Chat Button */}
+        <button
+          onClick={() => openModal('chat')}
+          className="relative flex items-center justify-center w-16 h-16 mb-8 group transition-transform hover:scale-105 active:scale-95"
+          aria-label="AI Chat"
+        >
+          <Heart className="w-16 h-16 text-purple-500 fill-purple-500 drop-shadow-lg" />
+          <span className="absolute text-white font-bold text-lg drop-shadow-md">AI</span>
+        </button>
 
         {/* Emergency Button - The Focal Point */}
         <div className="relative">
@@ -65,12 +86,12 @@ const ReadyScreen: React.FC = () => {
             </span>
           </button>
 
+          {/* Monitoring Status Label */}
+          <p className="text-gray-400 text-sm md:text-base font-medium mt-6 animate-pulse tracking-wide uppercase">
+            {t('monitoringStatus')}
+          </p>
+
           {/* Fall Detection Indicator (Subtle) */}
-          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-80 text-center px-2">
-            <p className="text-sm text-slate-400 font-medium tracking-wide truncate">
-              {t('monitoringStatus') || 'Monitoring Active'}
-            </p>
-          </div>
         </div>
       </main>
 

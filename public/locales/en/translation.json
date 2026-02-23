@@ -4,6 +4,7 @@
   "emergencyButton": "EMERGENCY",
   "alertTitle": "MEDICAL EMERGENCY",
   "alertStatus": "I am having a seizure. I am not in control.",
+  "monitoringStatus": "System Active & Monitoring",
   "durationLabel": "DURATION",
   "instructionsTitle": "Instructions for Bystanders",
   "instructions": [

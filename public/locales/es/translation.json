@@ -4,6 +4,7 @@
   "emergencyButton": "EMERGENCIA",
   "alertTitle": "EMERGENCIA MÉDICA",
   "alertStatus": "Estoy teniendo una convulsión. No estoy en control.",
+  "monitoringStatus": "Sistema Activo y Monitoreando",
   "durationLabel": "DURACIÓN",
   "instructionsTitle": "Instrucciones para Testigos",
   "instructions": [

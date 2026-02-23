@@ -2,9 +2,7 @@
 
 [![Read in English](https://img.shields.io/badge/Read_in_English-🇺🇸-blue)](README.md)
 
-<div align="center">
-  <img src="public/Aura-Habla-IA.png" alt="Logo de Aura Habla IA" width="400" />
-</div>
+![Logo de Aura Habla IA](public/Aura-Habla-IA.png)
 
 > **"Cuando no puedo hablar, Aura habla por mí."**
 >
@@ -43,9 +41,12 @@ Desarrollado por **[Coqui Cloud Dev Co.](https://coqui.cloud)** | [RamonRios.net
 
 ### 🤖 Asistencia Inteligente de Salud
 
-- **IA Consciente del Contexto:** Potenciado por el motor `gemini-1.5-flash` para orientación de primeros auxilios localizada.
-- **Integración Segura:** Un asistente guiado de "Conectar IA Aura" simplifica la integración de claves API con validación automatizada.
-- **Arquitectura de Privacidad:** Modelo de seguridad local-first donde todas las claves y registros se persisten exclusivamente en el almacenamiento local seguro.
+- **Aura Seizure (Estándar):** Optimizado para la gestión de la epilepsia. Incluye terminología de "Convulsión" y herramientas de respuesta rápida.
+- **Aura Senior (Seguridad ante Caídas):** Optimizado para el cuidado de adultos mayores. Incluye terminología de "Emergencia", texto más grande y controles simplificados de Detección de Caídas.
+- **Centro de Comando Adaptativo:** Transición a un sistema de cuadrícula modular enfocado en una navegación fácil. Los bloques principales incluyen:
+  - **Fila 1 (Núcleo de Vida):** Paciente (Bóveda Médica) | Contactos (Círculo de Cuidado) | Seguridad (Alertas)
+  - **Fila 2 (Inteligencia):** **Aura IA (API Gemini)** | Dispositivos (Hardware) | Cuidado del Teléfono (Batería/Telemetría)
+  - **Fila 3 (Clínica):** Calendarios | Medicación | Doctores (Directorio de Especialistas)
 
 ### ⚙️ Fácil de Instalar (PWA)
 
@@ -126,8 +127,6 @@ Si esta herramienta te da tranquilidad, por favor considera invitarme un café p
 <div align="center">
   <img src="public/Ramon Rios.png" alt="Ramon Rios" width="150" style="border-radius: 50%; border: 4px solid #b91c1c; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" />
   
-  <br />
-  <br />
 ### 📂 Estructura Modular
 
 - `src/`: **Código Núcleo de la App** (Estructura estándar React/Vite).
@@ -139,8 +138,6 @@ Si esta herramienta te da tranquilidad, por favor considera invitarme un café p
 > **"No podemos controlar los desafíos que enfrentamos, pero podemos controlar cómo respondemos. Deja que esta herramienta sea tu voz cuando más la necesites."**
 >
 > — _Ramon Rios Jr_
-
-</div>
 
 <br />
 
