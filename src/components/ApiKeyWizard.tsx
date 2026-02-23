@@ -17,7 +17,8 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
   if (!isOpen) return null;
 
   const handleValidate = async () => {
-    if (!apiKey.trim()) {
+    const trimmedKey = apiKey.trim();
+    if (!trimmedKey) {
       setError('Please enter an API Key');
       return;
     }
@@ -27,17 +28,20 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
 
     try {
       // Test the key with a simple model call
-      const genAI = new GoogleGenerativeAI(apiKey);
+      const genAI = new GoogleGenerativeAI(trimmedKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       await model.generateContent('Hello');
 
       // If success, save and close
-      localStorage.setItem('gemini_api_key', JSON.stringify(apiKey));
-      onSuccess(apiKey);
+      localStorage.setItem('gemini_api_key', JSON.stringify(trimmedKey));
+      onSuccess(trimmedKey);
       onClose();
+      // Force reload to ensure all contexts pick up the new key immediately
+      window.location.reload();
     } catch (e: unknown) {
       console.error('API Verification failed:', e);
-      setError('Invalid API Key. Please check and try again.');
+      const msg = e instanceof Error ? e.message : 'Unknown network error';
+      setError(`Verification failed: ${msg}`);
     } finally {
       setIsValidating(false);
     }
@@ -81,10 +85,21 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
                 </div>
                 <div>
                   <h3 className="font-semibold text-white">Free Connection Required</h3>
-                  <p className="text-sm text-slate-300 mt-1">
-                    To power Aura's voice features, you need a free secure key from Google. It takes
-                    about 30 seconds.
+                  <p className="text-sm text-slate-300 mt-1 mb-3">
+                    To power Aura's voice features, you need a free secure key from Google. Follow
+                    these steps:
                   </p>
+                  <ol className="list-decimal list-outside ml-4 space-y-2 text-sm text-slate-400">
+                    <li>Click the blue button below to open Google AI Studio.</li>
+                    <li>Sign in with your standard Google Account.</li>
+                    <li>
+                      Click the <strong>"Create API Key"</strong> button on the top left.
+                    </li>
+                    <li>Copy the long secret key that is generated.</li>
+                    <li>
+                      Close that tab, come back here, and proceed to the next step to paste it.
+                    </li>
+                  </ol>
                 </div>
               </div>
 
