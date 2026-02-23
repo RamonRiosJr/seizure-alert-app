@@ -21,7 +21,7 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.flatConfigs.recommended.rules,
+      ...(jsxA11y.flatConfigs?.recommended?.rules || jsxA11y.configs?.recommended?.rules || {}),
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       // "Senior Engineer" Strictness
       '@typescript-eslint/no-explicit-any': 'error',

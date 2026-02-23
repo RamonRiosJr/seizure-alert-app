@@ -30,6 +30,7 @@
   },
   "overrides": {
     "@exodus/bytes": "^1.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "minimatch": "^10.2.2",
     "tar": "^7.5.8"
   },
