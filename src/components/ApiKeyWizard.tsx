@@ -29,13 +29,49 @@ export const ApiKeyWizard: React.FC<ApiKeyWizardProps> = ({ isOpen, onClose, onS
     setError(null);
 
     try {
-      // Test the key with a simple model call
       const genAI = new GoogleGenerativeAI(trimmedKey);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-      await model.generateContent('Hello');
 
-      // If success, save and close
+      // Try models in order of preference and capabilities
+      const modelCandidates = [
+        'gemini-2.5-flash',
+        'gemini-2.0-flash',
+        'gemini-1.5-flash',
+        'gemini-1.5-pro',
+        'gemini-1.5-flash-latest',
+        'gemini-pro',
+      ];
+
+      let workingModelName = null;
+      let lastError = null;
+
+      for (const modelName of modelCandidates) {
+        try {
+          const model = genAI.getGenerativeModel({ model: modelName });
+          await model.generateContent('Hello');
+          workingModelName = modelName;
+          break; // Found a working model!
+        } catch (err: unknown) {
+          const e = err as Error;
+          console.warn(`Model ${modelName} failed:`, e?.message || e);
+          lastError = e;
+          // If it's an auth error (401/403), don't keep trying models.
+          if (
+            e?.message?.includes('401') ||
+            e?.message?.includes('403') ||
+            e?.message?.includes('API key')
+          ) {
+            break;
+          }
+        }
+      }
+
+      if (!workingModelName) {
+        throw lastError || new Error('No available models found for this API Key.');
+      }
+
+      // If success, save both the key and the specific model that worked
       localStorage.setItem('gemini_api_key', JSON.stringify(trimmedKey));
+      localStorage.setItem('gemini_model_name', workingModelName);
       onSuccess(trimmedKey);
       onClose();
       // Force reload to ensure all contexts pick up the new key immediately
