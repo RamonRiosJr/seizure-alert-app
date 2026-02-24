@@ -67,10 +67,12 @@ const ReadyScreen: React.FC = () => {
         <button
           onClick={() => openModal('chat')}
           className="relative flex items-center justify-center w-16 h-16 mb-8 group transition-transform hover:scale-105 active:scale-95"
-          aria-label="AI Chat"
+          aria-label={t('chatTitle')}
         >
           <Heart className="w-16 h-16 text-purple-500 fill-purple-500 drop-shadow-lg" />
-          <span className="absolute text-white font-bold text-lg drop-shadow-md">AI</span>
+          <span className="absolute text-white font-bold text-lg drop-shadow-md">
+            {t('aiButton')}
+          </span>
         </button>
 
         {/* Emergency Button - The Focal Point */}
