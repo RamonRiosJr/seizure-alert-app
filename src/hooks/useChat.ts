@@ -87,24 +87,40 @@ export const useChat = (language: Language) => {
         const baseSystemPrompt = getSystemPrompt(language);
         const finalSystemPrompt = `${baseSystemPrompt}\n${contextString}`;
 
-        // Use the Browser-compatible SDK pattern
+        const savedModel = localStorage.getItem('gemini_model_name') || 'gemini-1.5-flash';
+        const isLegacyModel = savedModel === 'gemini-pro' || savedModel === 'gemini-1.0-pro';
+
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-          model: 'gemini-1.5-flash',
-          systemInstruction: finalSystemPrompt,
-        });
+
+        // Define model params. Older models crash if systemInstruction is provided.
+        const modelParams: { model: string; systemInstruction?: string } = { model: savedModel };
+        if (!isLegacyModel) {
+          modelParams.systemInstruction = finalSystemPrompt;
+        }
+
+        const model = genAI.getGenerativeModel(modelParams);
 
         // Construct history for the API from previous messages
-        // Filter out error messages or system greetings if needed, currently passing valid chat history
-        const history = messages
-          .filter((m) => m.role === 'user' || m.role === 'model') // Simple filter
+        // Filter out error messages or system greetings if needed.
+        const historyContext = messages
+          .filter((m) => m.role === 'user' || m.role === 'model')
           .map((m) => ({
             role: m.role,
             parts: [{ text: m.text }],
           }));
 
+        // If legacy model, inject the system prompt into the first message of the history
+        if (
+          isLegacyModel &&
+          historyContext.length > 0 &&
+          historyContext[0]?.role === 'user' &&
+          historyContext[0]?.parts?.[0]?.text !== undefined
+        ) {
+          historyContext[0].parts[0].text = `System Instruction: ${finalSystemPrompt}\n\nUser: ${historyContext[0].parts[0].text}`;
+        }
+
         const chat = model.startChat({
-          history: history,
+          history: historyContext,
         });
 
         const result = await chat.sendMessageStream(userMessage);

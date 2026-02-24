@@ -333,7 +333,7 @@ const AlertScreen: React.FC = () => {
                   onClick={() => setIsInfoModalOpen(false)}
                   className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
                 >
-                  Close
+                  {t('closeButton')}
                 </button>
               </div>
             </div>
